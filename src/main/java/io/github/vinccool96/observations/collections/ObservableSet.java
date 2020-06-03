@@ -7,6 +7,9 @@ import java.util.Set;
 /**
  * A set that allows observers to track changes when they occur.
  *
+ * @param <E>
+ *         the type of elements maintained by this set
+ *
  * @see SetChangeListener
  * @see SetChangeListener.Change
  * @since JavaFX 2.1
