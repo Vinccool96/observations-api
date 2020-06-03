@@ -7,6 +7,11 @@ import java.util.Map;
 /**
  * A map that allows observers to track changes when they occur.
  *
+ * @param <K>
+ *         the type of keys maintained by this map
+ * @param <V>
+ *         the type of mapped values
+ *
  * @see MapChangeListener
  * @see MapChangeListener.Change
  * @since JavaFX 2.0

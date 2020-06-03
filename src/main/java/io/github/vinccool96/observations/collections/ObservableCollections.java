@@ -38,6 +38,8 @@ public class ObservableCollections {
      * <em>not</em> reported to observers of any ObservableList that
      * wraps it.
      *
+     * @param <E>
+     *         the list element type
      * @param list
      *         a concrete List that backs this ObservableList
      *
@@ -62,6 +64,8 @@ public class ObservableCollections {
      * returned by extractor (applied to each list element) are listened for changes and transformed into "update"
      * change of ListChangeListener.
      *
+     * @param <E>
+     *         the list element type
      * @param list
      *         a concrete List that backs this ObservableList
      * @param extractor
@@ -84,6 +88,10 @@ public class ObservableCollections {
      * instance will be reported to observers that have registered on that instance.<br> Note that mutation operations
      * made directly to the underlying map are <em>not</em> reported to observers of any ObservableMap that wraps it.
      *
+     * @param <K>
+     *         the type of keys maintained by this map
+     * @param <V>
+     *         the type of mapped values
      * @param map
      *         a Map that backs this ObservableMap
      *
@@ -101,6 +109,8 @@ public class ObservableCollections {
      * instance will be reported to observers that have registered on that instance.<br> Note that mutation operations
      * made directly to the underlying set are <em>not</em> reported to observers of any ObservableSet that wraps it.
      *
+     * @param <E>
+     *         the type of elements maintained by this set
      * @param set
      *         a Set that backs this ObservableSet
      *
@@ -118,6 +128,8 @@ public class ObservableCollections {
     /**
      * Constructs an ObservableSet backed by a HashSet that contains all the specified elements.
      *
+     * @param <E>
+     *         the type of elements maintained by this set
      * @param elements
      *         elements that will be added into returned ObservableSet
      *
@@ -139,6 +151,10 @@ public class ObservableCollections {
      * ObservableMap will be reported to observers that have registered on the unmodifiable instance. This allows
      * clients to track changes in a Map but disallows the ability to modify it.
      *
+     * @param <K>
+     *         the type of keys maintained by this map
+     * @param <V>
+     *         the type of mapped values
      * @param map
      *         an ObservableMap that is to be monitored by this interface
      *
@@ -156,6 +172,10 @@ public class ObservableCollections {
     /**
      * Creates and returns a typesafe wrapper on top of provided observable map.
      *
+     * @param <K>
+     *         the type of keys maintained by this map
+     * @param <V>
+     *         the type of mapped values
      * @param map
      *         an Observable map to be wrapped
      * @param keyType
@@ -179,6 +199,10 @@ public class ObservableCollections {
     /**
      * Creates and returns a synchronized wrapper on top of provided observable map.
      *
+     * @param <K>
+     *         the type of keys maintained by this map
+     * @param <V>
+     *         the type of mapped values
      * @param map
      *         the map to be "wrapped" in a synchronized map.
      *
@@ -187,8 +211,7 @@ public class ObservableCollections {
      * @see Collections#synchronizedMap(Map)
      * @since JavaFX 8.0
      */
-    public static <K, V> ObservableMap<K, V> synchronizedObservableMap(
-            ObservableMap<K, V> map) {
+    public static <K, V> ObservableMap<K, V> synchronizedObservableMap(ObservableMap<K, V> map) {
         if (map == null) {
             throw new NullPointerException();
         }
@@ -199,6 +222,11 @@ public class ObservableCollections {
 
     /**
      * Creates and empty unmodifiable observable map.
+     *
+     * @param <K>
+     *         the type of keys maintained by this map
+     * @param <V>
+     *         the type of mapped values
      *
      * @return An empty unmodifiable observable map
      *
@@ -292,6 +320,9 @@ public class ObservableCollections {
     /**
      * Creates a new empty observable list that is backed by an arraylist.
      *
+     * @param <E>
+     *         the list element type
+     *
      * @return a newly created ObservableList
      *
      * @see #observableList(List)
@@ -306,6 +337,8 @@ public class ObservableCollections {
      * <p>
      * This list reports element updates.
      *
+     * @param <E>
+     *         the list element type
      * @param extractor
      *         element to Observable[] convertor. Observable objects are listened for changes on the element.
      *
@@ -321,6 +354,8 @@ public class ObservableCollections {
     /**
      * Creates a new observable array list with {@code items} added to it.
      *
+     * @param <E>
+     *         the list element type
      * @param items
      *         the items that will be in the new observable ArrayList
      *
@@ -337,6 +372,8 @@ public class ObservableCollections {
     /**
      * Creates a new observable array list and adds a content of collection {@code col} to it.
      *
+     * @param <E>
+     *         the list element type
      * @param col
      *         a collection which content should be added to the observableArrayList
      *
@@ -365,6 +402,8 @@ public class ObservableCollections {
     /**
      * Concatenates more observable lists into one. The resulting list would be backed by an arraylist.
      *
+     * @param <E>
+     *         the list element type
      * @param lists
      *         lists to concatenate
      *
@@ -388,6 +427,8 @@ public class ObservableCollections {
     /**
      * Creates and returns unmodifiable wrapper list on top of provided observable list.
      *
+     * @param <E>
+     *         the list element type
      * @param list
      *         an ObservableList that is to be wrapped
      *
@@ -407,6 +448,8 @@ public class ObservableCollections {
     /**
      * Creates and returns a typesafe wrapper on top of provided observable list.
      *
+     * @param <E>
+     *         the list element type
      * @param list
      *         an Observable list to be wrapped
      * @param type
@@ -416,8 +459,7 @@ public class ObservableCollections {
      *
      * @see Collections#checkedList(List, java.lang.Class)
      */
-    public static <E> ObservableList<E> checkedObservableList(
-            ObservableList<E> list, Class<E> type) {
+    public static <E> ObservableList<E> checkedObservableList(ObservableList<E> list, Class<E> type) {
         if (list == null) {
             throw new NullPointerException();
         }
@@ -427,6 +469,8 @@ public class ObservableCollections {
     /**
      * Creates and returns a synchronized wrapper on top of provided observable list.
      *
+     * @param <E>
+     *         the list element type
      * @param list
      *         the list to be "wrapped" in a synchronized list.
      *
@@ -434,8 +478,7 @@ public class ObservableCollections {
      *
      * @see Collections#synchronizedList(List)
      */
-    public static <E> ObservableList<E> synchronizedObservableList(
-            ObservableList<E> list) {
+    public static <E> ObservableList<E> synchronizedObservableList(ObservableList<E> list) {
         if (list == null) {
             throw new NullPointerException();
         }
@@ -460,6 +503,8 @@ public class ObservableCollections {
     /**
      * Creates an unmodifiable observable list with single element.
      *
+     * @param <E>
+     *         the list element type
      * @param e
      *         the only elements that will be contained in this singleton observable list
      *
@@ -475,6 +520,8 @@ public class ObservableCollections {
     /**
      * Creates and returns unmodifiable wrapper on top of provided observable set.
      *
+     * @param <E>
+     *         the set element type
      * @param set
      *         an ObservableSet that is to be wrapped
      *
@@ -495,6 +542,8 @@ public class ObservableCollections {
     /**
      * Creates and returns a typesafe wrapper on top of provided observable set.
      *
+     * @param <E>
+     *         the set element type
      * @param set
      *         an Observable set to be wrapped
      * @param type
@@ -515,6 +564,8 @@ public class ObservableCollections {
     /**
      * Creates and returns a synchronized wrapper on top of provided observable set.
      *
+     * @param <E>
+     *         the set element type
      * @param set
      *         the set to be "wrapped" in a synchronized set.
      *
@@ -536,6 +587,9 @@ public class ObservableCollections {
     /**
      * Creates and empty unmodifiable observable set.
      *
+     * @param <E>
+     *         the set element type
+     *
      * @return An empty unmodifiable observable set
      *
      * @see Collections#emptySet()
@@ -550,6 +604,8 @@ public class ObservableCollections {
     /**
      * Copies elements from src to dest. Fires only <b>one</b> change notification on dest.
      *
+     * @param <T>
+     *         the list element type
      * @param dest
      *         the destination observable list
      * @param src
@@ -571,6 +627,8 @@ public class ObservableCollections {
     /**
      * Fills the provided list with obj. Fires only <b>one</b> change notification on the list.
      *
+     * @param <T>
+     *         the list element type
      * @param list
      *         the list to fill
      * @param obj
@@ -589,6 +647,8 @@ public class ObservableCollections {
      * Replace all oldVal elements in the list with newVal element. Fires only <b>one</b> change notification on the
      * list.
      *
+     * @param <T>
+     *         the list element type
      * @param list
      *         the list which will have it's elements replaced
      * @param oldVal
@@ -740,6 +800,8 @@ public class ObservableCollections {
      * Sorts the provided observable list using the c comparator. Fires only <b>one</b> change notification on the
      * list.
      *
+     * @param <T>
+     *         the list element type
      * @param list
      *         the list to sort
      * @param c
