@@ -1,4 +1,4 @@
-package io.github.vinccool96.observations.sun.adapter;//package com.sun.io.github.vinccool96.observations.property.adapter;
+package io.github.vinccool96.observations.sun.adapter;//package io.github.vinccool96.observations.sun.property.adapter;
 //
 //import io.github.vinccool96.observations.beans.property.ObjectProperty;
 //import io.github.vinccool96.observations.beans.property.adapter.JavaBeanObjectProperty;

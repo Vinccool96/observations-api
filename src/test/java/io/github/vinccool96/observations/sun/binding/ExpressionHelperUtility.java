@@ -14,49 +14,49 @@ import java.util.List;
 public class ExpressionHelperUtility {
 
     private static final String EXPRESSION_HELPER_SINGLE_INVALIDATION =
-            "com.sun.io.github.vinccool96.observations.binding.ExpressionHelper$SingleInvalidation";
+            "io.github.vinccool96.observations.sun.binding.ExpressionHelper$SingleInvalidation";
 
     private static final String EXPRESSION_HELPER_SINGLE_CHANGE =
-            "com.sun.io.github.vinccool96.observations.binding.ExpressionHelper$SingleChange";
+            "io.github.vinccool96.observations.sun.binding.ExpressionHelper$SingleChange";
 
     private static final String EXPRESSION_HELPER_GENERIC =
-            "com.sun.io.github.vinccool96.observations.binding.ExpressionHelper$Generic";
+            "io.github.vinccool96.observations.sun.binding.ExpressionHelper$Generic";
 
     private static final String LIST_EXPRESSION_HELPER_SINGLE_INVALIDATION =
-            "com.sun.io.github.vinccool96.observations.binding.ListExpressionHelper$SingleInvalidation";
+            "io.github.vinccool96.observations.sun.binding.ListExpressionHelper$SingleInvalidation";
 
     private static final String LIST_EXPRESSION_HELPER_SINGLE_CHANGE =
-            "com.sun.io.github.vinccool96.observations.binding.ListExpressionHelper$SingleChange";
+            "io.github.vinccool96.observations.sun.binding.ListExpressionHelper$SingleChange";
 
     private static final String LIST_EXPRESSION_HELPER_SINGLE_LIST_CHANGE =
-            "com.sun.io.github.vinccool96.observations.binding.ListExpressionHelper$SingleListChange";
+            "io.github.vinccool96.observations.sun.binding.ListExpressionHelper$SingleListChange";
 
     private static final String LIST_EXPRESSION_HELPER_GENERIC =
-            "com.sun.io.github.vinccool96.observations.binding.ListExpressionHelper$Generic";
+            "io.github.vinccool96.observations.sun.binding.ListExpressionHelper$Generic";
 
     private static final String MAP_EXPRESSION_HELPER_SINGLE_INVALIDATION =
-            "com.sun.io.github.vinccool96.observations.binding.MapExpressionHelper$SingleInvalidation";
+            "io.github.vinccool96.observations.sun.binding.MapExpressionHelper$SingleInvalidation";
 
     private static final String MAP_EXPRESSION_HELPER_SINGLE_CHANGE =
-            "com.sun.io.github.vinccool96.observations.binding.MapExpressionHelper$SingleChange";
+            "io.github.vinccool96.observations.sun.binding.MapExpressionHelper$SingleChange";
 
     private static final String MAP_EXPRESSION_HELPER_SINGLE_MAP_CHANGE =
-            "com.sun.io.github.vinccool96.observations.binding.MapExpressionHelper$SingleMapChange";
+            "io.github.vinccool96.observations.sun.binding.MapExpressionHelper$SingleMapChange";
 
     private static final String MAP_EXPRESSION_HELPER_GENERIC =
-            "com.sun.io.github.vinccool96.observations.binding.MapExpressionHelper$Generic";
+            "io.github.vinccool96.observations.sun.binding.MapExpressionHelper$Generic";
 
     private static final String SET_EXPRESSION_HELPER_SINGLE_INVALIDATION =
-            "com.sun.io.github.vinccool96.observations.binding.SetExpressionHelper$SingleInvalidation";
+            "io.github.vinccool96.observations.sun.binding.SetExpressionHelper$SingleInvalidation";
 
     private static final String SET_EXPRESSION_HELPER_SINGLE_CHANGE =
-            "com.sun.io.github.vinccool96.observations.binding.SetExpressionHelper$SingleChange";
+            "io.github.vinccool96.observations.sun.binding.SetExpressionHelper$SingleChange";
 
     private static final String SET_EXPRESSION_HELPER_SINGLE_SET_CHANGE =
-            "com.sun.io.github.vinccool96.observations.binding.SetExpressionHelper$SingleSetChange";
+            "io.github.vinccool96.observations.sun.binding.SetExpressionHelper$SingleSetChange";
 
     private static final String SET_EXPRESSION_HELPER_GENERIC =
-            "com.sun.io.github.vinccool96.observations.binding.SetExpressionHelper$Generic";
+            "io.github.vinccool96.observations.sun.binding.SetExpressionHelper$Generic";
 
     private ExpressionHelperUtility() {
     }
