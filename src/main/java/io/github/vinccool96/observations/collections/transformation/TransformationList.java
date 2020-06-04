@@ -1,4 +1,4 @@
-package io.github.vinccool96.observations.collections.transformations;
+package io.github.vinccool96.observations.collections.transformation;
 
 import io.github.vinccool96.observations.collections.ListChangeListener;
 import io.github.vinccool96.observations.collections.ListChangeListener.Change;
