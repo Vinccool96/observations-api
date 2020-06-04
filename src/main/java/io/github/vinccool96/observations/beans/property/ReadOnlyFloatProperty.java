@@ -50,6 +50,8 @@ public abstract class ReadOnlyFloatProperty extends FloatExpression implements R
      *
      * @param property
      *         The source {@code ReadOnlyProperty}
+     * @param <T>
+     *         The type of the wrapped number
      *
      * @return A {@code ReadOnlyFloatProperty} that wraps the {@code ReadOnlyProperty} if necessary
      *

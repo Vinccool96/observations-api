@@ -27,7 +27,8 @@ import java.lang.reflect.Method;
  */
 public final class JavaBeanStringPropertyBuilder {
 
-    private JavaBeanPropertyBuilderHelper helper = new JavaBeanPropertyBuilderHelper();
+    @SuppressWarnings("FieldMayBeFinal") private JavaBeanPropertyBuilderHelper helper =
+            new JavaBeanPropertyBuilderHelper();
 
     /**
      * Create a new instance of {@code JavaBeanStringPropertyBuilder}

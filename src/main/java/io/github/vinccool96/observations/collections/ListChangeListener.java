@@ -49,7 +49,7 @@ public interface ListChangeListener<E> {
      * pattern for doing this looks something like the following:<br>
      *
      * <blockquote><pre>
-     * ObservableList<Item> theList = ...;
+     * ObservableList&lt;Item&gt; theList = ...;
      *
      * theList.addListener(new ListChangeListener&lt;Item&gt;() {
      *     public void onChanged(Change&lt;tem&gt; c) {
@@ -205,7 +205,7 @@ public interface ListChangeListener<E> {
          * Usually, it's not necessary to use this method directly. Handling remove operation and then add operation, as
          * in the example {@link Change above}, will effectively handle also set operation.
          *
-         * @return same <code> as wasAdded() && wasRemoved() </code>
+         * @return same as {@code wasAdded() && wasRemoved()}
          *
          * @throws IllegalStateException
          *         if this Change is in initial state

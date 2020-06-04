@@ -13,7 +13,7 @@ import java.util.List;
  * it's structure.
  * <p>
  * If the source list is observable, a listener is automatically added to it and the events are delegated to {@link
- * #sourceChanged(Change)}
+ * #sourceChanged(io.github.vinccool96.observations.collections.ListChangeListener.Change)}
  *
  * @param <E>
  *         the type parameter of this list
@@ -42,7 +42,6 @@ public abstract class TransformationList<E, F> extends ObservableListBase<E> imp
      * @param source
      *         the wrapped list
      */
-    @SuppressWarnings("unchecked")
     protected TransformationList(ObservableList<? extends F> source) {
         if (source == null) {
             throw new NullPointerException();

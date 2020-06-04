@@ -490,6 +490,9 @@ public class ObservableCollections {
     /**
      * Creates and empty unmodifiable observable list.
      *
+     * @param <E>
+     *         the list element type
+     *
      * @return An empty unmodifiable observable list
      *
      * @see Collections#emptyList()
@@ -765,7 +768,7 @@ public class ObservableCollections {
      */
     @SuppressWarnings("unchecked")
     public static void shuffle(ObservableList list, Random rnd) {
-        Object newContent[] = list.toArray();
+        Object[] newContent = list.toArray();
 
         for (int i = list.size(); i > 1; i--) {
             swap(newContent, i - 1, rnd.nextInt(i));
@@ -782,6 +785,11 @@ public class ObservableCollections {
 
     /**
      * Sorts the provided observable list. Fires only <b>one</b> change notification on the list.
+     *
+     * @param <T>
+     *         the list element type
+     * @param list
+     *         the list to be sorted
      *
      * @see Collections#sort(List)
      */

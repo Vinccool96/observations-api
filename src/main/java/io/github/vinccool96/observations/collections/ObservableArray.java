@@ -61,6 +61,7 @@ public interface ObservableArray<T extends ObservableArray<T>> extends Observabl
      * already exceeds the {@code capacity}.
      *
      * @param capacity
+     *         the new capacity of the array
      */
     void ensureCapacity(int capacity);
 

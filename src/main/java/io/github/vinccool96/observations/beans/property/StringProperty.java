@@ -71,6 +71,8 @@ public abstract class StringProperty extends ReadOnlyStringProperty implements P
      * @param converter
      *         the {@code StringConverter} used to convert between this {@code StringProperty} and the other {@code
      *         Property}
+     * @param <T>
+     *         the type of the wrapped value
      *
      * @throws NullPointerException
      *         if {@code other} or {@code converter} is {@code null}

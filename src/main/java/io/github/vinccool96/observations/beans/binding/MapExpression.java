@@ -76,6 +76,10 @@ public abstract class MapExpression<K, V> implements ObservableMapValue<K, V> {
      *
      * @param value
      *         The source {@code ObservableMapValue}
+     * @param <K>
+     *         the type of the key elements
+     * @param <V>
+     *         the type of the value elements
      *
      * @return A {@code MapExpression} that wraps the {@code ObservableMapValue} if necessary
      *
@@ -112,6 +116,8 @@ public abstract class MapExpression<K, V> implements ObservableMapValue<K, V> {
 
     /**
      * The size of the map
+     *
+     * @return the size
      */
     public int getSize() {
         return size();
@@ -126,6 +132,8 @@ public abstract class MapExpression<K, V> implements ObservableMapValue<K, V> {
 
     /**
      * A boolean property that is {@code true}, if the map is empty.
+     *
+     * @return the property
      */
     public abstract ReadOnlyBooleanProperty emptyProperty();
 

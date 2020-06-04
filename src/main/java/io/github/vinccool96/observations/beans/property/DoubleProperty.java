@@ -90,7 +90,7 @@ public abstract class DoubleProperty extends ReadOnlyDoubleProperty implements P
      * property will result in a change of the original property.
      *
      * <p>
-     * This is very useful when bidirectionally binding an ObjectProperty<Double> and a DoubleProperty.
+     * This is very useful when bidirectionally binding an ObjectProperty&lt;Double&gt; and a DoubleProperty.
      *
      * <blockquote><pre>
      *   DoubleProperty doubleProperty = new SimpleDoubleProperty(1.0);

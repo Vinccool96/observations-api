@@ -61,7 +61,7 @@ import io.github.vinccool96.observations.sun.collections.annotations.ReturnsUnmo
  *     }
  *
  *     &#x40;Override
- *     public ObservableList<?> getDependencies() {
+ *     public ObservableList&lt;?&gt; getDependencies() {
  *         return ObservableCollections.singletonObservableList(moo);
  *     }
  *

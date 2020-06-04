@@ -96,8 +96,6 @@ public final class SortedList<E> extends TransformationList<E, E> {
         }
     }
 
-    ;
-
     /**
      * The comparator that denotes the order of this SortedList. Null for unordered SortedList.
      */
@@ -277,7 +275,6 @@ public final class SortedList<E> extends TransformationList<E, E> {
         }
 
         @Override
-        @SuppressWarnings("unchecked")
         public int compare(Element<E> o1, Element<E> o2) {
             return comparator.compare(o1.e, o2.e);
         }

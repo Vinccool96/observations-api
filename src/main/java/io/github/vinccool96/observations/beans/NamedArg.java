@@ -20,13 +20,13 @@ public @interface NamedArg {
      *
      * @return the name of the annotated argument
      */
-    public String value();
+    String value();
 
     /**
      * The default value of the annotated argument.
      *
      * @return the default value of the annotated argument
      */
-    public String defaultValue() default "";
+    String defaultValue() default "";
 
 }

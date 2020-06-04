@@ -184,10 +184,13 @@ public abstract class ModifiableObservableListBase<E> extends ObservableListBase
      *         the element that will be added
      *
      * @throws ClassCastException
+     *         if the class of the specified element prevents it from being added to this list
      * @throws NullPointerException
+     *         if the specified element is null and this list does not permit null elements
      * @throws IllegalArgumentException
+     *         if some property of the specified element prevents it from being added to this list
      * @throws IndexOutOfBoundsException
-     *         if the index is out of range (<tt>index &lt; 0 || index &gt; size()</tt>)
+     *         if the index is out of range ({@code index &lt; 0 || index &gt;= size()})
      */
     protected abstract void doAdd(int index, E element);
 
@@ -205,10 +208,13 @@ public abstract class ModifiableObservableListBase<E> extends ObservableListBase
      * @return the old element at the specified position
      *
      * @throws ClassCastException
+     *         if the class of the specified element prevents it from being added to this list
      * @throws NullPointerException
+     *         if the specified element is null and this list does not permit null elements
      * @throws IllegalArgumentException
+     *         if some property of the specified element prevents it from being added to this list
      * @throws IndexOutOfBoundsException
-     *         if the index is out of range (<tt>index &lt; 0 || index &gt;= size()</tt>)
+     *         if the index is out of range ({@code index &lt; 0 || index &gt;= size()})
      */
     protected abstract E doSet(int index, E element);
 

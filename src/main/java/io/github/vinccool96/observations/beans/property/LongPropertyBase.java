@@ -26,8 +26,6 @@ public abstract class LongPropertyBase extends LongProperty {
 
     private ObservableLongValue observable = null;
 
-    ;
-
     private InvalidationListener listener = null;
 
     private boolean valid = true;

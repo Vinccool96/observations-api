@@ -8,6 +8,7 @@ import java.util.List;
  * threat all lists the same way. E.g. ObservableList can sort and fire only one notification.
  *
  * @param <E>
+ *         the type of elements in this list
  */
 public interface SortableList<E> extends List<E> {
 

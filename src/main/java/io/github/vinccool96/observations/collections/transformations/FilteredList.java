@@ -182,7 +182,6 @@ public final class FilteredList<E> extends TransformationList<E, E> {
         return pos;
     }
 
-    @SuppressWarnings("unchecked")
     private void ensureSize(int size) {
         if (filtered.length < size) {
             int[] replacement = new int[size * 3 / 2 + 1];
@@ -292,7 +291,6 @@ public final class FilteredList<E> extends TransformationList<E, E> {
         }
     }
 
-    @SuppressWarnings("unchecked")
     private void refilter() {
         ensureSize(getSource().size());
         List<E> removed = null;

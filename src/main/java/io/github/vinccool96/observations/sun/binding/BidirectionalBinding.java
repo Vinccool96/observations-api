@@ -724,7 +724,7 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
         }
 
         @Override
-        public void changed(ObservableValue<? extends Object> sourceProperty, Object oldValue, Object newValue) {
+        public void changed(ObservableValue<?> sourceProperty, Object oldValue, Object newValue) {
             throw new RuntimeException("Should not reach here");
         }
 
@@ -759,7 +759,7 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
         }
 
         @Override
-        public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+        public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
             if (!updating) {
                 final Property<String> property1 = stringPropertyRef.get();
                 final Property<T> property2 = otherPropertyRef.get();
