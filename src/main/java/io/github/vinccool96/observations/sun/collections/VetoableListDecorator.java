@@ -42,6 +42,8 @@ public abstract class VetoableListDecorator<E> implements ObservableList<E> {
      *
      * @param toBeAdded
      *         the list to be added
+     * @param indexes
+     *         the indexes
      *
      * @throws IllegalArgumentException
      *         when the change is vetoed
