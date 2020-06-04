@@ -26,8 +26,6 @@ public abstract class ObjectPropertyBase<T> extends ObjectProperty<T> {
 
     private ObservableValue<? extends T> observable = null;
 
-    ;
-
     private InvalidationListener listener = null;
 
     private boolean valid = true;

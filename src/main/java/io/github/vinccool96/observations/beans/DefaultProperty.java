@@ -15,7 +15,9 @@ public @interface DefaultProperty {
 
     /**
      * The name of the default property.
+     *
+     * @return the name
      */
-    public String value();
+    String value();
 
 }

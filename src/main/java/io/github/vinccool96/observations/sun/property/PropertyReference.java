@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 /**
- * A handle to a specific property defined on some {@link Bean}.
+ * A handle to a specific property defined on some {@code Bean}.
  */
 public final class PropertyReference<T> {
 
@@ -32,7 +32,7 @@ public final class PropertyReference<T> {
      * Creates a new {@code PropertyReference} for a property of a bean.
      *
      * @param clazz
-     *         The class of the {@link Bean} that contains the property
+     *         The class of the {@code Bean} that contains the property
      * @param name
      *         The name of the property
      *
@@ -79,7 +79,7 @@ public final class PropertyReference<T> {
     /**
      * Can be used to determine if a property provides an implementation of {@link io.github.vinccool96.observations.beans.value.ObservableValue}.
      *
-     * @return
+     * @return {@code true}, if it provides it, {@code false} otherwise
      */
     public boolean hasProperty() {
         reflect();
@@ -96,9 +96,9 @@ public final class PropertyReference<T> {
     }
 
     /**
-     * Returns the class of the {@link Bean} that contains the property.
+     * Returns the class of the {@code Bean} that contains the property.
      *
-     * @return the class of the {@link Bean}
+     * @return the class of the {@code Bean}
      */
     public Class<?> getContainingClass() {
         return clazz;
@@ -118,7 +118,7 @@ public final class PropertyReference<T> {
      * Set the property to a new value.
      *
      * @param bean
-     *         The {@link Bean} instance for which the property should be set
+     *         The {@code Bean} instance for which the property should be set
      * @param value
      *         The new value
      *

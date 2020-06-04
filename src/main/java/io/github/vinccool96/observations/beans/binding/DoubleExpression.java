@@ -104,6 +104,8 @@ public abstract class DoubleExpression extends NumberExpressionBase implements O
      *
      * @param value
      *         The source {@code ObservableValue}
+     * @param <T>
+     *         The type of the wrapped number
      *
      * @return A {@code DoubleExpression} that wraps the {@code ObservableValue} if necessary
      *

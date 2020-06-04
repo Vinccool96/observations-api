@@ -27,14 +27,15 @@ public abstract class NumberExpressionBase implements NumberExpression {
      *
      * @param value
      *         The source {@code ObservableNumberValue}
+     * @param <S>
+     *         The type of the wrapped number
      *
      * @return An {@code NumberExpressionBase} that wraps the {@code ObservableNumberValue} if necessary
      *
      * @throws NullPointerException
      *         if {@code value} is {@code null}
      */
-    public static <S extends Number> NumberExpressionBase numberExpression(
-            final ObservableNumberValue value) {
+    public static <S extends Number> NumberExpressionBase numberExpression(final ObservableNumberValue value) {
         if (value == null) {
             throw new NullPointerException("Value must be specified.");
         }

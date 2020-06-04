@@ -15,6 +15,9 @@ import java.util.Locale;
  * A concrete sub-class of {@code ObjectExpression} has to implement the method {@link ObservableObjectValue#get()},
  * which provides the actual value of this expression.
  *
+ * @param <T>
+ *         The type of the wrapped value
+ *
  * @since JavaFX 2.0
  */
 public abstract class ObjectExpression<T> implements ObservableObjectValue<T> {
@@ -31,14 +34,15 @@ public abstract class ObjectExpression<T> implements ObservableObjectValue<T> {
      *
      * @param value
      *         The source {@code ObservableObjectValue}
+     * @param <T>
+     *         The type of the wrapped value
      *
      * @return A {@code ObjectExpression} that wraps the {@code ObservableObjectValue} if necessary
      *
      * @throws NullPointerException
      *         if {@code value} is {@code null}
      */
-    public static <T> ObjectExpression<T> objectExpression(
-            final ObservableObjectValue<T> value) {
+    public static <T> ObjectExpression<T> objectExpression(final ObservableObjectValue<T> value) {
         if (value == null) {
             throw new NullPointerException("Value must be specified.");
         }
@@ -183,11 +187,14 @@ public abstract class ObjectExpression<T> implements ObservableObjectValue<T> {
      * The result is formatted according to the formatting {@code String} and the passed in {@code Locale}. See {@code
      * java.util.Formatter} for formatting rules. See {@code java.util.Locale} for details on {@code Locale}.
      *
+     * @param locale
+     *         the locale
      * @param format
      *         the formatting {@code String}
      *
      * @return the new {@code StringBinding}
      *
+     * @see Locale
      * @since JavaFX 8.0
      */
     public StringBinding asString(Locale locale, String format) {

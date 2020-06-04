@@ -103,6 +103,8 @@ public abstract class FloatExpression extends NumberExpressionBase implements Ob
      *
      * @param value
      *         The source {@code ObservableValue}
+     * @param <T>
+     *         The type of the wrapped number
      *
      * @return A {@code FloatExpression} that wraps the {@code ObservableValue} if necessary
      *

@@ -103,6 +103,8 @@ public abstract class IntegerExpression extends NumberExpressionBase implements 
      *
      * @param value
      *         The source {@code ObservableValue}
+     * @param <T>
+     *         The type of the wrapped number
      *
      * @return A {@code IntegerExpression} that wraps the {@code ObservableValue} if necessary
      *

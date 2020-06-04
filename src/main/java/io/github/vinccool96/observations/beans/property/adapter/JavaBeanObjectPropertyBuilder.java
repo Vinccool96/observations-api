@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
  * JavaBeanObjectPropertyBuilder}. by switching the Java Bean instance (with {@link #bean(Object)} and calling {@link
  * #build()}.
  *
- * @param T
+ * @param <T>
  *         the type of the wrapped {@code Object}
  *
  * @see JavaBeanObjectProperty

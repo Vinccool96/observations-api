@@ -50,6 +50,8 @@ public abstract class ReadOnlyDoubleProperty extends DoubleExpression implements
      *
      * @param property
      *         The source {@code ReadOnlyProperty}
+     * @param <T>
+     *         The type of the wrapped number
      *
      * @return A {@code ReadOnlyDoubleProperty} that wraps the {@code ReadOnlyProperty} if necessary
      *

@@ -3,13 +3,19 @@ package io.github.vinccool96.observations.collections;
 /**
  * Interface that receives notifications of changes to an ObservableArray.
  *
+ * @param <T>
+ *         The type of the {@code ObservableArray}
+ *
+ * @see ObservableArray
  * @since JavaFX 8.0
  */
 public interface ArrayChangeListener<T extends ObservableArray<T>> {
 
     /**
-     * Called after a change has been made to an ObservableArray.
+     * Called after a change has been made to an {@link ObservableArray}.
      *
+     * @param observableArray
+     *         The {@code ObservableArray}
      * @param sizeChanged
      *         indicates size of array changed
      * @param from
@@ -17,6 +23,6 @@ public interface ArrayChangeListener<T extends ObservableArray<T>> {
      * @param to
      *         An end (exclusive) of an interval related to the change.
      */
-    public void onChanged(T observableArray, boolean sizeChanged, int from, int to);
+    void onChanged(T observableArray, boolean sizeChanged, int from, int to);
 
 }

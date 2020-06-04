@@ -26,8 +26,6 @@ public abstract class FloatPropertyBase extends FloatProperty {
 
     private ObservableFloatValue observable = null;
 
-    ;
-
     private InvalidationListener listener = null;
 
     private boolean valid = true;

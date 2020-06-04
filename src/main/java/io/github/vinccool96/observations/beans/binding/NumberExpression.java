@@ -847,10 +847,14 @@ public interface NumberExpression extends ObservableNumberValue {
      * The result is formatted according to the formatting {@code String} and the passed in {@code Locale}. See {@code
      * java.util.Formatter} for formatting rules. See {@code java.util.Locale} for details on {@code Locale}.
      *
+     * @param locale
+     *         the Locale
      * @param format
      *         the formatting {@code String}
      *
      * @return the new {@code StringBinding}
+     *
+     * @see Locale
      */
     StringBinding asString(Locale locale, String format);
 

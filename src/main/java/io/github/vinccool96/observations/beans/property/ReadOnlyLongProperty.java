@@ -50,6 +50,8 @@ public abstract class ReadOnlyLongProperty extends LongExpression implements
      *
      * @param property
      *         The source {@code ReadOnlyProperty}
+     * @param <T>
+     *         the type of the wrapped number
      *
      * @return A {@code ReadOnlyLongProperty} that wraps the {@code ReadOnlyProperty} if necessary
      *

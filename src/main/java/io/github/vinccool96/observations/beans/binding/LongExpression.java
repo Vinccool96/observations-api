@@ -103,6 +103,8 @@ public abstract class LongExpression extends NumberExpressionBase implements Obs
      *
      * @param value
      *         The source {@code ObservableValue}
+     * @param <T>
+     *         The type of the wrapped number
      *
      * @return A {@code LongExpression} that wraps the {@code ObservableValue} if necessary
      *

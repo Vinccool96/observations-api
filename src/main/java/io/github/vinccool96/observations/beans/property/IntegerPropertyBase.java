@@ -26,8 +26,6 @@ public abstract class IntegerPropertyBase extends IntegerProperty {
 
     private ObservableIntegerValue observable = null;
 
-    ;
-
     private InvalidationListener listener = null;
 
     private boolean valid = true;

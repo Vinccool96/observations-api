@@ -49,6 +49,8 @@ public abstract class ReadOnlyIntegerProperty extends IntegerExpression implemen
      *
      * @param property
      *         The source {@code ReadOnlyProperty}
+     * @param <T>
+     *         The type of the wrapped number
      *
      * @return A {@code ReadOnlyIntegerProperty} that wraps the {@code ReadOnlyProperty} if necessary
      *

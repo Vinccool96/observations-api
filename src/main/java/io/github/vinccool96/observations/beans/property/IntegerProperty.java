@@ -90,7 +90,7 @@ public abstract class IntegerProperty extends ReadOnlyIntegerProperty
      * property will result in a change of the original property.
      *
      * <p>
-     * This is very useful when bidirectionally binding an ObjectProperty<Integer> and a IntegerProperty.
+     * This is very useful when bidirectionally binding an ObjectProperty&lt;Integer&gt; and a IntegerProperty.
      *
      * <blockquote><pre>
      *   IntegerProperty integerProperty = new SimpleIntegerProperty(1);

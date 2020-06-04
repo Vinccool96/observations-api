@@ -1,28 +1,3 @@
-/*
- * Copyright (c) 2010, 2013, Oracle and/or its affiliates. All rights reserved.
- * ORACLE PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- */
-
 package io.github.vinccool96.observations.collections;
 
 import io.github.vinccool96.observations.beans.InvalidationListener;
@@ -251,6 +226,7 @@ public abstract class ObservableListBase<E> extends AbstractList<E> implements O
      * Notifies all listeners of a change
      *
      * @param change
+     *         the change
      */
     protected final void fireChange(ListChangeListener.Change<? extends E> change) {
         ListListenerHelper.fireValueChangedEvent(listenerHelper, change);
@@ -258,6 +234,8 @@ public abstract class ObservableListBase<E> extends AbstractList<E> implements O
 
     /**
      * Returns true if there are some listeners registered for this list.
+     *
+     * @return {@code true}, if it has listeners
      */
     protected final boolean hasListeners() {
         return ListListenerHelper.hasListeners(listenerHelper);

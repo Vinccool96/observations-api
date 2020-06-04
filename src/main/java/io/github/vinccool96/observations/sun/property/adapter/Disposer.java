@@ -20,6 +20,7 @@ public class Disposer implements Runnable {
 
     private static final Map<Object, Runnable> records = new ConcurrentHashMap<>();
 
+    @SuppressWarnings("FieldMayBeFinal")
     private static Disposer disposerInstance;
 
     static {
@@ -37,7 +38,6 @@ public class Disposer implements Runnable {
                         for (ThreadGroup tgn = tg;
                                 tgn != null;
                                 tg = tgn, tgn = tg.getParent()) {
-                            ;
                         }
                         Thread t =
                                 new Thread(tg, disposerInstance, "Property Disposer");

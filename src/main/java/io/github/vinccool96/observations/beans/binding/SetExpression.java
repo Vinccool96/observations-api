@@ -100,6 +100,8 @@ public abstract class SetExpression<E> implements ObservableSetValue<E> {
      *
      * @param value
      *         The source {@code ObservableSetValue}
+     * @param <E>
+     *         the type of the {@code Set} elements
      *
      * @return A {@code SetExpression} that wraps the {@code ObservableSetValue} if necessary
      *
@@ -136,6 +138,8 @@ public abstract class SetExpression<E> implements ObservableSetValue<E> {
 
     /**
      * The size of the set
+     *
+     * @return the size
      */
     public int getSize() {
         return size();
@@ -150,6 +154,8 @@ public abstract class SetExpression<E> implements ObservableSetValue<E> {
 
     /**
      * A boolean property that is {@code true}, if the set is empty.
+     *
+     * @return the property
      */
     public abstract ReadOnlyBooleanProperty emptyProperty();
 

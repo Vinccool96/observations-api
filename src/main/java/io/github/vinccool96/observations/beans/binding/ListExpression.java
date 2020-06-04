@@ -45,6 +45,8 @@ public abstract class ListExpression<E> implements ObservableListValue<E> {
      *
      * @param value
      *         The source {@code ObservableListValue}
+     * @param <E>
+     *         the type of the {@code List} elements.
      *
      * @return A {@code ListExpression} that wraps the {@code ObservableListValue} if necessary
      *
@@ -81,6 +83,8 @@ public abstract class ListExpression<E> implements ObservableListValue<E> {
 
     /**
      * The size of the list
+     *
+     * @return the size
      */
     public int getSize() {
         return size();
@@ -95,6 +99,8 @@ public abstract class ListExpression<E> implements ObservableListValue<E> {
 
     /**
      * A boolean property that is {@code true}, if the list is empty.
+     *
+     * @return the property
      */
     public abstract ReadOnlyBooleanProperty emptyProperty();
 

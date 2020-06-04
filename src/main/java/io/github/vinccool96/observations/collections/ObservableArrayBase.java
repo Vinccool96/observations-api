@@ -15,31 +15,39 @@ import io.github.vinccool96.observations.sun.collections.ArrayListenerHelper;
  * @see ArrayChangeListener
  * @since JavaFX 8.0
  */
-public abstract class ObservableArrayBase<T extends ObservableArray<T>> implements
-        ObservableArray<T> {
+public abstract class ObservableArrayBase<T extends ObservableArray<T>> implements ObservableArray<T> {
 
     private ArrayListenerHelper<T> listenerHelper;
 
-    @Override public final void addListener(InvalidationListener listener) {
+    @Override
+    public final void addListener(InvalidationListener listener) {
         listenerHelper = ArrayListenerHelper.<T>addListener(listenerHelper, (T) this, listener);
     }
 
-    @Override public final void removeListener(InvalidationListener listener) {
+    @Override
+    public final void removeListener(InvalidationListener listener) {
         listenerHelper = ArrayListenerHelper.removeListener(listenerHelper, listener);
     }
 
-    @Override public final void addListener(ArrayChangeListener<T> listener) {
+    @Override
+    public final void addListener(ArrayChangeListener<T> listener) {
         listenerHelper = ArrayListenerHelper.<T>addListener(listenerHelper, (T) this, listener);
     }
 
-    @Override public final void removeListener(ArrayChangeListener<T> listener) {
+    @Override
+    public final void removeListener(ArrayChangeListener<T> listener) {
         listenerHelper = ArrayListenerHelper.removeListener(listenerHelper, listener);
     }
 
     /**
      * Notifies all listeners of a change
      *
-     * @param change
+     * @param sizeChanged
+     *         if the size changed
+     * @param from
+     *         index of the change start
+     * @param to
+     *         index of the change to
      */
     protected final void fireChange(boolean sizeChanged, int from, int to) {
         ArrayListenerHelper.fireValueChangedEvent(listenerHelper, sizeChanged, from, to);

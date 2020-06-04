@@ -89,7 +89,7 @@ public abstract class FloatProperty extends ReadOnlyFloatProperty implements Pro
      * property will result in a change of the original property.
      *
      * <p>
-     * This is very useful when bidirectionally binding an ObjectProperty<Float> and a FloatProperty.
+     * This is very useful when bidirectionally binding an ObjectProperty&lt;Float&gt; and a FloatProperty.
      *
      * <blockquote><pre>
      *   FloatProperty floatProperty = new SimpleFloatProperty(1.0f);

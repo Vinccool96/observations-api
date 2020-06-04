@@ -822,6 +822,9 @@ public class When {
     /**
      * An intermediate class needed while assembling the ternary expression. It should not be used in another context.
      *
+     * @param <T>
+     *         the type of the wrapped {@code Object}
+     *
      * @since JavaFX 2.0
      */
     public class ObjectConditionBuilder<T> {
@@ -880,6 +883,8 @@ public class When {
      * Defines the {@link ObservableObjectValue} which value is returned by the ternary expression if the condition is
      * {@code true}.
      *
+     * @param <T>
+     *         the type of the wrapped {@code Object}
      * @param thenValue
      *         the value
      *
@@ -895,6 +900,8 @@ public class When {
     /**
      * Defines a constant value of the ternary expression, that is returned if the condition is {@code true}.
      *
+     * @param <T>
+     *         the type of the wrapped {@code Object}
      * @param thenValue
      *         the value
      *
