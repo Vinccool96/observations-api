@@ -1,8 +1,8 @@
 package io.github.vinccool96.observations.collections;
 
 import io.github.vinccool96.observations.beans.Observable;
-import io.github.vinccool96.observations.collections.transformations.FilteredList;
-import io.github.vinccool96.observations.collections.transformations.SortedList;
+import io.github.vinccool96.observations.collections.transformation.FilteredList;
+import io.github.vinccool96.observations.collections.transformation.SortedList;
 
 import java.text.Collator;
 import java.util.Collection;
