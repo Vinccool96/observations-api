@@ -38,6 +38,12 @@ public class ImmutableObservableList<E> extends AbstractList<E> implements Obser
     }
 
     @Override
+    public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
+        // no op
+        return false;
+    }
+
+    @Override
     public boolean addAll(E... elements) {
         throw new UnsupportedOperationException();
     }

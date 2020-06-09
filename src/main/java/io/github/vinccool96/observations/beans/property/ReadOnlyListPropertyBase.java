@@ -5,6 +5,7 @@ import io.github.vinccool96.observations.beans.value.ChangeListener;
 import io.github.vinccool96.observations.collections.ListChangeListener;
 import io.github.vinccool96.observations.collections.ObservableList;
 import io.github.vinccool96.observations.sun.binding.ListExpressionHelper;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 /**
  * Base class for all readonly properties wrapping a {@link ObservableList}. This class provides a default
@@ -39,12 +40,19 @@ public abstract class ReadOnlyListPropertyBase<E> extends ReadOnlyListProperty<E
 
     @Override
     public void addListener(ListChangeListener<? super E> listener) {
-        helper = ListExpressionHelper.addListener(helper, this, listener);
+        if (helper == null || !isChangeListenerAlreadyAdded(listener)) {
+            helper = ListExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     @Override
     public void removeListener(ListChangeListener<? super E> listener) {
         helper = ListExpressionHelper.removeListener(helper, listener);
+    }
+
+    @Override
+    public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
+        return ArrayUtils.getInstance().contains(this.helper.getListChangeListeners(), listener);
     }
 
     /**

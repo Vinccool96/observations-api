@@ -3,6 +3,7 @@ package io.github.vinccool96.observations.sun.collections;
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.collections.ListChangeListener;
 import io.github.vinccool96.observations.collections.ObservableList;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 import java.util.*;
 
@@ -66,6 +67,11 @@ public abstract class VetoableListDecorator<E> implements ObservableList<E> {
     @Override
     public void removeListener(ListChangeListener<? super E> listener) {
         helper = ListListenerHelper.removeListener(helper, listener);
+    }
+
+    @Override
+    public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
+        return ArrayUtils.getInstance().contains(this.helper.getChangeListeners(), listener);
     }
 
     @Override

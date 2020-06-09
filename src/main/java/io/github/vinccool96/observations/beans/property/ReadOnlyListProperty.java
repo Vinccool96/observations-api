@@ -19,8 +19,7 @@ import java.util.ListIterator;
  * @see ReadOnlyProperty
  * @since JavaFX 2.1
  */
-public abstract class ReadOnlyListProperty<E> extends ListExpression<E>
-        implements ReadOnlyProperty<ObservableList<E>> {
+public abstract class ReadOnlyListProperty<E> extends ListExpression<E> implements ReadOnlyProperty<ObservableList<E>> {
 
     /**
      * The constructor of {@code ReadOnlyListProperty}.

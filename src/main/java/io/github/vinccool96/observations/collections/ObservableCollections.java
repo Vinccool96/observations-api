@@ -5,6 +5,7 @@ import io.github.vinccool96.observations.beans.Observable;
 import io.github.vinccool96.observations.sun.binding.ListListenerHelper;
 import io.github.vinccool96.observations.sun.collections.*;
 import io.github.vinccool96.observations.sun.collections.annotations.ReturnsUnmodifiableCollection;
+import io.github.vinccool96.observations.util.ArrayUtils;
 import io.github.vinccool96.observations.util.Callback;
 
 import java.lang.reflect.Array;
@@ -828,8 +829,7 @@ public class ObservableCollections {
         }
     }
 
-    private static class EmptyObservableList<E> extends AbstractList<E> implements
-            ObservableList<E> {
+    private static class EmptyObservableList<E> extends AbstractList<E> implements ObservableList<E> {
 
         private static final ListIterator iterator = new ListIterator() {
 
@@ -896,6 +896,11 @@ public class ObservableCollections {
 
         @Override
         public void removeListener(ListChangeListener<? super E> o) {
+        }
+
+        @Override
+        public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
+            return false;
         }
 
         @Override
@@ -989,8 +994,7 @@ public class ObservableCollections {
 
     }
 
-    private static class SingletonObservableList<E> extends AbstractList<E> implements
-            ObservableList<E> {
+    private static class SingletonObservableList<E> extends AbstractList<E> implements ObservableList<E> {
 
         private final E element;
 
@@ -1048,6 +1052,11 @@ public class ObservableCollections {
         }
 
         @Override
+        public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
+            return false;
+        }
+
+        @Override
         public int size() {
             return 1;
         }
@@ -1072,8 +1081,7 @@ public class ObservableCollections {
 
     }
 
-    private static class UnmodifiableObservableListImpl<T> extends ObservableListBase<T>
-            implements ObservableList<T> {
+    private static class UnmodifiableObservableListImpl<T> extends ObservableListBase<T> implements ObservableList<T> {
 
         private final ObservableList<T> backingList;
 
@@ -1404,7 +1412,9 @@ public class ObservableCollections {
         @Override
         public void addListener(ListChangeListener<? super T> listener) {
             synchronized (mutex) {
-                helper = ListListenerHelper.addListener(helper, listener);
+                if (helper == null || !isChangeListenerAlreadyAdded(listener)) {
+                    helper = ListListenerHelper.addListener(helper, listener);
+                }
             }
         }
 
@@ -1413,6 +1423,11 @@ public class ObservableCollections {
             synchronized (mutex) {
                 helper = ListListenerHelper.removeListener(helper, listener);
             }
+        }
+
+        @Override
+        public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super T> listener) {
+            return ArrayUtils.getInstance().contains(this.helper.getChangeListeners(), listener);
         }
 
     }

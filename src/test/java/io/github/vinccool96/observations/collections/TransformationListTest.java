@@ -3,7 +3,6 @@ package io.github.vinccool96.observations.collections;
 import io.github.vinccool96.observations.collections.ListChangeListener.Change;
 import io.github.vinccool96.observations.collections.transformation.TransformationList;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -13,7 +12,6 @@ import static org.junit.Assert.assertEquals;
 /**
  *
  */
-@Ignore
 public class TransformationListTest {
 
     private static class TransformationListImpl extends TransformationList<String, String> {

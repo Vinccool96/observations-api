@@ -44,6 +44,16 @@ public interface ObservableArray<T extends ObservableArray<T>> extends Observabl
     void removeListener(ArrayChangeListener<T> listener);
 
     /**
+     * Verify if a {@code ArrayChangeListener} already exist for this {@code ObservableArray}.
+     *
+     * @param listener
+     *         the {@code ArrayChangeListener} to verify
+     *
+     * @return {@code true}, if the listener already listens, {@code false} otherwise.
+     */
+    boolean isChangeListenerAlreadyAdded(ArrayChangeListener<T> listener);
+
+    /**
      * Sets new length of data in this array. This method grows capacity if necessary but never shrinks it. Resulting
      * array will contain existing data for indexes that are less than the current size and zeroes for indexes that are
      * greater than the current size.

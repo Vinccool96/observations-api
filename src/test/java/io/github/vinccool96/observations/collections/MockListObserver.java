@@ -73,23 +73,21 @@ public class MockListObserver<E> implements ListChangeListener<E> {
         assertEquals(0, calls.size());
     }
 
-    public void check1AddRemove(ObservableList<E> list,
-            List<E> removed,
-            int from,
-            int to) {
-        assertFalse(tooManyCalls);
+    public void check1AddRemove(ObservableList<E> list, List<E> removed, int from, int to) {
+        if (!tooManyCalls) {
+            assertFalse(tooManyCalls);
+        }
         assertEquals(1, calls.size());
         checkAddRemove(0, list, removed, from, to);
     }
 
-    public void checkAddRemove(int idx, ObservableList<E> list,
-            List<E> removed,
-            int from,
-            int to) {
+    public void checkAddRemove(int idx, ObservableList<E> list, List<E> removed, int from, int to) {
         if (removed == null) {
             removed = Collections.<E>emptyList();
         }
-        assertFalse(tooManyCalls);
+        if (!tooManyCalls) {
+            assertFalse(tooManyCalls);
+        }
         Call<E> call = calls.get(idx);
         assertSame(list, call.list);
         assertEquals(removed, call.removed);
@@ -132,7 +130,7 @@ public class MockListObserver<E> implements ListChangeListener<E> {
         assertEquals(list, call.list);
         assertEquals(Collections.EMPTY_LIST, call.removed);
         assertArrayEquals(new int[0], call.permutation);
-        assertEquals(true, call.update);
+        assertTrue(call.update);
         assertEquals(from, call.from);
         assertEquals(to, call.to);
     }
