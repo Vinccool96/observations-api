@@ -83,8 +83,7 @@ public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected ListListenerHelper<E> addListener(InvalidationListener listener) {
-            return new io.github.vinccool96.observations.sun.collections.ListListenerHelper.Generic<E>(this.listener,
-                    listener);
+            return new ListListenerHelper.Generic<E>(this.listener, listener);
         }
 
         @Override
@@ -94,8 +93,7 @@ public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected ListListenerHelper<E> addListener(ListChangeListener<? super E> listener) {
-            return new io.github.vinccool96.observations.sun.collections.ListListenerHelper.Generic<E>(this.listener,
-                    listener);
+            return new ListListenerHelper.Generic<E>(this.listener, listener);
         }
 
         @Override
@@ -124,8 +122,7 @@ public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected ListListenerHelper<E> addListener(InvalidationListener listener) {
-            return new io.github.vinccool96.observations.sun.collections.ListListenerHelper.Generic<E>(listener,
-                    this.listener);
+            return new ListListenerHelper.Generic<E>(listener, this.listener);
         }
 
         @Override
@@ -135,8 +132,7 @@ public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected ListListenerHelper<E> addListener(ListChangeListener<? super E> listener) {
-            return new io.github.vinccool96.observations.sun.collections.ListListenerHelper.Generic<E>(this.listener,
-                    listener);
+            return new ListListenerHelper.Generic<E>(this.listener, listener);
         }
 
         @Override
@@ -185,8 +181,7 @@ public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
         }
 
         @Override
-        protected io.github.vinccool96.observations.sun.collections.ListListenerHelper.Generic<E> addListener(
-                InvalidationListener listener) {
+        protected ListListenerHelper.Generic<E> addListener(InvalidationListener listener) {
             if (invalidationListeners == null) {
                 invalidationListeners = new InvalidationListener[]{listener};
                 invalidationSize = 1;
@@ -214,14 +209,12 @@ public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
                     if (listener.equals(invalidationListeners[index])) {
                         if (invalidationSize == 1) {
                             if (changeSize == 1) {
-                                return new io.github.vinccool96.observations.sun.collections.ListListenerHelper.SingleChange<E>(
-                                        changeListeners[0]);
+                                return new ListListenerHelper.SingleChange<E>(changeListeners[0]);
                             }
                             invalidationListeners = null;
                             invalidationSize = 0;
                         } else if ((invalidationSize == 2) && (changeSize == 0)) {
-                            return new io.github.vinccool96.observations.sun.collections.ListListenerHelper.SingleInvalidation<E>(
-                                    invalidationListeners[1 - index]);
+                            return new ListListenerHelper.SingleInvalidation<E>(invalidationListeners[1 - index]);
                         } else {
                             final int numMoved = invalidationSize - index - 1;
                             final InvalidationListener[] oldListeners = invalidationListeners;
@@ -273,14 +266,12 @@ public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
                     if (listener.equals(changeListeners[index])) {
                         if (changeSize == 1) {
                             if (invalidationSize == 1) {
-                                return new io.github.vinccool96.observations.sun.collections.ListListenerHelper.SingleInvalidation<E>(
-                                        invalidationListeners[0]);
+                                return new ListListenerHelper.SingleInvalidation<E>(invalidationListeners[0]);
                             }
                             changeListeners = null;
                             changeSize = 0;
                         } else if ((changeSize == 2) && (invalidationSize == 0)) {
-                            return new io.github.vinccool96.observations.sun.collections.ListListenerHelper.SingleChange<E>(
-                                    changeListeners[1 - index]);
+                            return new ListListenerHelper.SingleChange<E>(changeListeners[1 - index]);
                         } else {
                             final int numMoved = changeSize - index - 1;
                             final ListChangeListener<? super E>[] oldListeners = changeListeners;

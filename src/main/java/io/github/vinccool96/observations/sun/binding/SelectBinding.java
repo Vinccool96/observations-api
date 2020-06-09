@@ -62,8 +62,7 @@ public class SelectBinding {
             try {
                 return (T) observable.getValue();
             } catch (ClassCastException ex) {
-                io.github.vinccool96.observations.sun.binding.Logging
-                        .getLogger().warning("Value of select-binding has wrong type, returning null.", ex);
+                Logging.getLogger().warning("Value of select-binding has wrong type, returning null.", ex);
             }
             return null;
         }
@@ -112,11 +111,9 @@ public class SelectBinding {
             try {
                 return (Boolean) observable.getValue();
             } catch (NullPointerException ex) {
-                io.github.vinccool96.observations.sun.binding.Logging
-                        .getLogger().fine("Value of select binding is null, returning default value", ex);
+                Logging.getLogger().fine("Value of select binding is null, returning default value", ex);
             } catch (ClassCastException ex) {
-                io.github.vinccool96.observations.sun.binding.Logging
-                        .getLogger().warning("Value of select-binding has wrong type, returning default value.", ex);
+                Logging.getLogger().warning("Value of select-binding has wrong type, returning default value.", ex);
             }
             return DEFAULT_VALUE;
         }
@@ -165,11 +162,9 @@ public class SelectBinding {
             try {
                 return ((Number) observable.getValue()).doubleValue();
             } catch (NullPointerException ex) {
-                io.github.vinccool96.observations.sun.binding.Logging
-                        .getLogger().fine("Value of select binding is null, returning default value", ex);
+                Logging.getLogger().fine("Value of select binding is null, returning default value", ex);
             } catch (ClassCastException ex) {
-                io.github.vinccool96.observations.sun.binding.Logging.getLogger()
-                        .warning("Exception while evaluating select-binding", ex);
+                Logging.getLogger().warning("Exception while evaluating select-binding", ex);
             }
             return DEFAULT_VALUE;
         }
@@ -218,11 +213,9 @@ public class SelectBinding {
             try {
                 return ((Number) observable.getValue()).floatValue();
             } catch (NullPointerException ex) {
-                io.github.vinccool96.observations.sun.binding.Logging
-                        .getLogger().fine("Value of select binding is null, returning default value", ex);
+                Logging.getLogger().fine("Value of select binding is null, returning default value", ex);
             } catch (ClassCastException ex) {
-                io.github.vinccool96.observations.sun.binding.Logging.getLogger()
-                        .warning("Exception while evaluating select-binding", ex);
+                Logging.getLogger().warning("Exception while evaluating select-binding", ex);
             }
             return DEFAULT_VALUE;
         }
@@ -271,11 +264,9 @@ public class SelectBinding {
             try {
                 return ((Number) observable.getValue()).intValue();
             } catch (NullPointerException ex) {
-                io.github.vinccool96.observations.sun.binding.Logging
-                        .getLogger().fine("Value of select binding is null, returning default value", ex);
+                Logging.getLogger().fine("Value of select binding is null, returning default value", ex);
             } catch (ClassCastException ex) {
-                io.github.vinccool96.observations.sun.binding.Logging.getLogger()
-                        .warning("Exception while evaluating select-binding", ex);
+                Logging.getLogger().warning("Exception while evaluating select-binding", ex);
             }
             return DEFAULT_VALUE;
         }
@@ -324,11 +315,9 @@ public class SelectBinding {
             try {
                 return ((Number) observable.getValue()).longValue();
             } catch (NullPointerException ex) {
-                io.github.vinccool96.observations.sun.binding.Logging
-                        .getLogger().fine("Value of select binding is null, returning default value", ex);
+                Logging.getLogger().fine("Value of select binding is null, returning default value", ex);
             } catch (ClassCastException ex) {
-                io.github.vinccool96.observations.sun.binding.Logging.getLogger()
-                        .warning("Exception while evaluating select-binding", ex);
+                Logging.getLogger().warning("Exception while evaluating select-binding", ex);
             }
             return DEFAULT_VALUE;
         }
@@ -374,8 +363,7 @@ public class SelectBinding {
             try {
                 return observable.getValue().toString();
             } catch (RuntimeException ex) {
-                io.github.vinccool96.observations.sun.binding.Logging.getLogger()
-                        .warning("Exception while evaluating select-binding", ex);
+                Logging.getLogger().warning("Exception while evaluating select-binding", ex);
                 // return default
                 return DEFAULT_VALUE;
             }
@@ -469,23 +457,21 @@ public class SelectBinding {
                                 JavaBeanAccessHelper.createReadOnlyJavaBeanProperty(obj, propRefs[i].getName());
                     }
                 } catch (NoSuchMethodException ex) {
-                    io.github.vinccool96.observations.sun.binding.Logging
-                            .getLogger().warning("Exception while evaluating select-binding " + stepsToString(), ex);
+                    Logging.getLogger().warning("Exception while evaluating select-binding " + stepsToString(), ex);
                     // return default
                     updateDependencies();
                     return null;
                 } catch (RuntimeException ex) {
-                    final PlatformLogger logger = io.github.vinccool96.observations.sun.binding.Logging.getLogger();
+                    final PlatformLogger logger = Logging.getLogger();
                     if (logger.isLoggable(Level.WARNING)) {
-                        io.github.vinccool96.observations.sun.binding.Logging
-                                .getLogger().warning("Exception while evaluating select-binding " + stepsToString());
+                        Logging.getLogger().warning("Exception while evaluating select-binding " + stepsToString());
                         if (ex instanceof IllegalStateException) {
                             logger.warning("Property '" + propertyNames[i] + "' does not exist in " + obj.getClass(),
                                     ex);
                         } else if (ex instanceof NullPointerException) {
                             logger.fine("Property '" + propertyNames[i] + "' in " + properties[i] + " is null", ex);
                         } else {
-                            io.github.vinccool96.observations.sun.binding.Logging.getLogger().warning("", ex);
+                            Logging.getLogger().warning("", ex);
                         }
                     }
                     // return default
