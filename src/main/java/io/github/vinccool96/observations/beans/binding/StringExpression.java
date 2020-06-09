@@ -48,8 +48,7 @@ public abstract class StringExpression implements ObservableStringValue {
      * @throws NullPointerException
      *         if {@code value} is {@code null}
      */
-    public static io.github.vinccool96.observations.beans.binding.StringExpression stringExpression(
-            final ObservableValue<?> value) {
+    public static StringExpression stringExpression(final ObservableValue<?> value) {
         if (value == null) {
             throw new NullPointerException("Value must be specified.");
         }
@@ -69,7 +68,7 @@ public abstract class StringExpression implements ObservableStringValue {
      *
      * @return the new {@code StringExpression}
      */
-    public io.github.vinccool96.observations.beans.binding.StringExpression concat(Object other) {
+    public StringExpression concat(Object other) {
         return Bindings.concat(this, other);
     }
 

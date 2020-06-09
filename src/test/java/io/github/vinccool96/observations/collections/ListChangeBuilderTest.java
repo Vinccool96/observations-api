@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class ListChangeBuilderTest {
 
-    private io.github.vinccool96.observations.collections.ListChangeBuilder<String> builder;
+    private ListChangeBuilder<String> builder;
 
     private ObservableListWrapper<String> observableList;
 
@@ -28,7 +28,7 @@ public class ListChangeBuilderTest {
         list = new ArrayList<String>(Arrays.asList("a", "b", "c", "d"));
         observableList = new ObservableListWrapper<String>(list);
         observableList.addListener(observer);
-        builder = new io.github.vinccool96.observations.collections.ListChangeBuilder<String>(observableList);
+        builder = new ListChangeBuilder<String>(observableList);
     }
 
     @Test

@@ -16,41 +16,40 @@ public final class ElementObservableListDecorator<E> extends ObservableListBase<
 
     private final ListChangeListener<E> listener;
 
-    private io.github.vinccool96.observations.sun.collections.ElementObserver<E> observer;
+    private ElementObserver<E> observer;
 
     public ElementObservableListDecorator(ObservableList<E> decorated,
             Callback<E, Observable[]> extractor) {
-        this.observer = new io.github.vinccool96.observations.sun.collections.ElementObserver<E>(extractor,
-                new Callback<E, InvalidationListener>() {
+        this.observer = new ElementObserver<E>(extractor, new Callback<E, InvalidationListener>() {
+
+            @Override
+            public InvalidationListener call(final E e) {
+                return new InvalidationListener() {
 
                     @Override
-                    public InvalidationListener call(final E e) {
-                        return new InvalidationListener() {
-
-                            @Override
-                            public void invalidated(Observable observable) {
-                                beginChange();
-                                int i = 0;
-                                if (decoratedList instanceof RandomAccess) {
-                                    final int size = size();
-                                    for (; i < size; ++i) {
-                                        if (get(i) == e) {
-                                            nextUpdate(i);
-                                        }
-                                    }
-                                } else {
-                                    for (Iterator<?> it = iterator(); it.hasNext(); ) {
-                                        if (it.next() == e) {
-                                            nextUpdate(i);
-                                        }
-                                        ++i;
-                                    }
+                    public void invalidated(Observable observable) {
+                        beginChange();
+                        int i = 0;
+                        if (decoratedList instanceof RandomAccess) {
+                            final int size = size();
+                            for (; i < size; ++i) {
+                                if (get(i) == e) {
+                                    nextUpdate(i);
                                 }
-                                endChange();
                             }
-                        };
+                        } else {
+                            for (Iterator<?> it = iterator(); it.hasNext(); ) {
+                                if (it.next() == e) {
+                                    nextUpdate(i);
+                                }
+                                ++i;
+                            }
+                        }
+                        endChange();
                     }
-                }, this);
+                };
+            }
+        }, this);
         this.decoratedList = decorated;
         final int sz = decoratedList.size();
         for (int i = 0; i < sz; ++i) {
