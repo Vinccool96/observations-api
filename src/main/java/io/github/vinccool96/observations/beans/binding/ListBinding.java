@@ -13,6 +13,7 @@ import io.github.vinccool96.observations.collections.ObservableList;
 import io.github.vinccool96.observations.sun.binding.BindingHelperObserver;
 import io.github.vinccool96.observations.sun.binding.ListExpressionHelper;
 import io.github.vinccool96.observations.sun.collections.annotations.ReturnsUnmodifiableCollection;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 /**
  * Base class that provides most of the functionality needed to implement a {@link Binding} of an {@link
@@ -143,12 +144,19 @@ public abstract class ListBinding<E> extends ListExpression<E> implements Bindin
 
     @Override
     public void addListener(ListChangeListener<? super E> listener) {
-        helper = ListExpressionHelper.addListener(helper, this, listener);
+        if (helper == null || !isChangeListenerAlreadyAdded(listener)) {
+            helper = ListExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     @Override
     public void removeListener(ListChangeListener<? super E> listener) {
         helper = ListExpressionHelper.removeListener(helper, listener);
+    }
+
+    @Override
+    public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
+        return ArrayUtils.getInstance().contains(this.helper.getListChangeListeners(), listener);
     }
 
     /**

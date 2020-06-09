@@ -70,10 +70,15 @@ public class MockArrayObserver<T extends ObservableArray<T>> implements ArrayCha
         assertEquals(to, call.to);
     }
 
-    public void check(T array,
-            boolean sizeChanged,
-            int from,
-            int to) {
+    public void check(T array, boolean sizeChanged, int from, int to) {
+        assertFalse("Too many array change events", tooManyCalls);
+        assertSame(array, call.array);
+        assertEquals(sizeChanged, call.sizeChanged);
+        assertEquals(from, call.from);
+        assertEquals(to, call.to);
+    }
+
+    public void checkTwice(T array, boolean sizeChanged, int from, int to) {
         assertFalse("Too many array change events", tooManyCalls);
         assertSame(array, call.array);
         assertEquals(sizeChanged, call.sizeChanged);

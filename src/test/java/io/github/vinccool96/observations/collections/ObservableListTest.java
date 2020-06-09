@@ -1,7 +1,6 @@
 package io.github.vinccool96.observations.collections;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -79,7 +78,6 @@ public class ObservableListTest {
     }
 
     @Test
-    @Ignore
     public void testObserverAddTwice() {
         list.addListener(mlo); // add it a second time
         list.add("plugh");

@@ -765,6 +765,11 @@ public class ObservableCollectionsTest {
         }
 
         @Override
+        public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super String> listener) {
+            return this.listeners.contains(listener);
+        }
+
+        @Override
         public boolean removeAll(String... es) {
             throw new UnsupportedOperationException("Not supported yet.");
         }

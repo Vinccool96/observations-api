@@ -2,6 +2,7 @@ package io.github.vinccool96.observations.collections;
 
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.sun.collections.ArrayListenerHelper;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 /**
  * Abstract class that serves as a base class for {@link ObservableArray} implementations. The base class provides
@@ -31,12 +32,19 @@ public abstract class ObservableArrayBase<T extends ObservableArray<T>> implemen
 
     @Override
     public final void addListener(ArrayChangeListener<T> listener) {
-        listenerHelper = ArrayListenerHelper.<T>addListener(listenerHelper, (T) this, listener);
+        if (listenerHelper == null || !isChangeListenerAlreadyAdded(listener)) {
+            listenerHelper = ArrayListenerHelper.<T>addListener(listenerHelper, (T) this, listener);
+        }
     }
 
     @Override
     public final void removeListener(ArrayChangeListener<T> listener) {
         listenerHelper = ArrayListenerHelper.removeListener(listenerHelper, listener);
+    }
+
+    @Override
+    public boolean isChangeListenerAlreadyAdded(ArrayChangeListener<T> listener) {
+        return ArrayUtils.getInstance().contains(this.listenerHelper.getChangeListeners(), listener);
     }
 
     /**

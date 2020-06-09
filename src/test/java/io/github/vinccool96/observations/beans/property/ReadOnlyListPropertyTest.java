@@ -91,6 +91,11 @@ public class ReadOnlyListPropertyTest {
         }
 
         @Override
+        public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super Object> listener) {
+            return false;
+        }
+
+        @Override
         public ReadOnlyIntegerProperty sizeProperty() {
             fail("Not in use");
             return null;

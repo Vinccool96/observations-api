@@ -40,6 +40,16 @@ public interface ObservableList<E> extends List<E>, Observable {
     void removeListener(ListChangeListener<? super E> listener);
 
     /**
+     * Verify if a {@code ArrayChangeListener} already exist for this {@code ObservableArray}.
+     *
+     * @param listener
+     *         the {@code ArrayChangeListener} to verify
+     *
+     * @return {@code true}, if the listener already listens, {@code false} otherwise.
+     */
+    boolean isChangeListenerAlreadyAdded(ListChangeListener<? super E> listener);
+
+    /**
      * A convenient method for var-arg adding of elements.
      *
      * @param elements

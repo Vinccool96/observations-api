@@ -2,7 +2,6 @@ package io.github.vinccool96.observations.collections;
 
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -469,14 +468,15 @@ public class ObservableArrayTest {
         mao3.checkOnlySizeChanged(array);
     }
 
-    @Test @Ignore
+    @Test
     public void testAddListenerTwice() {
         array.addListener(mao); // add it a second time
         wrapper.set(1, wrapper.getNextValue());
         mao.check(array, false, 1, 2);
     }
 
-    @Test public void testRemoveListenerTwice() {
+    @Test
+    public void testRemoveListenerTwice() {
         array.removeListener(mao);
         array.removeListener(mao);
         wrapper.set(1, wrapper.getNextValue());

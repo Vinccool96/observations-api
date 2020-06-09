@@ -4,6 +4,7 @@ import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.collections.ArrayChangeListener;
 import io.github.vinccool96.observations.collections.ObservableArray;
 import io.github.vinccool96.observations.sun.binding.ExpressionHelperBase;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 import java.util.Arrays;
 
@@ -74,6 +75,10 @@ public abstract class ArrayListenerHelper<T extends ObservableArray<T>> extends 
 
     protected abstract void fireValueChangedEvent(boolean sizeChanged, int from, int to);
 
+    public abstract InvalidationListener[] getInvalidationListeners();
+
+    public abstract ArrayChangeListener[] getChangeListeners();
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Implementations
 
@@ -115,6 +120,16 @@ public abstract class ArrayListenerHelper<T extends ObservableArray<T>> extends 
             }
         }
 
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return new InvalidationListener[]{this.listener};
+        }
+
+        @Override
+        public ArrayChangeListener[] getChangeListeners() {
+            return new ArrayChangeListener[0];
+        }
+
     }
 
     private static class SingleChange<T extends ObservableArray<T>> extends ArrayListenerHelper<T> {
@@ -153,6 +168,16 @@ public abstract class ArrayListenerHelper<T extends ObservableArray<T>> extends 
             } catch (Exception e) {
                 Thread.currentThread().getUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
             }
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return new InvalidationListener[0];
+        }
+
+        @Override
+        public ArrayChangeListener[] getChangeListeners() {
+            return new ArrayChangeListener[]{this.listener};
         }
 
     }
@@ -332,6 +357,16 @@ public abstract class ArrayListenerHelper<T extends ObservableArray<T>> extends 
             } finally {
                 locked = false;
             }
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return ArrayUtils.getInstance().clone(this.invalidationListeners, InvalidationListener.class);
+        }
+
+        @Override
+        public ArrayChangeListener[] getChangeListeners() {
+            return ArrayUtils.getInstance().clone(this.changeListeners, ArrayChangeListener.class);
         }
 
     }

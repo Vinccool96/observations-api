@@ -2,6 +2,7 @@ package io.github.vinccool96.observations.sun.binding;
 
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.collections.ListChangeListener;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 import java.util.Arrays;
 
@@ -69,6 +70,10 @@ public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
 
     protected abstract void fireValueChangedEvent(ListChangeListener.Change<? extends E> change);
 
+    public abstract InvalidationListener[] getInvalidationListeners();
+
+    public abstract ListChangeListener[] getChangeListeners();
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Implementations
 
@@ -109,6 +114,16 @@ public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
             }
         }
 
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return new InvalidationListener[]{this.listener};
+        }
+
+        @Override
+        public ListChangeListener[] getChangeListeners() {
+            return new ListChangeListener[0];
+        }
+
     }
 
     private static class SingleChange<E> extends ListListenerHelper<E> {
@@ -146,6 +161,16 @@ public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
             } catch (Exception e) {
                 Thread.currentThread().getUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
             }
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return new InvalidationListener[0];
+        }
+
+        @Override
+        public ListChangeListener[] getChangeListeners() {
+            return new ListChangeListener[]{this.listener};
         }
 
     }
@@ -322,6 +347,16 @@ public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
             } finally {
                 locked = false;
             }
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return ArrayUtils.getInstance().clone(this.invalidationListeners, InvalidationListener.class);
+        }
+
+        @Override
+        public ListChangeListener[] getChangeListeners() {
+            return ArrayUtils.getInstance().clone(this.changeListeners, ListChangeListener.class);
         }
 
     }

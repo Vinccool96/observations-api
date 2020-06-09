@@ -10,7 +10,6 @@ import io.github.vinccool96.observations.beans.value.*;
 import io.github.vinccool96.observations.binding.DependencyUtils;
 import io.github.vinccool96.observations.collections.ObservableCollections;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Locale;
@@ -442,7 +441,6 @@ public class AbstractNumberExpressionTest {
         assertEquals("42", s.get());
     }
 
-    @Ignore("RT-33413")
     @Test
     public void testAsString_Format() {
         final Locale defaultLocale = Locale.getDefault();
@@ -467,7 +465,6 @@ public class AbstractNumberExpressionTest {
         }
     }
 
-    @Ignore("RT-33413")
     @Test
     public void testAsString_LocaleFormat() {
         // checking German default

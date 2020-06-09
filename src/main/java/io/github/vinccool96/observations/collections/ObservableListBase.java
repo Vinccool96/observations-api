@@ -2,6 +2,7 @@ package io.github.vinccool96.observations.collections;
 
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.sun.binding.ListListenerHelper;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 import java.util.AbstractList;
 import java.util.Arrays;
@@ -214,12 +215,20 @@ public abstract class ObservableListBase<E> extends AbstractList<E> implements O
 
     @Override
     public final void addListener(ListChangeListener<? super E> listener) {
-        listenerHelper = ListListenerHelper.addListener(listenerHelper, listener);
+        if (listenerHelper == null || !isChangeListenerAlreadyAdded(listener)) {
+            listenerHelper = ListListenerHelper.addListener(listenerHelper, listener);
+        }
     }
 
     @Override
     public final void removeListener(ListChangeListener<? super E> listener) {
         listenerHelper = ListListenerHelper.removeListener(listenerHelper, listener);
+    }
+
+    @Override
+    public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
+        return ArrayUtils.getInstance()
+                .contains(this.listenerHelper.getChangeListeners(), (ListChangeListener) listener);
     }
 
     /**

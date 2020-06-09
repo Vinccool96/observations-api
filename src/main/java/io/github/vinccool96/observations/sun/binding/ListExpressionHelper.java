@@ -9,6 +9,7 @@ import io.github.vinccool96.observations.collections.ObservableCollections;
 import io.github.vinccool96.observations.collections.ObservableList;
 import io.github.vinccool96.observations.sun.collections.NonIterableChange;
 import io.github.vinccool96.observations.sun.collections.SourceAdapterChange;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 import java.util.Arrays;
 
@@ -110,6 +111,12 @@ public abstract class ListExpressionHelper<E> extends ExpressionHelperBase {
 
     protected abstract void fireValueChangedEvent(Change<? extends E> change);
 
+    public abstract InvalidationListener[] getInvalidationListeners();
+
+    public abstract ChangeListener[] getChangeListeners();
+
+    public abstract ListChangeListener[] getListChangeListeners();
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Implementations
 
@@ -160,6 +167,21 @@ public abstract class ListExpressionHelper<E> extends ExpressionHelperBase {
         @Override
         protected void fireValueChangedEvent(Change<? extends E> change) {
             listener.invalidated(observable);
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return new InvalidationListener[]{this.listener};
+        }
+
+        @Override
+        public ChangeListener[] getChangeListeners() {
+            return new ChangeListener[0];
+        }
+
+        @Override
+        public ListChangeListener[] getListChangeListeners() {
+            return new ListChangeListener[0];
         }
 
     }
@@ -218,6 +240,21 @@ public abstract class ListExpressionHelper<E> extends ExpressionHelperBase {
         @Override
         protected void fireValueChangedEvent(Change<? extends E> change) {
             listener.changed(observable, currentValue, currentValue);
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return new InvalidationListener[0];
+        }
+
+        @Override
+        public ChangeListener[] getChangeListeners() {
+            return new ChangeListener[]{this.listener};
+        }
+
+        @Override
+        public ListChangeListener[] getListChangeListeners() {
+            return new ListChangeListener[0];
         }
 
     }
@@ -282,6 +319,21 @@ public abstract class ListExpressionHelper<E> extends ExpressionHelperBase {
         @Override
         protected void fireValueChangedEvent(final Change<? extends E> change) {
             listener.onChanged(new SourceAdapterChange<>(observable, change));
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return new InvalidationListener[0];
+        }
+
+        @Override
+        public ChangeListener[] getChangeListeners() {
+            return new ChangeListener[0];
+        }
+
+        @Override
+        public ListChangeListener[] getListChangeListeners() {
+            return new ListChangeListener[]{this.listener};
         }
 
     }
@@ -571,6 +623,21 @@ public abstract class ListExpressionHelper<E> extends ExpressionHelperBase {
         protected void fireValueChangedEvent(final Change<? extends E> change) {
             final Change<E> mappedChange = (listChangeSize == 0) ? null : new SourceAdapterChange<>(observable, change);
             notifyListeners(currentValue, mappedChange, false);
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return ArrayUtils.getInstance().clone(this.invalidationListeners, InvalidationListener.class);
+        }
+
+        @Override
+        public ChangeListener[] getChangeListeners() {
+            return ArrayUtils.getInstance().clone(this.changeListeners, ChangeListener.class);
+        }
+
+        @Override
+        public ListChangeListener[] getListChangeListeners() {
+            return ArrayUtils.getInstance().clone(this.listChangeListeners, ListChangeListener.class);
         }
 
         private void notifyListeners(ObservableList<E> oldValue, Change<E> change, boolean noChange) {
