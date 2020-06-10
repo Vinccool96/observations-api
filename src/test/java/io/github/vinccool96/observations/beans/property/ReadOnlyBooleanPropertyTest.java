@@ -76,15 +76,18 @@ public class ReadOnlyBooleanPropertyTest {
             this.name = name;
         }
 
-        @Override public Object getBean() {
+        @Override
+        public Object getBean() {
             return bean;
         }
 
-        @Override public String getName() {
+        @Override
+        public String getName() {
             return name;
         }
 
-        @Override public boolean get() {
+        @Override
+        public boolean get() {
             return false;
         }
 
@@ -102,6 +105,11 @@ public class ReadOnlyBooleanPropertyTest {
 
         @Override
         public void removeListener(InvalidationListener listener) {
+        }
+
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return false;
         }
 
     }

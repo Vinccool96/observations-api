@@ -207,6 +207,12 @@ public class IntegerPropertyTest {
             fail("Not in use");
         }
 
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            fail("Not in use");
+            return false;
+        }
+
     }
 
 }

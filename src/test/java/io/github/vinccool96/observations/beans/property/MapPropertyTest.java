@@ -181,6 +181,12 @@ public class MapPropertyTest {
             return null;
         }
 
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            fail("Not in use");
+            return false;
+        }
+
     }
 
 }

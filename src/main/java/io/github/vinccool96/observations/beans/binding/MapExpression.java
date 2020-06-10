@@ -62,6 +62,11 @@ public abstract class MapExpression<K, V> implements ObservableMapValue<K, V> {
             // no-op
         }
 
+        @Override public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            // no-op
+            return false;
+        }
+
     }
 
     @Override

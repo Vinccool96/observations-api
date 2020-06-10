@@ -891,6 +891,11 @@ public class ObservableCollections {
         }
 
         @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return false;
+        }
+
+        @Override
         public void addListener(ListChangeListener<? super E> o) {
         }
 
@@ -899,7 +904,7 @@ public class ObservableCollections {
         }
 
         @Override
-        public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
+        public boolean isListChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
             return false;
         }
 
@@ -1044,6 +1049,11 @@ public class ObservableCollections {
         }
 
         @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return false;
+        }
+
+        @Override
         public void addListener(ListChangeListener<? super E> o) {
         }
 
@@ -1052,7 +1062,7 @@ public class ObservableCollections {
         }
 
         @Override
-        public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
+        public boolean isListChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
             return false;
         }
 
@@ -1330,8 +1340,7 @@ public class ObservableCollections {
 
     }
 
-    private static class SynchronizedObservableList<T> extends ObservableCollections.SynchronizedList<T>
-            implements ObservableList<T> {
+    private static class SynchronizedObservableList<T> extends SynchronizedList<T> implements ObservableList<T> {
 
         private ListListenerHelper helper;
 
@@ -1398,7 +1407,9 @@ public class ObservableCollections {
         @Override
         public final void addListener(InvalidationListener listener) {
             synchronized (mutex) {
-                helper = ListListenerHelper.addListener(helper, listener);
+                if (helper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+                    helper = ListListenerHelper.addListener(helper, listener);
+                }
             }
         }
 
@@ -1410,9 +1421,14 @@ public class ObservableCollections {
         }
 
         @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
+        }
+
+        @Override
         public void addListener(ListChangeListener<? super T> listener) {
             synchronized (mutex) {
-                if (helper == null || !isChangeListenerAlreadyAdded(listener)) {
+                if (helper == null || !isListChangeListenerAlreadyAdded(listener)) {
                     helper = ListListenerHelper.addListener(helper, listener);
                 }
             }
@@ -1426,7 +1442,7 @@ public class ObservableCollections {
         }
 
         @Override
-        public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super T> listener) {
+        public boolean isListChangeListenerAlreadyAdded(ListChangeListener<? super T> listener) {
             return ArrayUtils.getInstance().contains(this.helper.getChangeListeners(), listener);
         }
 
@@ -1746,6 +1762,11 @@ public class ObservableCollections {
         }
 
         @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return false;
+        }
+
+        @Override
         public void addListener(SetChangeListener<? super E> listener) {
         }
 
@@ -1867,12 +1888,19 @@ public class ObservableCollections {
         @Override
         public void addListener(InvalidationListener listener) {
             initListener();
-            listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
+            if (listenerHelper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+                listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
+            }
         }
 
         @Override
         public void removeListener(InvalidationListener listener) {
             listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
+        }
+
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
         }
 
         @Override
@@ -2041,8 +2069,7 @@ public class ObservableCollections {
 
     }
 
-    private static class SynchronizedObservableSet<E> extends ObservableCollections.SynchronizedSet<E>
-            implements ObservableSet<E> {
+    private static class SynchronizedObservableSet<E> extends SynchronizedSet<E> implements ObservableSet<E> {
 
         private final ObservableSet<E> backingSet;
 
@@ -2067,7 +2094,9 @@ public class ObservableCollections {
         @Override
         public void addListener(InvalidationListener listener) {
             synchronized (mutex) {
-                listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
+                if (listenerHelper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+                    listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
+                }
             }
         }
 
@@ -2076,6 +2105,11 @@ public class ObservableCollections {
             synchronized (mutex) {
                 listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
             }
+        }
+
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
         }
 
         @Override
@@ -2130,12 +2164,19 @@ public class ObservableCollections {
 
         @Override
         public void addListener(InvalidationListener listener) {
-            listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
+            if (listenerHelper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+                listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
+            }
         }
 
         @Override
         public void removeListener(InvalidationListener listener) {
             listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
+        }
+
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
         }
 
         @Override
@@ -2252,8 +2293,7 @@ public class ObservableCollections {
 
     }
 
-    private static class EmptyObservableMap<K, V> extends AbstractMap<K, V> implements
-            ObservableMap<K, V> {
+    private static class EmptyObservableMap<K, V> extends AbstractMap<K, V> implements ObservableMap<K, V> {
 
         public EmptyObservableMap() {
         }
@@ -2264,6 +2304,11 @@ public class ObservableCollections {
 
         @Override
         public void removeListener(InvalidationListener listener) {
+        }
+
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return false;
         }
 
         @Override
@@ -2326,8 +2371,7 @@ public class ObservableCollections {
 
     }
 
-    private static class CheckedObservableMap<K, V> extends AbstractMap<K, V> implements
-            ObservableMap<K, V> {
+    private static class CheckedObservableMap<K, V> extends AbstractMap<K, V> implements ObservableMap<K, V> {
 
         private final ObservableMap<K, V> backingMap;
 
@@ -2369,12 +2413,19 @@ public class ObservableCollections {
 
         @Override
         public void addListener(InvalidationListener listener) {
-            listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
+            if (listenerHelper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+                listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
+            }
         }
 
         @Override
         public void removeListener(InvalidationListener listener) {
             listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
+        }
+
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
         }
 
         @Override
@@ -2386,6 +2437,11 @@ public class ObservableCollections {
         public void removeListener(MapChangeListener<? super K, ? super V> listener) {
             listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
         }
+
+//        @Override
+//        public boolean isMapChangeListenerAlreadyAdded(MapChangeListener<? super K, ? super V> listener) {
+//            return false;
+//        }
 
         @Override
         public int size() {
@@ -2562,10 +2618,8 @@ public class ObservableCollections {
                  * Ensure that we don't get an ArrayStoreException even if
                  * s.toArray returns an array of something other than Object
                  */
-                Object[] dest =
-                        (ObservableCollections.CheckedObservableMap.CheckedEntrySet.CheckedEntry.class.isInstance(
-                                source.getClass().getComponentType()) ? source :
-                                new Object[source.length]);
+                Object[] dest = (CheckedEntry.class.isInstance(source.getClass().getComponentType()) ? source :
+                        new Object[source.length]);
 
                 for (int i = 0; i < source.length; i++) {
                     dest[i] = checkedEntry((Map.Entry<K, V>) source[i],
@@ -2984,8 +3038,7 @@ public class ObservableCollections {
 
     }
 
-    private static class SynchronizedObservableMap<K, V> extends ObservableCollections.SynchronizedMap<K, V>
-            implements ObservableMap<K, V> {
+    private static class SynchronizedObservableMap<K, V> extends SynchronizedMap<K, V> implements ObservableMap<K, V> {
 
         private final ObservableMap<K, V> backingMap;
 
@@ -3010,7 +3063,9 @@ public class ObservableCollections {
         @Override
         public void addListener(InvalidationListener listener) {
             synchronized (mutex) {
-                listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
+                if (listenerHelper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+                    listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
+                }
             }
         }
 
@@ -3019,6 +3074,11 @@ public class ObservableCollections {
             synchronized (mutex) {
                 listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
             }
+        }
+
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
         }
 
         @Override

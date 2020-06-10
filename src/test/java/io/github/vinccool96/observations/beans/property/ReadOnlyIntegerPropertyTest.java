@@ -104,6 +104,11 @@ public class ReadOnlyIntegerPropertyTest {
         public void removeListener(InvalidationListener listener) {
         }
 
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return false;
+        }
+
     }
 
 }

@@ -3,6 +3,7 @@ package io.github.vinccool96.observations.beans.property;
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.beans.value.ChangeListener;
 import io.github.vinccool96.observations.sun.binding.ExpressionHelper;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 /**
  * Base class for all readonly properties wrapping an arbitrary {@code Object}. This class provides a default
@@ -20,12 +21,19 @@ public abstract class ReadOnlyObjectPropertyBase<T> extends ReadOnlyObjectProper
 
     @Override
     public void addListener(InvalidationListener listener) {
-        helper = ExpressionHelper.addListener(helper, this, listener);
+        if (helper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     @Override
     public void removeListener(InvalidationListener listener) {
         helper = ExpressionHelper.removeListener(helper, listener);
+    }
+
+    @Override
+    public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     @Override

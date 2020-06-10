@@ -400,10 +400,14 @@ public class AbstractNumberExpressionTest {
             @Override public void addListener(InvalidationListener observer) {
             }
 
-            @Override public void addListener(ChangeListener observer) {
+            @Override public void removeListener(InvalidationListener observer) {
             }
 
-            @Override public void removeListener(InvalidationListener observer) {
+            @Override public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+                return false;
+            }
+
+            @Override public void addListener(ChangeListener observer) {
             }
 
             @Override public void removeListener(ChangeListener observer) {

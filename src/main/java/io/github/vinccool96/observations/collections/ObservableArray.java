@@ -51,7 +51,7 @@ public interface ObservableArray<T extends ObservableArray<T>> extends Observabl
      *
      * @return {@code true}, if the listener already listens, {@code false} otherwise.
      */
-    boolean isChangeListenerAlreadyAdded(ArrayChangeListener<T> listener);
+    boolean isArrayChangeListenerAlreadyAdded(ArrayChangeListener<T> listener);
 
     /**
      * Sets new length of data in this array. This method grows capacity if necessary but never shrinks it. Resulting

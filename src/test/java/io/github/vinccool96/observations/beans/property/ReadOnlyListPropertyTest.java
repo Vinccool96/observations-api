@@ -83,6 +83,11 @@ public class ReadOnlyListPropertyTest {
         }
 
         @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return false;
+        }
+
+        @Override
         public void addListener(ListChangeListener<? super Object> listChangeListener) {
         }
 
@@ -91,7 +96,7 @@ public class ReadOnlyListPropertyTest {
         }
 
         @Override
-        public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super Object> listener) {
+        public boolean isListChangeListenerAlreadyAdded(ListChangeListener<? super Object> listener) {
             return false;
         }
 

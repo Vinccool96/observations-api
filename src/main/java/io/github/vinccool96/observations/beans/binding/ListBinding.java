@@ -124,12 +124,19 @@ public abstract class ListBinding<E> extends ListExpression<E> implements Bindin
 
     @Override
     public void addListener(InvalidationListener listener) {
-        helper = ListExpressionHelper.addListener(helper, this, listener);
+        if (helper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+            helper = ListExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     @Override
     public void removeListener(InvalidationListener listener) {
         helper = ListExpressionHelper.removeListener(helper, listener);
+    }
+
+    @Override
+    public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     @Override
@@ -144,7 +151,7 @@ public abstract class ListBinding<E> extends ListExpression<E> implements Bindin
 
     @Override
     public void addListener(ListChangeListener<? super E> listener) {
-        if (helper == null || !isChangeListenerAlreadyAdded(listener)) {
+        if (helper == null || !isListChangeListenerAlreadyAdded(listener)) {
             helper = ListExpressionHelper.addListener(helper, this, listener);
         }
     }
@@ -155,7 +162,7 @@ public abstract class ListBinding<E> extends ListExpression<E> implements Bindin
     }
 
     @Override
-    public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
+    public boolean isListChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
         return ArrayUtils.getInstance().contains(this.helper.getListChangeListeners(), listener);
     }
 

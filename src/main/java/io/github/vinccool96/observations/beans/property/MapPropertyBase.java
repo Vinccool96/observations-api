@@ -7,6 +7,7 @@ import io.github.vinccool96.observations.beans.value.ObservableValue;
 import io.github.vinccool96.observations.collections.MapChangeListener;
 import io.github.vinccool96.observations.collections.ObservableMap;
 import io.github.vinccool96.observations.sun.binding.MapExpressionHelper;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 import java.lang.ref.WeakReference;
 
@@ -132,12 +133,19 @@ public abstract class MapPropertyBase<K, V> extends MapProperty<K, V> {
 
     @Override
     public void addListener(InvalidationListener listener) {
-        helper = MapExpressionHelper.addListener(helper, this, listener);
+        if (helper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+            helper = MapExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     @Override
     public void removeListener(InvalidationListener listener) {
         helper = MapExpressionHelper.removeListener(helper, listener);
+    }
+
+    @Override
+    public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     @Override

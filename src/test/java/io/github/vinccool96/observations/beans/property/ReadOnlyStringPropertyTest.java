@@ -79,6 +79,11 @@ public class ReadOnlyStringPropertyTest {
         public void removeListener(InvalidationListener listener) {
         }
 
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return false;
+        }
+
     }
 
 }

@@ -398,6 +398,12 @@ public class BindingsBooleanTest {
             this.listener = null;
         }
 
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            // not used
+            return false;
+        }
+
     }
 
 }

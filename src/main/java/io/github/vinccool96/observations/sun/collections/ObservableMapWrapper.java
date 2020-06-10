@@ -3,6 +3,7 @@ package io.github.vinccool96.observations.sun.collections;
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.collections.MapChangeListener;
 import io.github.vinccool96.observations.collections.ObservableMap;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -105,6 +106,11 @@ public class ObservableMapWrapper<K, V> implements ObservableMap<K, V> {
     @Override
     public void removeListener(InvalidationListener listener) {
         listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
+    }
+
+    @Override
+    public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
     }
 
     @Override

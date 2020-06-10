@@ -53,12 +53,18 @@ public class WeakChangeListenerTest {
         }
 
         @Override
-        public void addListener(ChangeListener<? super Object> listener) {
+        public void removeListener(InvalidationListener listener) {
             // not used
         }
 
         @Override
-        public void removeListener(InvalidationListener listener) {
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            // not used
+            return false;
+        }
+
+        @Override
+        public void addListener(ChangeListener<? super Object> listener) {
             // not used
         }
 

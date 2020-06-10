@@ -102,6 +102,11 @@ public class ReadOnlySetPropertyTest {
             return null;
         }
 
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return false;
+        }
+
     }
 
 }
