@@ -33,14 +33,14 @@ public interface ObservableSet<E> extends Set<E>, Observable {
      */
     void removeListener(SetChangeListener<? super E> listener);
 
-//    /**
-//     * Verify if a {@code SetChangeListener} already exist for this {@code ObservableSet}.
-//     *
-//     * @param listener
-//     *         the {@code SetChangeListener} to verify
-//     *
-//     * @return {@code true}, if the listener already listens, {@code false} otherwise.
-//     */
-//    boolean isMapChangeListenerAlreadyAdded(SetChangeListener<? super E> listener);
+    /**
+     * Verify if a {@code SetChangeListener} already exist for this {@code ObservableSet}.
+     *
+     * @param listener
+     *         the {@code SetChangeListener} to verify
+     *
+     * @return {@code true}, if the listener already listens, {@code false} otherwise.
+     */
+    boolean isSetChangeListenerAlreadyAdded(SetChangeListener<? super E> listener);
 
 }

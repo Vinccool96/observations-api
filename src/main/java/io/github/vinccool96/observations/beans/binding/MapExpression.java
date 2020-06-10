@@ -53,6 +53,12 @@ public abstract class MapExpression<K, V> implements ObservableMapValue<K, V> {
         }
 
         @Override
+        public boolean isMapChangeListenerAlreadyAdded(MapChangeListener<? super K, ? super V> listener) {
+            // no-op
+            return false;
+        }
+
+        @Override
         public void addListener(InvalidationListener listener) {
             // no-op
         }
@@ -62,7 +68,8 @@ public abstract class MapExpression<K, V> implements ObservableMapValue<K, V> {
             // no-op
         }
 
-        @Override public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
             // no-op
             return false;
         }

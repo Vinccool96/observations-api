@@ -83,11 +83,21 @@ public class ReadOnlySetPropertyTest {
         }
 
         @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return false;
+        }
+
+        @Override
         public void addListener(SetChangeListener<? super Object> listChangeListener) {
         }
 
         @Override
         public void removeListener(SetChangeListener<? super Object> listChangeListener) {
+        }
+
+        @Override
+        public boolean isSetChangeListenerAlreadyAdded(SetChangeListener<? super Object> listener) {
+            return false;
         }
 
         @Override
@@ -100,11 +110,6 @@ public class ReadOnlySetPropertyTest {
         public ReadOnlyBooleanProperty emptyProperty() {
             fail("Not in use");
             return null;
-        }
-
-        @Override
-        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-            return false;
         }
 
     }

@@ -1775,6 +1775,11 @@ public class ObservableCollections {
         }
 
         @Override
+        public boolean isSetChangeListenerAlreadyAdded(SetChangeListener<? super E> listener) {
+            return false;
+        }
+
+        @Override
         public int size() {
             return 0;
         }
@@ -1830,8 +1835,7 @@ public class ObservableCollections {
 
     }
 
-    private static class UnmodifiableObservableSet<E> extends AbstractSet<E> implements
-            ObservableSet<E> {
+    private static class UnmodifiableObservableSet<E> extends AbstractSet<E> implements ObservableSet<E> {
 
         private final ObservableSet<E> backingSet;
 
@@ -1906,12 +1910,19 @@ public class ObservableCollections {
         @Override
         public void addListener(SetChangeListener<? super E> listener) {
             initListener();
-            listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
+            if (listenerHelper == null || !isSetChangeListenerAlreadyAdded(listener)) {
+                listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
+            }
         }
 
         @Override
         public void removeListener(SetChangeListener<? super E> listener) {
             listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
+        }
+
+        @Override
+        public boolean isSetChangeListenerAlreadyAdded(SetChangeListener<? super E> listener) {
+            return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
         }
 
         @Override
@@ -2115,7 +2126,9 @@ public class ObservableCollections {
         @Override
         public void addListener(SetChangeListener<? super E> listener) {
             synchronized (mutex) {
-                listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
+                if (listenerHelper == null || !isSetChangeListenerAlreadyAdded(listener)) {
+                    listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
+                }
             }
         }
 
@@ -2124,6 +2137,11 @@ public class ObservableCollections {
             synchronized (mutex) {
                 listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
             }
+        }
+
+        @Override
+        public boolean isSetChangeListenerAlreadyAdded(SetChangeListener<? super E> listener) {
+            return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
         }
 
     }
@@ -2181,12 +2199,19 @@ public class ObservableCollections {
 
         @Override
         public void addListener(SetChangeListener<? super E> listener) {
-            listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
+            if (listenerHelper == null || !isSetChangeListenerAlreadyAdded(listener)) {
+                listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
+            }
         }
 
         @Override
         public void removeListener(SetChangeListener<? super E> listener) {
             listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
+        }
+
+        @Override
+        public boolean isSetChangeListenerAlreadyAdded(SetChangeListener<? super E> listener) {
+            return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
         }
 
         @Override
@@ -2320,6 +2345,11 @@ public class ObservableCollections {
         }
 
         @Override
+        public boolean isMapChangeListenerAlreadyAdded(MapChangeListener<? super K, ? super V> listener) {
+            return false;
+        }
+
+        @Override
         public int size() {
             return 0;
         }
@@ -2430,7 +2460,9 @@ public class ObservableCollections {
 
         @Override
         public void addListener(MapChangeListener<? super K, ? super V> listener) {
-            listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
+            if (listenerHelper == null || !isMapChangeListenerAlreadyAdded(listener)) {
+                listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
+            }
         }
 
         @Override
@@ -2438,10 +2470,10 @@ public class ObservableCollections {
             listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
         }
 
-//        @Override
-//        public boolean isMapChangeListenerAlreadyAdded(MapChangeListener<? super K, ? super V> listener) {
-//            return false;
-//        }
+        @Override
+        public boolean isMapChangeListenerAlreadyAdded(MapChangeListener<? super K, ? super V> listener) {
+            return false;
+        }
 
         @Override
         public int size() {
@@ -3084,7 +3116,9 @@ public class ObservableCollections {
         @Override
         public void addListener(MapChangeListener<? super K, ? super V> listener) {
             synchronized (mutex) {
-                listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
+                if (listenerHelper == null || !isMapChangeListenerAlreadyAdded(listener)) {
+                    listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
+                }
             }
         }
 
@@ -3093,6 +3127,11 @@ public class ObservableCollections {
             synchronized (mutex) {
                 listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
             }
+        }
+
+        @Override
+        public boolean isMapChangeListenerAlreadyAdded(MapChangeListener<? super K, ? super V> listener) {
+            return ArrayUtils.getInstance().contains(listenerHelper.getMapChangeListeners(), listener);
         }
 
     }

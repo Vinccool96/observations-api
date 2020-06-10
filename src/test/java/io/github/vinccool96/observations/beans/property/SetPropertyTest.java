@@ -172,6 +172,12 @@ public class SetPropertyTest {
         }
 
         @Override
+        public boolean isSetChangeListenerAlreadyAdded(SetChangeListener<? super Object> listener) {
+            fail("Not in use");
+            return false;
+        }
+
+        @Override
         public ReadOnlyIntegerProperty sizeProperty() {
             fail("Not in use");
             return null;

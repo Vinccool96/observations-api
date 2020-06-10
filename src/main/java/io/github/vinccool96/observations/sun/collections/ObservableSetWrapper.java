@@ -130,7 +130,9 @@ public class ObservableSetWrapper<E> implements ObservableSet<E> {
      */
     @Override
     public void addListener(SetChangeListener<? super E> observer) {
-        listenerHelper = SetListenerHelper.addListener(listenerHelper, observer);
+        if (listenerHelper == null || !isSetChangeListenerAlreadyAdded(observer)) {
+            listenerHelper = SetListenerHelper.addListener(listenerHelper, observer);
+        }
     }
 
     /**
@@ -139,6 +141,11 @@ public class ObservableSetWrapper<E> implements ObservableSet<E> {
     @Override
     public void removeListener(SetChangeListener<? super E> observer) {
         listenerHelper = SetListenerHelper.removeListener(listenerHelper, observer);
+    }
+
+    @Override
+    public boolean isSetChangeListenerAlreadyAdded(SetChangeListener<? super E> listener) {
+        return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
     }
 
     /**

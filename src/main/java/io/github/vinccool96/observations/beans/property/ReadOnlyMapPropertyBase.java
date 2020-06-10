@@ -47,12 +47,19 @@ public abstract class ReadOnlyMapPropertyBase<K, V> extends ReadOnlyMapProperty<
 
     @Override
     public void addListener(MapChangeListener<? super K, ? super V> listener) {
-        helper = MapExpressionHelper.addListener(helper, this, listener);
+        if (helper == null || !isMapChangeListenerAlreadyAdded(listener)) {
+            helper = MapExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     @Override
     public void removeListener(MapChangeListener<? super K, ? super V> listener) {
         helper = MapExpressionHelper.removeListener(helper, listener);
+    }
+
+    @Override
+    public boolean isMapChangeListenerAlreadyAdded(MapChangeListener<? super K, ? super V> listener) {
+        return ArrayUtils.getInstance().contains(helper.getMapChangeListeners(), listener);
     }
 
     /**

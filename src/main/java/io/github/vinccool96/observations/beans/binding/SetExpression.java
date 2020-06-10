@@ -67,16 +67,6 @@ public abstract class SetExpression<E> implements ObservableSetValue<E> {
         }
 
         @Override
-        public void addListener(SetChangeListener<? super E> setChangeListener) {
-            // no-op
-        }
-
-        @Override
-        public void removeListener(SetChangeListener<? super E> setChangeListener) {
-            // no-op
-        }
-
-        @Override
         public void addListener(InvalidationListener listener) {
             // no-op
         }
@@ -87,6 +77,22 @@ public abstract class SetExpression<E> implements ObservableSetValue<E> {
         }
 
         @Override public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            // no-op
+            return false;
+        }
+
+        @Override
+        public void addListener(SetChangeListener<? super E> setChangeListener) {
+            // no-op
+        }
+
+        @Override
+        public void removeListener(SetChangeListener<? super E> setChangeListener) {
+            // no-op
+        }
+
+        @Override
+        public boolean isSetChangeListenerAlreadyAdded(SetChangeListener<? super E> listener) {
             // no-op
             return false;
         }

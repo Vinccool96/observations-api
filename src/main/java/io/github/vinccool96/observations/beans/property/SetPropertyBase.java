@@ -158,12 +158,19 @@ public abstract class SetPropertyBase<E> extends SetProperty<E> {
 
     @Override
     public void addListener(SetChangeListener<? super E> listener) {
-        helper = SetExpressionHelper.addListener(helper, this, listener);
+        if (helper == null || !isSetChangeListenerAlreadyAdded(listener)) {
+            helper = SetExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     @Override
     public void removeListener(SetChangeListener<? super E> listener) {
         helper = SetExpressionHelper.removeListener(helper, listener);
+    }
+
+    @Override
+    public boolean isSetChangeListenerAlreadyAdded(SetChangeListener<? super E> listener) {
+        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     /**

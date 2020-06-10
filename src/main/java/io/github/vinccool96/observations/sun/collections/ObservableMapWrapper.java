@@ -115,12 +115,19 @@ public class ObservableMapWrapper<K, V> implements ObservableMap<K, V> {
 
     @Override
     public void addListener(MapChangeListener<? super K, ? super V> observer) {
-        listenerHelper = MapListenerHelper.addListener(listenerHelper, observer);
+        if (listenerHelper == null || !isMapChangeListenerAlreadyAdded(observer)) {
+            listenerHelper = MapListenerHelper.addListener(listenerHelper, observer);
+        }
     }
 
     @Override
     public void removeListener(MapChangeListener<? super K, ? super V> observer) {
         listenerHelper = MapListenerHelper.removeListener(listenerHelper, observer);
+    }
+
+    @Override
+    public boolean isMapChangeListenerAlreadyAdded(MapChangeListener<? super K, ? super V> listener) {
+        return ArrayUtils.getInstance().contains(listenerHelper.getMapChangeListeners(), listener);
     }
 
     @Override
