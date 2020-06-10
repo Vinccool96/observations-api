@@ -5,6 +5,7 @@ import io.github.vinccool96.observations.beans.value.ChangeListener;
 import io.github.vinccool96.observations.beans.value.ObservableSetValue;
 import io.github.vinccool96.observations.collections.ObservableSet;
 import io.github.vinccool96.observations.collections.SetChangeListener;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 import java.util.Arrays;
 
@@ -103,6 +104,12 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
 
     protected abstract void fireValueChangedEvent(SetChangeListener.Change<? extends E> change);
 
+    public abstract InvalidationListener[] getInvalidationListeners();
+
+    public abstract ChangeListener[] getChangeListeners();
+
+    public abstract SetChangeListener[] getSetChangeListeners();
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Implementations
 
@@ -153,6 +160,21 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
         @Override
         protected void fireValueChangedEvent(SetChangeListener.Change<? extends E> change) {
             listener.invalidated(observable);
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return new InvalidationListener[]{this.listener};
+        }
+
+        @Override
+        public ChangeListener[] getChangeListeners() {
+            return new ChangeListener[0];
+        }
+
+        @Override
+        public SetChangeListener[] getSetChangeListeners() {
+            return new SetChangeListener[0];
         }
 
     }
@@ -211,6 +233,21 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
         @Override
         protected void fireValueChangedEvent(SetChangeListener.Change<? extends E> change) {
             listener.changed(observable, currentValue, currentValue);
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return new InvalidationListener[0];
+        }
+
+        @Override
+        public ChangeListener[] getChangeListeners() {
+            return new ChangeListener[]{this.listener};
+        }
+
+        @Override
+        public SetChangeListener[] getSetChangeListeners() {
+            return new SetChangeListener[0];
         }
 
     }
@@ -290,6 +327,21 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
         @Override
         protected void fireValueChangedEvent(final SetChangeListener.Change<? extends E> change) {
             listener.onChanged(new SetExpressionHelper.SimpleChange<E>(observable, change));
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return new InvalidationListener[0];
+        }
+
+        @Override
+        public ChangeListener[] getChangeListeners() {
+            return new ChangeListener[0];
+        }
+
+        @Override
+        public SetChangeListener[] getSetChangeListeners() {
+            return new SetChangeListener[]{this.listener};
         }
 
     }
@@ -561,6 +613,21 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
                     mappedChange =
                     (setChangeSize == 0) ? null : new SetExpressionHelper.SimpleChange<E>(observable, change);
             notifyListeners(currentValue, mappedChange);
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return ArrayUtils.getInstance().clone(this.invalidationListeners, InvalidationListener.class);
+        }
+
+        @Override
+        public ChangeListener[] getChangeListeners() {
+            return ArrayUtils.getInstance().clone(this.changeListeners, ChangeListener.class);
+        }
+
+        @Override
+        public SetChangeListener[] getSetChangeListeners() {
+            return ArrayUtils.getInstance().clone(this.setChangeListeners, SetChangeListener.class);
         }
 
         private void notifyListeners(ObservableSet<E> oldValue, SetExpressionHelper.SimpleChange<E> change) {

@@ -57,14 +57,14 @@ public interface Observable {
      */
     void removeListener(InvalidationListener listener);
 
-//    /**
-//     * Verify if the specified {@code InvalidationListener} already exists for this {@code Observable}.
-//     *
-//     * @param listener
-//     *         the {@code ArrayChangeListener} to verify
-//     *
-//     * @return {@code true}, if the listener already listens, {@code false} otherwise.
-//     */
-//    boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener);
+    /**
+     * Verify if the specified {@code InvalidationListener} already exists for this {@code Observable}.
+     *
+     * @param listener
+     *         the {@code InvalidationListener} to verify
+     *
+     * @return {@code true}, if the listener already listens, {@code false} otherwise.
+     */
+    boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener);
 
 }

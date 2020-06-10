@@ -5,6 +5,7 @@ import io.github.vinccool96.observations.beans.value.ChangeListener;
 import io.github.vinccool96.observations.collections.ObservableSet;
 import io.github.vinccool96.observations.collections.SetChangeListener;
 import io.github.vinccool96.observations.sun.binding.SetExpressionHelper;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 /**
  * Base class for all readonly properties wrapping an {@link ObservableSet}. This class provides a default
@@ -22,12 +23,19 @@ public abstract class ReadOnlySetPropertyBase<E> extends ReadOnlySetProperty<E> 
 
     @Override
     public void addListener(InvalidationListener listener) {
-        helper = SetExpressionHelper.addListener(helper, this, listener);
+        if (helper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+            helper = SetExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     @Override
     public void removeListener(InvalidationListener listener) {
         helper = SetExpressionHelper.removeListener(helper, listener);
+    }
+
+    @Override
+    public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     @Override

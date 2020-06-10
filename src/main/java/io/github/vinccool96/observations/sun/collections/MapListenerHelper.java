@@ -3,6 +3,7 @@ package io.github.vinccool96.observations.sun.collections;
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.collections.MapChangeListener;
 import io.github.vinccool96.observations.sun.binding.ExpressionHelperBase;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 import java.util.Arrays;
 
@@ -70,6 +71,10 @@ public abstract class MapListenerHelper<K, V> extends ExpressionHelperBase {
 
     protected abstract void fireValueChangedEvent(MapChangeListener.Change<? extends K, ? extends V> change);
 
+    public abstract InvalidationListener[] getInvalidationListeners();
+
+    public abstract MapChangeListener[] getMapChangeListeners();
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Implementations
 
@@ -110,6 +115,16 @@ public abstract class MapListenerHelper<K, V> extends ExpressionHelperBase {
             }
         }
 
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return new InvalidationListener[]{this.listener};
+        }
+
+        @Override
+        public MapChangeListener[] getMapChangeListeners() {
+            return new MapChangeListener[0];
+        }
+
     }
 
     private static class SingleChange<K, V> extends MapListenerHelper<K, V> {
@@ -147,6 +162,16 @@ public abstract class MapListenerHelper<K, V> extends ExpressionHelperBase {
             } catch (Exception e) {
                 Thread.currentThread().getUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
             }
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return new InvalidationListener[0];
+        }
+
+        @Override
+        public MapChangeListener[] getMapChangeListeners() {
+            return new MapChangeListener[]{this.listener};
         }
 
     }
@@ -324,6 +349,16 @@ public abstract class MapListenerHelper<K, V> extends ExpressionHelperBase {
             } finally {
                 locked = false;
             }
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return ArrayUtils.getInstance().clone(this.invalidationListeners, InvalidationListener.class);
+        }
+
+        @Override
+        public MapChangeListener[] getMapChangeListeners() {
+            return ArrayUtils.getInstance().clone(this.changeListeners, MapChangeListener.class);
         }
 
     }

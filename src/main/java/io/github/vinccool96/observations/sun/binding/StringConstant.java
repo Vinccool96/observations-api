@@ -32,12 +32,18 @@ public class StringConstant extends StringExpression {
     }
 
     @Override
-    public void addListener(ChangeListener<? super String> observer) {
+    public void removeListener(InvalidationListener observer) {
         // no-op
     }
 
     @Override
-    public void removeListener(InvalidationListener observer) {
+    public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        // no-op
+        return false;
+    }
+
+    @Override
+    public void addListener(ChangeListener<? super String> observer) {
         // no-op
     }
 

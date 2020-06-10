@@ -156,6 +156,12 @@ public class SetPropertyTest {
         }
 
         @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            fail("Not in use");
+            return false;
+        }
+
+        @Override
         public void addListener(SetChangeListener<? super Object> listChangeListener) {
             fail("Not in use");
         }

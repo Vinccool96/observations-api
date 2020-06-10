@@ -86,6 +86,11 @@ public abstract class SetExpression<E> implements ObservableSetValue<E> {
             // no-op
         }
 
+        @Override public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            // no-op
+            return false;
+        }
+
     }
 
     @Override

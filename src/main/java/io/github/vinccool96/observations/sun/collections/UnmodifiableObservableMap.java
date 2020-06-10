@@ -6,6 +6,7 @@ import io.github.vinccool96.observations.collections.MapChangeListener.Change;
 import io.github.vinccool96.observations.collections.ObservableMap;
 import io.github.vinccool96.observations.collections.WeakMapChangeListener;
 import io.github.vinccool96.observations.sun.collections.annotations.ReturnsUnmodifiableCollection;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 import java.util.AbstractMap;
 import java.util.Collection;
@@ -43,12 +44,19 @@ public class UnmodifiableObservableMap<K, V> extends AbstractMap<K, V> implement
 
     @Override
     public void addListener(InvalidationListener listener) {
-        listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
+        if (listenerHelper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+            listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
+        }
     }
 
     @Override
     public void removeListener(InvalidationListener listener) {
         listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
+    }
+
+    @Override
+    public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
     }
 
     @Override

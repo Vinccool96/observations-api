@@ -22,7 +22,9 @@ public abstract class ObservableArrayBase<T extends ObservableArray<T>> implemen
 
     @Override
     public final void addListener(InvalidationListener listener) {
-        listenerHelper = ArrayListenerHelper.<T>addListener(listenerHelper, (T) this, listener);
+        if (listenerHelper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+            listenerHelper = ArrayListenerHelper.<T>addListener(listenerHelper, (T) this, listener);
+        }
     }
 
     @Override
@@ -31,8 +33,13 @@ public abstract class ObservableArrayBase<T extends ObservableArray<T>> implemen
     }
 
     @Override
+    public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
+    }
+
+    @Override
     public final void addListener(ArrayChangeListener<T> listener) {
-        if (listenerHelper == null || !isChangeListenerAlreadyAdded(listener)) {
+        if (listenerHelper == null || !isArrayChangeListenerAlreadyAdded(listener)) {
             listenerHelper = ArrayListenerHelper.<T>addListener(listenerHelper, (T) this, listener);
         }
     }
@@ -43,7 +50,7 @@ public abstract class ObservableArrayBase<T extends ObservableArray<T>> implemen
     }
 
     @Override
-    public boolean isChangeListenerAlreadyAdded(ArrayChangeListener<T> listener) {
+    public boolean isArrayChangeListenerAlreadyAdded(ArrayChangeListener<T> listener) {
         return ArrayUtils.getInstance().contains(this.listenerHelper.getChangeListeners(), listener);
     }
 

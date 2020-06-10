@@ -5,6 +5,7 @@ import io.github.vinccool96.observations.beans.value.ChangeListener;
 import io.github.vinccool96.observations.beans.value.ObservableMapValue;
 import io.github.vinccool96.observations.collections.MapChangeListener;
 import io.github.vinccool96.observations.collections.ObservableMap;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -104,6 +105,12 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
 
     protected abstract void fireValueChangedEvent(MapChangeListener.Change<? extends K, ? extends V> change);
 
+    public abstract InvalidationListener[] getInvalidationListeners();
+
+    public abstract ChangeListener[] getChangeListeners();
+
+    public abstract MapChangeListener[] getMapChangeListeners();
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Implementations
 
@@ -154,6 +161,21 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
         @Override
         protected void fireValueChangedEvent(MapChangeListener.Change<? extends K, ? extends V> change) {
             listener.invalidated(observable);
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return new InvalidationListener[]{this.listener};
+        }
+
+        @Override
+        public ChangeListener[] getChangeListeners() {
+            return new ChangeListener[0];
+        }
+
+        @Override
+        public MapChangeListener[] getMapChangeListeners() {
+            return new MapChangeListener[0];
         }
 
     }
@@ -213,6 +235,21 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
         @Override
         protected void fireValueChangedEvent(MapChangeListener.Change<? extends K, ? extends V> change) {
             listener.changed(observable, currentValue, currentValue);
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return new InvalidationListener[0];
+        }
+
+        @Override
+        public ChangeListener[] getChangeListeners() {
+            return new ChangeListener[]{this.listener};
+        }
+
+        @Override
+        public MapChangeListener[] getMapChangeListeners() {
+            return new MapChangeListener[0];
         }
 
     }
@@ -300,6 +337,21 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
         @Override
         protected void fireValueChangedEvent(final MapChangeListener.Change<? extends K, ? extends V> change) {
             listener.onChanged(new MapExpressionHelper.SimpleChange<K, V>(observable, change));
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return new InvalidationListener[0];
+        }
+
+        @Override
+        public ChangeListener[] getChangeListeners() {
+            return new ChangeListener[0];
+        }
+
+        @Override
+        public MapChangeListener[] getMapChangeListeners() {
+            return new MapChangeListener[]{this.listener};
         }
 
     }
@@ -571,6 +623,21 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
                     mappedChange =
                     (mapChangeSize == 0) ? null : new MapExpressionHelper.SimpleChange<K, V>(observable, change);
             notifyListeners(currentValue, mappedChange);
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return ArrayUtils.getInstance().clone(this.invalidationListeners, InvalidationListener.class);
+        }
+
+        @Override
+        public ChangeListener[] getChangeListeners() {
+            return ArrayUtils.getInstance().clone(this.changeListeners, ChangeListener.class);
+        }
+
+        @Override
+        public MapChangeListener[] getMapChangeListeners() {
+            return ArrayUtils.getInstance().clone(this.mapChangeListeners, MapChangeListener.class);
         }
 
         private void notifyListeners(ObservableMap<K, V> oldValue, MapExpressionHelper.SimpleChange<K, V> change) {

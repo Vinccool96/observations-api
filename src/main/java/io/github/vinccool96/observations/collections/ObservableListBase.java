@@ -205,7 +205,9 @@ public abstract class ObservableListBase<E> extends AbstractList<E> implements O
 
     @Override
     public final void addListener(InvalidationListener listener) {
-        listenerHelper = ListListenerHelper.addListener(listenerHelper, listener);
+        if (listenerHelper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+            listenerHelper = ListListenerHelper.addListener(listenerHelper, listener);
+        }
     }
 
     @Override
@@ -214,8 +216,13 @@ public abstract class ObservableListBase<E> extends AbstractList<E> implements O
     }
 
     @Override
+    public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
+    }
+
+    @Override
     public final void addListener(ListChangeListener<? super E> listener) {
-        if (listenerHelper == null || !isChangeListenerAlreadyAdded(listener)) {
+        if (listenerHelper == null || !isListChangeListenerAlreadyAdded(listener)) {
             listenerHelper = ListListenerHelper.addListener(listenerHelper, listener);
         }
     }
@@ -226,7 +233,7 @@ public abstract class ObservableListBase<E> extends AbstractList<E> implements O
     }
 
     @Override
-    public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
+    public boolean isListChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
         return ArrayUtils.getInstance()
                 .contains(this.listenerHelper.getChangeListeners(), (ListChangeListener) listener);
     }

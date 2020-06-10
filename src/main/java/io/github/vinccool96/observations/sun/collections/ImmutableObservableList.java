@@ -27,6 +27,11 @@ public class ImmutableObservableList<E> extends AbstractList<E> implements Obser
         // no-op
     }
 
+    @Override public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        // no-op
+        return false;
+    }
+
     @Override
     public void addListener(ListChangeListener<? super E> listener) {
         // no-op
@@ -38,7 +43,7 @@ public class ImmutableObservableList<E> extends AbstractList<E> implements Obser
     }
 
     @Override
-    public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
+    public boolean isListChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
         // no op
         return false;
     }

@@ -755,6 +755,12 @@ public class ObservableCollectionsTest {
         }
 
         @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            // not used
+            return false;
+        }
+
+        @Override
         public void addListener(ListChangeListener<? super String> ll) {
             listeners.add(ll);
         }
@@ -765,7 +771,7 @@ public class ObservableCollectionsTest {
         }
 
         @Override
-        public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super String> listener) {
+        public boolean isListChangeListenerAlreadyAdded(ListChangeListener<? super String> listener) {
             return this.listeners.contains(listener);
         }
 

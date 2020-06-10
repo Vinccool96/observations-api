@@ -70,18 +70,25 @@ public abstract class VetoableListDecorator<E> implements ObservableList<E> {
     }
 
     @Override
-    public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
+    public boolean isListChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
         return ArrayUtils.getInstance().contains(this.helper.getChangeListeners(), listener);
     }
 
     @Override
     public void addListener(InvalidationListener listener) {
-        helper = ListListenerHelper.addListener(helper, listener);
+        if (helper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+            helper = ListListenerHelper.addListener(helper, listener);
+        }
     }
 
     @Override
     public void removeListener(InvalidationListener listener) {
         helper = ListListenerHelper.removeListener(helper, listener);
+    }
+
+    @Override
+    public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     @Override

@@ -14,6 +14,7 @@ import io.github.vinccool96.observations.collections.SetChangeListener;
 import io.github.vinccool96.observations.sun.binding.BindingHelperObserver;
 import io.github.vinccool96.observations.sun.binding.SetExpressionHelper;
 import io.github.vinccool96.observations.sun.collections.annotations.ReturnsUnmodifiableCollection;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 /**
  * Base class that provides most of the functionality needed to implement a {@link Binding} of an {@link
@@ -130,6 +131,11 @@ public abstract class SetBinding<E> extends SetExpression<E> implements Binding<
     @Override
     public void removeListener(InvalidationListener listener) {
         helper = SetExpressionHelper.removeListener(helper, listener);
+    }
+
+    @Override
+    public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     @Override

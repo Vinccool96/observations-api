@@ -8,6 +8,7 @@ import io.github.vinccool96.observations.collections.ObservableList;
 import io.github.vinccool96.observations.sun.binding.BindingHelperObserver;
 import io.github.vinccool96.observations.sun.binding.ExpressionHelper;
 import io.github.vinccool96.observations.sun.collections.annotations.ReturnsUnmodifiableCollection;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 /**
  * Base class that provides most of the functionality needed to implement a {@link Binding} of a {@code boolean} value.
@@ -44,12 +45,19 @@ public abstract class BooleanBinding extends BooleanExpression implements Bindin
 
     @Override
     public void addListener(InvalidationListener listener) {
-        helper = ExpressionHelper.addListener(helper, this, listener);
+        if (helper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     @Override
     public void removeListener(InvalidationListener listener) {
         helper = ExpressionHelper.removeListener(helper, listener);
+    }
+
+    @Override
+    public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     @Override

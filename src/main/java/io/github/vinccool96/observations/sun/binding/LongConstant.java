@@ -35,12 +35,18 @@ public final class LongConstant implements ObservableLongValue {
     }
 
     @Override
-    public void addListener(ChangeListener<? super Number> observer) {
+    public void removeListener(InvalidationListener observer) {
         // no-op
     }
 
     @Override
-    public void removeListener(InvalidationListener observer) {
+    public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        // no-op
+        return false;
+    }
+
+    @Override
+    public void addListener(ChangeListener<? super Number> observer) {
         // no-op
     }
 

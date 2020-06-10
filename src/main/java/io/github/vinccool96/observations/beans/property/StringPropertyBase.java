@@ -5,6 +5,7 @@ import io.github.vinccool96.observations.beans.Observable;
 import io.github.vinccool96.observations.beans.value.ChangeListener;
 import io.github.vinccool96.observations.beans.value.ObservableValue;
 import io.github.vinccool96.observations.sun.binding.ExpressionHelper;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 import java.lang.ref.WeakReference;
 
@@ -47,12 +48,19 @@ public abstract class StringPropertyBase extends StringProperty {
 
     @Override
     public void addListener(InvalidationListener listener) {
-        helper = ExpressionHelper.addListener(helper, this, listener);
+        if (helper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     @Override
     public void removeListener(InvalidationListener listener) {
         helper = ExpressionHelper.removeListener(helper, listener);
+    }
+
+    @Override
+    public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     @Override

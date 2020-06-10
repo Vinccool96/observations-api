@@ -7,6 +7,7 @@ import io.github.vinccool96.observations.beans.value.ObservableValue;
 import io.github.vinccool96.observations.sun.binding.ExpressionHelper;
 import io.github.vinccool96.observations.sun.property.adapter.Disposer;
 import io.github.vinccool96.observations.sun.property.adapter.PropertyDescriptor;
+import io.github.vinccool96.observations.util.ArrayUtils;
 import sun.reflect.misc.MethodUtil;
 
 import java.lang.reflect.InvocationTargetException;
@@ -169,7 +170,9 @@ public final class JavaBeanStringProperty extends StringProperty implements Java
      */
     @Override
     public void addListener(InvalidationListener listener) {
-        helper = ExpressionHelper.addListener(helper, this, listener);
+        if (helper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     /**
@@ -178,6 +181,11 @@ public final class JavaBeanStringProperty extends StringProperty implements Java
     @Override
     public void removeListener(InvalidationListener listener) {
         helper = ExpressionHelper.removeListener(helper, listener);
+    }
+
+    @Override
+    public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     /**

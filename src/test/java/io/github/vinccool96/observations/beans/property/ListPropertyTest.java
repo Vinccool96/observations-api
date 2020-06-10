@@ -166,7 +166,7 @@ public class ListPropertyTest {
         }
 
         @Override
-        public boolean isChangeListenerAlreadyAdded(ListChangeListener<? super Object> listChangeListener) {
+        public boolean isListChangeListenerAlreadyAdded(ListChangeListener<? super Object> listChangeListener) {
             fail("Not in use");
             return false;
         }
@@ -181,6 +181,12 @@ public class ListPropertyTest {
         public ReadOnlyBooleanProperty emptyProperty() {
             fail("Not in use");
             return null;
+        }
+
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            fail("Not in use");
+            return false;
         }
 
     }

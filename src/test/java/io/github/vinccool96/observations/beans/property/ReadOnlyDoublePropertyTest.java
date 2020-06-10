@@ -106,6 +106,11 @@ public class ReadOnlyDoublePropertyTest {
         public void removeListener(InvalidationListener listener) {
         }
 
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return false;
+        }
+
     }
 
 }

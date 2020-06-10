@@ -3,6 +3,7 @@ package io.github.vinccool96.observations.sun.binding;
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.beans.value.ChangeListener;
 import io.github.vinccool96.observations.beans.value.ObservableValue;
+import io.github.vinccool96.observations.util.ArrayUtils;
 
 import java.util.Arrays;
 
@@ -75,6 +76,10 @@ public abstract class ExpressionHelper<T> extends ExpressionHelperBase {
 
     protected abstract void fireValueChangedEvent();
 
+    public abstract InvalidationListener[] getInvalidationListeners();
+
+    public abstract ChangeListener[] getChangeListeners();
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Implementations
 
@@ -114,6 +119,16 @@ public abstract class ExpressionHelper<T> extends ExpressionHelperBase {
             } catch (Exception e) {
                 Thread.currentThread().getUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
             }
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return new InvalidationListener[]{this.listener};
+        }
+
+        @Override
+        public ChangeListener[] getChangeListeners() {
+            return new ChangeListener[0];
         }
 
     }
@@ -162,6 +177,16 @@ public abstract class ExpressionHelper<T> extends ExpressionHelperBase {
                     Thread.currentThread().getUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
                 }
             }
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return new InvalidationListener[0];
+        }
+
+        @Override
+        public ChangeListener[] getChangeListeners() {
+            return new ChangeListener[]{this.listener};
         }
 
     }
@@ -358,6 +383,16 @@ public abstract class ExpressionHelper<T> extends ExpressionHelperBase {
             } finally {
                 locked = false;
             }
+        }
+
+        @Override
+        public InvalidationListener[] getInvalidationListeners() {
+            return ArrayUtils.getInstance().clone(this.invalidationListeners, InvalidationListener.class);
+        }
+
+        @Override
+        public ChangeListener[] getChangeListeners() {
+            return ArrayUtils.getInstance().clone(this.changeListeners, ChangeListener.class);
         }
 
     }

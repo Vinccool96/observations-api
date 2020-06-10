@@ -32,12 +32,18 @@ public class ObjectConstant<T> implements ObservableObjectValue<T> {
     }
 
     @Override
-    public void addListener(ChangeListener<? super T> observer) {
+    public void removeListener(InvalidationListener observer) {
         // no-op
     }
 
     @Override
-    public void removeListener(InvalidationListener observer) {
+    public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        // no-op
+        return false;
+    }
+
+    @Override
+    public void addListener(ChangeListener<? super T> observer) {
         // no-op
     }
 

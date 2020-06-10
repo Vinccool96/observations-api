@@ -30,10 +30,12 @@ public class ArrayUtils {
 
     public <T> boolean contains(T[] array, T value) {
         boolean contained = false;
-        for (T element : array) {
-            if (value.equals(element)) {
-                contained = true;
-                break;
+        if (array != null) {
+            for (T element : array) {
+                if (value.equals(element)) {
+                    contained = true;
+                    break;
+                }
             }
         }
         return contained;

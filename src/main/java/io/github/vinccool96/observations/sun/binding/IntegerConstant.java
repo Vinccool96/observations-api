@@ -35,12 +35,18 @@ public final class IntegerConstant implements ObservableIntegerValue {
     }
 
     @Override
-    public void addListener(ChangeListener<? super Number> listener) {
+    public void removeListener(InvalidationListener observer) {
         // no-op
     }
 
     @Override
-    public void removeListener(InvalidationListener observer) {
+    public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        // no-op
+        return false;
+    }
+
+    @Override
+    public void addListener(ChangeListener<? super Number> listener) {
         // no-op
     }
 
