@@ -170,6 +170,12 @@ public class MapPropertyTest {
         }
 
         @Override
+        public boolean isMapChangeListenerAlreadyAdded(MapChangeListener<? super Object, ? super Object> listener) {
+            fail("Not in use");
+            return false;
+        }
+
+        @Override
         public ReadOnlyIntegerProperty sizeProperty() {
             fail("Not in use");
             return null;

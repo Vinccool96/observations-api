@@ -35,14 +35,14 @@ public interface ObservableMap<K, V> extends Map<K, V>, Observable {
      */
     void removeListener(MapChangeListener<? super K, ? super V> listener);
 
-//    /**
-//     * Verify if a {@code MapChangeListener} already exist for this {@code ObservableMap}.
-//     *
-//     * @param listener
-//     *         the {@code MapChangeListener} to verify
-//     *
-//     * @return {@code true}, if the listener already listens, {@code false} otherwise.
-//     */
-//    boolean isMapChangeListenerAlreadyAdded(MapChangeListener<? super K, ? super V> listener);
+    /**
+     * Verify if a {@code MapChangeListener} already exist for this {@code ObservableMap}.
+     *
+     * @param listener
+     *         the {@code MapChangeListener} to verify
+     *
+     * @return {@code true}, if the listener already listens, {@code false} otherwise.
+     */
+    boolean isMapChangeListenerAlreadyAdded(MapChangeListener<? super K, ? super V> listener);
 
 }

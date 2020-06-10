@@ -67,14 +67,6 @@ public class ReadOnlyMapPropertyTest {
         }
 
         @Override
-        public void addListener(ChangeListener<? super ObservableMap<Object, Object>> listener) {
-        }
-
-        @Override
-        public void removeListener(ChangeListener<? super ObservableMap<Object, Object>> listener) {
-        }
-
-        @Override
         public void addListener(InvalidationListener listener) {
         }
 
@@ -83,11 +75,29 @@ public class ReadOnlyMapPropertyTest {
         }
 
         @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return false;
+        }
+
+        @Override
+        public void addListener(ChangeListener<? super ObservableMap<Object, Object>> listener) {
+        }
+
+        @Override
+        public void removeListener(ChangeListener<? super ObservableMap<Object, Object>> listener) {
+        }
+
+        @Override
         public void addListener(MapChangeListener<? super Object, ? super Object> listChangeListener) {
         }
 
         @Override
         public void removeListener(MapChangeListener<? super Object, ? super Object> listChangeListener) {
+        }
+
+        @Override
+        public boolean isMapChangeListenerAlreadyAdded(MapChangeListener<? super Object, ? super Object> listener) {
+            return false;
         }
 
         @Override
@@ -100,11 +110,6 @@ public class ReadOnlyMapPropertyTest {
         public ReadOnlyBooleanProperty emptyProperty() {
             fail("Not in use");
             return null;
-        }
-
-        @Override
-        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-            return false;
         }
 
     }
