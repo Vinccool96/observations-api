@@ -52,4 +52,10 @@ public class StringConstant extends StringExpression {
         // no-op
     }
 
+    @Override
+    public boolean isChangeListenerAlreadyAdded(ChangeListener<? super String> listener) {
+        // no-op
+        return false;
+    }
+
 }

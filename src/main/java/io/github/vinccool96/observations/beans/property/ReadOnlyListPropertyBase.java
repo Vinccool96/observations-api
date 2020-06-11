@@ -37,12 +37,24 @@ public abstract class ReadOnlyListPropertyBase<E> extends ReadOnlyListProperty<E
 
     @Override
     public void addListener(ChangeListener<? super ObservableList<E>> listener) {
-        helper = ListExpressionHelper.addListener(helper, this, listener);
+        if (!isChangeListenerAlreadyAdded(listener)) {
+            helper = ListExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     @Override
     public void removeListener(ChangeListener<? super ObservableList<E>> listener) {
-        helper = ListExpressionHelper.removeListener(helper, listener);
+        if (isChangeListenerAlreadyAdded(listener)) {
+            helper = ListExpressionHelper.removeListener(helper, listener);
+        }
+    }
+
+    @Override
+    public boolean isChangeListenerAlreadyAdded(ChangeListener<? super ObservableList<E>> listener) {
+        if (listener == null) {
+            throw new NullPointerException();
+        }
+        return helper != null && ArrayUtils.getInstance().contains(helper.getChangeListeners(), listener);
     }
 
     @Override

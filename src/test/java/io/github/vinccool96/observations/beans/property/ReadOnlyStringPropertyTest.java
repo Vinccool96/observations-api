@@ -72,6 +72,11 @@ public class ReadOnlyStringPropertyTest {
         }
 
         @Override
+        public boolean isChangeListenerAlreadyAdded(ChangeListener<? super String> listener) {
+            return false;
+        }
+
+        @Override
         public void addListener(InvalidationListener listener) {
         }
 

@@ -35,12 +35,24 @@ public abstract class ReadOnlyStringPropertyBase extends ReadOnlyStringProperty 
 
     @Override
     public void addListener(ChangeListener<? super String> listener) {
-        helper = ExpressionHelper.addListener(helper, this, listener);
+        if (!isChangeListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     @Override
     public void removeListener(ChangeListener<? super String> listener) {
-        helper = ExpressionHelper.removeListener(helper, listener);
+        if (isChangeListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.removeListener(helper, listener);
+        }
+    }
+
+    @Override
+    public boolean isChangeListenerAlreadyAdded(ChangeListener<? super String> listener) {
+        if (listener == null) {
+            throw new NullPointerException();
+        }
+        return helper != null && ArrayUtils.getInstance().contains(helper.getChangeListeners(), listener);
     }
 
     /**

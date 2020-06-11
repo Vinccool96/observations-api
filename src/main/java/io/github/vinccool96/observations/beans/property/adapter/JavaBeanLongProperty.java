@@ -155,7 +155,9 @@ public final class JavaBeanLongProperty extends LongProperty implements JavaBean
      */
     @Override
     public void addListener(ChangeListener<? super Number> listener) {
-        helper = ExpressionHelper.addListener(helper, this, listener);
+        if (!isChangeListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     /**
@@ -163,7 +165,17 @@ public final class JavaBeanLongProperty extends LongProperty implements JavaBean
      */
     @Override
     public void removeListener(ChangeListener<? super Number> listener) {
-        helper = ExpressionHelper.removeListener(helper, listener);
+        if (isChangeListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.removeListener(helper, listener);
+        }
+    }
+
+    @Override
+    public boolean isChangeListenerAlreadyAdded(ChangeListener<? super Number> listener) {
+        if (listener == null) {
+            throw new NullPointerException();
+        }
+        return helper != null && ArrayUtils.getInstance().contains(helper.getChangeListeners(), listener);
     }
 
     /**

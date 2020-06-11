@@ -48,7 +48,9 @@ public abstract class ObservableValueBase<T> implements ObservableValue<T> {
      */
     @Override
     public void addListener(ChangeListener<? super T> listener) {
-        helper = ExpressionHelper.addListener(helper, this, listener);
+        if (!isChangeListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     /**
@@ -56,7 +58,17 @@ public abstract class ObservableValueBase<T> implements ObservableValue<T> {
      */
     @Override
     public void removeListener(ChangeListener<? super T> listener) {
-        helper = ExpressionHelper.removeListener(helper, listener);
+        if (isChangeListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.removeListener(helper, listener);
+        }
+    }
+
+    @Override
+    public boolean isChangeListenerAlreadyAdded(ChangeListener<? super T> listener) {
+        if (listener == null) {
+            throw new NullPointerException();
+        }
+        return helper != null && ArrayUtils.getInstance().contains(helper.getChangeListeners(), listener);
     }
 
     /**

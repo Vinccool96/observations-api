@@ -146,6 +146,12 @@ public class SetPropertyTest {
         }
 
         @Override
+        public boolean isChangeListenerAlreadyAdded(ChangeListener<? super ObservableSet<Object>> listener) {
+            fail("Not in use");
+            return false;
+        }
+
+        @Override
         public void addListener(InvalidationListener listener) {
             fail("Not in use");
         }

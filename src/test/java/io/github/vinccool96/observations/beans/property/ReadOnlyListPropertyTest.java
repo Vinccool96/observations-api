@@ -75,6 +75,11 @@ public class ReadOnlyListPropertyTest {
         }
 
         @Override
+        public boolean isChangeListenerAlreadyAdded(ChangeListener<? super ObservableList<Object>> listener) {
+            return false;
+        }
+
+        @Override
         public void addListener(InvalidationListener listener) {
         }
 

@@ -72,6 +72,11 @@ public class WeakInvalidationListenerTest {
             removeCounter++;
         }
 
+        @Override
+        public boolean isChangeListenerAlreadyAdded(ChangeListener<? super Object> listener) {
+            return false;
+        }
+
     }
 
 }

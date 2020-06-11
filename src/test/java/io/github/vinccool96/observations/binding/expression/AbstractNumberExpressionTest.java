@@ -413,6 +413,11 @@ public class AbstractNumberExpressionTest {
             @Override public void removeListener(ChangeListener observer) {
             }
 
+            @Override
+            public boolean isChangeListenerAlreadyAdded(ChangeListener listener) {
+                return false;
+            }
+
             @Override public Number getValue() {
                 return null;
             }

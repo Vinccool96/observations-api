@@ -56,6 +56,12 @@ public final class IntegerConstant implements ObservableIntegerValue {
     }
 
     @Override
+    public boolean isChangeListenerAlreadyAdded(ChangeListener<? super Number> listener) {
+        // no-op
+        return false;
+    }
+
+    @Override
     public int intValue() {
         return value;
     }

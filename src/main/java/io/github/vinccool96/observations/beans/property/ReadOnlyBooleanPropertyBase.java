@@ -35,12 +35,24 @@ public abstract class ReadOnlyBooleanPropertyBase extends ReadOnlyBooleanPropert
 
     @Override
     public void addListener(ChangeListener<? super Boolean> listener) {
-        helper = ExpressionHelper.addListener(helper, this, listener);
+        if (!isChangeListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     @Override
     public void removeListener(ChangeListener<? super Boolean> listener) {
-        helper = ExpressionHelper.removeListener(helper, listener);
+        if (isChangeListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.removeListener(helper, listener);
+        }
+    }
+
+    @Override
+    public boolean isChangeListenerAlreadyAdded(ChangeListener<? super Boolean> listener) {
+        if (listener == null) {
+            throw new NullPointerException();
+        }
+        return helper != null && ArrayUtils.getInstance().contains(helper.getChangeListeners(), listener);
     }
 
     /**

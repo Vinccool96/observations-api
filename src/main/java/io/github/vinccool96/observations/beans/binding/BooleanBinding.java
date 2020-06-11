@@ -45,29 +45,46 @@ public abstract class BooleanBinding extends BooleanExpression implements Bindin
 
     @Override
     public void addListener(InvalidationListener listener) {
-        if (helper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+        if (!isInvalidationListenerAlreadyAdded(listener)) {
             helper = ExpressionHelper.addListener(helper, this, listener);
         }
     }
 
     @Override
     public void removeListener(InvalidationListener listener) {
-        helper = ExpressionHelper.removeListener(helper, listener);
+        if (isInvalidationListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.removeListener(helper, listener);
+        }
     }
 
     @Override
     public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
+        if (listener == null) {
+            throw new NullPointerException();
+        }
+        return helper != null && ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     @Override
     public void addListener(ChangeListener<? super Boolean> listener) {
-        helper = ExpressionHelper.addListener(helper, this, listener);
+        if (!isChangeListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     @Override
     public void removeListener(ChangeListener<? super Boolean> listener) {
-        helper = ExpressionHelper.removeListener(helper, listener);
+        if (isChangeListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.removeListener(helper, listener);
+        }
+    }
+
+    @Override
+    public boolean isChangeListenerAlreadyAdded(ChangeListener<? super Boolean> listener) {
+        if (listener == null) {
+            throw new NullPointerException();
+        }
+        return helper != null && ArrayUtils.getInstance().contains(helper.getChangeListeners(), listener);
     }
 
     /**

@@ -100,6 +100,11 @@ public class ReadOnlyBooleanPropertyTest {
         }
 
         @Override
+        public boolean isChangeListenerAlreadyAdded(ChangeListener<? super Boolean> listener) {
+            return false;
+        }
+
+        @Override
         public void addListener(InvalidationListener listener) {
         }
 

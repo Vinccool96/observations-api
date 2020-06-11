@@ -73,6 +73,11 @@ public class WeakChangeListenerTest {
             removeCounter++;
         }
 
+        @Override
+        public boolean isChangeListenerAlreadyAdded(ChangeListener<? super Object> listener) {
+            return false;
+        }
+
     }
 
 }

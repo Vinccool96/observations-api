@@ -56,6 +56,12 @@ public final class LongConstant implements ObservableLongValue {
     }
 
     @Override
+    public boolean isChangeListenerAlreadyAdded(ChangeListener<? super Number> listener) {
+        // no-op
+        return false;
+    }
+
+    @Override
     public int intValue() {
         return (int) value;
     }

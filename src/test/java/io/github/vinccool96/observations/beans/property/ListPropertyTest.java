@@ -146,6 +146,12 @@ public class ListPropertyTest {
         }
 
         @Override
+        public boolean isChangeListenerAlreadyAdded(ChangeListener<? super ObservableList<Object>> listener) {
+            fail("Not in use");
+            return false;
+        }
+
+        @Override
         public void addListener(InvalidationListener listener) {
             fail("Not in use");
         }
