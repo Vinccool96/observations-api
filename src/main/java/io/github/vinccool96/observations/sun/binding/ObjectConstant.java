@@ -52,4 +52,10 @@ public class ObjectConstant<T> implements ObservableObjectValue<T> {
         // no-op
     }
 
+    @Override
+    public boolean isChangeListenerAlreadyAdded(ChangeListener<? super T> listener) {
+        // no-op
+        return false;
+    }
+
 }

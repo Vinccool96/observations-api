@@ -150,6 +150,12 @@ public class MapPropertyTest {
         }
 
         @Override
+        public boolean isChangeListenerAlreadyAdded(ChangeListener<? super ObservableMap<Object, Object>> listener) {
+            fail("Not in use");
+            return false;
+        }
+
+        @Override
         public void addListener(InvalidationListener listener) {
             fail("Not in use");
         }

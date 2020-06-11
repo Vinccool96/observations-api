@@ -99,6 +99,11 @@ public class ReadOnlyDoublePropertyTest {
         }
 
         @Override
+        public boolean isChangeListenerAlreadyAdded(ChangeListener<? super Number> listener) {
+            return false;
+        }
+
+        @Override
         public void addListener(InvalidationListener listener) {
         }
 

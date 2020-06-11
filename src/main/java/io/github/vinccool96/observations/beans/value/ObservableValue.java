@@ -92,4 +92,14 @@ public interface ObservableValue<T> extends Observable {
      */
     void removeListener(ChangeListener<? super T> listener);
 
+    /**
+     * Verify if the specified {@code ChangeListener} already exists for this {@code ObservableValue}.
+     *
+     * @param listener
+     *         the {@code ChangeListener} to verify
+     *
+     * @return {@code true}, if the listener already listens, {@code false} otherwise.
+     */
+    boolean isChangeListenerAlreadyAdded(ChangeListener<? super T> listener);
+
 }

@@ -143,6 +143,12 @@ public class ObjectPropertyTest {
         }
 
         @Override
+        public boolean isChangeListenerAlreadyAdded(ChangeListener<? super Object> listener) {
+            fail("Not in use");
+            return false;
+        }
+
+        @Override
         public void addListener(InvalidationListener listener) {
             fail("Not in use");
         }

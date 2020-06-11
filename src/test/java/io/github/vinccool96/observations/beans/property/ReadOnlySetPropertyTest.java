@@ -75,6 +75,11 @@ public class ReadOnlySetPropertyTest {
         }
 
         @Override
+        public boolean isChangeListenerAlreadyAdded(ChangeListener<? super ObservableSet<Object>> listener) {
+            return false;
+        }
+
+        @Override
         public void addListener(InvalidationListener listener) {
         }
 

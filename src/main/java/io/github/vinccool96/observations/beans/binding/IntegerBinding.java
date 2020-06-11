@@ -40,29 +40,46 @@ public abstract class IntegerBinding extends IntegerExpression implements Number
 
     @Override
     public void addListener(InvalidationListener listener) {
-        if (helper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+        if (!isInvalidationListenerAlreadyAdded(listener)) {
             helper = ExpressionHelper.addListener(helper, this, listener);
         }
     }
 
     @Override
     public void removeListener(InvalidationListener listener) {
-        helper = ExpressionHelper.removeListener(helper, listener);
+        if (isInvalidationListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.removeListener(helper, listener);
+        }
     }
 
     @Override
     public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
+        if (listener == null) {
+            throw new NullPointerException();
+        }
+        return helper != null && ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     @Override
     public void addListener(ChangeListener<? super Number> listener) {
-        helper = ExpressionHelper.addListener(helper, this, listener);
+        if (!isChangeListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     @Override
     public void removeListener(ChangeListener<? super Number> listener) {
-        helper = ExpressionHelper.removeListener(helper, listener);
+        if (isChangeListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.removeListener(helper, listener);
+        }
+    }
+
+    @Override
+    public boolean isChangeListenerAlreadyAdded(ChangeListener<? super Number> listener) {
+        if (listener == null) {
+            throw new NullPointerException();
+        }
+        return helper != null && ArrayUtils.getInstance().contains(helper.getChangeListeners(), listener);
     }
 
     /**

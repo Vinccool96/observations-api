@@ -144,12 +144,24 @@ public abstract class MapBinding<K, V> extends MapExpression<K, V> implements Bi
 
     @Override
     public void addListener(ChangeListener<? super ObservableMap<K, V>> listener) {
-        helper = MapExpressionHelper.addListener(helper, this, listener);
+        if (!isChangeListenerAlreadyAdded(listener)) {
+            helper = MapExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     @Override
     public void removeListener(ChangeListener<? super ObservableMap<K, V>> listener) {
-        helper = MapExpressionHelper.removeListener(helper, listener);
+        if (isChangeListenerAlreadyAdded(listener)) {
+            helper = MapExpressionHelper.removeListener(helper, listener);
+        }
+    }
+
+    @Override
+    public boolean isChangeListenerAlreadyAdded(ChangeListener<? super ObservableMap<K, V>> listener) {
+        if (listener == null) {
+            throw new NullPointerException();
+        }
+        return helper != null && ArrayUtils.getInstance().contains(helper.getChangeListeners(), listener);
     }
 
     @Override

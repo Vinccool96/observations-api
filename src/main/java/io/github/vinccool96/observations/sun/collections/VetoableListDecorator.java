@@ -15,13 +15,13 @@ public abstract class VetoableListDecorator<E> implements ObservableList<E> {
 
     private ListListenerHelper<E> helper;
 
-    private static interface ModCountAccessor {
+    private interface ModCountAccessor {
 
-        public int get();
+        int get();
 
-        public int incrementAndGet();
+        int incrementAndGet();
 
-        public int decrementAndGet();
+        int decrementAndGet();
 
     }
 

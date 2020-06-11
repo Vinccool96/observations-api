@@ -88,6 +88,11 @@ public class ReadOnlyMapPropertyTest {
         }
 
         @Override
+        public boolean isChangeListenerAlreadyAdded(ChangeListener<? super ObservableMap<Object, Object>> listener) {
+            return false;
+        }
+
+        @Override
         public void addListener(MapChangeListener<? super Object, ? super Object> listChangeListener) {
         }
 

@@ -154,7 +154,9 @@ public final class JavaBeanStringProperty extends StringProperty implements Java
      */
     @Override
     public void addListener(ChangeListener<? super String> listener) {
-        helper = ExpressionHelper.addListener(helper, this, listener);
+        if (!isChangeListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     /**
@@ -162,7 +164,17 @@ public final class JavaBeanStringProperty extends StringProperty implements Java
      */
     @Override
     public void removeListener(ChangeListener<? super String> listener) {
-        helper = ExpressionHelper.removeListener(helper, listener);
+        if (isChangeListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.removeListener(helper, listener);
+        }
+    }
+
+    @Override
+    public boolean isChangeListenerAlreadyAdded(ChangeListener<? super String> listener) {
+        if (listener == null) {
+            throw new NullPointerException();
+        }
+        return helper != null && ArrayUtils.getInstance().contains(helper.getChangeListeners(), listener);
     }
 
     /**

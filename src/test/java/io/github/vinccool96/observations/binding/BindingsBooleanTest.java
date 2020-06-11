@@ -383,6 +383,12 @@ public class BindingsBooleanTest {
         }
 
         @Override
+        public boolean isChangeListenerAlreadyAdded(ChangeListener<? super Boolean> listener) {
+            // not used
+            return false;
+        }
+
+        @Override
         public void addListener(InvalidationListener listener) {
             if ((this.listener != null) && !this.listener.equals(listener)) {
                 fail("More than one listener set in mock.");
