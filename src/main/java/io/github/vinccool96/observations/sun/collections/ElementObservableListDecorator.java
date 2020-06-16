@@ -58,28 +58,28 @@ public final class ElementObservableListDecorator<E> extends ObservableListBase<
         listener = new ListChangeListener<E>() {
 
             @Override
-            public void onChanged(Change<? extends E> c) {
-                while (c.next()) {
-                    if (c.wasAdded() || c.wasRemoved()) {
-                        final int removedSize = c.getRemovedSize();
-                        final List<? extends E> removed = c.getRemoved();
+            public void onChanged(Change<? extends E> change) {
+                while (change.next()) {
+                    if (change.wasAdded() || change.wasRemoved()) {
+                        final int removedSize = change.getRemovedSize();
+                        final List<? extends E> removed = change.getRemoved();
                         for (int i = 0; i < removedSize; ++i) {
                             observer.detachListener(removed.get(i));
                         }
                         if (decoratedList instanceof RandomAccess) {
-                            final int to = c.getTo();
-                            for (int i = c.getFrom(); i < to; ++i) {
+                            final int to = change.getTo();
+                            for (int i = change.getFrom(); i < to; ++i) {
                                 observer.attachListener(decoratedList.get(i));
                             }
                         } else {
-                            for (E e : c.getAddedSubList()) {
+                            for (E e : change.getAddedSubList()) {
                                 observer.attachListener(e);
                             }
                         }
                     }
                 }
-                c.reset();
-                fireChange(c);
+                change.reset();
+                fireChange(change);
             }
         };
         this.decoratedList.addListener(new WeakListChangeListener<E>(listener));

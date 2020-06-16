@@ -1,8 +1,7 @@
 package io.github.vinccool96.observations.beans.value;
 
 /**
- * A tagging interface that marks all sub-interfaces of {@link io.github.vinccool96.observations.beans.value.WritableValue}
- * that wrap a number.
+ * A tagging interface that marks all sub-interfaces of {@link WritableValue} that wrap a number.
  *
  * @see WritableValue
  * @see WritableDoubleValue

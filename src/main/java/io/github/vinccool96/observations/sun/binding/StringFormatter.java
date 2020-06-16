@@ -27,14 +27,13 @@ public abstract class StringFormatter extends StringBinding {
     }
 
     private static ObservableValue<?>[] extractDependencies(Object... args) {
-        final List<ObservableValue<?>>
-                dependencies = new ArrayList<ObservableValue<?>>();
+        final List<ObservableValue<?>> dependencies = new ArrayList<ObservableValue<?>>();
         for (final Object obj : args) {
             if (obj instanceof ObservableValue) {
                 dependencies.add((ObservableValue<?>) obj);
             }
         }
-        return dependencies.toArray(new ObservableValue[dependencies.size()]);
+        return dependencies.toArray(new ObservableValue[0]);
     }
 
     public static StringExpression convert(final ObservableValue<?> observableValue) {

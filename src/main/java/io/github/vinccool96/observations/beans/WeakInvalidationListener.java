@@ -54,7 +54,7 @@ public final class WeakInvalidationListener implements InvalidationListener, Wea
      */
     @Override
     public boolean wasGarbageCollected() {
-        return (this.ref.get() == null);
+        return this.ref.get() == null;
     }
 
 }

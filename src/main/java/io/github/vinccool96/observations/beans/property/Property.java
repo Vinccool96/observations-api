@@ -14,7 +14,7 @@ import io.github.vinccool96.observations.beans.value.WritableValue;
 public interface Property<T> extends ReadOnlyProperty<T>, WritableValue<T> {
 
     /**
-     * Create a unidirection binding for this {@code Property}.
+     * Create a unidirectional binding for this {@code Property}.
      * <p>
      * Note that JavaFX has all the bind calls implemented through weak listeners. This means the bound property can be
      * garbage collected and stopped from being updated.
@@ -62,6 +62,7 @@ public interface Property<T> extends ReadOnlyProperty<T>, WritableValue<T> {
      *         if {@code other} is {@code null}
      * @throws IllegalArgumentException
      *         if {@code other} is {@code this}
+     * @see #unbindBidirectional(Property)
      */
     void bindBidirectional(Property<T> other);
 
@@ -73,7 +74,7 @@ public interface Property<T> extends ReadOnlyProperty<T>, WritableValue<T> {
      * It is possible to unbind by a call on the second property. This code will work:
      *
      * <blockquote><pre>
-     *     property1.bindBirectional(property2);
+     *     property1.bindBidirectional(property2);
      *     property2.unbindBidirectional(property1);
      * </pre></blockquote>
      *
@@ -84,6 +85,7 @@ public interface Property<T> extends ReadOnlyProperty<T>, WritableValue<T> {
      *         if {@code other} is {@code null}
      * @throws IllegalArgumentException
      *         if {@code other} is {@code this}
+     * @see #bindBidirectional(Property)
      */
     void unbindBidirectional(Property<T> other);
 

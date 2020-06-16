@@ -12,7 +12,6 @@ import io.github.vinccool96.observations.collections.ObservableMap;
  *
  * @see ObservableMap
  * @see WritableObjectValue
- * @see WritableMapValue
  * @since JavaFX 2.1
  */
 public interface WritableMapValue<K, V> extends WritableObjectValue<ObservableMap<K, V>>, ObservableMap<K, V> {

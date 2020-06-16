@@ -14,13 +14,15 @@ import java.util.List;
  * functionalities for the implementing classes.
  * <ul>
  * <li> Listener handling by implementing {@code addListener} and {@code removeListener} methods.
- *      {@link #fireChange(ListChangeListener.Change)  } method is provided
+ *      {@link #fireChange(ListChangeListener.Change)} method is provided
  *      for notifying the listeners with a {@code Change} object.
  * <li> Methods for building up a {@link ListChangeListener.Change} object. There are various methods called
- *      {@code next*}, like {@link #nextAdd(int, int) } for new items in the lists or {@link #nextRemove(int, Object) } for
+ *      {@code next*}, like {@link #nextAdd(int, int)} for new items in the lists or {@link #nextRemove(int, Object)} for
  *      an item being removed from the list.
- *      <p><strong>These methods must be always enclosed in {@link #beginChange() } and {@link #endChange() } block.</strong>
- *      <p>See the example below.
+ * <p>
+ *     <strong>These methods must be always enclosed in {@link #beginChange()} and {@link #endChange()} block.</strong>
+ * <p>
+ *     See the example below.
  * </ul>
  * <p>
  * The following example shows how the Change build-up works:
@@ -56,7 +58,7 @@ import java.util.List;
  * using {@link ModifiableObservableListBase} as a superclass.
  * <p>
  * Note: In order to create list with sequential access, you should override {@link #listIterator()},
- * {@link #iterator() } methods and use them in {@link #get}, {@link #size()} and other methods accordingly.
+ * {@link #iterator()} methods and use them in {@link #get}, {@link #size()} and other methods accordingly.
  *
  * @param <E>
  *         the type of the elements contained in the List

@@ -39,15 +39,15 @@ public interface Binding<T> extends ObservableValue<T> {
     void invalidate();
 
     /**
-     * Returns the dependencies of a binding in an unmodifiable {@link io.github.vinccool96.observations.collections.ObservableList}.
-     * The implementation is optional. The main purpose of this method is to support developers during development. It
-     * allows to explore and monitor dependencies of a binding during runtime.
+     * Returns the dependencies of a binding in an unmodifiable {@link ObservableList}. The implementation is optional.
+     * The main purpose of this method is to support developers during development. It allows to explore and monitor
+     * dependencies of a binding during runtime.
      * <p>
      * Because this method should not be used in production code, it is recommended to implement this functionality as
      * sparse as possible. For example if the dependencies do not change, each call can generate a new {@code
      * ObservableList}, avoiding the necessity to store the result.
      *
-     * @return an unmodifiable {@code} ObservableList of the dependencies
+     * @return an unmodifiable {@code ObservableList} of the dependencies
      */
     @ReturnsUnmodifiableCollection
     ObservableList<?> getDependencies();

@@ -15,7 +15,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Wraps an ObservableList and sorts it's content. All changes in the ObservableList are propagated immediately to the
+ * Wraps an ObservableList and sorts its content. All changes in the ObservableList are propagated immediately to the
  * SortedList.
  * <p>
  * Note: invalid SortedList (as a result of broken comparison) doesn't send any notification to listeners on becoming
@@ -40,12 +40,12 @@ public final class SortedList<E> extends TransformationList<E, E> {
 
     /**
      * Creates a new SortedList wrapped around the source list. The source list will be sorted using the comparator
-     * provided. If null is provided, the list stays unordered and is equal to the source list.
+     * provided. If {@code null} is provided, the list stays unordered and is equal to the source list.
      *
      * @param source
      *         a list to wrap
      * @param comparator
-     *         a comparator to use or null for unordered List
+     *         a comparator to use or {@code null} for unordered List
      */
     @SuppressWarnings("unchecked")
     public SortedList(@NamedArg("source") ObservableList<? extends E> source,

@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.function.Predicate;
 
 /**
- * Wraps an ObservableList and filters it's content using the provided Predicate. All changes in the ObservableList are
+ * Wraps an ObservableList and filters its content using the provided Predicate. All changes in the ObservableList are
  * propagated immediately to the FilteredList.
  *
  * @see TransformationList

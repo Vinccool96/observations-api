@@ -10,10 +10,10 @@ import java.util.List;
 
 /**
  * A base class for all lists that wraps other lists in a way that changes the list's elements, order, size or generally
- * it's structure.
+ * its structure.
  * <p>
  * If the source list is observable, a listener is automatically added to it and the events are delegated to {@link
- * #sourceChanged(io.github.vinccool96.observations.collections.ListChangeListener.Change)}
+ * #sourceChanged(ListChangeListener.Change)}
  *
  * @param <E>
  *         the type parameter of this list
@@ -129,7 +129,7 @@ public abstract class TransformationList<E, F> extends ObservableListBase<E> imp
      */
     public final int getSourceIndexFor(ObservableList<?> list, int index) {
         if (!isInTransformationChain(list)) {
-            throw new IllegalArgumentException("Provided list is not in the transformation chain of this"
+            throw new IllegalArgumentException("Provided list is not in the transformation chain of this "
                     + "transformation list");
         }
         List<?> currentSource = source;

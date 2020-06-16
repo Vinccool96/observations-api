@@ -103,6 +103,9 @@ public abstract class VetoableListDecorator<E> implements ObservableList<E> {
 
     @Override
     public boolean setAll(Collection<? extends E> col) {
+        if (col.contains(null)) {
+            throw new NullPointerException();
+        }
         onProposedChange(Collections.unmodifiableList(new ArrayList(col)), 0, size());
         try {
             modCount++;
@@ -196,6 +199,9 @@ public abstract class VetoableListDecorator<E> implements ObservableList<E> {
 
     @Override
     public boolean add(E e) {
+        if (e == null) {
+            throw new NullPointerException();
+        }
         onProposedChange(Collections.singletonList(e), size(), size());
         try {
             modCount++;
@@ -224,6 +230,9 @@ public abstract class VetoableListDecorator<E> implements ObservableList<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
+        if (c.contains(null)) {
+            throw new NullPointerException();
+        }
         onProposedChange(Collections.unmodifiableList(new ArrayList(c)), size(), size());
         try {
             modCount++;
@@ -240,6 +249,9 @@ public abstract class VetoableListDecorator<E> implements ObservableList<E> {
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
+        if (c.contains(null)) {
+            throw new NullPointerException();
+        }
         onProposedChange(Collections.unmodifiableList(new ArrayList(c)), index, index);
         try {
             modCount++;
@@ -305,12 +317,18 @@ public abstract class VetoableListDecorator<E> implements ObservableList<E> {
 
     @Override
     public E set(int index, E element) {
+        if (element == null) {
+            throw new NullPointerException();
+        }
         onProposedChange(Collections.singletonList(element), index, index + 1);
         return list.set(index, element);
     }
 
     @Override
     public void add(int index, E element) {
+        if (element == null) {
+            throw new NullPointerException();
+        }
         onProposedChange(Collections.singletonList(element), index, index);
         try {
             modCount++;
@@ -429,6 +447,9 @@ public abstract class VetoableListDecorator<E> implements ObservableList<E> {
 
         @Override
         public boolean add(E e) {
+            if (e == null) {
+                throw new NullPointerException();
+            }
             checkForComodification();
             onProposedChange(Collections.<E>singletonList(e), offset + size(), offset + size());
             try {
@@ -460,6 +481,9 @@ public abstract class VetoableListDecorator<E> implements ObservableList<E> {
 
         @Override
         public boolean addAll(Collection<? extends E> c) {
+            if (c.contains(null)) {
+                throw new NullPointerException();
+            }
             checkForComodification();
             onProposedChange(Collections.unmodifiableList(new ArrayList(c)), offset + size(), offset + size());
             try {
@@ -477,6 +501,9 @@ public abstract class VetoableListDecorator<E> implements ObservableList<E> {
 
         @Override
         public boolean addAll(int index, Collection<? extends E> c) {
+            if (c.contains(null)) {
+                throw new NullPointerException();
+            }
             checkForComodification();
             onProposedChange(Collections.unmodifiableList(new ArrayList(c)), offset + index, offset + index);
             try {
@@ -547,6 +574,9 @@ public abstract class VetoableListDecorator<E> implements ObservableList<E> {
 
         @Override
         public E set(int index, E element) {
+            if (element == null) {
+                throw new NullPointerException();
+            }
             checkForComodification();
             onProposedChange(Collections.singletonList(element), offset + index, offset + index + 1);
             return subList.set(index, element);
@@ -554,6 +584,9 @@ public abstract class VetoableListDecorator<E> implements ObservableList<E> {
 
         @Override
         public void add(int index, E element) {
+            if (element == null) {
+                throw new NullPointerException();
+            }
             checkForComodification();
             onProposedChange(Collections.singletonList(element), offset + index, offset + index);
             try {
@@ -595,22 +628,21 @@ public abstract class VetoableListDecorator<E> implements ObservableList<E> {
         @Override
         public ListIterator<E> listIterator() {
             checkForComodification();
-            return new VetoableListIteratorDecorator(new ModCountAccessorImplSub(),
-                    subList.listIterator(), offset);
+            return new VetoableListIteratorDecorator(new ModCountAccessorImplSub(), subList.listIterator(), offset);
         }
 
         @Override
         public ListIterator<E> listIterator(int index) {
             checkForComodification();
-            return new VetoableListIteratorDecorator(new ModCountAccessorImplSub(),
-                    subList.listIterator(index), offset + index);
+            return new VetoableListIteratorDecorator(new ModCountAccessorImplSub(), subList.listIterator(index),
+                    offset + index);
         }
 
         @Override
         public List<E> subList(int fromIndex, int toIndex) {
             checkForComodification();
-            return new VetoableSubListDecorator(new ModCountAccessorImplSub(),
-                    subList.subList(fromIndex, toIndex), offset + fromIndex);
+            return new VetoableSubListDecorator(new ModCountAccessorImplSub(), subList.subList(fromIndex, toIndex),
+                    offset + fromIndex);
         }
 
         @Override
@@ -772,6 +804,9 @@ public abstract class VetoableListDecorator<E> implements ObservableList<E> {
 
         @Override
         public void set(E e) {
+            if (e == null) {
+                throw new NullPointerException();
+            }
             checkForComodification();
             if (lastReturned == -1) {
                 throw new IllegalStateException();
@@ -782,6 +817,9 @@ public abstract class VetoableListDecorator<E> implements ObservableList<E> {
 
         @Override
         public void add(E e) {
+            if (e == null) {
+                throw new NullPointerException();
+            }
             checkForComodification();
             onProposedChange(Collections.singletonList(e), offset + cursor, offset + cursor);
             try {

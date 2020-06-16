@@ -228,7 +228,7 @@ public class ListListenerHelperTest {
             int counter;
 
             @Override
-            public void onChanged(Change<? extends Object> c) {
+            public void onChanged(Change<? extends Object> change) {
                 helper = ListListenerHelper.addListener(helper, invalidationListenerMock[counter++]);
             }
         };
@@ -340,7 +340,7 @@ public class ListListenerHelperTest {
             int counter;
 
             @Override
-            public void onChanged(Change<? extends Object> c) {
+            public void onChanged(Change<? extends Object> change) {
                 helper = ListListenerHelper.removeListener(helper, invalidationListenerMock[counter++]);
             }
         };

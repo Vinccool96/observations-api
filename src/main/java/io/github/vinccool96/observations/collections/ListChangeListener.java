@@ -16,7 +16,7 @@ import java.util.List;
 public interface ListChangeListener<E> {
 
     /**
-     * Represents a report of a changes done to an Observablelist. The Change may consist of one or more actual changes
+     * Represents a report of a changes done to an ObservableList. The Change may consist of one or more actual changes
      * and must be iterated by {@link #next()} method.
      * <p>
      * Each change must be one of the following:
@@ -315,11 +315,11 @@ public interface ListChangeListener<E> {
     /**
      * Called after a change has been made to an ObservableList.
      *
-     * @param c
+     * @param change
      *         an object representing the change that was done
      *
      * @see Change
      */
-    void onChanged(Change<? extends E> c);
+    void onChanged(Change<? extends E> change);
 
 }
