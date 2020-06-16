@@ -1,5 +1,6 @@
 package io.github.vinccool96.observations.collections;
 
+import io.github.vinccool96.observations.sun.collections.VetoableListDecorator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -155,10 +156,17 @@ public class ObservableListTest {
 
     @Test
     public void testRemoveNull() {
-        useListData("one", "two", null, "three");
-        boolean b = list.remove(null);
-        mlo.check1AddRemove(list, Arrays.asList((String) null), 2, 2);
-        assertTrue(b);
+        if (!(list instanceof VetoableListDecorator)) {
+            useListData("one", "two", null, "three");
+            boolean b = list.remove(null);
+            mlo.check1AddRemove(list, Arrays.asList((String) null), 2, 2);
+            assertTrue(b);
+        } else {
+            useListData("one", "two", "three");
+            boolean b = list.remove("three");
+            mlo.check1AddRemove(list, Arrays.asList("three"), 2, 2);
+            assertTrue(b);
+        }
     }
 
     @Test

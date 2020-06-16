@@ -29,7 +29,7 @@ public class ChangeHelper {
     }
 
     public static String updateChangeToString(int from, int to) {
-        return "updated at range [" + from + ", " + to + ")";
+        return "updated at range [" + from + ", " + to + "]";
     }
 
 }

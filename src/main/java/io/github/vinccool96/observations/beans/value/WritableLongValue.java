@@ -4,7 +4,7 @@ package io.github.vinccool96.observations.beans.value;
  * A writable {@code long} value.
  *
  * @see WritableValue
- * @see io.github.vinccool96.observations.beans.value.WritableNumberValue
+ * @see WritableNumberValue
  * @since JavaFX 2.0
  */
 public interface WritableLongValue extends WritableNumberValue {

@@ -2,7 +2,6 @@ package io.github.vinccool96.observations.collections;
 
 import io.github.vinccool96.observations.sun.collections.VetoableListDecorator;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.*;
@@ -61,69 +60,59 @@ public class VetoableObservableListTest {
     }
 
     @Test(expected = NullPointerException.class)
-    @Ignore
     public void testNull_add() {
         list.add(null);
 
     }
 
     @Test(expected = NullPointerException.class)
-    @Ignore
     public void testNull_add_indexed() {
         list.add(1, null);
 
     }
 
     @Test(expected = NullPointerException.class)
-    @Ignore
     public void testNull_addAll_collection() {
         list.addAll(Arrays.asList("a", null, "b"));
 
     }
 
     @Test(expected = NullPointerException.class)
-    @Ignore
     public void testNull_addAll() {
         list.addAll("a", null, "b");
 
     }
 
     @Test(expected = NullPointerException.class)
-    @Ignore
     public void testNull_addAll_collection_indexed() {
         list.addAll(1, Arrays.asList("a", null, "b"));
 
     }
 
     @Test(expected = NullPointerException.class)
-    @Ignore
     public void testNull_set() {
         list.set(1, null);
 
     }
 
     @Test(expected = NullPointerException.class)
-    @Ignore
     public void testNull_setAll() {
         list.setAll("a", null);
 
     }
 
     @Test(expected = NullPointerException.class)
-    @Ignore
     public void testNull_setAll_collection() {
         list.setAll(Arrays.asList("a", null, "b"));
     }
 
     @Test(expected = NullPointerException.class)
-    @Ignore
     public void testNull_listIterator_add() {
         list.listIterator().add(null);
 
     }
 
     @Test(expected = NullPointerException.class)
-    @Ignore
     public void testNull_listIterator_set() {
         ListIterator<String> it = list.listIterator();
         it.next();
@@ -131,37 +120,31 @@ public class VetoableObservableListTest {
     }
 
     @Test(expected = NullPointerException.class)
-    @Ignore
     public void testNull_subList_add() {
         list.subList(0, 1).add(null);
     }
 
     @Test(expected = NullPointerException.class)
-    @Ignore
     public void testNull_subList_add_indexed() {
         list.subList(0, 1).add(0, null);
     }
 
     @Test(expected = NullPointerException.class)
-    @Ignore
     public void testNull_subList_addAll() {
         list.subList(0, 1).addAll(Collections.<String>singleton(null));
     }
 
     @Test(expected = NullPointerException.class)
-    @Ignore
     public void testNull_subList_addAll_indexed() {
         list.subList(0, 1).addAll(0, Collections.<String>singleton(null));
     }
 
     @Test(expected = NullPointerException.class)
-    @Ignore
     public void testNull_subList_set() {
         list.subList(0, 1).set(0, null);
     }
 
     @Test(expected = NullPointerException.class)
-    @Ignore
     public void testNull_subList_listIterator() {
         list.subList(0, 1).listIterator().add(null);
     }

@@ -76,7 +76,7 @@ public interface ObservableList<E> extends List<E>, Observable {
      * Clears the ObservableList and add all elements from the collection.
      *
      * @param col
-     *         the collection with elements that will be added to this observableArrayList
+     *         the collection with elements that will be added to this observableList
      *
      * @return true (as specified by Collection.add(E))
      *
@@ -86,7 +86,7 @@ public interface ObservableList<E> extends List<E>, Observable {
     boolean setAll(Collection<? extends E> col);
 
     /**
-     * A convenient method for var-arg usage of removaAll method.
+     * A convenient method for var-arg usage of removeAll method.
      *
      * @param elements
      *         the elements to be removed

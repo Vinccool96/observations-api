@@ -11,8 +11,7 @@ import io.github.vinccool96.observations.sun.collections.annotations.ReturnsUnmo
 import io.github.vinccool96.observations.util.ArrayUtils;
 
 /**
- * Base class that provides most of the functionality needed to implement a {@link
- * io.github.vinccool96.observations.beans.binding.Binding} of a {@code String}.
+ * Base class that provides most of the functionality needed to implement a {@link Binding} of a {@code String}.
  * <p>
  * {@code StringBinding} provides a simple invalidation-scheme. An extending class can register dependencies by calling
  * {@link #bind(Observable...)}. If One of the registered dependencies becomes invalid, this {@code StringBinding} is
@@ -24,8 +23,8 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * <p>
  * See {@link DoubleBinding} for an example how this base class can be extended.
  *
- * @see io.github.vinccool96.observations.beans.binding.Binding
- * @see io.github.vinccool96.observations.beans.binding.StringExpression
+ * @see Binding
+ * @see StringExpression
  * @since JavaFX 2.0
  */
 public abstract class StringBinding extends StringExpression implements Binding<String> {

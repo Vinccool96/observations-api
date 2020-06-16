@@ -11,8 +11,8 @@ import io.github.vinccool96.observations.sun.binding.StringFormatter;
  * A concrete sub-class of {@code StringExpression} has to implement the method {@link ObservableStringValue#get()},
  * which provides the actual value of this expression.
  * <p>
- * Note: all implementation of {@link io.github.vinccool96.observations.beans.binding.BooleanBinding} returned by the
- * comparisons in this class consider a {@code String} that is {@code null} equal to an empty {@code String}.
+ * Note: all implementation of {@link BooleanBinding} returned by the comparisons in this class consider a {@code
+ * String} that is {@code null} equal to an empty {@code String}.
  *
  * @since JavaFX 2.0
  */
@@ -36,9 +36,8 @@ public abstract class StringExpression implements ObservableStringValue {
 
     /**
      * Returns a {@code StringExpression} that wraps a {@link ObservableValue}. If the {@code ObservableValue} is
-     * already a {@code StringExpression}, it will be returned. Otherwise a new {@link
-     * io.github.vinccool96.observations.beans.binding.StringBinding} is created that holds the value of the {@code
-     * ObservableValue} converted to a {@code String}.
+     * already a {@code StringExpression}, it will be returned. Otherwise a new {@link StringBinding} is created that
+     * holds the value of the {@code ObservableValue} converted to a {@code String}.
      *
      * @param value
      *         The source {@code ObservableValue}
@@ -73,8 +72,8 @@ public abstract class StringExpression implements ObservableStringValue {
     }
 
     /**
-     * Creates a new {@link io.github.vinccool96.observations.beans.binding.BooleanBinding} that holds {@code true} if
-     * this and another {@link ObservableStringValue} are equal.
+     * Creates a new {@link BooleanBinding} that holds {@code true} if this and another {@link ObservableStringValue}
+     * are equal.
      * <p>
      * Note: In this comparison a {@code String} that is {@code null} is considered equal to an empty {@code String}.
      *
@@ -88,8 +87,8 @@ public abstract class StringExpression implements ObservableStringValue {
     }
 
     /**
-     * Creates a new {@link io.github.vinccool96.observations.beans.binding.BooleanBinding} that holds {@code true} if
-     * this {@code StringExpression} is equal to a constant value.
+     * Creates a new {@link BooleanBinding} that holds {@code true} if this {@code StringExpression} is equal to a
+     * constant value.
      * <p>
      * Note: In this comparison a {@code String} that is {@code null} is considered equal to an empty {@code String}.
      *
@@ -103,8 +102,8 @@ public abstract class StringExpression implements ObservableStringValue {
     }
 
     /**
-     * Creates a new {@link io.github.vinccool96.observations.beans.binding.BooleanBinding} that holds {@code true} if
-     * this and another {@link ObservableStringValue} are not equal.
+     * Creates a new {@link BooleanBinding} that holds {@code true} if this and another {@link ObservableStringValue}
+     * are not equal.
      * <p>
      * Note: In this comparison a {@code String} that is {@code null} is considered equal to an empty {@code String}.
      *
@@ -119,8 +118,8 @@ public abstract class StringExpression implements ObservableStringValue {
     }
 
     /**
-     * Creates a new {@link io.github.vinccool96.observations.beans.binding.BooleanBinding} that holds {@code true} if
-     * this {@code StringExpression} is not equal to a constant value.
+     * Creates a new {@link BooleanBinding} that holds {@code true} if this {@code StringExpression} is not equal to a
+     * constant value.
      * <p>
      * Note: In this comparison a {@code String} that is {@code null} is considered equal to an empty {@code String}.
      *
@@ -134,8 +133,8 @@ public abstract class StringExpression implements ObservableStringValue {
     }
 
     /**
-     * Creates a new {@link io.github.vinccool96.observations.beans.binding.BooleanBinding} that holds {@code true} if
-     * this and another {@link ObservableStringValue} are equal ignoring case.
+     * Creates a new {@link BooleanBinding} that holds {@code true} if this and another {@link ObservableStringValue}
+     * are equal ignoring case.
      * <p>
      * Note: In this comparison a {@code String} that is {@code null} is considered equal to an empty {@code String}.
      *
@@ -150,8 +149,8 @@ public abstract class StringExpression implements ObservableStringValue {
     }
 
     /**
-     * Creates a new {@link io.github.vinccool96.observations.beans.binding.BooleanBinding} that holds {@code true} if
-     * this {@code StringExpression} is equal to a constant value ignoring case.
+     * Creates a new {@link BooleanBinding} that holds {@code true} if this {@code StringExpression} is equal to a
+     * constant value ignoring case.
      * <p>
      * Note: In this comparison a {@code String} that is {@code null} is considered equal to an empty {@code String}.
      *
@@ -165,8 +164,8 @@ public abstract class StringExpression implements ObservableStringValue {
     }
 
     /**
-     * Creates a new {@link io.github.vinccool96.observations.beans.binding.BooleanBinding} that holds {@code true} if
-     * this and another {@link ObservableStringValue} are not equal ignoring case.
+     * Creates a new {@link BooleanBinding} that holds {@code true} if this and another {@link ObservableStringValue}
+     * are not equal ignoring case.
      * <p>
      * Note: In this comparison a {@code String} that is {@code null} is considered equal to an empty {@code String}.
      *
@@ -181,8 +180,8 @@ public abstract class StringExpression implements ObservableStringValue {
     }
 
     /**
-     * Creates a new {@link io.github.vinccool96.observations.beans.binding.BooleanBinding} that holds {@code true} if
-     * this {@code StringExpression} is not equal to a constant value ignoring case.
+     * Creates a new {@link BooleanBinding} that holds {@code true} if this {@code StringExpression} is not equal to a
+     * constant value ignoring case.
      * <p>
      * Note: In this comparison a {@code String} that is {@code null} is considered equal to an empty {@code String}.
      *
@@ -196,8 +195,8 @@ public abstract class StringExpression implements ObservableStringValue {
     }
 
     /**
-     * Creates a new {@link io.github.vinccool96.observations.beans.binding.BooleanBinding} that holds {@code true} if
-     * this {@code StringExpression} is greater than another {@link ObservableStringValue}.
+     * Creates a new {@link BooleanBinding} that holds {@code true} if this {@code StringExpression} is greater than
+     * another {@link ObservableStringValue}.
      * <p>
      * Note: In this comparison a {@code String} that is {@code null} is considered equal to an empty {@code String}.
      *
@@ -211,8 +210,8 @@ public abstract class StringExpression implements ObservableStringValue {
     }
 
     /**
-     * Creates a new {@link io.github.vinccool96.observations.beans.binding.BooleanBinding} that holds {@code true} if
-     * this {@code StringExpression} is greater than a constant value.
+     * Creates a new {@link BooleanBinding} that holds {@code true} if this {@code StringExpression} is greater than a
+     * constant value.
      * <p>
      * Note: In this comparison a {@code String} that is {@code null} is considered equal to an empty {@code String}.
      *
@@ -226,8 +225,8 @@ public abstract class StringExpression implements ObservableStringValue {
     }
 
     /**
-     * Creates a new {@link io.github.vinccool96.observations.beans.binding.BooleanBinding} that holds {@code true} if
-     * this {@code StringExpression} is less than another {@link ObservableStringValue}.
+     * Creates a new {@link BooleanBinding} that holds {@code true} if this {@code StringExpression} is less than
+     * another {@link ObservableStringValue}.
      * <p>
      * Note: In this comparison a {@code String} that is {@code null} is considered equal to an empty {@code String}.
      *
@@ -241,8 +240,8 @@ public abstract class StringExpression implements ObservableStringValue {
     }
 
     /**
-     * Creates a new {@link io.github.vinccool96.observations.beans.binding.BooleanBinding} that holds {@code true} if
-     * this {@code StringExpression} is less than a constant value.
+     * Creates a new {@link BooleanBinding} that holds {@code true} if this {@code StringExpression} is less than a
+     * constant value.
      * <p>
      * Note: In this comparison a {@code String} that is {@code null} is considered equal to an empty {@code String}.
      *
@@ -256,8 +255,8 @@ public abstract class StringExpression implements ObservableStringValue {
     }
 
     /**
-     * Creates a new {@link io.github.vinccool96.observations.beans.binding.BooleanBinding} that holds {@code true} if
-     * this {@code StringExpression} is greater than or equal to another {@link ObservableStringValue}.
+     * Creates a new {@link BooleanBinding} that holds {@code true} if this {@code StringExpression} is greater than or
+     * equal to another {@link ObservableStringValue}.
      * <p>
      * Note: In this comparison a {@code String} that is {@code null} is considered equal to an empty {@code String}.
      *
@@ -272,8 +271,8 @@ public abstract class StringExpression implements ObservableStringValue {
     }
 
     /**
-     * Creates a new {@link io.github.vinccool96.observations.beans.binding.BooleanBinding} that holds {@code true} if
-     * this {@code StringExpression} is greater than or equal to a constant value.
+     * Creates a new {@link BooleanBinding} that holds {@code true} if this {@code StringExpression} is greater than or
+     * equal to a constant value.
      * <p>
      * Note: In this comparison a {@code String} that is {@code null} is considered equal to an empty {@code String}.
      *
@@ -287,8 +286,8 @@ public abstract class StringExpression implements ObservableStringValue {
     }
 
     /**
-     * Creates a new {@link io.github.vinccool96.observations.beans.binding.BooleanBinding} that holds {@code true} if
-     * this {@code StringExpression} is less than or equal to another {@link ObservableStringValue}.
+     * Creates a new {@link BooleanBinding} that holds {@code true} if this {@code StringExpression} is less than or
+     * equal to another {@link ObservableStringValue}.
      * <p>
      * Note: In this comparison a {@code String} that is {@code null} is considered equal to an empty {@code String}.
      *
@@ -303,8 +302,8 @@ public abstract class StringExpression implements ObservableStringValue {
     }
 
     /**
-     * Creates a new {@link io.github.vinccool96.observations.beans.binding.BooleanBinding} that holds {@code true} if
-     * this {@code StringExpression} is less than or equal to a constant value.
+     * Creates a new {@link BooleanBinding} that holds {@code true} if this {@code StringExpression} is less than or
+     * equal to a constant value.
      * <p>
      * Note: In this comparison a {@code String} that is {@code null} is considered equal to an empty {@code String}.
      *

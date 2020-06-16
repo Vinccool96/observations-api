@@ -22,7 +22,7 @@ public interface WritableObjectValue<T> extends WritableValue<T> {
     T get();
 
     /**
-     * Set the wrapped value. Should be equivalent to {@link #setValue(java.lang.Object)}
+     * Set the wrapped value. Should be equivalent to {@link #setValue(Object)}
      *
      * @param value
      *         The new value

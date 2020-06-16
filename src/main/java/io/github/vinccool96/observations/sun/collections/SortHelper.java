@@ -63,8 +63,7 @@ public class SortHelper {
         return result;
     }
 
-    public <T> int[] sort(T[] a, int fromIndex, int toIndex,
-            Comparator<? super T> c) {
+    public <T> int[] sort(T[] a, int fromIndex, int toIndex, Comparator<? super T> c) {
         rangeCheck(a.length, fromIndex, toIndex);
         T[] aux = (T[]) copyOfRange(a, fromIndex, toIndex);
         int[] result = initPermutation(a.length);
@@ -124,26 +123,20 @@ public class SortHelper {
         T[] copy = ((Object) newType == (Object) Object[].class)
                 ? (T[]) new Object[newLength]
                 : (T[]) Array.newInstance(newType.getComponentType(), newLength);
-        System.arraycopy(original, from, copy, 0,
-                Math.min(original.length - from, newLength));
+        System.arraycopy(original, from, copy, 0, Math.min(original.length - from, newLength));
         return copy;
     }
 
     /**
      * Merge sort from Oracle JDK 6
      */
-    private void mergeSort(int[] src,
-            int[] dest,
-            int low,
-            int high,
-            int off) {
+    private void mergeSort(int[] src, int[] dest, int low, int high, int off) {
         int length = high - low;
 
         // Insertion sort on smallest arrays
         if (length < INSERTIONSORT_THRESHOLD) {
             for (int i = low; i < high; i++) {
-                for (int j = i; j > low &&
-                        ((Comparable) dest[j - 1]).compareTo(dest[j]) > 0; j--) {
+                for (int j = i; j > low && ((Comparable) dest[j - 1]).compareTo(dest[j]) > 0; j--) {
                     swap(dest, j, j - 1);
                 }
             }
@@ -159,8 +152,8 @@ public class SortHelper {
         mergeSort(dest, src, low, mid, -off);
         mergeSort(dest, src, mid, high, -off);
 
-        // If list is already sorted, just copy from src to dest.  This is an
-        // optimization that results in faster sorts for nearly ordered lists.
+        // If list is already sorted, just copy from src to dest.  This is an optimization that results in faster sorts
+        // for nearly ordered lists.
         if (((Comparable) src[mid - 1]).compareTo(src[mid]) <= 0) {
             System.arraycopy(src, low, dest, destLow, length);
             return;
@@ -185,18 +178,13 @@ public class SortHelper {
     /**
      * Merge sort from Oracle JDK 6
      */
-    private void mergeSort(Object[] src,
-            Object[] dest,
-            int low,
-            int high,
-            int off) {
+    private void mergeSort(Object[] src, Object[] dest, int low, int high, int off) {
         int length = high - low;
 
         // Insertion sort on smallest arrays
         if (length < INSERTIONSORT_THRESHOLD) {
             for (int i = low; i < high; i++) {
-                for (int j = i; j > low &&
-                        ((Comparable) dest[j - 1]).compareTo(dest[j]) > 0; j--) {
+                for (int j = i; j > low && ((Comparable) dest[j - 1]).compareTo(dest[j]) > 0; j--) {
                     swap(dest, j, j - 1);
                 }
             }
@@ -212,8 +200,8 @@ public class SortHelper {
         mergeSort(dest, src, low, mid, -off);
         mergeSort(dest, src, mid, high, -off);
 
-        // If list is already sorted, just copy from src to dest.  This is an
-        // optimization that results in faster sorts for nearly ordered lists.
+        // If list is already sorted, just copy from src to dest.  This is an optimization that results in faster sorts
+        // for nearly ordered lists.
         if (((Comparable) src[mid - 1]).compareTo(src[mid]) <= 0) {
             System.arraycopy(src, low, dest, destLow, length);
             return;
@@ -235,10 +223,7 @@ public class SortHelper {
         }
     }
 
-    private void mergeSort(Object[] src,
-            Object[] dest,
-            int low, int high, int off,
-            Comparator c) {
+    private void mergeSort(Object[] src, Object[] dest, int low, int high, int off, Comparator c) {
         int length = high - low;
 
         // Insertion sort on smallest arrays
@@ -260,8 +245,8 @@ public class SortHelper {
         mergeSort(dest, src, low, mid, -off, c);
         mergeSort(dest, src, mid, high, -off, c);
 
-        // If list is already sorted, just copy from src to dest.  This is an
-        // optimization that results in faster sorts for nearly ordered lists.
+        // If list is already sorted, just copy from src to dest.  This is an optimization that results in faster sorts
+        // for nearly ordered lists.
         if (c.compare(src[mid - 1], src[mid]) <= 0) {
             System.arraycopy(src, low, dest, destLow, length);
             return;

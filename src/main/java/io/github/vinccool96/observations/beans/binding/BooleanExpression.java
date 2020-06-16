@@ -42,8 +42,7 @@ public abstract class BooleanExpression implements ObservableBooleanValue {
      * @throws NullPointerException
      *         if {@code value} is {@code null}
      */
-    public static BooleanExpression booleanExpression(
-            final ObservableBooleanValue value) {
+    public static BooleanExpression booleanExpression(final ObservableBooleanValue value) {
         if (value == null) {
             throw new NullPointerException("Value must be specified.");
         }

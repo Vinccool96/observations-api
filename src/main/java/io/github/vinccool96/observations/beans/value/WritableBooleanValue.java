@@ -3,7 +3,7 @@ package io.github.vinccool96.observations.beans.value;
 /**
  * A writable {@code boolean} value.
  *
- * @see io.github.vinccool96.observations.beans.value.WritableValue
+ * @see WritableValue
  * @since JavaFX 2.0
  */
 public interface WritableBooleanValue extends WritableValue<Boolean> {
