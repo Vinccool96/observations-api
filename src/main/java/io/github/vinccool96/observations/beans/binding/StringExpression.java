@@ -112,8 +112,7 @@ public abstract class StringExpression implements ObservableStringValue {
      *
      * @return the new {@code BooleanBinding}
      */
-    public BooleanBinding isNotEqualTo(
-            final ObservableStringValue other) {
+    public BooleanBinding isNotEqualTo(final ObservableStringValue other) {
         return Bindings.notEqual(this, other);
     }
 
@@ -143,8 +142,7 @@ public abstract class StringExpression implements ObservableStringValue {
      *
      * @return the new {@code BooleanBinding}
      */
-    public BooleanBinding isEqualToIgnoreCase(
-            final ObservableStringValue other) {
+    public BooleanBinding isEqualToIgnoreCase(final ObservableStringValue other) {
         return Bindings.equalIgnoreCase(this, other);
     }
 
@@ -174,8 +172,7 @@ public abstract class StringExpression implements ObservableStringValue {
      *
      * @return the new {@code BooleanBinding}
      */
-    public BooleanBinding isNotEqualToIgnoreCase(
-            final ObservableStringValue other) {
+    public BooleanBinding isNotEqualToIgnoreCase(final ObservableStringValue other) {
         return Bindings.notEqualIgnoreCase(this, other);
     }
 
@@ -265,8 +262,7 @@ public abstract class StringExpression implements ObservableStringValue {
      *
      * @return the new {@code BooleanBinding}
      */
-    public BooleanBinding greaterThanOrEqualTo(
-            final ObservableStringValue other) {
+    public BooleanBinding greaterThanOrEqualTo(final ObservableStringValue other) {
         return Bindings.greaterThanOrEqual(this, other);
     }
 
@@ -296,8 +292,7 @@ public abstract class StringExpression implements ObservableStringValue {
      *
      * @return the new {@code BooleanBinding}
      */
-    public BooleanBinding lessThanOrEqualTo(
-            final ObservableStringValue other) {
+    public BooleanBinding lessThanOrEqualTo(final ObservableStringValue other) {
         return Bindings.lessThanOrEqual(this, other);
     }
 

@@ -194,7 +194,7 @@ public class ObservableCollections {
         if (map == null || keyType == null || valueType == null) {
             throw new NullPointerException();
         }
-        return new ObservableCollections.CheckedObservableMap<K, V>(map, keyType, valueType);
+        return new CheckedObservableMap<K, V>(map, keyType, valueType);
     }
 
     /**
@@ -216,10 +216,10 @@ public class ObservableCollections {
         if (map == null) {
             throw new NullPointerException();
         }
-        return new ObservableCollections.SynchronizedObservableMap<K, V>(map);
+        return new SynchronizedObservableMap<K, V>(map);
     }
 
-    private static ObservableMap EMPTY_OBSERVABLE_MAP = new ObservableCollections.EmptyObservableMap();
+    private static ObservableMap EMPTY_OBSERVABLE_MAP = new EmptyObservableMap();
 
     /**
      * Creates and empty unmodifiable observable map.
@@ -443,7 +443,7 @@ public class ObservableCollections {
         if (list == null) {
             throw new NullPointerException();
         }
-        return new ObservableCollections.UnmodifiableObservableListImpl<E>(list);
+        return new UnmodifiableObservableListImpl<E>(list);
     }
 
     /**
@@ -458,13 +458,13 @@ public class ObservableCollections {
      *
      * @return a dynamically typesafe view of the specified list
      *
-     * @see Collections#checkedList(List, java.lang.Class)
+     * @see Collections#checkedList(List, Class)
      */
     public static <E> ObservableList<E> checkedObservableList(ObservableList<E> list, Class<E> type) {
         if (list == null) {
             throw new NullPointerException();
         }
-        return new ObservableCollections.CheckedObservableList<E>(list, type);
+        return new CheckedObservableList<E>(list, type);
     }
 
     /**
@@ -483,10 +483,10 @@ public class ObservableCollections {
         if (list == null) {
             throw new NullPointerException();
         }
-        return new ObservableCollections.SynchronizedObservableList<E>(list);
+        return new SynchronizedObservableList<E>(list);
     }
 
-    private static ObservableList EMPTY_OBSERVABLE_LIST = new ObservableCollections.EmptyObservableList();
+    private static ObservableList EMPTY_OBSERVABLE_LIST = new EmptyObservableList();
 
     /**
      * Creates and empty unmodifiable observable list.
@@ -514,11 +514,11 @@ public class ObservableCollections {
      *
      * @return a singleton observable list
      *
-     * @see Collections#singletonList(java.lang.Object)
+     * @see Collections#singletonList(Object)
      */
     @ReturnsUnmodifiableCollection
     public static <E> ObservableList<E> singletonObservableList(E e) {
-        return new ObservableCollections.SingletonObservableList<E>(e);
+        return new SingletonObservableList<E>(e);
     }
 
     /**
@@ -535,12 +535,11 @@ public class ObservableCollections {
      * @since JavaFX 8.0
      */
     @ReturnsUnmodifiableCollection
-    public static <E> ObservableSet<E> unmodifiableObservableSet(
-            ObservableSet<E> set) {
+    public static <E> ObservableSet<E> unmodifiableObservableSet(ObservableSet<E> set) {
         if (set == null) {
             throw new NullPointerException();
         }
-        return new ObservableCollections.UnmodifiableObservableSet<E>(set);
+        return new UnmodifiableObservableSet<E>(set);
     }
 
     /**
@@ -555,14 +554,14 @@ public class ObservableCollections {
      *
      * @return a dynamically typesafe view of the specified set
      *
-     * @see Collections#checkedSet(Set, java.lang.Class)
+     * @see Collections#checkedSet(Set, Class)
      * @since JavaFX 8.0
      */
     public static <E> ObservableSet<E> checkedObservableSet(ObservableSet<E> set, Class<E> type) {
         if (set == null) {
             throw new NullPointerException();
         }
-        return new ObservableCollections.CheckedObservableSet<E>(set, type);
+        return new CheckedObservableSet<E>(set, type);
     }
 
     /**
@@ -583,10 +582,10 @@ public class ObservableCollections {
         if (set == null) {
             throw new NullPointerException();
         }
-        return new ObservableCollections.SynchronizedObservableSet<E>(set);
+        return new SynchronizedObservableSet<E>(set);
     }
 
-    private static ObservableSet EMPTY_OBSERVABLE_SET = new ObservableCollections.EmptyObservableSet();
+    private static ObservableSet EMPTY_OBSERVABLE_SET = new EmptyObservableSet();
 
     /**
      * Creates and empty unmodifiable observable set.
@@ -638,7 +637,7 @@ public class ObservableCollections {
      * @param obj
      *         the object to fill the list with
      *
-     * @see Collections#fill(List, java.lang.Object)
+     * @see Collections#fill(List, Object)
      */
     @SuppressWarnings("unchecked")
     public static <T> void fill(ObservableList<? super T> list, T obj) {
@@ -662,7 +661,7 @@ public class ObservableCollections {
      *
      * @return true if the list was modified
      *
-     * @see Collections#replaceAll(List, java.lang.Object, java.lang.Object)
+     * @see Collections#replaceAll(List, Object, Object)
      */
     @SuppressWarnings("unchecked")
     public static <T> boolean replaceAll(ObservableList<T> list, T oldVal, T newVal) {
@@ -1100,7 +1099,7 @@ public class ObservableCollections {
         public UnmodifiableObservableListImpl(ObservableList<T> backingList) {
             this.backingList = backingList;
             listener = c -> {
-                fireChange(new SourceAdapterChange<T>(ObservableCollections.UnmodifiableObservableListImpl.this, c));
+                fireChange(new SourceAdapterChange<T>(UnmodifiableObservableListImpl.this, c));
             };
             this.backingList.addListener(new WeakListChangeListener<T>(listener));
         }
@@ -1312,7 +1311,7 @@ public class ObservableCollections {
         @Override
         public List<T> subList(int fromIndex, int toIndex) {
             synchronized (mutex) {
-                return new ObservableCollections.SynchronizedList<T>(backingList.subList(fromIndex, toIndex),
+                return new SynchronizedList<T>(backingList.subList(fromIndex, toIndex),
                         mutex);
             }
         }
@@ -1351,10 +1350,8 @@ public class ObservableCollections {
         SynchronizedObservableList(ObservableList<T> seq, Object mutex) {
             super(seq, mutex);
             this.backingList = seq;
-            listener = c -> {
-                ListListenerHelper.fireValueChangedEvent(helper, new SourceAdapterChange<T>(
-                        ObservableCollections.SynchronizedObservableList.this, c));
-            };
+            listener = c -> ListListenerHelper
+                    .fireValueChangedEvent(helper, new SourceAdapterChange<>(SynchronizedObservableList.this, c));
             backingList.addListener(new WeakListChangeListener<T>(listener));
         }
 
@@ -1464,7 +1461,7 @@ public class ObservableCollections {
             this.list = list;
             this.type = type;
             listener = c -> {
-                fireChange(new SourceAdapterChange<T>(ObservableCollections.CheckedObservableList.this, c));
+                fireChange(new SourceAdapterChange<T>(CheckedObservableList.this, c));
             };
             list.addListener(new WeakListChangeListener<T>(listener));
         }
@@ -1851,7 +1848,7 @@ public class ObservableCollections {
         private void initListener() {
             if (listener == null) {
                 listener = c -> {
-                    callObservers(new SetAdapterChange<E>(ObservableCollections.UnmodifiableObservableSet.this, c));
+                    callObservers(new SetAdapterChange<E>(UnmodifiableObservableSet.this, c));
                 };
                 this.backingSet.addListener(new WeakSetChangeListener<E>(listener));
             }
@@ -2093,7 +2090,7 @@ public class ObservableCollections {
             backingSet = set;
             listener = c -> {
                 SetListenerHelper.fireValueChangedEvent(listenerHelper, new SetAdapterChange<E>(
-                        ObservableCollections.SynchronizedObservableSet.this, c));
+                        SynchronizedObservableSet.this, c));
             };
             backingSet.addListener(new WeakSetChangeListener<E>(listener));
         }
@@ -2163,7 +2160,7 @@ public class ObservableCollections {
             backingSet = set;
             this.type = type;
             listener = c -> {
-                callObservers(new SetAdapterChange<E>(ObservableCollections.CheckedObservableSet.this, c));
+                callObservers(new SetAdapterChange<E>(CheckedObservableSet.this, c));
             };
             backingSet.addListener(new WeakSetChangeListener<E>(listener));
         }
@@ -2418,7 +2415,7 @@ public class ObservableCollections {
             this.keyType = keyType;
             this.valueType = valueType;
             listener = c -> {
-                callObservers(new MapAdapterChange<K, V>(ObservableCollections.CheckedObservableMap.this, c));
+                callObservers(new MapAdapterChange<K, V>(CheckedObservableMap.this, c));
             };
             backingMap.addListener(new WeakMapChangeListener<K, V>(listener));
         }
@@ -2555,7 +2552,7 @@ public class ObservableCollections {
         @Override
         public Set entrySet() {
             if (entrySet == null) {
-                entrySet = new ObservableCollections.CheckedObservableMap.CheckedEntrySet<K, V>(backingMap.entrySet(),
+                entrySet = new CheckedObservableMap.CheckedEntrySet<K, V>(backingMap.entrySet(),
                         valueType);
             }
             return entrySet;
@@ -2694,7 +2691,7 @@ public class ObservableCollections {
                 }
                 Map.Entry<?, ?> e = (Map.Entry<?, ?>) o;
                 return s.contains(
-                        (e instanceof ObservableCollections.CheckedObservableMap.CheckedEntrySet.CheckedEntry) ? e :
+                        (e instanceof CheckedObservableMap.CheckedEntrySet.CheckedEntry) ? e :
                                 checkedEntry(e, valueType));
             }
 
@@ -2757,10 +2754,10 @@ public class ObservableCollections {
                         && containsAll(that); // Invokes safe containsAll() above
             }
 
-            static <K, V, T> ObservableCollections.CheckedObservableMap.CheckedEntrySet.CheckedEntry<K, V, T> checkedEntry(
+            static <K, V, T> CheckedObservableMap.CheckedEntrySet.CheckedEntry<K, V, T> checkedEntry(
                     Map.Entry<K, V> e,
                     Class<T> valueType) {
-                return new ObservableCollections.CheckedObservableMap.CheckedEntrySet.CheckedEntry<K, V, T>(e,
+                return new CheckedObservableMap.CheckedEntrySet.CheckedEntry<K, V, T>(e,
                         valueType);
             }
 
@@ -2919,7 +2916,7 @@ public class ObservableCollections {
         public Set<K> keySet() {
             synchronized (mutex) {
                 if (keySet == null) {
-                    keySet = new ObservableCollections.SynchronizedSet<K>(backingMap.keySet(), mutex);
+                    keySet = new SynchronizedSet<K>(backingMap.keySet(), mutex);
                 }
                 return keySet;
             }
@@ -2929,7 +2926,7 @@ public class ObservableCollections {
         public Collection<V> values() {
             synchronized (mutex) {
                 if (values == null) {
-                    values = new ObservableCollections.SynchronizedCollection<V>(backingMap.values(), mutex);
+                    values = new SynchronizedCollection<V>(backingMap.values(), mutex);
                 }
                 return values;
             }
@@ -2939,7 +2936,7 @@ public class ObservableCollections {
         public Set<Entry<K, V>> entrySet() {
             synchronized (mutex) {
                 if (entrySet == null) {
-                    entrySet = new ObservableCollections.SynchronizedSet<Entry<K, V>>(backingMap.entrySet(), mutex);
+                    entrySet = new SynchronizedSet<Entry<K, V>>(backingMap.entrySet(), mutex);
                 }
                 return entrySet;
             }
@@ -3083,7 +3080,7 @@ public class ObservableCollections {
             backingMap = map;
             listener = c -> {
                 MapListenerHelper.fireValueChangedEvent(listenerHelper, new MapAdapterChange<K, V>(
-                        ObservableCollections.SynchronizedObservableMap.this, c));
+                        SynchronizedObservableMap.this, c));
             };
             backingMap.addListener(new WeakMapChangeListener<K, V>(listener));
         }
