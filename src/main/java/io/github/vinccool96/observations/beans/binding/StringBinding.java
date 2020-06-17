@@ -14,7 +14,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * Base class that provides most of the functionality needed to implement a {@link Binding} of a {@code String}.
  * <p>
  * {@code StringBinding} provides a simple invalidation-scheme. An extending class can register dependencies by calling
- * {@link #bind(Observable...)}. If One of the registered dependencies becomes invalid, this {@code StringBinding} is
+ * {@link #bind(Observable...)}. If one of the registered dependencies becomes invalid, this {@code StringBinding} is
  * marked as invalid. With {@link #unbind(Observable...)} listening to dependencies can be stopped.
  * <p>
  * To provide a concrete implementation of this class, the method {@link #computeValue()} has to be implemented to
@@ -122,8 +122,7 @@ public abstract class StringBinding extends StringExpression implements Binding<
     }
 
     /**
-     * A default implementation of {@code getDependencies()} that returns an empty {@link
-     * io.github.vinccool96.observations.collections.ObservableList}.
+     * A default implementation of {@code getDependencies()} that returns an empty {@link ObservableList}.
      *
      * @return an empty {@code ObservableList}
      */
@@ -186,8 +185,7 @@ public abstract class StringBinding extends StringExpression implements Binding<
      */
     @Override
     public String toString() {
-        return valid ? "StringBinding [value: " + get() + "]"
-                : "StringBinding [invalid]";
+        return valid ? "StringBinding [value: " + get() + "]" : "StringBinding [invalid]";
     }
 
 }

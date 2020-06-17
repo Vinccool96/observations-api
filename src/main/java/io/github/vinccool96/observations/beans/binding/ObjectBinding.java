@@ -14,7 +14,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * Base class that provides most of the functionality needed to implement a {@link Binding} of an {@code Object}.
  * <p>
  * {@code ObjectBinding} provides a simple invalidation-scheme. An extending class can register dependencies by calling
- * {@link #bind(Observable...)}. If One of the registered dependencies becomes invalid, this {@code ObjectBinding} is
+ * {@link #bind(Observable...)}. If one of the registered dependencies becomes invalid, this {@code ObjectBinding} is
  * marked as invalid. With {@link #unbind(Observable...)} listening to dependencies can be stopped.
  * <p>
  * To provide a concrete implementation of this class, the method {@link #computeValue()} has to be implemented to
