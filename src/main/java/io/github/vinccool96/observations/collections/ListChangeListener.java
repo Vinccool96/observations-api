@@ -55,24 +55,23 @@ public interface ListChangeListener<E> {
      *     public void onChanged(Change&lt;tem&gt; c) {
      *         while (c.next()) {
      *             if (c.wasPermutated()) {
-     *                     for (int i = c.getFrom(); i &lt; c.getTo(); ++i) {
-     *                          //permutate
-     *                     }
-     *                 } else if (c.wasUpdated()) {
-     *                          //update item
-     *                 } else {
-     *                     for (Item remitem : c.getRemoved()) {
-     *                         remitem.remove(Outer.this);
-     *                     }
-     *                     for (Item additem : c.getAddedSubList()) {
-     *                         additem.add(Outer.this);
-     *                     }
+     *                 for (int i = c.getFrom(); i &lt; c.getTo(); ++i) {
+     *                     //permutate
+     *                 }
+     *             } else if (c.wasUpdated()) {
+     *                 //update item
+     *             } else {
+     *                 for (Item remitem : c.getRemoved()) {
+     *                     remitem.remove(Outer.this);
+     *                 }
+     *                 for (Item additem : c.getAddedSubList()) {
+     *                     additem.add(Outer.this);
      *                 }
      *             }
      *         }
-     *     });
-     *
-     * }</pre></blockquote>
+     *     }
+     * });
+     * </pre></blockquote>
      * <p>
      * <b>Warning:</b> This class directly accesses the source list to acquire information about the changes.
      * <br> This effectively makes the Change object invalid when another change occurs on the list.

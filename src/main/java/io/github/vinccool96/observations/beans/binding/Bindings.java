@@ -4625,9 +4625,8 @@ public final class Bindings {
             if (binding == null) {
                 observable.removeListener(this);
             } else {
-                // short-circuit invalidation. This BooleanBinding becomes
-                // only invalid if the first operator changes or the
-                // first parameter is true.
+                // short-circuit invalidation. This BooleanBinding becomes only invalid if the first operator changes or
+                // the first parameter is true.
                 if ((binding.op1.equals(observable) || (binding.isValid() && binding.op1.get()))) {
                     binding.invalidate();
                 }
@@ -4708,9 +4707,8 @@ public final class Bindings {
             if (binding == null) {
                 observable.removeListener(this);
             } else {
-                // short circuit invalidation. This BooleanBinding becomes
-                // only invalid if the first operator changes or the
-                // first parameter is false.
+                // short circuit invalidation. This BooleanBinding becomes only invalid if the first operator changes or
+                // the first parameter is false.
                 if ((binding.op1.equals(observable) || (binding.isValid() && !binding.op1.get()))) {
                     binding.invalidate();
                 }
