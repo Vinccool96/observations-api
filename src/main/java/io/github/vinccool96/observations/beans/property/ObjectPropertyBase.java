@@ -216,7 +216,7 @@ public abstract class ObjectPropertyBase<T> extends ObjectProperty<T> {
         private final WeakReference<ObjectPropertyBase<?>> wref;
 
         public Listener(ObjectPropertyBase<?> ref) {
-            this.wref = new WeakReference<ObjectPropertyBase<?>>(ref);
+            this.wref = new WeakReference<>(ref);
         }
 
         @Override

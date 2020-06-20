@@ -24,6 +24,7 @@ import java.util.*;
  *
  * @since JavaFX 2.0
  */
+@SuppressWarnings("unused")
 public class ObservableCollections {
 
     /**
@@ -34,10 +35,8 @@ public class ObservableCollections {
 
     /**
      * Constructs an ObservableList that is backed by the specified list. Mutation operations on the ObservableList
-     * instance will be reported to observers that have registered on that instance.<br> Note that mutation operations
-     * made directly to the underlying list are
-     * <em>not</em> reported to observers of any ObservableList that
-     * wraps it.
+     * instance will be reported to observers that have registered on that instance. <br/> Note that mutation operations
+     * made directly to the underlying list are <em>not</em> reported to observers of any ObservableList that wraps it.
      *
      * @param <E>
      *         the list element type
@@ -45,23 +44,23 @@ public class ObservableCollections {
      *         a concrete List that backs this ObservableList
      *
      * @return a newly created ObservableList
+     *
+     * @throws NullPointerException
+     *         if {@code list} is {@code null}
      */
     public static <E> ObservableList<E> observableList(List<E> list) {
         if (list == null) {
             throw new NullPointerException();
         }
-        return list instanceof RandomAccess ? new ObservableListWrapper<E>(list) :
-                new ObservableSequentialListWrapper<E>(list);
+        return list instanceof RandomAccess ? new ObservableListWrapper<>(list) :
+                new ObservableSequentialListWrapper<>(list);
     }
 
     /**
      * Constructs an ObservableList that is backed by the specified list. Mutation operations on the ObservableList
-     * instance will be reported to observers that have registered on that instance.<br> Note that mutation operations
-     * made directly to the underlying list are
-     * <em>not</em> reported to observers of any ObservableList that
-     * wraps it.
-     * <br>
-     * This list also reports mutations of the elements in it by using <code>extractor</code>. Observable objects
+     * instance will be reported to observers that have registered on that instance. <br/> Note that mutation operations
+     * made directly to the underlying list are <em>not</em> reported to observers of any ObservableList that wraps it.
+     * <br/> This list also reports mutations of the elements in it by using {@code extractor}. Observable objects
      * returned by extractor (applied to each list element) are listened for changes and transformed into "update"
      * change of ListChangeListener.
      *
@@ -74,14 +73,16 @@ public class ObservableCollections {
      *
      * @return a newly created ObservableList
      *
+     * @throws NullPointerException
+     *         if {@code list} or {@code extractor} are {@code null}
      * @since JavaFX 2.1
      */
     public static <E> ObservableList<E> observableList(List<E> list, Callback<E, Observable[]> extractor) {
         if (list == null || extractor == null) {
             throw new NullPointerException();
         }
-        return list instanceof RandomAccess ? new ObservableListWrapper<E>(list, extractor) :
-                new ObservableSequentialListWrapper<E>(list, extractor);
+        return list instanceof RandomAccess ? new ObservableListWrapper<>(list, extractor) :
+                new ObservableSequentialListWrapper<>(list, extractor);
     }
 
     /**
@@ -97,12 +98,15 @@ public class ObservableCollections {
      *         a Map that backs this ObservableMap
      *
      * @return a newly created ObservableMap
+     *
+     * @throws NullPointerException
+     *         if {@code map} is {@code null}
      */
     public static <K, V> ObservableMap<K, V> observableMap(Map<K, V> map) {
         if (map == null) {
             throw new NullPointerException();
         }
-        return new ObservableMapWrapper<K, V>(map);
+        return new ObservableMapWrapper<>(map);
     }
 
     /**
@@ -118,12 +122,15 @@ public class ObservableCollections {
      * @return a newly created ObservableSet
      *
      * @since JavaFX 2.1
+     *
+     * @throws NullPointerException
+     *         if {@code set} is {@code null}
      */
     public static <E> ObservableSet<E> observableSet(Set<E> set) {
         if (set == null) {
             throw new NullPointerException();
         }
-        return new ObservableSetWrapper<E>(set);
+        return new ObservableSetWrapper<>(set);
     }
 
     /**
@@ -138,13 +145,14 @@ public class ObservableCollections {
      *
      * @since JavaFX 2.1
      */
+    @SafeVarargs
     public static <E> ObservableSet<E> observableSet(E... elements) {
         if (elements == null) {
             throw new NullPointerException();
         }
-        Set<E> set = new HashSet<E>(elements.length);
+        Set<E> set = new HashSet<>(elements.length);
         Collections.addAll(set, elements);
-        return new ObservableSetWrapper<E>(set);
+        return new ObservableSetWrapper<>(set);
     }
 
     /**
@@ -167,7 +175,7 @@ public class ObservableCollections {
         if (map == null) {
             throw new NullPointerException();
         }
-        return new UnmodifiableObservableMap<K, V>(map);
+        return new UnmodifiableObservableMap<>(map);
     }
 
     /**
@@ -328,9 +336,8 @@ public class ObservableCollections {
      *
      * @see #observableList(List)
      */
-    @SuppressWarnings("unchecked")
     public static <E> ObservableList<E> observableArrayList() {
-        return observableList(new ArrayList());
+        return observableList(new ArrayList<>());
     }
 
     /**
@@ -433,17 +440,16 @@ public class ObservableCollections {
      * @param list
      *         an ObservableList that is to be wrapped
      *
-     * @return an ObserableList wrapper that is unmodifiable
+     * @return an ObservableList wrapper that is unmodifiable
      *
      * @see Collections#unmodifiableList(List)
      */
     @ReturnsUnmodifiableCollection
-    public static <E> ObservableList<E> unmodifiableObservableList(
-            ObservableList<E> list) {
+    public static <E> ObservableList<E> unmodifiableObservableList(ObservableList<E> list) {
         if (list == null) {
             throw new NullPointerException();
         }
-        return new UnmodifiableObservableListImpl<E>(list);
+        return new UnmodifiableObservableListImpl<>(list);
     }
 
     /**
@@ -828,6 +834,7 @@ public class ObservableCollections {
         }
     }
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
     private static class EmptyObservableList<E> extends AbstractList<E> implements ObservableList<E> {
 
         private static final ListIterator iterator = new ListIterator() {
@@ -998,6 +1005,7 @@ public class ObservableCollections {
 
     }
 
+    @SuppressWarnings("unchecked")
     private static class SingletonObservableList<E> extends AbstractList<E> implements ObservableList<E> {
 
         private final E element;
@@ -1090,6 +1098,7 @@ public class ObservableCollections {
 
     }
 
+    @SuppressWarnings({"FieldCanBeLocal", "unchecked"})
     private static class UnmodifiableObservableListImpl<T> extends ObservableListBase<T> implements ObservableList<T> {
 
         private final ObservableList<T> backingList;
@@ -1098,10 +1107,8 @@ public class ObservableCollections {
 
         public UnmodifiableObservableListImpl(ObservableList<T> backingList) {
             this.backingList = backingList;
-            listener = c -> {
-                fireChange(new SourceAdapterChange<T>(UnmodifiableObservableListImpl.this, c));
-            };
-            this.backingList.addListener(new WeakListChangeListener<T>(listener));
+            listener = c -> fireChange(new SourceAdapterChange<>(UnmodifiableObservableListImpl.this, c));
+            this.backingList.addListener(new WeakListChangeListener<>(listener));
         }
 
         @Override

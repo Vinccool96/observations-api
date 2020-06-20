@@ -68,11 +68,12 @@ import java.util.List;
  * @see ModifiableObservableListBase
  * @since JavaFX 8.0
  */
+@SuppressWarnings({"unchecked", "SameParameterValue", "unused"})
 public abstract class ObservableListBase<E> extends AbstractList<E> implements ObservableList<E> {
 
     private ListListenerHelper<E> listenerHelper;
 
-    private final ListChangeBuilder<E> changeBuilder = new ListChangeBuilder<E>(this);
+    private final ListChangeBuilder<E> changeBuilder = new ListChangeBuilder<>(this);
 
     /**
      * Adds a new update operation to the change.
@@ -236,8 +237,7 @@ public abstract class ObservableListBase<E> extends AbstractList<E> implements O
 
     @Override
     public boolean isListChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
-        return ArrayUtils.getInstance()
-                .contains(this.listenerHelper.getChangeListeners(), (ListChangeListener) listener);
+        return ArrayUtils.getInstance().contains(this.listenerHelper.getChangeListeners(), listener);
     }
 
     /**

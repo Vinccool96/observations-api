@@ -5,6 +5,7 @@ import io.github.vinccool96.observations.collections.ObservableList;
 
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 public class SourceAdapterChange<E> extends Change<E> {
 
     private final Change<? extends E> change;

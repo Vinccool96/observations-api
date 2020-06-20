@@ -24,6 +24,7 @@ import java.util.List;
  * @see TransformationList
  * @since JavaFX 8.0
  */
+@SuppressWarnings({"unused", "rawtypes", "unchecked"})
 public final class SortedList<E> extends TransformationList<E, E> {
 
     private Comparator<Element<E>> elementComparator;
@@ -55,7 +56,7 @@ public final class SortedList<E> extends TransformationList<E, E> {
         perm = new int[sorted.length];
         size = source.size();
         for (int i = 0; i < size; ++i) {
-            sorted[i] = new Element<E>(source.get(i), i);
+            sorted[i] = new Element<>(source.get(i), i);
             perm[i] = i;
         }
         if (comparator != null) {
@@ -73,7 +74,7 @@ public final class SortedList<E> extends TransformationList<E, E> {
      * @see #SortedList(ObservableList, Comparator)
      */
     public SortedList(@NamedArg("source") ObservableList<? extends E> source) {
-        this(source, (Comparator) null);
+        this(source, null);
     }
 
     @Override
@@ -144,7 +145,7 @@ public final class SortedList<E> extends TransformationList<E, E> {
      * @return the element at the specified position in this list
      *
      * @throws IndexOutOfBoundsException
-     *         {@inheritDoc}
+     *         if the index is out of range (<tt>index &lt; 0 || index &gt;= size()</tt>)
      */
     @Override
     public E get(int index) {
@@ -246,7 +247,7 @@ public final class SortedList<E> extends TransformationList<E, E> {
                 System.arraycopy(perm, c.getFrom(), perm, c.getTo(), size - c.getFrom());
                 size += c.getAddedSize();
                 for (int i = c.getFrom(); i < c.getTo(); ++i) {
-                    sorted[i] = new Element<E>(c.getList().get(i), i);
+                    sorted[i] = new Element<>(c.getList().get(i), i);
                     perm[i] = i;
                 }
             }
@@ -308,8 +309,7 @@ public final class SortedList<E> extends TransformationList<E, E> {
             return 0;
         }
         tempElement.e = e;
-        int pos = Arrays.binarySearch(sorted, 0, size, tempElement, elementComparator);
-        return pos;
+        return Arrays.binarySearch(sorted, 0, size, tempElement, elementComparator);
     }
 
     private void insertToMapping(E e, int idx) {
@@ -332,7 +332,7 @@ public final class SortedList<E> extends TransformationList<E, E> {
         ensureSize(to);
         size = to;
         for (int i = 0; i < to; ++i) {
-            sorted[i] = new Element<E>(list.get(i), i);
+            sorted[i] = new Element<>(list.get(i), i);
         }
         int[] perm = helper.sort(sorted, 0, size, elementComparator);
         System.arraycopy(perm, 0, this.perm, 0, size);

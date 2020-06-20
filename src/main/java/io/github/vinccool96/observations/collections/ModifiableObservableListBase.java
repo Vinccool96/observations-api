@@ -55,6 +55,7 @@ import java.util.ListIterator;
  * @see ObservableListBase
  * @since JavaFX 8.0
  */
+@SuppressWarnings({"FieldMayBeFinal", "SuspiciousToArrayCall", "EqualsWhichDoesntCheckParameterClass"})
 public abstract class ModifiableObservableListBase<E> extends ObservableListBase<E> {
 
     @Override
@@ -73,8 +74,7 @@ public abstract class ModifiableObservableListBase<E> extends ObservableListBase
     public boolean addAll(Collection<? extends E> c) {
         beginChange();
         try {
-            boolean res = super.addAll(c);
-            return res;
+            return super.addAll(c);
         } finally {
             endChange();
         }
@@ -84,8 +84,7 @@ public abstract class ModifiableObservableListBase<E> extends ObservableListBase
     public boolean addAll(int index, Collection<? extends E> c) {
         beginChange();
         try {
-            boolean res = super.addAll(index, c);
-            return res;
+            return super.addAll(index, c);
         } finally {
             endChange();
         }
@@ -105,8 +104,7 @@ public abstract class ModifiableObservableListBase<E> extends ObservableListBase
     public boolean removeAll(Collection<?> c) {
         beginChange();
         try {
-            boolean res = super.removeAll(c);
-            return res;
+            return super.removeAll(c);
         } finally {
             endChange();
         }
@@ -116,8 +114,7 @@ public abstract class ModifiableObservableListBase<E> extends ObservableListBase
     public boolean retainAll(Collection<?> c) {
         beginChange();
         try {
-            boolean res = super.retainAll(c);
-            return res;
+            return super.retainAll(c);
         } finally {
             endChange();
         }
@@ -288,8 +285,7 @@ public abstract class ModifiableObservableListBase<E> extends ObservableListBase
         public boolean addAll(Collection<? extends E> c) {
             beginChange();
             try {
-                boolean res = sublist.addAll(c);
-                return res;
+                return sublist.addAll(c);
             } finally {
                 endChange();
             }
@@ -299,8 +295,7 @@ public abstract class ModifiableObservableListBase<E> extends ObservableListBase
         public boolean addAll(int index, Collection<? extends E> c) {
             beginChange();
             try {
-                boolean res = sublist.addAll(index, c);
-                return res;
+                return sublist.addAll(index, c);
             } finally {
                 endChange();
             }
@@ -310,8 +305,7 @@ public abstract class ModifiableObservableListBase<E> extends ObservableListBase
         public boolean removeAll(Collection<?> c) {
             beginChange();
             try {
-                boolean res = sublist.removeAll(c);
-                return res;
+                return sublist.removeAll(c);
             } finally {
                 endChange();
             }
@@ -321,8 +315,7 @@ public abstract class ModifiableObservableListBase<E> extends ObservableListBase
         public boolean retainAll(Collection<?> c) {
             beginChange();
             try {
-                boolean res = sublist.retainAll(c);
-                return res;
+                return sublist.retainAll(c);
             } finally {
                 endChange();
             }

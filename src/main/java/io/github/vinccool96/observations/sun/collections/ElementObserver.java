@@ -7,6 +7,7 @@ import io.github.vinccool96.observations.util.Callback;
 
 import java.util.IdentityHashMap;
 
+@SuppressWarnings({"FieldMayBeFinal", "FieldCanBeLocal", "unused"})
 final class ElementObserver<E> {
 
     private static class ElementsMapElement {
@@ -40,8 +41,7 @@ final class ElementObserver<E> {
 
     private final ObservableListBase<E> list;
 
-    private IdentityHashMap<E, ElementsMapElement> elementsMap =
-            new IdentityHashMap<E, ElementsMapElement>();
+    private IdentityHashMap<E, ElementsMapElement> elementsMap = new IdentityHashMap<>();
 
     ElementObserver(Callback<E, Observable[]> extractor, Callback<E, InvalidationListener> listenerGenerator,
             ObservableListBase<E> list) {
@@ -66,12 +66,14 @@ final class ElementObserver<E> {
 
     void detachListener(E e) {
         if (elementsMap != null && e != null) {
-            ElementsMapElement el = elementsMap.get(e);
-            for (Observable o : extractor.call(e)) {
-                o.removeListener(el.getListener());
-            }
-            if (el.decrement() == 0) {
-                elementsMap.remove(e);
+            if (elementsMap.containsKey(e)) {
+                ElementsMapElement el = elementsMap.get(e);
+                for (Observable o : extractor.call(e)) {
+                    o.removeListener(el.getListener());
+                }
+                if (el.decrement() == 0) {
+                    elementsMap.remove(e);
+                }
             }
         }
     }

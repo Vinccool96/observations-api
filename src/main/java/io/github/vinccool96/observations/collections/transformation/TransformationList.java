@@ -22,6 +22,7 @@ import java.util.List;
  *
  * @since JavaFX 8.0
  */
+@SuppressWarnings({"FieldMayBeFinal", "rawtypes", "unused"})
 public abstract class TransformationList<E, F> extends ObservableListBase<E> implements ObservableList<E> {
 
     /**
@@ -86,9 +87,7 @@ public abstract class TransformationList<E, F> extends ObservableListBase<E> imp
 
     private ListChangeListener<F> getListener() {
         if (sourceListener == null) {
-            sourceListener = c -> {
-                TransformationList.this.sourceChanged(c);
-            };
+            sourceListener = TransformationList.this::sourceChanged;
         }
         return sourceListener;
     }
