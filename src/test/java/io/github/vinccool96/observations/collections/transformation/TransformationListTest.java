@@ -1,7 +1,8 @@
-package io.github.vinccool96.observations.collections;
+package io.github.vinccool96.observations.collections.transformation;
 
 import io.github.vinccool96.observations.collections.ListChangeListener.Change;
-import io.github.vinccool96.observations.collections.transformation.TransformationList;
+import io.github.vinccool96.observations.collections.ObservableCollections;
+import io.github.vinccool96.observations.collections.ObservableList;
 import org.junit.Before;
 import org.junit.Test;
 

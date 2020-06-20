@@ -1,9 +1,8 @@
-package io.github.vinccool96.observations.collections;
+package io.github.vinccool96.observations.collections.transformation;
 
 import io.github.vinccool96.observations.beans.Observable;
 import io.github.vinccool96.observations.beans.property.SimpleObjectProperty;
-import io.github.vinccool96.observations.collections.transformation.FilteredList;
-import io.github.vinccool96.observations.collections.transformation.SortedList;
+import io.github.vinccool96.observations.collections.*;
 import io.github.vinccool96.observations.sun.collections.NonIterableChange.SimplePermutationChange;
 import io.github.vinccool96.observations.sun.collections.ObservableListWrapper;
 import org.junit.Before;

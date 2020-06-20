@@ -1,8 +1,11 @@
-package io.github.vinccool96.observations.collections;
+package io.github.vinccool96.observations.collections.transformation;
 
 import io.github.vinccool96.observations.beans.property.ObjectProperty;
 import io.github.vinccool96.observations.beans.property.SimpleObjectProperty;
-import io.github.vinccool96.observations.collections.transformation.FilteredList;
+import io.github.vinccool96.observations.collections.MockListObserver;
+import io.github.vinccool96.observations.collections.ObservableCollections;
+import io.github.vinccool96.observations.collections.ObservableList;
+import io.github.vinccool96.observations.collections.Person;
 import io.github.vinccool96.observations.sun.collections.ObservableListWrapper;
 import org.junit.Before;
 import org.junit.Test;
