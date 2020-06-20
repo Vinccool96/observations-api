@@ -32,7 +32,7 @@ public interface SortableList<E> extends List<E> {
      *         if the list contains elements that are not
      *         <i>mutually comparable</i> using the specified comparator.
      * @throws UnsupportedOperationException
-     *         if the specified list's list-iterator does not support the <tt>set</tt> operation.
+     *         if the specified list's list-iterator does not support the {@code set} operation.
      */
     void sort(Comparator<? super E> comparator);
 

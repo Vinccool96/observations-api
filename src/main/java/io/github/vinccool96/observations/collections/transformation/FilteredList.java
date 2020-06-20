@@ -26,6 +26,7 @@ public final class FilteredList<E> extends TransformationList<E, E> {
 
     private SortHelper helper;
 
+    @SuppressWarnings("rawtypes")
     private static final Predicate ALWAYS_TRUE = t -> true;
 
     /**
@@ -102,6 +103,7 @@ public final class FilteredList<E> extends TransformationList<E, E> {
         predicateProperty().set(predicate);
     }
 
+    @SuppressWarnings("unchecked")
     private Predicate<? super E> getPredicateImpl() {
         if (getPredicate() != null) {
             return getPredicate();
@@ -143,7 +145,7 @@ public final class FilteredList<E> extends TransformationList<E, E> {
      * @return the element at the specified position in this list
      *
      * @throws IndexOutOfBoundsException
-     *         {@inheritDoc}
+     *         if the index is out of range (<tt>index &lt; 0 || index &gt;= size()</tt>)
      */
     @Override
     public E get(int index) {
@@ -229,7 +231,7 @@ public final class FilteredList<E> extends TransformationList<E, E> {
         int pos = c.getFrom();
 
         ListIterator<? extends E> it = getSource().listIterator(pos);
-        for (; fpos < to && it.nextIndex() < c.getTo(); ) {
+        while (fpos < to && it.nextIndex() < c.getTo()) {
             if (pred.test(it.next())) {
                 filtered[fpos] = it.previousIndex();
                 nextAdd(fpos, fpos + 1);
@@ -291,6 +293,7 @@ public final class FilteredList<E> extends TransformationList<E, E> {
         }
     }
 
+    @SuppressWarnings("ForLoopReplaceableByForEach")
     private void refilter() {
         ensureSize(getSource().size());
         List<E> removed = null;

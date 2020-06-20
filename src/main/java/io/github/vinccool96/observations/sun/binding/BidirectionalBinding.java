@@ -11,6 +11,7 @@ import java.lang.ref.WeakReference;
 import java.text.Format;
 import java.text.ParseException;
 
+@SuppressWarnings({"rawtypes", "unchecked", "UnusedReturnValue"})
 public abstract class BidirectionalBinding<T> implements ChangeListener<T>, WeakListener {
 
     private static void checkParameters(Object property1, Object property2) {
@@ -35,7 +36,7 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
                         new BidirectionalLongBinding((LongProperty) property1, (LongProperty) property2)
                         : ((property1 instanceof BooleanProperty) && (property2 instanceof BooleanProperty)) ?
                         new BidirectionalBooleanBinding((BooleanProperty) property1, (BooleanProperty) property2)
-                        : new TypedGenericBidirectionalBinding<T>(property1, property2);
+                        : new TypedGenericBidirectionalBinding<>(property1, property2);
         property1.setValue(property2.getValue());
         property1.addListener(binding);
         property2.addListener(binding);
@@ -62,7 +63,7 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
             throw new NullPointerException("Converter cannot be null");
         }
         final StringConversionBidirectionalBinding<T> binding =
-                new StringConverterBidirectionalBinding<T>(stringProperty, otherProperty, converter);
+                new StringConverterBidirectionalBinding<>(stringProperty, otherProperty, converter);
         stringProperty.setValue(converter.toString(otherProperty.getValue()));
         stringProperty.addListener(binding);
         otherProperty.addListener(binding);
@@ -123,7 +124,7 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
             Property<T> property2) {
         checkParameters(property1, property2);
 
-        final BidirectionalBinding<Number> binding = new TypedNumberBidirectionalBinding<T>(property2, property1);
+        final BidirectionalBinding<Number> binding = new TypedNumberBidirectionalBinding<>(property2, property1);
 
         property1.setValue(property2.getValue());
         property1.addListener(binding);
@@ -135,7 +136,7 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
             Property<Number> property2) {
         checkParameters(property1, property2);
 
-        final BidirectionalBinding<Number> binding = new TypedNumberBidirectionalBinding<T>(property1, property2);
+        final BidirectionalBinding<Number> binding = new TypedNumberBidirectionalBinding<>(property1, property2);
 
         property1.setValue((T) property2.getValue());
         property1.addListener(binding);
@@ -143,14 +144,15 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
         return binding;
     }
 
+    @SuppressWarnings({"ConstantConditions"})
     public static <T extends Number> void unbindNumber(Property<T> property1, Property<Number> property2) {
         checkParameters(property1, property2);
         final BidirectionalBinding binding = new UntypedGenericBidirectionalBinding(property1, property2);
         if (property1 instanceof ObservableValue) {
-            ((ObservableValue) property1).removeListener(binding);
+            property1.removeListener(binding);
         }
         if (property2 instanceof Observable) {
-            ((ObservableValue) property2).removeListener(binding);
+            property2.removeListener(binding);
         }
     }
 
@@ -175,6 +177,7 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
     }
 
     @Override
+    @SuppressWarnings("RedundantIfStatement")
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -214,8 +217,8 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
 
         private BidirectionalBooleanBinding(BooleanProperty property1, BooleanProperty property2) {
             super(property1, property2);
-            propertyRef1 = new WeakReference<BooleanProperty>(property1);
-            propertyRef2 = new WeakReference<BooleanProperty>(property2);
+            propertyRef1 = new WeakReference<>(property1);
+            propertyRef2 = new WeakReference<>(property2);
         }
 
         @Override
@@ -264,8 +267,7 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
                                             + " Removing the bidirectional binding from properties " +
                                             property1 + " and " + property2, e2);
                         }
-                        throw new RuntimeException(
-                                "Bidirectional binding failed, setting to the previous value", e);
+                        throw new RuntimeException("Bidirectional binding failed, setting to the previous value", e);
                     } finally {
                         updating = false;
                     }
@@ -285,8 +287,8 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
 
         private BidirectionalDoubleBinding(DoubleProperty property1, DoubleProperty property2) {
             super(property1, property2);
-            propertyRef1 = new WeakReference<DoubleProperty>(property1);
-            propertyRef2 = new WeakReference<DoubleProperty>(property2);
+            propertyRef1 = new WeakReference<>(property1);
+            propertyRef2 = new WeakReference<>(property2);
         }
 
         @Override
@@ -335,8 +337,7 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
                                             + " Removing the bidirectional binding from properties " +
                                             property1 + " and " + property2, e2);
                         }
-                        throw new RuntimeException(
-                                "Bidirectional binding failed, setting to the previous value", e);
+                        throw new RuntimeException("Bidirectional binding failed, setting to the previous value", e);
                     } finally {
                         updating = false;
                     }
@@ -356,8 +357,8 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
 
         private BidirectionalFloatBinding(FloatProperty property1, FloatProperty property2) {
             super(property1, property2);
-            propertyRef1 = new WeakReference<FloatProperty>(property1);
-            propertyRef2 = new WeakReference<FloatProperty>(property2);
+            propertyRef1 = new WeakReference<>(property1);
+            propertyRef2 = new WeakReference<>(property2);
         }
 
         @Override
@@ -406,8 +407,7 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
                                             + " Removing the bidirectional binding from properties " +
                                             property1 + " and " + property2, e2);
                         }
-                        throw new RuntimeException(
-                                "Bidirectional binding failed, setting to the previous value", e);
+                        throw new RuntimeException("Bidirectional binding failed, setting to the previous value", e);
                     } finally {
                         updating = false;
                     }
@@ -427,8 +427,8 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
 
         private BidirectionalIntegerBinding(IntegerProperty property1, IntegerProperty property2) {
             super(property1, property2);
-            propertyRef1 = new WeakReference<IntegerProperty>(property1);
-            propertyRef2 = new WeakReference<IntegerProperty>(property2);
+            propertyRef1 = new WeakReference<>(property1);
+            propertyRef2 = new WeakReference<>(property2);
         }
 
         @Override
@@ -477,8 +477,7 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
                                             + " Removing the bidirectional binding from properties " +
                                             property1 + " and " + property2, e2);
                         }
-                        throw new RuntimeException(
-                                "Bidirectional binding failed, setting to the previous value", e);
+                        throw new RuntimeException("Bidirectional binding failed, setting to the previous value", e);
                     } finally {
                         updating = false;
                     }
@@ -498,8 +497,8 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
 
         private BidirectionalLongBinding(LongProperty property1, LongProperty property2) {
             super(property1, property2);
-            propertyRef1 = new WeakReference<LongProperty>(property1);
-            propertyRef2 = new WeakReference<LongProperty>(property2);
+            propertyRef1 = new WeakReference<>(property1);
+            propertyRef2 = new WeakReference<>(property2);
         }
 
         @Override
@@ -548,8 +547,7 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
                                             + " Removing the bidirectional binding from properties " +
                                             property1 + " and " + property2, e2);
                         }
-                        throw new RuntimeException(
-                                "Bidirectional binding failed, setting to the previous value", e);
+                        throw new RuntimeException("Bidirectional binding failed, setting to the previous value", e);
                     } finally {
                         updating = false;
                     }
@@ -569,8 +567,8 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
 
         private TypedGenericBidirectionalBinding(Property<T> property1, Property<T> property2) {
             super(property1, property2);
-            propertyRef1 = new WeakReference<Property<T>>(property1);
-            propertyRef2 = new WeakReference<Property<T>>(property2);
+            propertyRef1 = new WeakReference<>(property1);
+            propertyRef2 = new WeakReference<>(property2);
         }
 
         @Override
@@ -613,14 +611,11 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
                         } catch (Exception e2) {
                             e2.addSuppressed(e);
                             unbind(property1, property2);
-                            throw new RuntimeException(
-                                    "Bidirectional binding failed together with an attempt"
-                                            + " to restore the source property to the previous value."
-                                            + " Removing the bidirectional binding from properties " +
-                                            property1 + " and " + property2, e2);
+                            throw new RuntimeException("Bidirectional binding failed together with an attempt to " +
+                                    "restore the source property to the previous value. Removing the bidirectional " +
+                                    "binding from properties " + property1 + " and " + property2, e2);
                         }
-                        throw new RuntimeException(
-                                "Bidirectional binding failed, setting to the previous value", e);
+                        throw new RuntimeException("Bidirectional binding failed, setting to the previous value", e);
                     } finally {
                         updating = false;
                     }
@@ -640,8 +635,8 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
 
         private TypedNumberBidirectionalBinding(Property<T> property1, Property<Number> property2) {
             super(property1, property2);
-            propertyRef1 = new WeakReference<Property<T>>(property1);
-            propertyRef2 = new WeakReference<Property<Number>>(property2);
+            propertyRef1 = new WeakReference<>(property1);
+            propertyRef2 = new WeakReference<>(property2);
         }
 
         @Override
@@ -684,14 +679,11 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
                         } catch (Exception e2) {
                             e2.addSuppressed(e);
                             unbind(property1, property2);
-                            throw new RuntimeException(
-                                    "Bidirectional binding failed together with an attempt"
-                                            + " to restore the source property to the previous value."
-                                            + " Removing the bidirectional binding from properties " +
-                                            property1 + " and " + property2, e2);
+                            throw new RuntimeException("Bidirectional binding failed together with an attempt to " +
+                                    "restore the source property to the previous value. Removing the bidirectional " +
+                                    "binding from properties " + property1 + " and " + property2, e2);
                         }
-                        throw new RuntimeException(
-                                "Bidirectional binding failed, setting to the previous value", e);
+                        throw new RuntimeException("Bidirectional binding failed, setting to the previous value", e);
                     } finally {
                         updating = false;
                     }
@@ -740,8 +732,8 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
 
         public StringConversionBidirectionalBinding(Property<String> stringProperty, Property<T> otherProperty) {
             super(stringProperty, otherProperty);
-            stringPropertyRef = new WeakReference<Property<String>>(stringProperty);
-            otherPropertyRef = new WeakReference<Property<T>>(otherProperty);
+            stringPropertyRef = new WeakReference<>(stringProperty);
+            otherPropertyRef = new WeakReference<>(otherProperty);
         }
 
         protected abstract String toString(T value);
@@ -800,11 +792,11 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
 
     }
 
+    @SuppressWarnings("rawtypes")
     private static class StringFormatBidirectionalBinding extends StringConversionBidirectionalBinding {
 
         private final Format format;
 
-        @SuppressWarnings("unchecked")
         public StringFormatBidirectionalBinding(Property<String> stringProperty, Property<?> otherProperty,
                 Format format) {
             super(stringProperty, otherProperty);
@@ -839,7 +831,7 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
         }
 
         @Override
-        protected T fromString(String value) throws ParseException {
+        protected T fromString(String value) {
             return converter.fromString(value);
         }
 

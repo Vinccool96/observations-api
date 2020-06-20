@@ -1,6 +1,5 @@
 package io.github.vinccool96.observations.sun.collections;
 
-import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.beans.Observable;
 import io.github.vinccool96.observations.collections.ModifiableObservableListBase;
 import io.github.vinccool96.observations.collections.ObservableList;
@@ -9,12 +8,13 @@ import io.github.vinccool96.observations.util.Callback;
 
 import java.util.*;
 
+@SuppressWarnings({"WhileLoopReplaceableByForEach", "ForLoopReplaceableByForEach"})
 public final class ObservableSequentialListWrapper<E> extends ModifiableObservableListBase<E>
         implements ObservableList<E>, SortableList<E> {
 
     private final List<E> backingList;
 
-    private final ElementObserver elementObserver;
+    private final ElementObserver<E> elementObserver;
 
     private SortHelper helper;
 
@@ -25,26 +25,16 @@ public final class ObservableSequentialListWrapper<E> extends ModifiableObservab
 
     public ObservableSequentialListWrapper(List<E> list, Callback<E, Observable[]> extractor) {
         backingList = list;
-        this.elementObserver = new ElementObserver(extractor, new Callback<E, InvalidationListener>() {
-
-            @Override
-            public InvalidationListener call(final E e) {
-                return new InvalidationListener() {
-
-                    @Override
-                    public void invalidated(Observable observable) {
-                        beginChange();
-                        int i = 0;
-                        for (Iterator<?> it = backingList.iterator(); it.hasNext(); ) {
-                            if (it.next() == e) {
-                                nextUpdate(i);
-                            }
-                            ++i;
-                        }
-                        endChange();
-                    }
-                };
+        this.elementObserver = new ElementObserver<>(extractor, e -> observable -> {
+            beginChange();
+            int i = 0;
+            for (Iterator<?> it = backingList.iterator(); it.hasNext(); ) {
+                if (it.next() == e) {
+                    nextUpdate(i);
+                }
+                ++i;
             }
+            endChange();
         }, this);
         for (E e : backingList) {
             elementObserver.attachListener(e);
@@ -209,13 +199,13 @@ public final class ObservableSequentialListWrapper<E> extends ModifiableObservab
     }
 
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public void sort() {
         if (backingList.isEmpty()) {
             return;
         }
         int[] perm = getSortHelper().sort((List<? extends Comparable>) backingList);
-        fireChange(new SimplePermutationChange<E>(0, size(), perm, this));
+        fireChange(new SimplePermutationChange<>(0, size(), perm, this));
     }
 
     @Override
@@ -224,7 +214,7 @@ public final class ObservableSequentialListWrapper<E> extends ModifiableObservab
             return;
         }
         int[] perm = getSortHelper().sort(backingList, comparator);
-        fireChange(new SimplePermutationChange<E>(0, size(), perm, this));
+        fireChange(new SimplePermutationChange<>(0, size(), perm, this));
     }
 
     private SortHelper getSortHelper() {

@@ -37,8 +37,7 @@ public abstract class ReadOnlyObjectProperty<T> extends ObjectExpression<T> impl
     public String toString() {
         final Object bean = getBean();
         final String name = getName();
-        final StringBuilder result = new StringBuilder(
-                "ReadOnlyObjectProperty [");
+        final StringBuilder result = new StringBuilder("ReadOnlyObjectProperty [");
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }

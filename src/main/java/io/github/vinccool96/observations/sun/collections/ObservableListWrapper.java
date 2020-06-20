@@ -1,6 +1,5 @@
 package io.github.vinccool96.observations.sun.collections;
 
-import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.beans.Observable;
 import io.github.vinccool96.observations.collections.ModifiableObservableListBase;
 import io.github.vinccool96.observations.collections.ObservableList;
@@ -17,7 +16,7 @@ public class ObservableListWrapper<E> extends ModifiableObservableListBase<E>
 
     private final List<E> backingList;
 
-    private final ElementObserver elementObserver;
+    private final ElementObserver<E> elementObserver;
 
     public ObservableListWrapper(List<E> list) {
         backingList = list;
@@ -26,30 +25,19 @@ public class ObservableListWrapper<E> extends ModifiableObservableListBase<E>
 
     public ObservableListWrapper(List<E> list, Callback<E, Observable[]> extractor) {
         backingList = list;
-        this.elementObserver = new ElementObserver(extractor, new Callback<E, InvalidationListener>() {
-
-            @Override
-            public InvalidationListener call(final E e) {
-                return new InvalidationListener() {
-
-                    @Override
-                    public void invalidated(Observable observable) {
-                        beginChange();
-                        int i = 0;
-                        final int size = size();
-                        for (; i < size; ++i) {
-                            if (get(i) == e) {
-                                nextUpdate(i);
-                            }
-                        }
-                        endChange();
-                    }
-                };
+        this.elementObserver = new ElementObserver<>(extractor, param -> observable -> {
+            beginChange();
+            int i = 0;
+            final int size = size();
+            for (; i < size; ++i) {
+                if (get(i) == param) {
+                    nextUpdate(i);
+                }
             }
+            endChange();
         }, this);
-        final int sz = backingList.size();
-        for (int i = 0; i < sz; ++i) {
-            elementObserver.attachListener(backingList.get(i));
+        for (E e : backingList) {
+            elementObserver.attachListener(e);
         }
     }
 
@@ -113,9 +101,8 @@ public class ObservableListWrapper<E> extends ModifiableObservableListBase<E>
     @Override
     public void clear() {
         if (elementObserver != null) {
-            final int sz = size();
-            for (int i = 0; i < sz; ++i) {
-                elementObserver.detachListener(get(i));
+            for (E e : this) {
+                elementObserver.detachListener(e);
             }
         }
         if (hasListeners()) {
@@ -179,13 +166,13 @@ public class ObservableListWrapper<E> extends ModifiableObservableListBase<E>
     private SortHelper helper;
 
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public void sort() {
         if (backingList.isEmpty()) {
             return;
         }
         int[] perm = getSortHelper().sort((List<? extends Comparable>) backingList);
-        fireChange(new SimplePermutationChange<E>(0, size(), perm, this));
+        fireChange(new SimplePermutationChange<>(0, size(), perm, this));
     }
 
     @Override
@@ -194,7 +181,7 @@ public class ObservableListWrapper<E> extends ModifiableObservableListBase<E>
             return;
         }
         int[] perm = getSortHelper().sort(backingList, comparator);
-        fireChange(new SimplePermutationChange<E>(0, size(), perm, this));
+        fireChange(new SimplePermutationChange<>(0, size(), perm, this));
     }
 
     private SortHelper getSortHelper() {
