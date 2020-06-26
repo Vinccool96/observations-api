@@ -24,7 +24,7 @@ public abstract class IntegerExpression extends NumberExpressionBase implements 
 
     @Override
     public long longValue() {
-        return (long) get();
+        return get();
     }
 
     @Override
@@ -34,7 +34,7 @@ public abstract class IntegerExpression extends NumberExpressionBase implements 
 
     @Override
     public double doubleValue() {
-        return (double) get();
+        return get();
     }
 
     @Override
@@ -250,6 +250,7 @@ public abstract class IntegerExpression extends NumberExpressionBase implements 
             protected Integer computeValue() {
                 return IntegerExpression.this.getValue();
             }
+
         };
     }
 

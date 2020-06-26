@@ -18,6 +18,7 @@ import java.lang.ref.WeakReference;
  * @see StringProperty
  * @since JavaFX 2.0
  */
+@SuppressWarnings({"EqualsReplaceableByObjectsCall", "DuplicatedCode"})
 public abstract class StringPropertyBase extends StringProperty {
 
     private String value;

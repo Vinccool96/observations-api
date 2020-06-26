@@ -17,23 +17,15 @@ import java.util.Locale;
  * <li>The result is an integer otherwise.</li>
  * </ol>
  * <p>
- * To be able to deal with an unspecified return type, two interfaces
- * {@code NumberExpression} and its counterpart
- * {@link NumberBinding} were introduced. That means if the
- * return type is specified as {@code NumberBinding}, the method will either
- * return a {@link io.github.vinccool96.observations.beans.binding.DoubleBinding},
- * {@link FloatBinding},
- * {@link LongBinding} or
- * {@link IntegerBinding}, depending on the types of the
- * operands.
+ * To be able to deal with an unspecified return type, two interfaces {@code NumberExpression} and its counterpart
+ * {@link NumberBinding} were introduced. That means if the return type is specified as {@code NumberBinding}, the
+ * method will either return a {@link DoubleBinding}, {@link FloatBinding}, {@link LongBinding} or
+ * {@link IntegerBinding}, depending on the types of the operands.
  * <p>
- * The API tries to do its best in determining the correct return type, e.g.
- * combining a {@link ObservableNumberValue} with a primitive
- * double will always result in a {@link DoubleBinding}. In
- * cases where the return type is not known by the API, it is the responsibility
- * of the developer to call the correct getter ({@link #intValue()} etc.). If
- * the internal representation does not match the type of the getter, a standard
- * cast is done.
+ * The API tries to do its best in determining the correct return type, e.g. combining a {@link ObservableNumberValue}
+ * with a primitive double will always result in a {@link DoubleBinding}. In cases where the return type is not known by
+ * the API, it is the responsibility of the developer to call the correct getter ({@link #intValue()} etc.). If the
+ * internal representation does not match the type of the getter, a standard cast is done.
  *
  * @since JavaFX 2.0
  */

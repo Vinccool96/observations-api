@@ -3,7 +3,7 @@ package io.github.vinccool96.observations.beans.binding;
 /**
  * A tagging interface to mark all Bindings that wrap a number-value.
  *
- * @see io.github.vinccool96.observations.beans.binding.Binding
+ * @see Binding
  * @see NumberExpression
  * @since JavaFX 2.0
  */

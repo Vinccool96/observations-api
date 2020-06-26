@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
  * A mock observer that tracks calls to its onChanged() method, combined with utility methods to make assertions on the
  * calls made.
  */
+@SuppressWarnings({"ConstantConditions", "unused"})
 public class MockListObserver<E> implements ListChangeListener<E> {
 
     private boolean tooManyCalls;
@@ -37,13 +38,13 @@ public class MockListObserver<E> implements ListChangeListener<E> {
 
     }
 
-    List<Call<E>> calls = new LinkedList<Call<E>>();
+    List<Call<E>> calls = new LinkedList<>();
 
     @Override
     public void onChanged(Change<? extends E> change) {
         if (calls.isEmpty()) {
             while (change.next()) {
-                Call<E> call = new Call<E>();
+                Call<E> call = new Call<>();
                 call.list = change.getList();
                 call.removed = change.getRemoved();
                 call.from = change.getFrom();
@@ -83,7 +84,7 @@ public class MockListObserver<E> implements ListChangeListener<E> {
 
     public void checkAddRemove(int idx, ObservableList<E> list, List<E> removed, int from, int to) {
         if (removed == null) {
-            removed = Collections.<E>emptyList();
+            removed = Collections.emptyList();
         }
         if (!tooManyCalls) {
             assertFalse(tooManyCalls);
@@ -112,7 +113,7 @@ public class MockListObserver<E> implements ListChangeListener<E> {
         assertFalse(tooManyCalls);
         Call<E> call = calls.get(idx);
         assertEquals(list, call.list);
-        assertEquals(Collections.EMPTY_LIST, call.removed);
+        assertEquals(Collections.emptyList(), call.removed);
         assertEquals(from, call.from);
         assertEquals(to, call.to);
         assertArrayEquals(perm, call.permutation);
@@ -128,7 +129,7 @@ public class MockListObserver<E> implements ListChangeListener<E> {
         assertFalse(tooManyCalls);
         Call<E> call = calls.get(idx);
         assertEquals(list, call.list);
-        assertEquals(Collections.EMPTY_LIST, call.removed);
+        assertEquals(Collections.emptyList(), call.removed);
         assertArrayEquals(new int[0], call.permutation);
         assertTrue(call.update);
         assertEquals(from, call.from);

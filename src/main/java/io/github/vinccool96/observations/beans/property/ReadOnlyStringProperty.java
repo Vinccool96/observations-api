@@ -3,7 +3,7 @@ package io.github.vinccool96.observations.beans.property;
 import io.github.vinccool96.observations.beans.binding.StringExpression;
 
 /**
- * Super class for all readonly properties wrapping an {@code String}.
+ * Super class for all readonly properties wrapping a {@code String}.
  *
  * @see io.github.vinccool96.observations.beans.value.ObservableStringValue
  * @see StringExpression
@@ -27,8 +27,7 @@ public abstract class ReadOnlyStringProperty extends StringExpression implements
     public String toString() {
         final Object bean = getBean();
         final String name = getName();
-        final StringBuilder result = new StringBuilder(
-                "ReadOnlyStringProperty [");
+        final StringBuilder result = new StringBuilder("ReadOnlyStringProperty [");
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }

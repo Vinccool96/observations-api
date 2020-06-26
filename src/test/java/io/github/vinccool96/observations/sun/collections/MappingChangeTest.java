@@ -104,7 +104,7 @@ public class MappingChangeTest {
 
             @Override
             public List getRemoved() {
-                return Collections.EMPTY_LIST;
+                return Collections.emptyList();
             }
 
             @Override

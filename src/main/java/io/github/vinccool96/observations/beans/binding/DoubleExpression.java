@@ -272,6 +272,7 @@ public abstract class DoubleExpression extends NumberExpressionBase implements O
             protected Double computeValue() {
                 return DoubleExpression.this.getValue();
             }
+
         };
     }
 
