@@ -18,6 +18,7 @@ import java.util.Locale;
  * @see DoubleExpression
  * @since JavaFX 2.0
  */
+@SuppressWarnings("unused")
 public abstract class NumberExpressionBase implements NumberExpression {
 
     /**
@@ -85,8 +86,7 @@ public abstract class NumberExpressionBase implements NumberExpression {
     }
 
     @Override
-    public BooleanBinding isEqualTo(final ObservableNumberValue other,
-            double epsilon) {
+    public BooleanBinding isEqualTo(final ObservableNumberValue other, double epsilon) {
         return Bindings.equal(this, other, epsilon);
     }
 
@@ -129,8 +129,7 @@ public abstract class NumberExpressionBase implements NumberExpression {
     }
 
     @Override
-    public BooleanBinding isNotEqualTo(final ObservableNumberValue other,
-            double epsilon) {
+    public BooleanBinding isNotEqualTo(final ObservableNumberValue other, double epsilon) {
         return Bindings.notEqual(this, other, epsilon);
     }
 
@@ -193,7 +192,7 @@ public abstract class NumberExpressionBase implements NumberExpression {
     }
 
     // ===============================================================
-    // IsLesserThan
+    // IsLessThan
 
     @Override
     public BooleanBinding lessThan(final ObservableNumberValue other) {

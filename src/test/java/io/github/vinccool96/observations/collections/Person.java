@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@SuppressWarnings({"StringEquality", "RedundantIfStatement"})
 public class Person implements Comparable<Person> {
 
     public StringProperty name = new StringPropertyBase("foo") {
@@ -71,8 +72,7 @@ public class Person implements Comparable<Person> {
     }
 
     public static List<Person> createPersonsFromNames(String... names) {
-        return Arrays.asList(names).stream().
-                map(name -> new Person(name)).collect(Collectors.toList());
+        return Arrays.stream(names).map(name -> new Person(name)).collect(Collectors.toList());
     }
 
     public static ObservableList<Person> createPersonsList(String... names) {

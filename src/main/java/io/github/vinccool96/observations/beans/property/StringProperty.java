@@ -25,7 +25,8 @@ import java.text.Format;
  * @see Property
  * @since JavaFX 2.0
  */
-public abstract class StringProperty extends ReadOnlyStringProperty implements Property<String>, WritableStringValue {
+@SuppressWarnings("DuplicatedCode") public abstract class StringProperty extends ReadOnlyStringProperty
+        implements Property<String>, WritableStringValue {
 
     /**
      * {@inheritDoc}
@@ -119,8 +120,7 @@ public abstract class StringProperty extends ReadOnlyStringProperty implements P
     public String toString() {
         final Object bean = getBean();
         final String name = getName();
-        final StringBuilder result = new StringBuilder(
-                "StringProperty [");
+        final StringBuilder result = new StringBuilder("StringProperty [");
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }

@@ -1054,6 +1054,9 @@ public final class Bindings {
         ContentBinding.unbind(obj1, obj2);
     }
 
+    // Numbers
+    // =================================================================================================================
+
     // =================================================================================================================
     // Negation
 
@@ -1199,7 +1202,7 @@ public final class Bindings {
                 @ReturnsUnmodifiableCollection
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ? ObservableCollections.singletonObservableList(dependencies[0]) :
-                            new ImmutableObservableList<Observable>(dependencies);
+                            new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableFloatValue) || (op2 instanceof ObservableFloatValue)) {
@@ -1223,7 +1226,7 @@ public final class Bindings {
                 @ReturnsUnmodifiableCollection
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ? ObservableCollections.singletonObservableList(dependencies[0]) :
-                            new ImmutableObservableList<Observable>(dependencies);
+                            new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableLongValue) || (op2 instanceof ObservableLongValue)) {
@@ -1247,7 +1250,7 @@ public final class Bindings {
                 @ReturnsUnmodifiableCollection
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ? ObservableCollections.singletonObservableList(dependencies[0]) :
-                            new ImmutableObservableList<Observable>(dependencies);
+                            new ImmutableObservableList<>(dependencies);
                 }
             };
         } else {
@@ -1271,7 +1274,7 @@ public final class Bindings {
                 @ReturnsUnmodifiableCollection
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ? ObservableCollections.singletonObservableList(dependencies[0]) :
-                            new ImmutableObservableList<Observable>(dependencies);
+                            new ImmutableObservableList<>(dependencies);
                 }
             };
         }
@@ -1470,7 +1473,7 @@ public final class Bindings {
                 @ReturnsUnmodifiableCollection
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ? ObservableCollections.singletonObservableList(dependencies[0]) :
-                            new ImmutableObservableList<Observable>(dependencies);
+                            new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableFloatValue) || (op2 instanceof ObservableFloatValue)) {
@@ -1494,7 +1497,7 @@ public final class Bindings {
                 @ReturnsUnmodifiableCollection
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ? ObservableCollections.singletonObservableList(dependencies[0]) :
-                            new ImmutableObservableList<Observable>(dependencies);
+                            new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableLongValue) || (op2 instanceof ObservableLongValue)) {
@@ -1518,7 +1521,7 @@ public final class Bindings {
                 @ReturnsUnmodifiableCollection
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ? ObservableCollections.singletonObservableList(dependencies[0]) :
-                            new ImmutableObservableList<Observable>(dependencies);
+                            new ImmutableObservableList<>(dependencies);
                 }
             };
         } else {
@@ -1542,7 +1545,7 @@ public final class Bindings {
                 @ReturnsUnmodifiableCollection
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ? ObservableCollections.singletonObservableList(dependencies[0]) :
-                            new ImmutableObservableList<Observable>(dependencies);
+                            new ImmutableObservableList<>(dependencies);
                 }
             };
         }
@@ -1742,7 +1745,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableFloatValue) || (op2 instanceof ObservableFloatValue)) {
@@ -1767,7 +1770,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableLongValue) || (op2 instanceof ObservableLongValue)) {
@@ -1792,7 +1795,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else {
@@ -1817,7 +1820,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         }
@@ -2017,7 +2020,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableFloatValue) || (op2 instanceof ObservableFloatValue)) {
@@ -2042,7 +2045,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableLongValue) || (op2 instanceof ObservableLongValue)) {
@@ -2067,7 +2070,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else {
@@ -2092,7 +2095,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         }
@@ -2367,7 +2370,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         }
@@ -4910,7 +4913,7 @@ public final class Bindings {
      * If one of the arguments implements {@link ObservableValue} and the value of this {@code ObservableValue} changes,
      * the change is automatically reflected in the {@code StringExpression}.
      * <p>
-     * See {@code java.util.Formatter} for formatting rules.
+     * See {@link java.util.Formatter} for formatting rules.
      *
      * @param format
      *         the formatting {@code String}
@@ -4930,8 +4933,7 @@ public final class Bindings {
      * If one of the arguments implements {@link ObservableValue} and the value of this {@code ObservableValue} changes,
      * the change is automatically reflected in the {@code StringExpression}.
      * <p>
-     * See {@code java.util.Formatter} for formatting rules. See {@code java.util.Locale} for details on {@code
-     * Locale}.
+     * See {@link java.util.Formatter} for formatting rules. See {@link Locale} for details on {@code Locale}.
      *
      * @param locale
      *         the {@code Locale} to use during formatting
@@ -4942,8 +4944,7 @@ public final class Bindings {
      *
      * @return the new {@code StringExpression}
      */
-    public static StringExpression format(Locale locale, String format,
-            Object... args) {
+    public static StringExpression format(Locale locale, String format, Object... args) {
         return StringFormatter.format(locale, format, args);
     }
 
@@ -4979,9 +4980,8 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return (dependencies.length == 1) ?
-                        ObservableCollections.singletonObservableList(dependencies[0])
-                        : new ImmutableObservableList<Observable>(dependencies);
+                return (dependencies.length == 1) ? ObservableCollections.singletonObservableList(dependencies[0]) :
+                        new ImmutableObservableList<>(dependencies);
             }
         };
     }
@@ -5074,9 +5074,8 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return (dependencies.length == 1) ?
-                        ObservableCollections.singletonObservableList(dependencies[0])
-                        : new ImmutableObservableList<Observable>(dependencies);
+                return (dependencies.length == 1) ? ObservableCollections.singletonObservableList(dependencies[0]) :
+                        new ImmutableObservableList<>(dependencies);
             }
         };
     }
@@ -5169,9 +5168,8 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return (dependencies.length == 1) ?
-                        ObservableCollections.singletonObservableList(dependencies[0])
-                        : new ImmutableObservableList<Observable>(dependencies);
+                return (dependencies.length == 1) ? ObservableCollections.singletonObservableList(dependencies[0]) :
+                        new ImmutableObservableList<>(dependencies);
             }
         };
     }
@@ -5264,9 +5262,8 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return (dependencies.length == 1) ?
-                        ObservableCollections.singletonObservableList(dependencies[0])
-                        : new ImmutableObservableList<Observable>(dependencies);
+                return (dependencies.length == 1) ? ObservableCollections.singletonObservableList(dependencies[0]) :
+                        new ImmutableObservableList<>(dependencies);
             }
         };
     }
@@ -5359,9 +5356,8 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return (dependencies.length == 1) ?
-                        ObservableCollections.singletonObservableList(dependencies[0])
-                        : new ImmutableObservableList<Observable>(dependencies);
+                return (dependencies.length == 1) ? ObservableCollections.singletonObservableList(dependencies[0]) :
+                        new ImmutableObservableList<>(dependencies);
             }
         };
     }
@@ -5519,9 +5515,8 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return (dependencies.length == 1) ?
-                        ObservableCollections.singletonObservableList(dependencies[0])
-                        : new ImmutableObservableList<Observable>(dependencies);
+                return (dependencies.length == 1) ? ObservableCollections.singletonObservableList(dependencies[0]) :
+                        new ImmutableObservableList<>(dependencies);
             }
         };
     }

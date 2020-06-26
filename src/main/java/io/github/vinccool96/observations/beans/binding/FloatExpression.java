@@ -250,6 +250,7 @@ public abstract class FloatExpression extends NumberExpressionBase implements Ob
             protected Float computeValue() {
                 return FloatExpression.this.getValue();
             }
+
         };
     }
 

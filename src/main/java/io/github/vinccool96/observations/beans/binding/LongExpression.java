@@ -250,6 +250,7 @@ public abstract class LongExpression extends NumberExpressionBase implements Obs
             protected Long computeValue() {
                 return LongExpression.this.getValue();
             }
+
         };
     }
 

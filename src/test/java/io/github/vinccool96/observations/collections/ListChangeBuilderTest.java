@@ -49,7 +49,7 @@ public class ListChangeBuilderTest {
 
         assertEquals(list, Arrays.asList("aa", "a", "b", "ccc"));
 
-        observer.checkAddRemove(0, observableList, Collections.EMPTY_LIST, 0, 1);
+        observer.checkAddRemove(0, observableList, Collections.emptyList(), 0, 1);
         observer.checkAddRemove(1, observableList, Arrays.asList("c", "d"), 3, 4);
     }
 
@@ -113,7 +113,7 @@ public class ListChangeBuilderTest {
         assertEquals(list, Arrays.asList("a", "bb", "c", "d", "e"));
 
         observer.checkAddRemove(0, observableList, Arrays.asList("b"), 1, 2);
-        observer.checkAddRemove(1, observableList, Collections.EMPTY_LIST, 4, 5);
+        observer.checkAddRemove(1, observableList, Collections.emptyList(), 4, 5);
     }
 
     //RT-37089
@@ -129,7 +129,7 @@ public class ListChangeBuilderTest {
 
         builder.endChange();
 
-        observer.check1AddRemove(observableList, Collections.EMPTY_LIST, 1, 2);
+        observer.check1AddRemove(observableList, Collections.emptyList(), 1, 2);
 
     }
 
@@ -152,8 +152,8 @@ public class ListChangeBuilderTest {
 
         assertEquals(list, Arrays.asList("a", "aa", "aa", "aa", "aa", "b", "c", "d", "e"));
 
-        observer.checkAddRemove(0, observableList, Collections.EMPTY_LIST, 1, 5);
-        observer.checkAddRemove(1, observableList, Collections.EMPTY_LIST, 8, 9);
+        observer.checkAddRemove(0, observableList, Collections.emptyList(), 1, 5);
+        observer.checkAddRemove(1, observableList, Collections.emptyList(), 8, 9);
 
     }
 
@@ -250,7 +250,7 @@ public class ListChangeBuilderTest {
 
         assertEquals(list, Arrays.asList("aa", "a", "b", "ccc"));
 
-        observer.checkAddRemove(0, observableList, Collections.EMPTY_LIST, 0, 1);
+        observer.checkAddRemove(0, observableList, Collections.emptyList(), 0, 1);
         observer.checkAddRemove(1, observableList, Arrays.asList("c", "d"), 3, 4);
         observer.checkUpdate(2, observableList, 2, 3);
     }
@@ -267,7 +267,7 @@ public class ListChangeBuilderTest {
 
         assertEquals(list, Arrays.asList("a", "aa", "aaa", "b", "c", "d"));
 
-        observer.checkAddRemove(0, observableList, Collections.EMPTY_LIST, 1, 3);
+        observer.checkAddRemove(0, observableList, Collections.emptyList(), 1, 3);
         observer.checkUpdate(1, observableList, 0, 1);
         observer.checkUpdate(2, observableList, 3, 4);
     }
@@ -326,7 +326,7 @@ public class ListChangeBuilderTest {
         // "c", "a", "d" before "b" was added
         observer.checkPermutation(0, observableList, 0, 3, new int[]{1, 0, 2});
 
-        observer.checkAddRemove(1, observableList, Collections.EMPTY_LIST, 0, 1);
+        observer.checkAddRemove(1, observableList, Collections.emptyList(), 0, 1);
     }
 
     @Test
@@ -378,7 +378,7 @@ public class ListChangeBuilderTest {
         builder.endChange();
 
         observer.checkPermutation(0, observableList, 1, 4, new int[]{3, 1, 2});
-        observer.checkAddRemove(1, observableList, Collections.EMPTY_LIST, 0, 1);
+        observer.checkAddRemove(1, observableList, Collections.emptyList(), 0, 1);
         observer.checkAddRemove(2, observableList, Arrays.asList("c2"), 2, 3);
         observer.checkAddRemove(3, observableList, Arrays.asList("c1"), 4, 4);
     }
@@ -420,7 +420,7 @@ public class ListChangeBuilderTest {
 
     @Test(expected = IllegalStateException.class)
     public void testNextRemove2WithoutBegin() {
-        builder.nextRemove(0, Collections.EMPTY_LIST);
+        builder.nextRemove(0, Collections.emptyList());
     }
 
     @Test(expected = IllegalStateException.class)
@@ -435,7 +435,7 @@ public class ListChangeBuilderTest {
 
     @Test(expected = IllegalStateException.class)
     public void testNextReplaceWithoutBegin() {
-        builder.nextReplace(0, 1, Collections.EMPTY_LIST);
+        builder.nextReplace(0, 1, Collections.emptyList());
     }
 
     @Test
