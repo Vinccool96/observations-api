@@ -4,9 +4,7 @@ import java.lang.annotation.*;
 
 /**
  * Specifies a property to which child elements will be added or set when an explicit property is not given.
- *
- * @since JavaFX 2.0
- */
+*/
 @Inherited
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

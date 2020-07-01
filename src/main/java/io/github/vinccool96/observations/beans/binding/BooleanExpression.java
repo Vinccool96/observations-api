@@ -13,9 +13,7 @@ import io.github.vinccool96.observations.sun.collections.annotations.ReturnsUnmo
  * <p>
  * A concrete sub-class of {@code BooleanExpression} has to implement the method {@link ObservableBooleanValue#get()},
  * which provides the actual value of this expression.
- *
- * @since JavaFX 2.0
- */
+*/
 public abstract class BooleanExpression implements ObservableBooleanValue {
 
     /**
@@ -84,7 +82,6 @@ public abstract class BooleanExpression implements ObservableBooleanValue {
      *
      * @throws NullPointerException
      *         if {@code value} is {@code null}
-     * @since JavaFX 8.0
      */
     public static BooleanExpression booleanExpression(final ObservableValue<Boolean> value) {
         if (value == null) {
@@ -204,8 +201,6 @@ public abstract class BooleanExpression implements ObservableBooleanValue {
      * {@code BooleanExpression} changes, the value of the {@code ObjectExpression} will be updated automatically.
      *
      * @return the new {@code ObjectExpression}
-     *
-     * @since JavaFX 8.0
      */
     public ObjectExpression<Boolean> asObject() {
         return new ObjectBinding<Boolean>() {

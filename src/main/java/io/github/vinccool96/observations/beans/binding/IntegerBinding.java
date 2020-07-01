@@ -26,8 +26,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * @see Binding
  * @see NumberBinding
  * @see IntegerExpression
- * @since JavaFX 2.0
- */
+*/
 public abstract class IntegerBinding extends IntegerExpression implements NumberBinding {
 
     private int value;

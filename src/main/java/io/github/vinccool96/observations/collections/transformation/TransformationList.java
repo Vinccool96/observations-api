@@ -19,9 +19,7 @@ import java.util.List;
  *         the type parameter of this list
  * @param <F>
  *         the upper bound of the type of the source list
- *
- * @since JavaFX 8.0
- */
+*/
 @SuppressWarnings({"FieldMayBeFinal", "rawtypes", "unused"})
 public abstract class TransformationList<E, F> extends ObservableListBase<E> implements ObservableList<E> {
 

@@ -22,8 +22,7 @@ import java.util.List;
  * valid again.
  *
  * @see TransformationList
- * @since JavaFX 8.0
- */
+*/
 @SuppressWarnings({"unused", "rawtypes", "unchecked"})
 public final class SortedList<E> extends TransformationList<E, E> {
 

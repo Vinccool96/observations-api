@@ -31,8 +31,7 @@ import java.security.PrivilegedAction;
  *
  * @see FloatProperty
  * @see JavaBeanFloatPropertyBuilder
- * @since JavaFX 2.1
- */
+*/
 public final class JavaBeanFloatProperty extends FloatProperty implements JavaBeanProperty<Number> {
 
     private final PropertyDescriptor descriptor;

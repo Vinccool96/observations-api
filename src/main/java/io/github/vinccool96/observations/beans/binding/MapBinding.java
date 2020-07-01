@@ -37,8 +37,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  *
  * @see Binding
  * @see MapExpression
- * @since JavaFX 2.1
- */
+*/
 public abstract class MapBinding<K, V> extends MapExpression<K, V> implements Binding<ObservableMap<K, V>> {
 
     private final MapChangeListener<K, V> mapChangeListener = new MapChangeListener<K, V>() {

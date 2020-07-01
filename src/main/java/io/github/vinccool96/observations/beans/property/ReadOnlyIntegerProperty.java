@@ -10,8 +10,7 @@ import io.github.vinccool96.observations.beans.binding.IntegerExpression;
  * @see io.github.vinccool96.observations.beans.value.ObservableIntegerValue
  * @see IntegerExpression
  * @see ReadOnlyProperty
- * @since JavaFX 2.0
- */
+*/
 public abstract class ReadOnlyIntegerProperty extends IntegerExpression implements ReadOnlyProperty<Number> {
 
     /**
@@ -56,7 +55,6 @@ public abstract class ReadOnlyIntegerProperty extends IntegerExpression implemen
      *
      * @throws NullPointerException
      *         if {@code property} is {@code null}
-     * @since JavaFX 8.0
      */
     public static <T extends Number> ReadOnlyIntegerProperty readOnlyIntegerProperty(
             final ReadOnlyProperty<T> property) {
@@ -105,8 +103,6 @@ public abstract class ReadOnlyIntegerProperty extends IntegerExpression implemen
      * updated automatically.
      *
      * @return the new {@code ReadOnlyObjectProperty}
-     *
-     * @since JavaFX 8.0
      */
     @Override
     public ReadOnlyObjectProperty<Integer> asObject() {

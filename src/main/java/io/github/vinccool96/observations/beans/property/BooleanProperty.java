@@ -29,8 +29,7 @@ import java.security.PrivilegedAction;
  * @see WritableBooleanValue
  * @see ReadOnlyBooleanProperty
  * @see Property
- * @since JavaFX 2.0
- */
+*/
 public abstract class BooleanProperty extends ReadOnlyBooleanProperty
         implements Property<Boolean>, WritableBooleanValue {
 
@@ -104,7 +103,6 @@ public abstract class BooleanProperty extends ReadOnlyBooleanProperty
      *
      * @throws NullPointerException
      *         if {@code property} is {@code null}
-     * @since JavaFX 8.0
      */
     public static BooleanProperty booleanProperty(final Property<Boolean> property) {
         if (property == null) {
@@ -147,8 +145,6 @@ public abstract class BooleanProperty extends ReadOnlyBooleanProperty
      * {@code BooleanProperty} changes, the value of the {@code ObjectProperty} will be updated automatically.
      *
      * @return the new {@code ObjectProperty}
-     *
-     * @since JavaFX 8.0
      */
     @Override
     public ObjectProperty<Boolean> asObject() {

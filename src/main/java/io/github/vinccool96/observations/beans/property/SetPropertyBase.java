@@ -22,8 +22,7 @@ import java.lang.ref.WeakReference;
  *
  * @see ObservableSet
  * @see SetProperty
- * @since JavaFX 2.1
- */
+*/
 public abstract class SetPropertyBase<E> extends SetProperty<E> {
 
     private final SetChangeListener<E> setChangeListener = change -> {

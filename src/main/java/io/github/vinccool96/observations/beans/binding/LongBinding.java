@@ -26,8 +26,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * @see Binding
  * @see NumberBinding
  * @see LongExpression
- * @since JavaFX 2.0
- */
+*/
 public abstract class LongBinding extends LongExpression implements NumberBinding {
 
     private long value;

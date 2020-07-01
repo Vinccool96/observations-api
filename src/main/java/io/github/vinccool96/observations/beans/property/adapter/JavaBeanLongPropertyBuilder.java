@@ -23,8 +23,7 @@ import java.lang.reflect.Method;
  * #build()}.
  *
  * @see JavaBeanLongProperty
- * @since JavaFX 2.1
- */
+*/
 public final class JavaBeanLongPropertyBuilder {
 
     private JavaBeanPropertyBuilderHelper helper = new JavaBeanPropertyBuilderHelper();

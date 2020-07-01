@@ -7,8 +7,7 @@ package io.github.vinccool96.observations.collections;
  *         The type of the {@code ObservableArray}
  *
  * @see ObservableArray
- * @since JavaFX 8.0
- */
+*/
 public interface ArrayChangeListener<T extends ObservableArray<T>> {
 
     /**

@@ -22,8 +22,7 @@ import java.lang.ref.WeakReference;
  * @see SetChangeListener
  * @see ObservableSet
  * @see WeakListener
- * @since JavaFX 2.1
- */
+*/
 public final class WeakSetChangeListener<E> implements SetChangeListener<E>, WeakListener {
 
     private final WeakReference<SetChangeListener<E>> ref;

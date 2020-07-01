@@ -42,6 +42,11 @@ public class WeakInvalidationListenerTest {
         }
 
         @Override
+        public void removeListener(InvalidationListener listener) {
+            removeCounter++;
+        }
+
+        @Override
         public Object getValue() {
             return null;
         }
@@ -65,11 +70,6 @@ public class WeakInvalidationListenerTest {
         @Override
         public void addListener(ChangeListener<? super Object> listener) {
             // not used
-        }
-
-        @Override
-        public void removeListener(InvalidationListener listener) {
-            removeCounter++;
         }
 
         @Override

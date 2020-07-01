@@ -13,9 +13,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  *
  * @param <T>
  *         The type of the wrapped value.
- *
- * @since JavaFX 2.0
- */
+*/
 public abstract class ObservableValueBase<T> implements ObservableValue<T> {
 
     private ExpressionHelper<T> helper;

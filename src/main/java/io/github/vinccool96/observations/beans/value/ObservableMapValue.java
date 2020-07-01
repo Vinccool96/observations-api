@@ -13,8 +13,7 @@ import io.github.vinccool96.observations.collections.ObservableMap;
  * @see ObservableMap
  * @see ObservableObjectValue
  * @see ObservableValue
- * @since JavaFX 2.1
- */
+*/
 public interface ObservableMapValue<K, V> extends ObservableObjectValue<ObservableMap<K, V>>, ObservableMap<K, V> {
 
 }

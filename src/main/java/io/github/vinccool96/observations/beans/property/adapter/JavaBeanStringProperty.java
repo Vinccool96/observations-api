@@ -31,8 +31,7 @@ import java.security.PrivilegedAction;
  *
  * @see StringProperty
  * @see JavaBeanStringPropertyBuilder
- * @since JavaFX 2.1
- */
+*/
 public final class JavaBeanStringProperty extends StringProperty implements JavaBeanProperty<String> {
 
     private final PropertyDescriptor descriptor;

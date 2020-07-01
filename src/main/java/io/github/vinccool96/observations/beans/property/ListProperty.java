@@ -24,8 +24,7 @@ import io.github.vinccool96.observations.collections.ObservableList;
  * @see WritableListValue
  * @see ReadOnlyListProperty
  * @see Property
- * @since JavaFX 2.1
- */
+*/
 public abstract class ListProperty<E> extends ReadOnlyListProperty<E>
         implements Property<ObservableList<E>>, WritableListValue<E> {
 

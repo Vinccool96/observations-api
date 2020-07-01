@@ -23,8 +23,7 @@ import java.security.PrivilegedAction;
  *
  * @see io.github.vinccool96.observations.beans.property.ReadOnlyLongProperty
  * @see ReadOnlyJavaBeanLongPropertyBuilder
- * @since JavaFX 2.1
- */
+*/
 public final class ReadOnlyJavaBeanLongProperty extends ReadOnlyLongPropertyBase implements
         ReadOnlyJavaBeanProperty<Number> {
 

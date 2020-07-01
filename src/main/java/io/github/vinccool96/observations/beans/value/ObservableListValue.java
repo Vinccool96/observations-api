@@ -11,8 +11,7 @@ import io.github.vinccool96.observations.collections.ObservableList;
  * @see io.github.vinccool96.observations.collections.ObservableList
  * @see ObservableObjectValue
  * @see ObservableValue
- * @since JavaFX 2.1
- */
+*/
 public interface ObservableListValue<E> extends ObservableObjectValue<ObservableList<E>>, ObservableList<E> {
 
 }

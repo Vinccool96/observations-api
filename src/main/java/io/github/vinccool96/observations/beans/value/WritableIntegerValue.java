@@ -5,8 +5,7 @@ package io.github.vinccool96.observations.beans.value;
  *
  * @see WritableValue
  * @see WritableNumberValue
- * @since JavaFX 2.0
- */
+*/
 public interface WritableIntegerValue extends WritableNumberValue {
 
     /**

@@ -6,10 +6,10 @@ import io.github.vinccool96.observations.sun.property.PropertyReference;
 // that uses Foo will fail.
 public interface Foo {
 
-    public static final PropertyReference<String> NAME = new PropertyReference<String>(Foo.class, "name");
+    PropertyReference<String> NAME = new PropertyReference<>(Foo.class, "name");
 
-    public void setName(String name);
+    void setName(String name);
 
-    public String getName();
+    String getName();
 
 }

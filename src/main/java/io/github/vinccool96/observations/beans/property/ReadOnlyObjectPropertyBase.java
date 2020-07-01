@@ -13,8 +13,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  *         the type of the wrapped {@code Object}
  *
  * @see ReadOnlyObjectProperty
- * @since JavaFX 2.0
- */
+*/
 public abstract class ReadOnlyObjectPropertyBase<T> extends ReadOnlyObjectProperty<T> {
 
     ExpressionHelper<T> helper;

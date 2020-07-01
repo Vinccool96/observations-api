@@ -21,8 +21,7 @@ import io.github.vinccool96.observations.sun.collections.annotations.ReturnsUnmo
  * an example.
  *
  * @see DoubleBinding
- * @since JavaFX 2.0
- */
+*/
 public interface Binding<T> extends ObservableValue<T> {
 
     /**

@@ -10,8 +10,7 @@ import io.github.vinccool96.observations.beans.binding.FloatExpression;
  * @see io.github.vinccool96.observations.beans.value.ObservableFloatValue
  * @see FloatExpression
  * @see ReadOnlyProperty
- * @since JavaFX 2.0
- */
+*/
 public abstract class ReadOnlyFloatProperty extends FloatExpression implements ReadOnlyProperty<Number> {
 
     /**
@@ -57,7 +56,6 @@ public abstract class ReadOnlyFloatProperty extends FloatExpression implements R
      *
      * @throws NullPointerException
      *         if {@code property} is {@code null}
-     * @since JavaFX 8.0
      */
     public static <T extends Number> ReadOnlyFloatProperty readOnlyFloatProperty(final ReadOnlyProperty<T> property) {
         if (property == null) {
@@ -105,8 +103,6 @@ public abstract class ReadOnlyFloatProperty extends FloatExpression implements R
      * automatically.
      *
      * @return the new {@code ReadOnlyObjectProperty}
-     *
-     * @since JavaFX 8.0
      */
     @Override
     public ReadOnlyObjectProperty<Float> asObject() {

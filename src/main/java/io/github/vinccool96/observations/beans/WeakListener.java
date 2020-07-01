@@ -6,8 +6,7 @@ package io.github.vinccool96.observations.beans;
  *
  * @see WeakInvalidationListener
  * @see io.github.vinccool96.observations.beans.value.WeakChangeListener
- * @since JavaFX 2.1
- */
+*/
 public interface WeakListener {
 
     /**

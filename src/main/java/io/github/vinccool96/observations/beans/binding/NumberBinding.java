@@ -5,8 +5,7 @@ package io.github.vinccool96.observations.beans.binding;
  *
  * @see Binding
  * @see NumberExpression
- * @since JavaFX 2.0
- */
+*/
 public interface NumberBinding extends Binding<Number>, NumberExpression {
 
 }

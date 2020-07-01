@@ -10,8 +10,7 @@ import java.util.List;
  *         the list element type
  *
  * @see Change
- * @since JavaFX 2.0
- */
+*/
 @FunctionalInterface
 public interface ListChangeListener<E> {
 
@@ -87,8 +86,6 @@ public interface ListChangeListener<E> {
      *
      * @param <E>
      *         the list element type
-     *
-     * @since JavaFX 2.0
      */
     abstract class Change<E> {
 
@@ -218,8 +215,6 @@ public interface ListChangeListener<E> {
          * optional event type and may not be fired by all ObservableLists.
          *
          * @return true if the current change is an update change.
-         *
-         * @since JavaFX 2.1
          */
         public boolean wasUpdated() {
             return false;

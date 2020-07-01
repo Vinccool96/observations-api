@@ -19,8 +19,7 @@ import java.lang.ref.WeakReference;
  *         the type of the wrapped value
  *
  * @see ObjectProperty
- * @since JavaFX 2.0
- */
+*/
 public abstract class ObjectPropertyBase<T> extends ObjectProperty<T> {
 
     private T value;

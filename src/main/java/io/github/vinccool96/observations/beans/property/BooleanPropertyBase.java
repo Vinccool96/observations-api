@@ -18,8 +18,7 @@ import java.lang.ref.WeakReference;
  * methods, which must be implemented by extending classes.
  *
  * @see BooleanProperty
- * @since JavaFX 2.0
- */
+*/
 public abstract class BooleanPropertyBase extends BooleanProperty {
 
     private boolean value;

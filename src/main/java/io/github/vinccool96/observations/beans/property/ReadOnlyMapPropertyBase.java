@@ -12,8 +12,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * implementation to attach listener.
  *
  * @see ReadOnlyMapProperty
- * @since JavaFX 2.1
- */
+*/
 public abstract class ReadOnlyMapPropertyBase<K, V> extends ReadOnlyMapProperty<K, V> {
 
     private MapExpressionHelper<K, V> helper;

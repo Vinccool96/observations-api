@@ -19,8 +19,7 @@ import java.lang.ref.WeakReference;
  * methods, which must be implemented by extending classes.
  *
  * @see IntegerProperty
- * @since JavaFX 2.0
- */
+*/
 public abstract class IntegerPropertyBase extends IntegerProperty {
 
     private int value;

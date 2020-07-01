@@ -28,9 +28,7 @@ import java.util.*;
  *         the type of the key elements
  * @param <V>
  *         the type of the value elements
- *
- * @since JavaFX 2.1
- */
+*/
 public abstract class MapExpression<K, V> implements ObservableMapValue<K, V> {
 
     private static final ObservableMap EMPTY_MAP = new EmptyObservableMap();

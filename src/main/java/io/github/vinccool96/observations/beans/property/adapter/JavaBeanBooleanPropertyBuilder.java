@@ -23,8 +23,7 @@ import java.lang.reflect.Method;
  * #build()}.
  *
  * @see JavaBeanBooleanProperty
- * @since JavaFX 2.1
- */
+*/
 public final class JavaBeanBooleanPropertyBuilder {
 
     private final JavaBeanPropertyBuilderHelper helper = new JavaBeanPropertyBuilderHelper();

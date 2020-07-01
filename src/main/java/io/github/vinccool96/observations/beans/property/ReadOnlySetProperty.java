@@ -16,8 +16,7 @@ import java.util.Set;
  * @see io.github.vinccool96.observations.beans.value.ObservableSetValue
  * @see SetExpression
  * @see ReadOnlyProperty
- * @since JavaFX 2.1
- */
+*/
 public abstract class ReadOnlySetProperty<E> extends SetExpression<E> implements ReadOnlyProperty<ObservableSet<E>> {
 
     /**

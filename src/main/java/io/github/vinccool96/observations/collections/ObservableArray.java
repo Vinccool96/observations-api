@@ -7,16 +7,15 @@ import io.github.vinccool96.observations.beans.Observable;
  * changes, the internal array is encapsulated and there is no direct access available from the outside. Bulk operations
  * are supported but they always do a copy of the data range. You can find them in subclasses as they deal with
  * primitive arrays directly.
- *
- * <p>Implementations have both {@code capacity}, which is internal array length,
- * and {@code size}. If size needs to be increased beyond capacity, the capacity increases to match that new size. Use
- * {@link #trimToSize()} method to shrink it.
+ * <p>
+ * Implementations have both {@code capacity}, which is internal array length, and {@code size}. If size needs to be
+ * increased beyond capacity, the capacity increases to match that new size. Use {@link #trimToSize()} method to shrink
+ * it.
  *
  * @param <T>
  *         actual array instance type
  *
  * @see ArrayChangeListener
- * @since JavaFX 8.0
  */
 public interface ObservableArray<T extends ObservableArray<T>> extends Observable {
 

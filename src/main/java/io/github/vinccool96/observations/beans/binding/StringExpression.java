@@ -13,9 +13,7 @@ import io.github.vinccool96.observations.sun.binding.StringFormatter;
  * <p>
  * Note: all implementation of {@link BooleanBinding} returned by the comparisons in this class consider a {@code
  * String} that is {@code null} equal to an empty {@code String}.
- *
- * @since JavaFX 2.0
- */
+*/
 public abstract class StringExpression implements ObservableStringValue {
 
     @Override
@@ -336,8 +334,6 @@ public abstract class StringExpression implements ObservableStringValue {
      * Note: If the value of this {@code StringExpression} is {@code null}, the length is considered to be {@code 0}.
      *
      * @return the new {@code IntegerBinding}
-     *
-     * @since JavaFX 8.0
      */
     public IntegerBinding length() {
         return Bindings.length(this);
@@ -349,8 +345,6 @@ public abstract class StringExpression implements ObservableStringValue {
      * Note: If the value of this {@code StringExpression} is {@code null}, it is considered to be empty.
      *
      * @return the new {@code BooleanBinding}
-     *
-     * @since JavaFX 8.0
      */
     public BooleanBinding isEmpty() {
         return Bindings.isEmpty(this);
@@ -362,8 +356,6 @@ public abstract class StringExpression implements ObservableStringValue {
      * Note: If the value of this {@code StringExpression} is {@code null}, it is considered to be empty.
      *
      * @return the new {@code BooleanBinding}
-     *
-     * @since JavaFX 8.0
      */
     public BooleanBinding isNotEmpty() {
         return Bindings.isNotEmpty(this);

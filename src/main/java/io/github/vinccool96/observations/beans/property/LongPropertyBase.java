@@ -19,8 +19,7 @@ import java.lang.ref.WeakReference;
  * methods, which must be implemented by extending classes.
  *
  * @see LongProperty
- * @since JavaFX 2.0
- */
+*/
 public abstract class LongPropertyBase extends LongProperty {
 
     private long value;

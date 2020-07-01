@@ -20,8 +20,7 @@ import java.lang.ref.WeakReference;
  *
  * @see ChangeListener
  * @see ObservableValue
- * @since JavaFX 2.0
- */
+*/
 public final class WeakChangeListener<T> implements ChangeListener<T>, WeakListener {
 
     private final WeakReference<ChangeListener<T>> ref;

@@ -19,9 +19,7 @@ import java.lang.ref.WeakReference;
  * value of {@code value1} (if {@code cond.getValue() == true}) or {@code value2} (if {@code cond.getValue() == false}).
  * The values {@code value1} and {@code value2} have to be of the same type. They can be constant values or
  * implementations of {@link ObservableValue}.
- *
- * @since JavaFX 2.0
- */
+*/
 public class When {
 
     private final ObservableBooleanValue condition;
@@ -226,8 +224,6 @@ public class When {
 
     /**
      * If-then-else expression returning a number.
-     *
-     * @since JavaFX 2.0
      */
     public class NumberConditionBuilder {
 
@@ -464,8 +460,6 @@ public class When {
 
     /**
      * An intermediate class needed while assembling the ternary expression. It should not be used in another context.
-     *
-     * @since JavaFX 2.0
      */
     public class BooleanConditionBuilder {
 
@@ -644,8 +638,6 @@ public class When {
 
     /**
      * An intermediate class needed while assembling the ternary expression. It should not be used in another context.
-     *
-     * @since JavaFX 2.0
      */
     public class StringConditionBuilder {
 
@@ -824,8 +816,6 @@ public class When {
      *
      * @param <T>
      *         the type of the wrapped {@code Object}
-     *
-     * @since JavaFX 2.0
      */
     public class ObjectConditionBuilder<T> {
 

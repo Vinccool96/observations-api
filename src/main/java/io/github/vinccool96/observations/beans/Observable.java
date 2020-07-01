@@ -14,8 +14,7 @@ package io.github.vinccool96.observations.beans;
  * @see io.github.vinccool96.observations.beans.value.ObservableValue
  * @see io.github.vinccool96.observations.collections.ObservableList
  * @see io.github.vinccool96.observations.collections.ObservableMap
- * @since JavaFX 2.0
- */
+*/
 public interface Observable {
 
     /**

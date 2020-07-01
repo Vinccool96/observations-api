@@ -26,8 +26,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * @see Binding
  * @see NumberBinding
  * @see FloatExpression
- * @since JavaFX 2.0
- */
+*/
 public abstract class FloatBinding extends FloatExpression implements NumberBinding {
 
     private float value;

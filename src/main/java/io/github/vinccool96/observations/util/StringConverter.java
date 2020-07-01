@@ -6,9 +6,7 @@ package io.github.vinccool96.observations.util;
  *
  * @param <T>
  *         the type of the object
- *
- * @since JavaFX 2.0
- */
+*/
 public abstract class StringConverter<T> {
 
     /**
