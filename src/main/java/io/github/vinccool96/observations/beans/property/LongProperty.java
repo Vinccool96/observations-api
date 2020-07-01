@@ -22,8 +22,8 @@ import java.security.PrivilegedAction;
  * <p>
  * The context of a {@code LongProperty} can be read with {@link #getBean()} and {@link #getName()}.
  * <p>
- * Note: setting or binding this property to a null value will set the property to "0.0". See {@link #setValue(Number)
- * }.
+ * Note: setting or binding this property to a null value will set the property to "0.0". See {@link
+ * #setValue(Number)}.
  *
  * @see io.github.vinccool96.observations.beans.value.ObservableLongValue
  * @see WritableLongValue
@@ -86,10 +86,8 @@ public abstract class LongProperty extends ReadOnlyLongProperty implements Prope
     /**
      * Returns a {@code LongProperty} that wraps a {@link Property} and is bidirectionally bound to it. Changing this
      * property will result in a change of the original property.
-     *
      * <p>
      * This is very useful when bidirectionally binding an ObjectProperty&lt;Long&gt; and a LongProperty.
-     *
      * <blockquote><pre>
      *   LongProperty longProperty = new SimpleLongProperty(1L);
      *   ObjectProperty&lt;Long&gt; objectProperty = new SimpleObjectProperty&lt;&gt;(2L);
@@ -98,11 +96,9 @@ public abstract class LongProperty extends ReadOnlyLongProperty implements Prope
      *   LongProperty objectAsLong = LongProperty.longProperty(objectProperty);
      *
      *   longProperty.bindBidirectional(objectAsLong);
-     *
      * </pre></blockquote>
      * <p>
      * Another approach is to convert the LongProperty to ObjectProperty using {@link #asObject()} method.
-     *
      * <p>
      * Note: null values in the source property will be interpreted as 0L
      *
@@ -156,10 +152,8 @@ public abstract class LongProperty extends ReadOnlyLongProperty implements Prope
      * Creates an {@link ObjectProperty} that bidirectionally bound to this {@code LongProperty}. If the value of this
      * {@code LongProperty} changes, the value of the {@code ObjectProperty} will be updated automatically and
      * vice-versa.
-     *
      * <p>
      * Can be used for binding an ObjectProperty to LongProperty.
-     *
      * <blockquote><pre>
      *   LongProperty longProperty = new SimpleLongProperty(1L);
      *   ObjectProperty&lt;Long&gt; objectProperty = new SimpleObjectProperty&lt;&gt;(2L);

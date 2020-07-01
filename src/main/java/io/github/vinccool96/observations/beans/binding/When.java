@@ -250,7 +250,7 @@ public class When {
             if (otherwiseValue == null) {
                 throw new NullPointerException("Value needs to be specified");
             }
-            return When.createNumberCondition(condition, thenValue, otherwiseValue);
+            return createNumberCondition(condition, thenValue, otherwiseValue);
         }
 
         /**

@@ -799,14 +799,13 @@ public class ObservableCollections {
      *
      * @see Collections#sort(List)
      */
-    @SuppressWarnings("unchecked")
     public static <T extends Comparable<? super T>> void sort(ObservableList<T> list) {
         if (list instanceof SortableList) {
-            ((SortableList<? extends T>) list).sort();
+            ((SortableList<?>) list).sort();
         } else {
-            List<T> newContent = new ArrayList<T>(list);
+            List<T> newContent = new ArrayList<>(list);
             Collections.sort(newContent);
-            list.setAll((Collection<T>) newContent);
+            list.setAll(newContent);
         }
     }
 

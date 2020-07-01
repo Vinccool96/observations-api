@@ -25,8 +25,8 @@ import java.text.Format;
  * @see Property
  * @since JavaFX 2.0
  */
-@SuppressWarnings("DuplicatedCode") public abstract class StringProperty extends ReadOnlyStringProperty
-        implements Property<String>, WritableStringValue {
+@SuppressWarnings("DuplicatedCode")
+public abstract class StringProperty extends ReadOnlyStringProperty implements Property<String>, WritableStringValue {
 
     /**
      * {@inheritDoc}

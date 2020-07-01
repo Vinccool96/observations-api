@@ -29,8 +29,7 @@ public abstract class ReadOnlyDoubleProperty extends DoubleExpression implements
     public String toString() {
         final Object bean = getBean();
         final String name = getName();
-        final StringBuilder result = new StringBuilder(
-                "ReadOnlyDoubleProperty [");
+        final StringBuilder result = new StringBuilder("ReadOnlyDoubleProperty [");
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }

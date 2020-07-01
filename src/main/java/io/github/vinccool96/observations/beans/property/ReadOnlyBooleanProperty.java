@@ -29,8 +29,7 @@ public abstract class ReadOnlyBooleanProperty extends BooleanExpression implemen
     public String toString() {
         final Object bean = getBean();
         final String name = getName();
-        final StringBuilder result = new StringBuilder(
-                "ReadOnlyBooleanProperty [");
+        final StringBuilder result = new StringBuilder("ReadOnlyBooleanProperty [");
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }

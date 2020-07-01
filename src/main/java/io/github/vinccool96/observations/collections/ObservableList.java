@@ -20,6 +20,7 @@ import java.util.function.Predicate;
  * @see ListChangeListener.Change
  * @since JavaFX 2.0
  */
+@SuppressWarnings("unchecked")
 public interface ObservableList<E> extends List<E>, Observable {
 
     /**
@@ -130,7 +131,7 @@ public interface ObservableList<E> extends List<E>, Observable {
      * @since JavaFX 8.0
      */
     default FilteredList<E> filtered(Predicate<E> predicate) {
-        return new FilteredList<E>(this, predicate);
+        return new FilteredList<>(this, predicate);
     }
 
     /**
@@ -144,7 +145,7 @@ public interface ObservableList<E> extends List<E>, Observable {
      * @since JavaFX 8.0
      */
     default SortedList<E> sorted(Comparator<E> comparator) {
-        return new SortedList<E>(this, comparator);
+        return new SortedList<>(this, comparator);
     }
 
     /**
@@ -155,26 +156,22 @@ public interface ObservableList<E> extends List<E>, Observable {
      * @since JavaFX 8.0
      */
     default SortedList<E> sorted() {
-        Comparator<E> naturalOrder = new Comparator<E>() {
-
-            @Override
-            public int compare(E o1, E o2) {
-                if (o1 == null && o2 == null) {
-                    return 0;
-                }
-                if (o1 == null) {
-                    return -1;
-                }
-                if (o2 == null) {
-                    return 1;
-                }
-
-                if (o1 instanceof Comparable) {
-                    return ((Comparable<E>) o1).compareTo(o2);
-                }
-
-                return Collator.getInstance().compare(o1.toString(), o2.toString());
+        Comparator<E> naturalOrder = (o1, o2) -> {
+            if (o1 == null && o2 == null) {
+                return 0;
             }
+            if (o1 == null) {
+                return -1;
+            }
+            if (o2 == null) {
+                return 1;
+            }
+
+            if (o1 instanceof Comparable) {
+                return ((Comparable<E>) o1).compareTo(o2);
+            }
+
+            return Collator.getInstance().compare(o1.toString(), o2.toString());
         };
         return sorted(naturalOrder);
     }

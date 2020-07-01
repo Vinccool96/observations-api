@@ -1295,7 +1295,7 @@ public final class Bindings {
      *         if one of the operands is {@code null}
      */
     public static NumberBinding add(final ObservableNumberValue op1, final ObservableNumberValue op2) {
-        return Bindings.add(op1, op2, op1, op2);
+        return add(op1, op2, op1, op2);
     }
 
     /**
@@ -1313,7 +1313,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static DoubleBinding add(final ObservableNumberValue op1, double op2) {
-        return (DoubleBinding) Bindings.add(op1, DoubleConstant.valueOf(op2), op1);
+        return (DoubleBinding) add(op1, DoubleConstant.valueOf(op2), op1);
     }
 
     /**
@@ -1331,7 +1331,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static DoubleBinding add(double op1, final ObservableNumberValue op2) {
-        return (DoubleBinding) Bindings.add(DoubleConstant.valueOf(op1), op2, op2);
+        return (DoubleBinding) add(DoubleConstant.valueOf(op1), op2, op2);
     }
 
     /**
@@ -1349,7 +1349,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding add(final ObservableNumberValue op1, float op2) {
-        return Bindings.add(op1, FloatConstant.valueOf(op2), op1);
+        return add(op1, FloatConstant.valueOf(op2), op1);
     }
 
     /**
@@ -1367,7 +1367,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding add(float op1, final ObservableNumberValue op2) {
-        return Bindings.add(FloatConstant.valueOf(op1), op2, op2);
+        return add(FloatConstant.valueOf(op1), op2, op2);
     }
 
     /**
@@ -1385,7 +1385,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding add(final ObservableNumberValue op1, long op2) {
-        return Bindings.add(op1, LongConstant.valueOf(op2), op1);
+        return add(op1, LongConstant.valueOf(op2), op1);
     }
 
     /**
@@ -1403,7 +1403,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding add(long op1, final ObservableNumberValue op2) {
-        return Bindings.add(LongConstant.valueOf(op1), op2, op2);
+        return add(LongConstant.valueOf(op1), op2, op2);
     }
 
     /**
@@ -1421,7 +1421,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding add(final ObservableNumberValue op1, int op2) {
-        return Bindings.add(op1, IntegerConstant.valueOf(op2), op1);
+        return add(op1, IntegerConstant.valueOf(op2), op1);
     }
 
     /**
@@ -1439,7 +1439,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding add(int op1, final ObservableNumberValue op2) {
-        return Bindings.add(IntegerConstant.valueOf(op1), op2, op2);
+        return add(IntegerConstant.valueOf(op1), op2, op2);
     }
 
     // =================================================================================================================
@@ -1566,7 +1566,7 @@ public final class Bindings {
      *         if one of the operands is {@code null}
      */
     public static NumberBinding subtract(final ObservableNumberValue op1, final ObservableNumberValue op2) {
-        return Bindings.subtract(op1, op2, op1, op2);
+        return subtract(op1, op2, op1, op2);
     }
 
     /**
@@ -1584,7 +1584,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static DoubleBinding subtract(final ObservableNumberValue op1, double op2) {
-        return (DoubleBinding) Bindings.subtract(op1, DoubleConstant.valueOf(op2), op1);
+        return (DoubleBinding) subtract(op1, DoubleConstant.valueOf(op2), op1);
     }
 
     /**
@@ -1602,7 +1602,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static DoubleBinding subtract(double op1, final ObservableNumberValue op2) {
-        return (DoubleBinding) Bindings.subtract(DoubleConstant.valueOf(op1), op2, op2);
+        return (DoubleBinding) subtract(DoubleConstant.valueOf(op1), op2, op2);
     }
 
     /**
@@ -1620,7 +1620,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding subtract(final ObservableNumberValue op1, float op2) {
-        return Bindings.subtract(op1, FloatConstant.valueOf(op2), op1);
+        return subtract(op1, FloatConstant.valueOf(op2), op1);
     }
 
     /**
@@ -1638,7 +1638,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding subtract(float op1, final ObservableNumberValue op2) {
-        return Bindings.subtract(FloatConstant.valueOf(op1), op2, op2);
+        return subtract(FloatConstant.valueOf(op1), op2, op2);
     }
 
     /**
@@ -1656,7 +1656,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding subtract(final ObservableNumberValue op1, long op2) {
-        return Bindings.subtract(op1, LongConstant.valueOf(op2), op1);
+        return subtract(op1, LongConstant.valueOf(op2), op1);
     }
 
     /**
@@ -1674,7 +1674,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding subtract(long op1, final ObservableNumberValue op2) {
-        return Bindings.subtract(LongConstant.valueOf(op1), op2, op2);
+        return subtract(LongConstant.valueOf(op1), op2, op2);
     }
 
     /**
@@ -1692,7 +1692,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding subtract(final ObservableNumberValue op1, int op2) {
-        return Bindings.subtract(op1, IntegerConstant.valueOf(op2), op1);
+        return subtract(op1, IntegerConstant.valueOf(op2), op1);
     }
 
     /**
@@ -1710,7 +1710,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding subtract(int op1, final ObservableNumberValue op2) {
-        return Bindings.subtract(IntegerConstant.valueOf(op1), op2, op2);
+        return subtract(IntegerConstant.valueOf(op1), op2, op2);
     }
 
     // =================================================================================================================
@@ -1841,7 +1841,7 @@ public final class Bindings {
      *         if one of the operands is {@code null}
      */
     public static NumberBinding multiply(final ObservableNumberValue op1, final ObservableNumberValue op2) {
-        return Bindings.multiply(op1, op2, op1, op2);
+        return multiply(op1, op2, op1, op2);
     }
 
     /**
@@ -1859,7 +1859,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static DoubleBinding multiply(final ObservableNumberValue op1, double op2) {
-        return (DoubleBinding) Bindings.multiply(op1, DoubleConstant.valueOf(op2), op1);
+        return (DoubleBinding) multiply(op1, DoubleConstant.valueOf(op2), op1);
     }
 
     /**
@@ -1877,7 +1877,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static DoubleBinding multiply(double op1, final ObservableNumberValue op2) {
-        return (DoubleBinding) Bindings.multiply(DoubleConstant.valueOf(op1), op2, op2);
+        return (DoubleBinding) multiply(DoubleConstant.valueOf(op1), op2, op2);
     }
 
     /**
@@ -1895,7 +1895,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding multiply(final ObservableNumberValue op1, float op2) {
-        return Bindings.multiply(op1, FloatConstant.valueOf(op2), op1);
+        return multiply(op1, FloatConstant.valueOf(op2), op1);
     }
 
     /**
@@ -1913,7 +1913,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding multiply(float op1, final ObservableNumberValue op2) {
-        return Bindings.multiply(FloatConstant.valueOf(op1), op2, op2);
+        return multiply(FloatConstant.valueOf(op1), op2, op2);
     }
 
     /**
@@ -1931,7 +1931,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding multiply(final ObservableNumberValue op1, long op2) {
-        return Bindings.multiply(op1, LongConstant.valueOf(op2), op1);
+        return multiply(op1, LongConstant.valueOf(op2), op1);
     }
 
     /**
@@ -1949,7 +1949,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding multiply(long op1, final ObservableNumberValue op2) {
-        return Bindings.multiply(LongConstant.valueOf(op1), op2, op2);
+        return multiply(LongConstant.valueOf(op1), op2, op2);
     }
 
     /**
@@ -1967,7 +1967,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding multiply(final ObservableNumberValue op1, int op2) {
-        return Bindings.multiply(op1, IntegerConstant.valueOf(op2), op1);
+        return multiply(op1, IntegerConstant.valueOf(op2), op1);
     }
 
     /**
@@ -1985,7 +1985,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding multiply(int op1, final ObservableNumberValue op2) {
-        return Bindings.multiply(IntegerConstant.valueOf(op1), op2, op2);
+        return multiply(IntegerConstant.valueOf(op1), op2, op2);
     }
 
     // =================================================================================================================
@@ -2116,7 +2116,7 @@ public final class Bindings {
      *         if one of the operands is {@code null}
      */
     public static NumberBinding divide(final ObservableNumberValue op1, final ObservableNumberValue op2) {
-        return Bindings.divide(op1, op2, op1, op2);
+        return divide(op1, op2, op1, op2);
     }
 
     /**
@@ -2134,7 +2134,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static DoubleBinding divide(final ObservableNumberValue op1, double op2) {
-        return (DoubleBinding) Bindings.divide(op1, DoubleConstant.valueOf(op2), op1);
+        return (DoubleBinding) divide(op1, DoubleConstant.valueOf(op2), op1);
     }
 
     /**
@@ -2152,7 +2152,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static DoubleBinding divide(double op1, final ObservableNumberValue op2) {
-        return (DoubleBinding) Bindings.divide(DoubleConstant.valueOf(op1), op2, op2);
+        return (DoubleBinding) divide(DoubleConstant.valueOf(op1), op2, op2);
     }
 
     /**
@@ -2170,7 +2170,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding divide(final ObservableNumberValue op1, float op2) {
-        return Bindings.divide(op1, FloatConstant.valueOf(op2), op1);
+        return divide(op1, FloatConstant.valueOf(op2), op1);
     }
 
     /**
@@ -2188,7 +2188,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding divide(float op1, final ObservableNumberValue op2) {
-        return Bindings.divide(FloatConstant.valueOf(op1), op2, op2);
+        return divide(FloatConstant.valueOf(op1), op2, op2);
     }
 
     /**
@@ -2206,7 +2206,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding divide(final ObservableNumberValue op1, long op2) {
-        return Bindings.divide(op1, LongConstant.valueOf(op2), op1);
+        return divide(op1, LongConstant.valueOf(op2), op1);
     }
 
     /**
@@ -2224,7 +2224,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding divide(long op1, final ObservableNumberValue op2) {
-        return Bindings.divide(LongConstant.valueOf(op1), op2, op2);
+        return divide(LongConstant.valueOf(op1), op2, op2);
     }
 
     /**
@@ -2242,7 +2242,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding divide(final ObservableNumberValue op1, int op2) {
-        return Bindings.divide(op1, IntegerConstant.valueOf(op2), op1);
+        return divide(op1, IntegerConstant.valueOf(op2), op1);
     }
 
     /**
@@ -2260,7 +2260,7 @@ public final class Bindings {
      *         if the {@code ObservableNumberValue} is {@code null}
      */
     public static NumberBinding divide(int op1, final ObservableNumberValue op2) {
-        return Bindings.divide(IntegerConstant.valueOf(op1), op2, op2);
+        return divide(IntegerConstant.valueOf(op1), op2, op2);
     }
 
     // =================================================================================================================
@@ -2295,7 +2295,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableFloatValue) || (op2 instanceof ObservableFloatValue)) {
@@ -2320,7 +2320,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableLongValue) || (op2 instanceof ObservableLongValue)) {
@@ -2345,7 +2345,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else {
@@ -2398,7 +2398,7 @@ public final class Bindings {
      */
     public static BooleanBinding equal(final ObservableNumberValue op1, final ObservableNumberValue op2,
             final double epsilon) {
-        return Bindings.equal(op1, op2, epsilon, op1, op2);
+        return equal(op1, op2, epsilon, op1, op2);
     }
 
     /**
@@ -2730,7 +2730,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableFloatValue) || (op2 instanceof ObservableFloatValue)) {
@@ -2755,7 +2755,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableLongValue) || (op2 instanceof ObservableLongValue)) {
@@ -2780,7 +2780,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else {
@@ -2805,7 +2805,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         }
@@ -2833,7 +2833,7 @@ public final class Bindings {
      */
     public static BooleanBinding notEqual(final ObservableNumberValue op1, final ObservableNumberValue op2,
             final double epsilon) {
-        return Bindings.notEqual(op1, op2, epsilon, op1, op2);
+        return notEqual(op1, op2, epsilon, op1, op2);
     }
 
     /**
@@ -3165,7 +3165,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableFloatValue) || (op2 instanceof ObservableFloatValue)) {
@@ -3190,7 +3190,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableLongValue) || (op2 instanceof ObservableLongValue)) {
@@ -3215,7 +3215,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else {
@@ -3240,7 +3240,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         }
@@ -3261,7 +3261,7 @@ public final class Bindings {
      *         if one of the operands is {@code null}
      */
     public static BooleanBinding greaterThan(final ObservableNumberValue op1, final ObservableNumberValue op2) {
-        return Bindings.greaterThan(op1, op2, op1, op2);
+        return greaterThan(op1, op2, op1, op2);
     }
 
     /**
@@ -3610,7 +3610,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableFloatValue) || (op2 instanceof ObservableFloatValue)) {
@@ -3635,7 +3635,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableLongValue) || (op2 instanceof ObservableLongValue)) {
@@ -3660,7 +3660,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else {
@@ -3685,7 +3685,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         }
@@ -4820,7 +4820,7 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return new ImmutableObservableList<ObservableBooleanValue>(op1, op2);
+                return new ImmutableObservableList<>(op1, op2);
             }
         };
     }
@@ -4863,7 +4863,7 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return new ImmutableObservableList<ObservableBooleanValue>(op1, op2);
+                return new ImmutableObservableList<>(op1, op2);
             }
         };
     }

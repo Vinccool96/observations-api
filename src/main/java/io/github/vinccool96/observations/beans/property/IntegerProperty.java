@@ -22,8 +22,8 @@ import java.security.PrivilegedAction;
  * <p>
  * The context of a {@code IntegerProperty} can be read with {@link #getBean()} and {@link #getName()}.
  * <p>
- * Note: setting or binding this property to a null value will set the property to "0.0". See {@link #setValue(Number)
- * }.
+ * Note: setting or binding this property to a null value will set the property to "0.0". See {@link
+ * #setValue(Number)}.
  *
  * @see io.github.vinccool96.observations.beans.value.ObservableIntegerValue
  * @see WritableIntegerValue
@@ -73,8 +73,7 @@ public abstract class IntegerProperty extends ReadOnlyIntegerProperty
     public String toString() {
         final Object bean = getBean();
         final String name = getName();
-        final StringBuilder result = new StringBuilder(
-                "IntegerProperty [");
+        final StringBuilder result = new StringBuilder("IntegerProperty [");
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }
@@ -88,10 +87,8 @@ public abstract class IntegerProperty extends ReadOnlyIntegerProperty
     /**
      * Returns a {@code IntegerProperty} that wraps a {@link Property} and is bidirectionally bound to it. Changing this
      * property will result in a change of the original property.
-     *
      * <p>
      * This is very useful when bidirectionally binding an ObjectProperty&lt;Integer&gt; and a IntegerProperty.
-     *
      * <blockquote><pre>
      *   IntegerProperty integerProperty = new SimpleIntegerProperty(1);
      *   ObjectProperty&lt;Integer&gt; objectProperty = new SimpleObjectProperty&lt;&gt;(2);
@@ -100,11 +97,9 @@ public abstract class IntegerProperty extends ReadOnlyIntegerProperty
      *   IntegerProperty objectAsInteger = IntegerProperty.integerProperty(objectProperty);
      *
      *   integerProperty.bindBidirectional(objectAsInteger);
-     *
      * </pre></blockquote>
      * <p>
      * Another approach is to convert the IntegerProperty to ObjectProperty using {@link #asObject()} method.
-     *
      * <p>
      * Note: null values in the source property will be interpreted as 0
      *
@@ -158,7 +153,6 @@ public abstract class IntegerProperty extends ReadOnlyIntegerProperty
      * Creates an {@link ObjectProperty} that bidirectionally bound to this {@code IntegerProperty}. If the value of
      * this {@code IntegerProperty} changes, the value of the {@code ObjectProperty} will be updated automatically and
      * vice-versa.
-     *
      * <p>
      * Can be used for binding an ObjectProperty to IntegerProperty.
      *

@@ -117,8 +117,7 @@ public abstract class DoubleExpression extends NumberExpressionBase implements O
         if (value == null) {
             throw new NullPointerException("Value must be specified.");
         }
-        return (value instanceof DoubleExpression) ? (DoubleExpression) value
-                : new DoubleBinding() {
+        return (value instanceof DoubleExpression) ? (DoubleExpression) value : new DoubleBinding() {
 
             {
                 super.bind(value);

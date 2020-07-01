@@ -10,6 +10,7 @@ import java.util.Arrays;
 /**
  *
  */
+@SuppressWarnings({"rawtypes", "unchecked"})
 public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -19,7 +20,7 @@ public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
         if (listener == null) {
             throw new NullPointerException();
         }
-        return (helper == null) ? new SingleInvalidation<E>(listener) : helper.addListener(listener);
+        return (helper == null) ? new SingleInvalidation<>(listener) : helper.addListener(listener);
     }
 
     public static <E> ListListenerHelper<E> removeListener(ListListenerHelper<E> helper,
@@ -35,7 +36,7 @@ public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
         if (listener == null) {
             throw new NullPointerException();
         }
-        return (helper == null) ? new SingleChange<E>(listener) : helper.addListener(listener);
+        return (helper == null) ? new SingleChange<>(listener) : helper.addListener(listener);
     }
 
     public static <E> ListListenerHelper<E> removeListener(ListListenerHelper<E> helper,
@@ -88,7 +89,7 @@ public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected ListListenerHelper<E> addListener(InvalidationListener listener) {
-            return new ListListenerHelper.Generic<E>(this.listener, listener);
+            return new ListListenerHelper.Generic<>(this.listener, listener);
         }
 
         @Override
@@ -98,7 +99,7 @@ public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected ListListenerHelper<E> addListener(ListChangeListener<? super E> listener) {
-            return new ListListenerHelper.Generic<E>(this.listener, listener);
+            return new ListListenerHelper.Generic<>(this.listener, listener);
         }
 
         @Override
@@ -137,7 +138,7 @@ public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected ListListenerHelper<E> addListener(InvalidationListener listener) {
-            return new ListListenerHelper.Generic<E>(listener, this.listener);
+            return new ListListenerHelper.Generic<>(listener, this.listener);
         }
 
         @Override
@@ -147,7 +148,7 @@ public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected ListListenerHelper<E> addListener(ListChangeListener<? super E> listener) {
-            return new ListListenerHelper.Generic<E>(this.listener, listener);
+            return new ListListenerHelper.Generic<>(this.listener, listener);
         }
 
         @Override
@@ -234,12 +235,12 @@ public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
                     if (listener.equals(invalidationListeners[index])) {
                         if (invalidationSize == 1) {
                             if (changeSize == 1) {
-                                return new ListListenerHelper.SingleChange<E>(changeListeners[0]);
+                                return new ListListenerHelper.SingleChange<>(changeListeners[0]);
                             }
                             invalidationListeners = null;
                             invalidationSize = 0;
                         } else if ((invalidationSize == 2) && (changeSize == 0)) {
-                            return new ListListenerHelper.SingleInvalidation<E>(invalidationListeners[1 - index]);
+                            return new ListListenerHelper.SingleInvalidation<>(invalidationListeners[1 - index]);
                         } else {
                             final int numMoved = invalidationSize - index - 1;
                             final InvalidationListener[] oldListeners = invalidationListeners;
@@ -291,12 +292,12 @@ public abstract class ListListenerHelper<E> extends ExpressionHelperBase {
                     if (listener.equals(changeListeners[index])) {
                         if (changeSize == 1) {
                             if (invalidationSize == 1) {
-                                return new ListListenerHelper.SingleInvalidation<E>(invalidationListeners[0]);
+                                return new ListListenerHelper.SingleInvalidation<>(invalidationListeners[0]);
                             }
                             changeListeners = null;
                             changeSize = 0;
                         } else if ((changeSize == 2) && (invalidationSize == 0)) {
-                            return new ListListenerHelper.SingleChange<E>(changeListeners[1 - index]);
+                            return new ListListenerHelper.SingleChange<>(changeListeners[1 - index]);
                         } else {
                             final int numMoved = changeSize - index - 1;
                             final ListChangeListener<? super E>[] oldListeners = changeListeners;
