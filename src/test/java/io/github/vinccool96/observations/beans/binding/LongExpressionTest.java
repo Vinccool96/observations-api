@@ -1,6 +1,5 @@
-package io.github.vinccool96.observations.beans.binding.expression;
+package io.github.vinccool96.observations.beans.binding;
 
-import io.github.vinccool96.observations.beans.binding.*;
 import io.github.vinccool96.observations.beans.property.LongProperty;
 import io.github.vinccool96.observations.beans.property.SimpleLongProperty;
 import io.github.vinccool96.observations.beans.value.ObservableLongValueStub;
