@@ -6,7 +6,7 @@ package io.github.vinccool96.observations.collections;
  * Bulk operations are supported but they always do a copy of the data range.
  *
  * @see ArrayChangeListener
-*/
+ */
 public interface ObservableFloatArray extends ObservableArray<ObservableFloatArray> {
 
     /**

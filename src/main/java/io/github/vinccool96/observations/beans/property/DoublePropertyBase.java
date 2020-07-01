@@ -19,7 +19,7 @@ import java.lang.ref.WeakReference;
  * methods, which must be implemented by extending classes.
  *
  * @see DoubleProperty
-*/
+ */
 public abstract class DoublePropertyBase extends DoubleProperty {
 
     private double value;

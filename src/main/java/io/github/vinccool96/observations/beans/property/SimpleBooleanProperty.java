@@ -4,7 +4,7 @@ package io.github.vinccool96.observations.beans.property;
  * This class provides a full implementation of a {@link Property} wrapping a {@code boolean} value.
  *
  * @see BooleanPropertyBase
-*/
+ */
 public class SimpleBooleanProperty extends BooleanPropertyBase {
 
     private static final Object DEFAULT_BEAN = null;

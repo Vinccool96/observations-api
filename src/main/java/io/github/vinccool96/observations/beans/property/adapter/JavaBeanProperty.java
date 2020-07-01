@@ -8,7 +8,7 @@ import io.github.vinccool96.observations.beans.property.Property;
  *
  * @param <T>
  *         The type of the wrapped property
-*/
+ */
 public interface JavaBeanProperty<T> extends ReadOnlyJavaBeanProperty<T>, Property<T> {
 
 }

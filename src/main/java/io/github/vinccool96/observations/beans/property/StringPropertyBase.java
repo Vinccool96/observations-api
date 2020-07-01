@@ -16,7 +16,7 @@ import java.lang.ref.WeakReference;
  * methods, which must be implemented by extending classes.
  *
  * @see StringProperty
-*/
+ */
 @SuppressWarnings({"EqualsReplaceableByObjectsCall", "DuplicatedCode"})
 public abstract class StringPropertyBase extends StringProperty {
 

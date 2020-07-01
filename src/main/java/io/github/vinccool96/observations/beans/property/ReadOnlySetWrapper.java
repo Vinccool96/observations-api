@@ -8,7 +8,7 @@ import static io.github.vinccool96.observations.collections.SetChangeListener.Ch
  * This class provides a convenient class to define read-only properties. It creates two properties that are
  * synchronized. One property is read-only and can be passed to external users. The other property is read- and writable
  * and should be used internally only.
-*/
+ */
 public class ReadOnlySetWrapper<E> extends SimpleSetProperty<E> {
 
     private ReadOnlyPropertyImpl readOnlyProperty;

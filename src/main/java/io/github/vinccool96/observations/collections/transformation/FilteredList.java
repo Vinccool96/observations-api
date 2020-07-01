@@ -16,7 +16,7 @@ import java.util.function.Predicate;
  * propagated immediately to the FilteredList.
  *
  * @see TransformationList
-*/
+ */
 public final class FilteredList<E> extends TransformationList<E, E> {
 
     private int[] filtered;

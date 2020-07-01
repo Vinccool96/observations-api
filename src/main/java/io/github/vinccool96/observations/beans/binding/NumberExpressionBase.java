@@ -16,7 +16,7 @@ import java.util.Locale;
  * @see LongExpression
  * @see FloatExpression
  * @see DoubleExpression
-*/
+ */
 @SuppressWarnings("unused")
 public abstract class NumberExpressionBase implements NumberExpression {
 

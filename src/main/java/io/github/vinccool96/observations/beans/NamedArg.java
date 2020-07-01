@@ -8,7 +8,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Annotation that provides information about argument's name.
-*/
+ */
 @Retention(RUNTIME)
 @Target(PARAMETER)
 public @interface NamedArg {

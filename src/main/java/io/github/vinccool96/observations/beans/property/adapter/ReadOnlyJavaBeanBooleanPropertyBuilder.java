@@ -23,7 +23,7 @@ import java.lang.reflect.Method;
  * {@link #build()}.
  *
  * @see ReadOnlyJavaBeanBooleanProperty
-*/
+ */
 public final class ReadOnlyJavaBeanBooleanPropertyBuilder {
 
     private final ReadOnlyJavaBeanPropertyBuilderHelper helper = new ReadOnlyJavaBeanPropertyBuilderHelper();

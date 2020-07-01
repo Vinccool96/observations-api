@@ -77,7 +77,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * @see Binding
  * @see NumberBinding
  * @see DoubleExpression
-*/
+ */
 public abstract class DoubleBinding extends DoubleExpression implements NumberBinding {
 
     private double value;

@@ -31,7 +31,7 @@ import java.security.PrivilegedAction;
  *
  * @see StringProperty
  * @see JavaBeanStringPropertyBuilder
-*/
+ */
 public final class JavaBeanStringProperty extends StringProperty implements JavaBeanProperty<String> {
 
     private final PropertyDescriptor descriptor;

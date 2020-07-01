@@ -12,7 +12,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * implementation to attach listener.
  *
  * @see ReadOnlyMapProperty
-*/
+ */
 public abstract class ReadOnlyMapPropertyBase<K, V> extends ReadOnlyMapProperty<K, V> {
 
     private MapExpressionHelper<K, V> helper;

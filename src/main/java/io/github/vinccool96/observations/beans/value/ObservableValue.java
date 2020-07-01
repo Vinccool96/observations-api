@@ -42,7 +42,7 @@ import io.github.vinccool96.observations.beans.Observable;
  * @see ObservableNumberValue
  * @see ObservableObjectValue
  * @see ObservableStringValue
-*/
+ */
 public interface ObservableValue<T> extends Observable {
 
     /**

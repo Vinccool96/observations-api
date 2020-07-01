@@ -4,7 +4,7 @@ package io.github.vinccool96.observations.beans.value;
  * A writable {@code boolean} value.
  *
  * @see WritableValue
-*/
+ */
 public interface WritableBooleanValue extends WritableValue<Boolean> {
 
     /**

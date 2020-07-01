@@ -10,7 +10,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * attach listener.
  *
  * @see ReadOnlyLongProperty
-*/
+ */
 public abstract class ReadOnlyLongPropertyBase extends ReadOnlyLongProperty {
 
     ExpressionHelper<Number> helper;

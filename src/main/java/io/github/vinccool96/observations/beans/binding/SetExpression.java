@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
  *
  * @param <E>
  *         the type of the {@code Set} elements
-*/
+ */
 public abstract class SetExpression<E> implements ObservableSetValue<E> {
 
     private static final ObservableSet EMPTY_SET = new EmptyObservableSet();

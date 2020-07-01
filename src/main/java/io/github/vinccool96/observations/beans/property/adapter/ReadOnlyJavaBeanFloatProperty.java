@@ -23,7 +23,7 @@ import java.security.PrivilegedAction;
  *
  * @see io.github.vinccool96.observations.beans.property.ReadOnlyFloatProperty
  * @see ReadOnlyJavaBeanFloatPropertyBuilder
-*/
+ */
 public final class ReadOnlyJavaBeanFloatProperty extends ReadOnlyFloatPropertyBase implements
         ReadOnlyJavaBeanProperty<Number> {
 

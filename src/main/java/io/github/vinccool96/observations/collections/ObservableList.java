@@ -18,7 +18,7 @@ import java.util.function.Predicate;
  *
  * @see ListChangeListener
  * @see ListChangeListener.Change
-*/
+ */
 @SuppressWarnings("unchecked")
 public interface ObservableList<E> extends List<E>, Observable {
 

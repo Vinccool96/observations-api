@@ -26,7 +26,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * @see Binding
  * @see NumberBinding
  * @see LongExpression
-*/
+ */
 public abstract class LongBinding extends LongExpression implements NumberBinding {
 
     private long value;

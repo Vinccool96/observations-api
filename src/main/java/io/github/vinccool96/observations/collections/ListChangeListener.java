@@ -10,7 +10,7 @@ import java.util.List;
  *         the list element type
  *
  * @see Change
-*/
+ */
 @FunctionalInterface
 public interface ListChangeListener<E> {
 

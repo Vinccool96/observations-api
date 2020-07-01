@@ -23,7 +23,7 @@ import java.lang.reflect.Method;
  * #build()}.
  *
  * @see JavaBeanFloatProperty
-*/
+ */
 public final class JavaBeanFloatPropertyBuilder {
 
     private JavaBeanPropertyBuilderHelper helper = new JavaBeanPropertyBuilderHelper();

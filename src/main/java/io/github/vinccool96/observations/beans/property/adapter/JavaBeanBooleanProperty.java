@@ -31,7 +31,7 @@ import java.security.PrivilegedAction;
  *
  * @see BooleanProperty
  * @see JavaBeanBooleanPropertyBuilder
-*/
+ */
 public final class JavaBeanBooleanProperty extends BooleanProperty implements JavaBeanProperty<Boolean> {
 
     private final PropertyDescriptor descriptor;

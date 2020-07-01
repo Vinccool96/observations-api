@@ -29,7 +29,7 @@ import java.security.PrivilegedAction;
  * @see WritableIntegerValue
  * @see ReadOnlyIntegerProperty
  * @see Property
-*/
+ */
 public abstract class IntegerProperty extends ReadOnlyIntegerProperty
         implements Property<Number>, WritableIntegerValue {
 

@@ -11,7 +11,7 @@ import io.github.vinccool96.observations.collections.ObservableSet;
  * @see ObservableSet
  * @see ObservableObjectValue
  * @see ObservableValue
-*/
+ */
 public interface ObservableSetValue<E> extends ObservableObjectValue<ObservableSet<E>>, ObservableSet<E> {
 
 }

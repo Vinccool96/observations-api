@@ -8,7 +8,7 @@ import io.github.vinccool96.observations.beans.binding.StringExpression;
  * @see io.github.vinccool96.observations.beans.value.ObservableStringValue
  * @see StringExpression
  * @see ReadOnlyProperty
-*/
+ */
 public abstract class ReadOnlyStringProperty extends StringExpression implements ReadOnlyProperty<String> {
 
     /**

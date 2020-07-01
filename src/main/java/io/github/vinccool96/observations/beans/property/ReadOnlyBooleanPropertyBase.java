@@ -10,7 +10,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * attach listener.
  *
  * @see ReadOnlyBooleanProperty
-*/
+ */
 public abstract class ReadOnlyBooleanPropertyBase extends ReadOnlyBooleanProperty {
 
     ExpressionHelper<Boolean> helper;

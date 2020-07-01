@@ -22,7 +22,7 @@ import java.util.List;
  * valid again.
  *
  * @see TransformationList
-*/
+ */
 @SuppressWarnings({"unused", "rawtypes", "unchecked"})
 public final class SortedList<E> extends TransformationList<E, E> {
 

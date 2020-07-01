@@ -29,7 +29,7 @@ import java.security.PrivilegedAction;
  * @see WritableLongValue
  * @see ReadOnlyLongProperty
  * @see Property
-*/
+ */
 public abstract class LongProperty extends ReadOnlyLongProperty implements Property<Number>, WritableLongValue {
 
     /**

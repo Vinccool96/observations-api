@@ -13,7 +13,7 @@ import io.github.vinccool96.observations.sun.binding.StringFormatter;
  * <p>
  * Note: all implementation of {@link BooleanBinding} returned by the comparisons in this class consider a {@code
  * String} that is {@code null} equal to an empty {@code String}.
-*/
+ */
 public abstract class StringExpression implements ObservableStringValue {
 
     @Override

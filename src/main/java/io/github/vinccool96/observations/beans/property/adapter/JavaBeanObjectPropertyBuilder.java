@@ -26,7 +26,7 @@ import java.lang.reflect.Method;
  *         the type of the wrapped {@code Object}
  *
  * @see JavaBeanObjectProperty
-*/
+ */
 public final class JavaBeanObjectPropertyBuilder<T> {
 
     private JavaBeanPropertyBuilderHelper helper = new JavaBeanPropertyBuilderHelper();

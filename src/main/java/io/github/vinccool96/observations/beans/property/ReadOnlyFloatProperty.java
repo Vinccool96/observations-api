@@ -10,7 +10,7 @@ import io.github.vinccool96.observations.beans.binding.FloatExpression;
  * @see io.github.vinccool96.observations.beans.value.ObservableFloatValue
  * @see FloatExpression
  * @see ReadOnlyProperty
-*/
+ */
 public abstract class ReadOnlyFloatProperty extends FloatExpression implements ReadOnlyProperty<Number> {
 
     /**

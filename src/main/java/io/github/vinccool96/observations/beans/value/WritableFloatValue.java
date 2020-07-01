@@ -5,7 +5,7 @@ package io.github.vinccool96.observations.beans.value;
  *
  * @see WritableValue
  * @see WritableNumberValue
-*/
+ */
 public interface WritableFloatValue extends WritableNumberValue {
 
     /**

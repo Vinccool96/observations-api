@@ -12,7 +12,7 @@ import io.github.vinccool96.observations.sun.collections.annotations.ReturnsUnmo
  * <p>
  * A concrete sub-class of {@code IntegerExpression} has to implement the method {@link ObservableIntegerValue#get()},
  * which provides the actual value of this expression.
-*/
+ */
 public abstract class IntegerExpression extends NumberExpressionBase implements ObservableIntegerValue {
 
     @Override

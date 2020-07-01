@@ -10,7 +10,7 @@ import io.github.vinccool96.observations.beans.binding.IntegerExpression;
  * @see io.github.vinccool96.observations.beans.value.ObservableIntegerValue
  * @see IntegerExpression
  * @see ReadOnlyProperty
-*/
+ */
 public abstract class ReadOnlyIntegerProperty extends IntegerExpression implements ReadOnlyProperty<Number> {
 
     /**

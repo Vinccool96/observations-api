@@ -29,7 +29,7 @@ import java.security.PrivilegedAction;
  * @see WritableBooleanValue
  * @see ReadOnlyBooleanProperty
  * @see Property
-*/
+ */
 public abstract class BooleanProperty extends ReadOnlyBooleanProperty
         implements Property<Boolean>, WritableBooleanValue {
 

@@ -26,7 +26,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * @see Binding
  * @see NumberBinding
  * @see FloatExpression
-*/
+ */
 public abstract class FloatBinding extends FloatExpression implements NumberBinding {
 
     private float value;

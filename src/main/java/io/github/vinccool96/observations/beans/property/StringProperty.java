@@ -23,7 +23,7 @@ import java.text.Format;
  * @see WritableStringValue
  * @see ReadOnlyStringProperty
  * @see Property
-*/
+ */
 @SuppressWarnings("DuplicatedCode")
 public abstract class StringProperty extends ReadOnlyStringProperty implements Property<String>, WritableStringValue {
 

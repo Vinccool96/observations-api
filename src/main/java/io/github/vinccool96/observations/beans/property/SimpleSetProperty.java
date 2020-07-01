@@ -9,7 +9,7 @@ import io.github.vinccool96.observations.collections.ObservableSet;
  *         the type of the {@code Set} elements
  *
  * @see SetPropertyBase
-*/
+ */
 public class SimpleSetProperty<E> extends SetPropertyBase<E> {
 
     private static final Object DEFAULT_BEAN = null;

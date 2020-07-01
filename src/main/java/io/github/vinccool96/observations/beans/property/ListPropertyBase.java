@@ -22,7 +22,7 @@ import java.lang.ref.WeakReference;
  *
  * @see ObservableList
  * @see ListProperty
-*/
+ */
 public abstract class ListPropertyBase<E> extends ListProperty<E> {
 
     private final ListChangeListener<E> listChangeListener = change -> {

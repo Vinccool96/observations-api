@@ -34,7 +34,7 @@ import java.security.PrivilegedAction;
  *
  * @see ObjectProperty
  * @see JavaBeanObjectPropertyBuilder
-*/
+ */
 public final class JavaBeanObjectProperty<T> extends ObjectProperty<T> implements JavaBeanProperty<T> {
 
     private final PropertyDescriptor descriptor;

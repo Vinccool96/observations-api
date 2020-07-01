@@ -24,7 +24,7 @@ import java.lang.ref.WeakReference;
  * @see MapChangeListener
  * @see ObservableMap
  * @see WeakListener
-*/
+ */
 public final class WeakMapChangeListener<K, V> implements MapChangeListener<K, V>, WeakListener {
 
     private final WeakReference<MapChangeListener<K, V>> ref;

@@ -45,7 +45,7 @@ import java.util.concurrent.Callable;
  *
  * @see Binding
  * @see NumberBinding
-*/
+ */
 public final class Bindings {
 
     private Bindings() {

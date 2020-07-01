@@ -19,7 +19,7 @@ import java.lang.ref.WeakReference;
  * methods, which must be implemented by extending classes.
  *
  * @see FloatProperty
-*/
+ */
 public abstract class FloatPropertyBase extends FloatProperty {
 
     private float value;

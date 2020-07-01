@@ -23,7 +23,7 @@ import java.security.PrivilegedAction;
  *
  * @see io.github.vinccool96.observations.beans.property.ReadOnlyDoubleProperty
  * @see ReadOnlyJavaBeanDoublePropertyBuilder
-*/
+ */
 public final class ReadOnlyJavaBeanDoubleProperty extends ReadOnlyDoublePropertyBase
         implements ReadOnlyJavaBeanProperty<Number> {
 

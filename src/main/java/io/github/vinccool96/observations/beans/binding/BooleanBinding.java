@@ -25,7 +25,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  *
  * @see Binding
  * @see BooleanExpression
-*/
+ */
 public abstract class BooleanBinding extends BooleanExpression implements Binding<Boolean> {
 
     /**

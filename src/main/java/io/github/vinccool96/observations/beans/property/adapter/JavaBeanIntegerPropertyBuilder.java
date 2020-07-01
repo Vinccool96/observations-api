@@ -23,7 +23,7 @@ import java.lang.reflect.Method;
  * #build()}.
  *
  * @see JavaBeanIntegerProperty
-*/
+ */
 public final class JavaBeanIntegerPropertyBuilder {
 
     private JavaBeanPropertyBuilderHelper helper = new JavaBeanPropertyBuilderHelper();

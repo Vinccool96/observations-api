@@ -21,7 +21,7 @@ import io.github.vinccool96.observations.sun.collections.annotations.ReturnsUnmo
  * an example.
  *
  * @see DoubleBinding
-*/
+ */
 public interface Binding<T> extends ObservableValue<T> {
 
     /**

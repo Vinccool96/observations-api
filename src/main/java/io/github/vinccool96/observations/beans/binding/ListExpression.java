@@ -26,7 +26,7 @@ import java.util.ListIterator;
  *
  * @param <E>
  *         the type of the {@code List} elements.
-*/
+ */
 public abstract class ListExpression<E> implements ObservableListValue<E> {
 
     private static final ObservableList EMPTY_LIST = ObservableCollections.emptyObservableList();
