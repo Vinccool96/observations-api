@@ -1,9 +1,5 @@
-package io.github.vinccool96.observations.beans.binding.expression;
+package io.github.vinccool96.observations.beans.binding;
 
-import io.github.vinccool96.observations.beans.binding.DoubleBinding;
-import io.github.vinccool96.observations.beans.binding.FloatBinding;
-import io.github.vinccool96.observations.beans.binding.FloatExpression;
-import io.github.vinccool96.observations.beans.binding.ObjectExpression;
 import io.github.vinccool96.observations.beans.property.FloatProperty;
 import io.github.vinccool96.observations.beans.property.SimpleFloatProperty;
 import io.github.vinccool96.observations.beans.value.ObservableFloatValueStub;

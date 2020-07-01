@@ -1,6 +1,5 @@
-package io.github.vinccool96.observations.beans.binding.expression;
+package io.github.vinccool96.observations.beans.binding;
 
-import io.github.vinccool96.observations.beans.binding.BooleanBinding;
 import io.github.vinccool96.observations.beans.property.SetProperty;
 import io.github.vinccool96.observations.beans.property.SimpleSetProperty;
 import io.github.vinccool96.observations.collections.ObservableCollections;

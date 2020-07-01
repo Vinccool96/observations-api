@@ -1,6 +1,5 @@
-package io.github.vinccool96.observations.beans.binding.expression;
+package io.github.vinccool96.observations.beans.binding;
 
-import io.github.vinccool96.observations.beans.binding.*;
 import io.github.vinccool96.observations.beans.property.ObjectProperty;
 import io.github.vinccool96.observations.beans.property.SimpleObjectProperty;
 import io.github.vinccool96.observations.beans.value.ObservableObjectValueStub;

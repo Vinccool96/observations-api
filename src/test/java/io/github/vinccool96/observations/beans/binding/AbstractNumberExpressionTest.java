@@ -1,7 +1,6 @@
-package io.github.vinccool96.observations.beans.binding.expression;
+package io.github.vinccool96.observations.beans.binding;
 
 import io.github.vinccool96.observations.beans.InvalidationListener;
-import io.github.vinccool96.observations.beans.binding.*;
 import io.github.vinccool96.observations.beans.property.DoubleProperty;
 import io.github.vinccool96.observations.beans.property.IntegerProperty;
 import io.github.vinccool96.observations.beans.property.SimpleDoubleProperty;

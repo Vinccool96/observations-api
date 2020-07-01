@@ -1,8 +1,5 @@
-package io.github.vinccool96.observations.beans.binding.expression;
+package io.github.vinccool96.observations.beans.binding;
 
-import io.github.vinccool96.observations.beans.binding.DoubleBinding;
-import io.github.vinccool96.observations.beans.binding.DoubleExpression;
-import io.github.vinccool96.observations.beans.binding.ObjectExpression;
 import io.github.vinccool96.observations.beans.property.DoubleProperty;
 import io.github.vinccool96.observations.beans.property.SimpleDoubleProperty;
 import io.github.vinccool96.observations.beans.value.ObservableDoubleValueStub;
