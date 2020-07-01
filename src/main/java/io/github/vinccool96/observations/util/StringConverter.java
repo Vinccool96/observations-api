@@ -6,7 +6,7 @@ package io.github.vinccool96.observations.util;
  *
  * @param <T>
  *         the type of the object
-*/
+ */
 public abstract class StringConverter<T> {
 
     /**

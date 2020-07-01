@@ -19,7 +19,7 @@ import java.lang.ref.WeakReference;
  * methods, which must be implemented by extending classes.
  *
  * @see IntegerProperty
-*/
+ */
 public abstract class IntegerPropertyBase extends IntegerProperty {
 
     private int value;

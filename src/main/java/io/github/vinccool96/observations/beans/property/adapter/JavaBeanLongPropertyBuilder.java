@@ -23,7 +23,7 @@ import java.lang.reflect.Method;
  * #build()}.
  *
  * @see JavaBeanLongProperty
-*/
+ */
 public final class JavaBeanLongPropertyBuilder {
 
     private JavaBeanPropertyBuilderHelper helper = new JavaBeanPropertyBuilderHelper();

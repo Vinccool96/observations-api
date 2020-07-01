@@ -7,7 +7,7 @@ import io.github.vinccool96.observations.beans.value.ObservableValue;
  *
  * @param <T>
  *         the type of the wrapped value
-*/
+ */
 public interface ReadOnlyProperty<T> extends ObservableValue<T> {
 
     /**

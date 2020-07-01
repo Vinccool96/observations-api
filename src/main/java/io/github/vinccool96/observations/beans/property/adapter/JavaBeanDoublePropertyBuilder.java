@@ -23,7 +23,7 @@ import java.lang.reflect.Method;
  * #build()}.
  *
  * @see JavaBeanDoubleProperty
-*/
+ */
 public final class JavaBeanDoublePropertyBuilder {
 
     private final JavaBeanPropertyBuilderHelper helper = new JavaBeanPropertyBuilderHelper();

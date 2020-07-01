@@ -4,7 +4,7 @@ package io.github.vinccool96.observations.beans.property;
  * This class provides a full implementation of a {@link Property} wrapping a {@code String} value.
  *
  * @see StringPropertyBase
-*/
+ */
 public class SimpleStringProperty extends StringPropertyBase {
 
     private static final Object DEFAULT_BEAN = null;

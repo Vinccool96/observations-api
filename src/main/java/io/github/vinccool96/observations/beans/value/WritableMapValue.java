@@ -12,7 +12,7 @@ import io.github.vinccool96.observations.collections.ObservableMap;
  *
  * @see ObservableMap
  * @see WritableObjectValue
-*/
+ */
 public interface WritableMapValue<K, V> extends WritableObjectValue<ObservableMap<K, V>>, ObservableMap<K, V> {
 
 }

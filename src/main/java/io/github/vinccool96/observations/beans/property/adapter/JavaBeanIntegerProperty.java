@@ -31,7 +31,7 @@ import java.security.PrivilegedAction;
  *
  * @see IntegerProperty
  * @see JavaBeanIntegerPropertyBuilder
-*/
+ */
 public final class JavaBeanIntegerProperty extends IntegerProperty implements JavaBeanProperty<Number> {
 
     private final PropertyDescriptor descriptor;

@@ -24,7 +24,7 @@ import io.github.vinccool96.observations.collections.ObservableSet;
  * @see WritableSetValue
  * @see ReadOnlySetProperty
  * @see Property
-*/
+ */
 public abstract class SetProperty<E> extends ReadOnlySetProperty<E> implements
         Property<ObservableSet<E>>, WritableSetValue<E> {
 

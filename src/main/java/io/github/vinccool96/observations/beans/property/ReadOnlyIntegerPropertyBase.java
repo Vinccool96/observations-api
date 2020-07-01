@@ -10,7 +10,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * attach listener.
  *
  * @see ReadOnlyIntegerProperty
-*/
+ */
 public abstract class ReadOnlyIntegerPropertyBase extends ReadOnlyIntegerProperty {
 
     ExpressionHelper<Number> helper;

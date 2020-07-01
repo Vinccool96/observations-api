@@ -5,7 +5,7 @@ package io.github.vinccool96.observations.beans.value;
  *
  * @see ObservableValue
  * @see ObservableNumberValue
-*/
+ */
 public interface ObservableLongValue extends ObservableNumberValue {
 
     /**

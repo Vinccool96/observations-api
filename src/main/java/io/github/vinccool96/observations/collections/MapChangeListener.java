@@ -7,7 +7,7 @@ package io.github.vinccool96.observations.collections;
  *         the key element type
  * @param <V>
  *         the value element type
-*/
+ */
 @FunctionalInterface
 public interface MapChangeListener<K, V> {
 

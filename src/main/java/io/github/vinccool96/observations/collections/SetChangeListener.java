@@ -5,7 +5,7 @@ package io.github.vinccool96.observations.collections;
  *
  * @param <E>
  *         the element type
-*/
+ */
 @FunctionalInterface
 public interface SetChangeListener<E> {
 

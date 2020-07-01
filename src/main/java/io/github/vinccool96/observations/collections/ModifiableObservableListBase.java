@@ -53,7 +53,7 @@ import java.util.ListIterator;
  *         the type of the elements contained in the List
  *
  * @see ObservableListBase
-*/
+ */
 @SuppressWarnings({"FieldMayBeFinal", "SuspiciousToArrayCall", "EqualsWhichDoesntCheckParameterClass"})
 public abstract class ModifiableObservableListBase<E> extends ObservableListBase<E> {
 

@@ -10,7 +10,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * attach listener.
  *
  * @see ReadOnlyFloatProperty
-*/
+ */
 public abstract class ReadOnlyFloatPropertyBase extends ReadOnlyFloatProperty {
 
     ExpressionHelper<Number> helper;

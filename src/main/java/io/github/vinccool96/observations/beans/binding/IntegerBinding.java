@@ -26,7 +26,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * @see Binding
  * @see NumberBinding
  * @see IntegerExpression
-*/
+ */
 public abstract class IntegerBinding extends IntegerExpression implements NumberBinding {
 
     private int value;

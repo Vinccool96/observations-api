@@ -12,7 +12,7 @@ import java.util.Set;
  *
  * @see SetChangeListener
  * @see SetChangeListener.Change
-*/
+ */
 public interface ObservableSet<E> extends Set<E>, Observable {
 
     /**

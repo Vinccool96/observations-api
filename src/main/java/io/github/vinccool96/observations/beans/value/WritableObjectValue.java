@@ -7,7 +7,7 @@ package io.github.vinccool96.observations.beans.value;
  *         The type of the wrapped value
  *
  * @see WritableValue
-*/
+ */
 public interface WritableObjectValue<T> extends WritableValue<T> {
 
     /**

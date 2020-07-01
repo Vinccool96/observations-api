@@ -10,7 +10,7 @@ import io.github.vinccool96.observations.beans.binding.DoubleExpression;
  * @see io.github.vinccool96.observations.beans.value.ObservableDoubleValue
  * @see DoubleExpression
  * @see ReadOnlyProperty
-*/
+ */
 public abstract class ReadOnlyDoubleProperty extends DoubleExpression implements ReadOnlyProperty<Number> {
 
     /**

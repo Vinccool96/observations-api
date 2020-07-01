@@ -10,7 +10,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * attach listener.
  *
  * @see ReadOnlyStringProperty
-*/
+ */
 public abstract class ReadOnlyStringPropertyBase extends ReadOnlyStringProperty {
 
     ExpressionHelper<String> helper;

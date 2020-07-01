@@ -14,7 +14,7 @@ import io.github.vinccool96.observations.beans.value.ObservableValue;
  *
  * @see Observable
  * @see ObservableValue
-*/
+ */
 @FunctionalInterface
 public interface InvalidationListener {
 

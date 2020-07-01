@@ -29,7 +29,7 @@ import java.security.PrivilegedAction;
  * @see WritableDoubleValue
  * @see ReadOnlyDoubleProperty
  * @see Property
-*/
+ */
 public abstract class DoubleProperty extends ReadOnlyDoubleProperty implements Property<Number>, WritableDoubleValue {
 
     /**

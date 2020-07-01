@@ -31,7 +31,7 @@ import java.security.PrivilegedAction;
  *
  * @see DoubleProperty
  * @see JavaBeanDoublePropertyBuilder
-*/
+ */
 public final class JavaBeanDoubleProperty extends DoubleProperty implements JavaBeanProperty<Number> {
 
     private final PropertyDescriptor descriptor;

@@ -17,7 +17,7 @@ import java.util.Locale;
  *
  * @param <T>
  *         The type of the wrapped value
-*/
+ */
 public abstract class ObjectExpression<T> implements ObservableObjectValue<T> {
 
     @Override

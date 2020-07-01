@@ -4,7 +4,7 @@ package io.github.vinccool96.observations.beans.property;
  * This class provides a full implementation of a {@link Property} wrapping a {@code double} value.
  *
  * @see DoublePropertyBase
-*/
+ */
 public class SimpleDoubleProperty extends DoublePropertyBase {
 
     private static final Object DEFAULT_BEAN = null;

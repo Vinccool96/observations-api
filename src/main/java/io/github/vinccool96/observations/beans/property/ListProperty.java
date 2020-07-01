@@ -24,7 +24,7 @@ import io.github.vinccool96.observations.collections.ObservableList;
  * @see WritableListValue
  * @see ReadOnlyListProperty
  * @see Property
-*/
+ */
 public abstract class ListProperty<E> extends ReadOnlyListProperty<E>
         implements Property<ObservableList<E>>, WritableListValue<E> {
 

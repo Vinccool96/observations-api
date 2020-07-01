@@ -10,7 +10,7 @@ import io.github.vinccool96.observations.beans.binding.LongExpression;
  * @see io.github.vinccool96.observations.beans.value.ObservableLongValue
  * @see LongExpression
  * @see ReadOnlyProperty
-*/
+ */
 public abstract class ReadOnlyLongProperty extends LongExpression implements ReadOnlyProperty<Number> {
 
     /**

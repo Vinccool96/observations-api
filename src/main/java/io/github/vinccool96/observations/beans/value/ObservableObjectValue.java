@@ -7,7 +7,7 @@ package io.github.vinccool96.observations.beans.value;
  *         The type of the wrapped value
  *
  * @see ObservableValue
-*/
+ */
 public interface ObservableObjectValue<T> extends ObservableValue<T> {
 
     /**

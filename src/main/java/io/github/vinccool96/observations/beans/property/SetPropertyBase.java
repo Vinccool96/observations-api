@@ -22,7 +22,7 @@ import java.lang.ref.WeakReference;
  *
  * @see ObservableSet
  * @see SetProperty
-*/
+ */
 public abstract class SetPropertyBase<E> extends SetProperty<E> {
 
     private final SetChangeListener<E> setChangeListener = change -> {

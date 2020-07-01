@@ -31,7 +31,7 @@ import java.security.PrivilegedAction;
  *
  * @see LongProperty
  * @see JavaBeanLongPropertyBuilder
-*/
+ */
 public final class JavaBeanLongProperty extends LongProperty implements JavaBeanProperty<Number> {
 
     private final PropertyDescriptor descriptor;

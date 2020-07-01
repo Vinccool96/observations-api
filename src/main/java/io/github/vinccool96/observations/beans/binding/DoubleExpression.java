@@ -13,7 +13,7 @@ import io.github.vinccool96.observations.sun.collections.annotations.ReturnsUnmo
  * <p>
  * A concrete sub-class of {@code DoubleExpression} has to implement the method {@link ObservableDoubleValue#get()},
  * which provides the actual value of this expression.
-*/
+ */
 public abstract class DoubleExpression extends NumberExpressionBase implements ObservableDoubleValue {
 
     @Override

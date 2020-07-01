@@ -12,7 +12,7 @@ import io.github.vinccool96.observations.sun.collections.annotations.ReturnsUnmo
  * <p>
  * A concrete sub-class of {@code FloatExpression} has to implement the method {@link ObservableFloatValue#get()}, which
  * provides the actual value of this expression.
-*/
+ */
 public abstract class FloatExpression extends NumberExpressionBase implements ObservableFloatValue {
 
     @Override

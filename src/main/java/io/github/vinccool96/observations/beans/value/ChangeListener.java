@@ -11,7 +11,7 @@ package io.github.vinccool96.observations.beans.value;
  * The same instance of {@code ChangeListener} can be registered to listen to multiple {@code ObservableValues}.
  *
  * @see ObservableValue
-*/
+ */
 @FunctionalInterface
 public interface ChangeListener<T> {
 

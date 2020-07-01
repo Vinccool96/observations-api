@@ -23,7 +23,7 @@ import java.security.PrivilegedAction;
  *
  * @see io.github.vinccool96.observations.beans.property.ReadOnlyBooleanProperty
  * @see ReadOnlyJavaBeanBooleanPropertyBuilder
-*/
+ */
 public final class ReadOnlyJavaBeanBooleanProperty extends ReadOnlyBooleanPropertyBase implements
         ReadOnlyJavaBeanProperty<Boolean> {
 

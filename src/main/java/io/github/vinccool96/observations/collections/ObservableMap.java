@@ -14,7 +14,7 @@ import java.util.Map;
  *
  * @see MapChangeListener
  * @see MapChangeListener.Change
-*/
+ */
 public interface ObservableMap<K, V> extends Map<K, V>, Observable {
 
     /**

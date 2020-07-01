@@ -23,7 +23,7 @@ import java.lang.reflect.Method;
  * #build()}.
  *
  * @see JavaBeanStringProperty
-*/
+ */
 public final class JavaBeanStringPropertyBuilder {
 
     @SuppressWarnings("FieldMayBeFinal") private JavaBeanPropertyBuilderHelper helper =

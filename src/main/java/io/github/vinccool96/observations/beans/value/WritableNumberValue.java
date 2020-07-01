@@ -8,7 +8,7 @@ package io.github.vinccool96.observations.beans.value;
  * @see WritableFloatValue
  * @see WritableIntegerValue
  * @see WritableLongValue
-*/
+ */
 public interface WritableNumberValue extends WritableValue<Number> {
 
 }

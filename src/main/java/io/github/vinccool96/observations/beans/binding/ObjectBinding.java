@@ -28,7 +28,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  *
  * @see Binding
  * @see ObjectExpression
-*/
+ */
 public abstract class ObjectBinding<T> extends ObjectExpression<T> implements Binding<T> {
 
     private T value;

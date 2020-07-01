@@ -10,7 +10,7 @@ import io.github.vinccool96.observations.beans.binding.BooleanExpression;
  * @see io.github.vinccool96.observations.beans.value.ObservableBooleanValue
  * @see BooleanExpression
  * @see ReadOnlyProperty
-*/
+ */
 public abstract class ReadOnlyBooleanProperty extends BooleanExpression implements ReadOnlyProperty<Boolean> {
 
     /**

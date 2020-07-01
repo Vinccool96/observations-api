@@ -35,7 +35,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  *
  * @see Binding
  * @see SetExpression
-*/
+ */
 public abstract class SetBinding<E> extends SetExpression<E> implements Binding<ObservableSet<E>> {
 
     private final SetChangeListener<E> setChangeListener = new SetChangeListener<E>() {

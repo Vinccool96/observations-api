@@ -21,7 +21,7 @@ import java.util.*;
  * The utility methods are here mainly for performance reasons. All methods are optimized in a way that they yield only
  * limited number of notifications. On the other hand, Collections methods might call "modification methods" on an
  * ObservableList multiple times, resulting in a number of notifications.
-*/
+ */
 @SuppressWarnings("unused")
 public class ObservableCollections {
 

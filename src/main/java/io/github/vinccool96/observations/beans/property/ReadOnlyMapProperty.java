@@ -18,7 +18,7 @@ import java.util.Map;
  * @see io.github.vinccool96.observations.beans.value.ObservableMapValue
  * @see MapExpression
  * @see ReadOnlyProperty
-*/
+ */
 public abstract class ReadOnlyMapProperty<K, V> extends MapExpression<K, V> implements
         ReadOnlyProperty<ObservableMap<K, V>> {
 

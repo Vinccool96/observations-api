@@ -23,7 +23,7 @@ import java.security.PrivilegedAction;
  *
  * @see io.github.vinccool96.observations.beans.property.ReadOnlyStringProperty
  * @see ReadOnlyJavaBeanStringPropertyBuilder
-*/
+ */
 public final class ReadOnlyJavaBeanStringProperty extends ReadOnlyStringPropertyBase implements
         ReadOnlyJavaBeanProperty<String> {
 

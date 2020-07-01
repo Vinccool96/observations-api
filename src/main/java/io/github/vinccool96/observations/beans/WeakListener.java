@@ -6,7 +6,7 @@ package io.github.vinccool96.observations.beans;
  *
  * @see WeakInvalidationListener
  * @see io.github.vinccool96.observations.beans.value.WeakChangeListener
-*/
+ */
 public interface WeakListener {
 
     /**

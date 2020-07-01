@@ -25,7 +25,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  *
  * @see Binding
  * @see StringExpression
-*/
+ */
 public abstract class StringBinding extends StringExpression implements Binding<String> {
 
     private String value;

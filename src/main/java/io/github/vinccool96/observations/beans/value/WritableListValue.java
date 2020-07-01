@@ -10,7 +10,7 @@ import io.github.vinccool96.observations.collections.ObservableList;
  *
  * @see ObservableList
  * @see WritableObjectValue
-*/
+ */
 public interface WritableListValue<E> extends WritableObjectValue<ObservableList<E>>, ObservableList<E> {
 
 }

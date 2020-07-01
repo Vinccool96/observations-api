@@ -10,7 +10,7 @@ package io.github.vinccool96.observations.beans.value;
  * @see ObservableFloatValue
  * @see ObservableIntegerValue
  * @see ObservableLongValue
-*/
+ */
 public interface ObservableNumberValue extends ObservableValue<Number> {
 
     /**

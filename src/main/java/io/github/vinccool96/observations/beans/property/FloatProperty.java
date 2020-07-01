@@ -29,7 +29,7 @@ import java.security.PrivilegedAction;
  * @see WritableFloatValue
  * @see ReadOnlyFloatProperty
  * @see Property
-*/
+ */
 public abstract class FloatProperty extends ReadOnlyFloatProperty implements Property<Number>, WritableFloatValue {
 
     /**

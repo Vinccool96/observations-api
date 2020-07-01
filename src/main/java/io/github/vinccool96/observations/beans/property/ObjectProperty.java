@@ -30,7 +30,7 @@ import io.github.vinccool96.observations.collections.ObservableSet;
  * @see WritableObjectValue
  * @see ReadOnlyObjectProperty
  * @see Property
-*/
+ */
 public abstract class ObjectProperty<T> extends ReadOnlyObjectProperty<T>
         implements Property<T>, WritableObjectValue<T> {
 

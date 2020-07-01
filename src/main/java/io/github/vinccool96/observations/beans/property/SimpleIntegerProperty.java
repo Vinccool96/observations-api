@@ -4,7 +4,7 @@ package io.github.vinccool96.observations.beans.property;
  * This class provides a full implementation of a {@link Property} wrapping a {@code int} value.
  *
  * @see IntegerPropertyBase
-*/
+ */
 public class SimpleIntegerProperty extends IntegerPropertyBase {
 
     private static final Object DEFAULT_BEAN = null;

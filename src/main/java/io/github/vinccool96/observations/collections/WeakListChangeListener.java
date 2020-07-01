@@ -22,7 +22,7 @@ import java.lang.ref.WeakReference;
  * @see ListChangeListener
  * @see ObservableList
  * @see WeakListener
-*/
+ */
 public final class WeakListChangeListener<E> implements ListChangeListener<E>, WeakListener {
 
     private final WeakReference<ListChangeListener<E>> ref;
