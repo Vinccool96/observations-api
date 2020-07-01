@@ -8,7 +8,8 @@ public class InvalidationListenerMock implements InvalidationListener {
 
     private int counter = 0;
 
-    @Override public void invalidated(Observable valueModel) {
+    @Override
+    public void invalidated(Observable valueModel) {
         this.observable = valueModel;
         counter++;
     }

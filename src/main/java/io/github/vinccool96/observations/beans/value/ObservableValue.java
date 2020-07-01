@@ -42,8 +42,7 @@ import io.github.vinccool96.observations.beans.Observable;
  * @see ObservableNumberValue
  * @see ObservableObjectValue
  * @see ObservableStringValue
- * @since JavaFX 2.0
- */
+*/
 public interface ObservableValue<T> extends Observable {
 
     /**

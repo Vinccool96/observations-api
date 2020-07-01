@@ -22,8 +22,7 @@ import java.lang.ref.WeakReference;
  * @see ListChangeListener
  * @see ObservableList
  * @see WeakListener
- * @since JavaFX 2.1
- */
+*/
 public final class WeakListChangeListener<E> implements ListChangeListener<E>, WeakListener {
 
     private final WeakReference<ListChangeListener<E>> ref;

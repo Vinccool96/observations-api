@@ -17,9 +17,7 @@ import java.util.Locale;
  *
  * @param <T>
  *         The type of the wrapped value
- *
- * @since JavaFX 2.0
- */
+*/
 public abstract class ObjectExpression<T> implements ObservableObjectValue<T> {
 
     @Override
@@ -153,8 +151,6 @@ public abstract class ObjectExpression<T> implements ObservableObjectValue<T> {
      * updated automatically.
      *
      * @return the new {@code StringBinding}
-     *
-     * @since JavaFX 8.0
      */
     public StringBinding asString() {
         return (StringBinding) StringFormatter.convert(this);
@@ -172,8 +168,6 @@ public abstract class ObjectExpression<T> implements ObservableObjectValue<T> {
      *         the formatting {@code String}
      *
      * @return the new {@code StringBinding}
-     *
-     * @since JavaFX 8.0
      */
     public StringBinding asString(String format) {
         return (StringBinding) Bindings.format(format, this);
@@ -195,7 +189,6 @@ public abstract class ObjectExpression<T> implements ObservableObjectValue<T> {
      * @return the new {@code StringBinding}
      *
      * @see Locale
-     * @since JavaFX 8.0
      */
     public StringBinding asString(Locale locale, String format) {
         return (StringBinding) Bindings.format(locale, format, this);

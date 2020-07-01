@@ -10,8 +10,7 @@ import io.github.vinccool96.observations.beans.binding.DoubleExpression;
  * @see io.github.vinccool96.observations.beans.value.ObservableDoubleValue
  * @see DoubleExpression
  * @see ReadOnlyProperty
- * @since JavaFX 2.0
- */
+*/
 public abstract class ReadOnlyDoubleProperty extends DoubleExpression implements ReadOnlyProperty<Number> {
 
     /**
@@ -56,7 +55,6 @@ public abstract class ReadOnlyDoubleProperty extends DoubleExpression implements
      *
      * @throws NullPointerException
      *         if {@code property} is {@code null}
-     * @since JavaFX 8.0
      */
     public static <T extends Number> ReadOnlyDoubleProperty readOnlyDoubleProperty(final ReadOnlyProperty<T> property) {
         if (property == null) {
@@ -104,8 +102,6 @@ public abstract class ReadOnlyDoubleProperty extends DoubleExpression implements
      * updated automatically.
      *
      * @return the new {@code ReadOnlyObjectProperty}
-     *
-     * @since JavaFX 8.0
      */
     @Override
     public ReadOnlyObjectProperty<Double> asObject() {

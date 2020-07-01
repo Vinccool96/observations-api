@@ -8,9 +8,7 @@ import io.github.vinccool96.observations.beans.value.WritableValue;
  *
  * @param <T>
  *         the type of the wrapped value
- *
- * @since JavaFX 2.0
- */
+*/
 public interface Property<T> extends ReadOnlyProperty<T>, WritableValue<T> {
 
     /**

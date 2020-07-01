@@ -10,8 +10,7 @@ import io.github.vinccool96.observations.beans.binding.BooleanExpression;
  * @see io.github.vinccool96.observations.beans.value.ObservableBooleanValue
  * @see BooleanExpression
  * @see ReadOnlyProperty
- * @since JavaFX 2.0
- */
+*/
 public abstract class ReadOnlyBooleanProperty extends BooleanExpression implements ReadOnlyProperty<Boolean> {
 
     /**
@@ -54,7 +53,6 @@ public abstract class ReadOnlyBooleanProperty extends BooleanExpression implemen
      *
      * @throws NullPointerException
      *         if {@code property} is {@code null}
-     * @since JavaFX 8.0
      */
     public static ReadOnlyBooleanProperty readOnlyBooleanProperty(final ReadOnlyProperty<Boolean> property) {
         if (property == null) {
@@ -102,8 +100,6 @@ public abstract class ReadOnlyBooleanProperty extends BooleanExpression implemen
      * updated automatically.
      *
      * @return the new {@code ReadOnlyObjectProperty}
-     *
-     * @since JavaFX 8.0
      */
     @Override
     public ReadOnlyObjectProperty<Boolean> asObject() {

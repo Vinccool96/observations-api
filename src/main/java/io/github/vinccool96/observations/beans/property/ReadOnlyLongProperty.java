@@ -10,8 +10,7 @@ import io.github.vinccool96.observations.beans.binding.LongExpression;
  * @see io.github.vinccool96.observations.beans.value.ObservableLongValue
  * @see LongExpression
  * @see ReadOnlyProperty
- * @since JavaFX 2.0
- */
+*/
 public abstract class ReadOnlyLongProperty extends LongExpression implements ReadOnlyProperty<Number> {
 
     /**
@@ -56,7 +55,6 @@ public abstract class ReadOnlyLongProperty extends LongExpression implements Rea
      *
      * @throws NullPointerException
      *         if {@code property} is {@code null}
-     * @since JavaFX 8.0
      */
     public static <T extends Number> ReadOnlyLongProperty readOnlyLongProperty(final ReadOnlyProperty<T> property) {
         if (property == null) {
@@ -104,8 +102,6 @@ public abstract class ReadOnlyLongProperty extends LongExpression implements Rea
      * automatically.
      *
      * @return the new {@code ReadOnlyObjectProperty}
-     *
-     * @since JavaFX 8.0
      */
     @Override
     public ReadOnlyObjectProperty<Long> asObject() {

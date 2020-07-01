@@ -10,8 +10,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * attach listener.
  *
  * @see ReadOnlyLongProperty
- * @since JavaFX 2.0
- */
+*/
 public abstract class ReadOnlyLongPropertyBase extends ReadOnlyLongProperty {
 
     ExpressionHelper<Number> helper;

@@ -6,8 +6,7 @@ package io.github.vinccool96.observations.collections;
  * Bulk operations are supported but they always do a copy of the data range.
  *
  * @see ArrayChangeListener
- * @since JavaFX 8.0
- */
+*/
 public interface ObservableIntegerArray extends ObservableArray<ObservableIntegerArray> {
 
     /**

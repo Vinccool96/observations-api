@@ -12,8 +12,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * implementation to attach listener.
  *
  * @see ReadOnlyListProperty
- * @since JavaFX 2.1
- */
+*/
 public abstract class ReadOnlyListPropertyBase<E> extends ReadOnlyListProperty<E> {
 
     private ListExpressionHelper<E> helper;

@@ -7,8 +7,7 @@ package io.github.vinccool96.observations.beans.value;
  *         The type of the wrapped value
  *
  * @see ObservableValue
- * @since JavaFX 2.0
- */
+*/
 public interface ObservableObjectValue<T> extends ObservableValue<T> {
 
     /**

@@ -24,8 +24,7 @@ import java.lang.ref.WeakReference;
  * @see MapChangeListener
  * @see ObservableMap
  * @see WeakListener
- * @since JavaFX 2.1
- */
+*/
 public final class WeakMapChangeListener<K, V> implements MapChangeListener<K, V>, WeakListener {
 
     private final WeakReference<MapChangeListener<K, V>> ref;

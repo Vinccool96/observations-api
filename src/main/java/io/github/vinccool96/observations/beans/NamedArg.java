@@ -8,9 +8,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Annotation that provides information about argument's name.
- *
- * @since JavaFX 8.0
- */
+*/
 @Retention(RUNTIME)
 @Target(PARAMETER)
 public @interface NamedArg {

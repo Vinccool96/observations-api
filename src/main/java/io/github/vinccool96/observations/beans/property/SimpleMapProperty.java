@@ -11,8 +11,7 @@ import io.github.vinccool96.observations.collections.ObservableMap;
  *         the type of the value elements of the {@code Map}
  *
  * @see MapPropertyBase
- * @since JavaFX 2.1
- */
+*/
 public class SimpleMapProperty<K, V> extends MapPropertyBase<K, V> {
 
     private static final Object DEFAULT_BEAN = null;

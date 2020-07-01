@@ -5,9 +5,7 @@ package io.github.vinccool96.observations.collections;
  *
  * @param <E>
  *         the element type
- *
- * @since JavaFX 2.1
- */
+*/
 @FunctionalInterface
 public interface SetChangeListener<E> {
 
@@ -17,8 +15,6 @@ public interface SetChangeListener<E> {
      *
      * @param <E>
      *         element type
-     *
-     * @since JavaFX 2.1
      */
     abstract class Change<E> {
 

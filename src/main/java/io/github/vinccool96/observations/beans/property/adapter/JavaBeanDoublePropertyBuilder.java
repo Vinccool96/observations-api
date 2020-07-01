@@ -23,8 +23,7 @@ import java.lang.reflect.Method;
  * #build()}.
  *
  * @see JavaBeanDoubleProperty
- * @since JavaFX 2.1
- */
+*/
 public final class JavaBeanDoublePropertyBuilder {
 
     private final JavaBeanPropertyBuilderHelper helper = new JavaBeanPropertyBuilderHelper();

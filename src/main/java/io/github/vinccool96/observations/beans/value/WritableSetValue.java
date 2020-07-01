@@ -10,8 +10,7 @@ import io.github.vinccool96.observations.collections.ObservableSet;
  *
  * @see ObservableSet
  * @see WritableObjectValue
- * @since JavaFX 2.1
- */
+*/
 public interface WritableSetValue<E> extends WritableObjectValue<ObservableSet<E>>, ObservableSet<E> {
 
 }

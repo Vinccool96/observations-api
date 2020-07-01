@@ -29,8 +29,7 @@ import java.security.PrivilegedAction;
  * @see WritableLongValue
  * @see ReadOnlyLongProperty
  * @see Property
- * @since JavaFX 2.0
- */
+*/
 public abstract class LongProperty extends ReadOnlyLongProperty implements Property<Number>, WritableLongValue {
 
     /**
@@ -110,7 +109,6 @@ public abstract class LongProperty extends ReadOnlyLongProperty implements Prope
      * @throws NullPointerException
      *         if {@code property} is {@code null}
      * @see #asObject()
-     * @since JavaFX 8.0
      */
     public static LongProperty longProperty(final Property<Long> property) {
         if (property == null) {
@@ -162,8 +160,6 @@ public abstract class LongProperty extends ReadOnlyLongProperty implements Prope
      * </pre></blockquote>
      *
      * @return the new {@code ObjectProperty}
-     *
-     * @since JavaFX 8.0
      */
     @Override
     public ObjectProperty<Long> asObject() {

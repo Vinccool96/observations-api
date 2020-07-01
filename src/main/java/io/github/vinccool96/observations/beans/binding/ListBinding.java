@@ -34,8 +34,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  *
  * @see Binding
  * @see ListExpression
- * @since JavaFX 2.1
- */
+*/
 public abstract class ListBinding<E> extends ListExpression<E> implements Binding<ObservableList<E>> {
 
     private final ListChangeListener<E> listChangeListener = new ListChangeListener<E>() {

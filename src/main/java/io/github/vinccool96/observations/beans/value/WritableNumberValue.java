@@ -8,8 +8,7 @@ package io.github.vinccool96.observations.beans.value;
  * @see WritableFloatValue
  * @see WritableIntegerValue
  * @see WritableLongValue
- * @since JavaFX 2.0
- */
+*/
 public interface WritableNumberValue extends WritableValue<Number> {
 
 }

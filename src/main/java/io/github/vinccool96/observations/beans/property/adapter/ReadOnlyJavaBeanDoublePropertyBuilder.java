@@ -23,8 +23,7 @@ import java.lang.reflect.Method;
  * {@link #build()}.
  *
  * @see ReadOnlyJavaBeanDoubleProperty
- * @since JavaFX 2.1
- */
+*/
 public final class ReadOnlyJavaBeanDoublePropertyBuilder {
 
     private final ReadOnlyJavaBeanPropertyBuilderHelper helper = new ReadOnlyJavaBeanPropertyBuilderHelper();

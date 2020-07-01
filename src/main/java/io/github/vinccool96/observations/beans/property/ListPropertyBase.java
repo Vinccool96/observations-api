@@ -22,8 +22,7 @@ import java.lang.ref.WeakReference;
  *
  * @see ObservableList
  * @see ListProperty
- * @since JavaFX 2.1
- */
+*/
 public abstract class ListPropertyBase<E> extends ListProperty<E> {
 
     private final ListChangeListener<E> listChangeListener = change -> {

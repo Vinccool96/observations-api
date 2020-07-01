@@ -24,8 +24,7 @@ import java.lang.ref.WeakReference;
  *
  * @see ObservableMap
  * @see MapProperty
- * @since JavaFX 2.1
- */
+*/
 public abstract class MapPropertyBase<K, V> extends MapProperty<K, V> {
 
     private final MapChangeListener<K, V> mapChangeListener = change -> {

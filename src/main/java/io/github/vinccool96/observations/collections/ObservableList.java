@@ -18,8 +18,7 @@ import java.util.function.Predicate;
  *
  * @see ListChangeListener
  * @see ListChangeListener.Change
- * @since JavaFX 2.0
- */
+*/
 @SuppressWarnings("unchecked")
 public interface ObservableList<E> extends List<E>, Observable {
 
@@ -127,8 +126,6 @@ public interface ObservableList<E> extends List<E>, Observable {
      *         the predicate to use
      *
      * @return new {@code FilteredList}
-     *
-     * @since JavaFX 8.0
      */
     default FilteredList<E> filtered(Predicate<E> predicate) {
         return new FilteredList<>(this, predicate);
@@ -141,8 +138,6 @@ public interface ObservableList<E> extends List<E>, Observable {
      *         the comparator to use or null for unordered List
      *
      * @return new {@code SortedList}
-     *
-     * @since JavaFX 8.0
      */
     default SortedList<E> sorted(Comparator<E> comparator) {
         return new SortedList<>(this, comparator);
@@ -152,8 +147,6 @@ public interface ObservableList<E> extends List<E>, Observable {
      * Creates a {@link SortedList} wrapper of this list with the natural ordering.
      *
      * @return new {@code SortedList}
-     *
-     * @since JavaFX 8.0
      */
     default SortedList<E> sorted() {
         Comparator<E> naturalOrder = (o1, o2) -> {

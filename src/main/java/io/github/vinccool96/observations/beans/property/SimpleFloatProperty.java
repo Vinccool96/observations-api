@@ -4,8 +4,7 @@ package io.github.vinccool96.observations.beans.property;
  * This class provides a full implementation of a {@link Property} wrapping a {@code float} value.
  *
  * @see FloatPropertyBase
- * @since JavaFX 2.0
- */
+*/
 public class SimpleFloatProperty extends FloatPropertyBase {
 
     private static final Object DEFAULT_BEAN = null;

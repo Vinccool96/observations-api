@@ -9,8 +9,7 @@ import io.github.vinccool96.observations.collections.ObservableList;
  *         the type of the {@code List} elements
  *
  * @see ListPropertyBase
- * @since JavaFX 2.1
- */
+*/
 public class SimpleListProperty<E> extends ListPropertyBase<E> {
 
     private static final Object DEFAULT_BEAN = null;

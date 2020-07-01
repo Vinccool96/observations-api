@@ -23,8 +23,7 @@ import java.text.Format;
  * @see WritableStringValue
  * @see ReadOnlyStringProperty
  * @see Property
- * @since JavaFX 2.0
- */
+*/
 @SuppressWarnings("DuplicatedCode")
 public abstract class StringProperty extends ReadOnlyStringProperty implements Property<String>, WritableStringValue {
 
@@ -57,7 +56,6 @@ public abstract class StringProperty extends ReadOnlyStringProperty implements P
      *         if {@code other} or {@code format} is {@code null}
      * @throws IllegalArgumentException
      *         if {@code other} is {@code this}
-     * @since JavaFX 2.1
      */
     public void bindBidirectional(Property<?> other, Format format) {
         Bindings.bindBidirectional(this, other, format);
@@ -79,7 +77,6 @@ public abstract class StringProperty extends ReadOnlyStringProperty implements P
      *         if {@code other} or {@code converter} is {@code null}
      * @throws IllegalArgumentException
      *         if {@code other} is {@code this}
-     * @since JavaFX 2.1
      */
     public <T> void bindBidirectional(Property<T> other, StringConverter<T> converter) {
         Bindings.bindBidirectional(this, other, converter);
@@ -105,7 +102,6 @@ public abstract class StringProperty extends ReadOnlyStringProperty implements P
      *         if {@code other} is {@code null}
      * @throws IllegalArgumentException
      *         if {@code other} is {@code this}
-     * @since JavaFX 2.1
      */
     public void unbindBidirectional(Object other) {
         Bindings.unbindBidirectional(this, other);

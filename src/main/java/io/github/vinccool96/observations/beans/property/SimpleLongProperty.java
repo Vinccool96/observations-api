@@ -4,8 +4,7 @@ package io.github.vinccool96.observations.beans.property;
  * This class provides a full implementation of a {@link Property} wrapping a {@code long} value.
  *
  * @see LongPropertyBase
- * @since JavaFX 2.0
- */
+*/
 public class SimpleLongProperty extends LongPropertyBase {
 
     private static final Object DEFAULT_BEAN = null;

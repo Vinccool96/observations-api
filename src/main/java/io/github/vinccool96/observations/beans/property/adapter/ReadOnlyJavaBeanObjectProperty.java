@@ -26,8 +26,7 @@ import java.security.PrivilegedAction;
  *
  * @see io.github.vinccool96.observations.beans.property.ReadOnlyObjectProperty
  * @see ReadOnlyJavaBeanObjectPropertyBuilder
- * @since JavaFX 2.1
- */
+*/
 public final class ReadOnlyJavaBeanObjectProperty<T> extends ReadOnlyObjectPropertyBase<T>
         implements ReadOnlyJavaBeanProperty<T> {
 

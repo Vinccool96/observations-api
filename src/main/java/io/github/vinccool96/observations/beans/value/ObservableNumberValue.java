@@ -10,8 +10,7 @@ package io.github.vinccool96.observations.beans.value;
  * @see ObservableFloatValue
  * @see ObservableIntegerValue
  * @see ObservableLongValue
- * @since JavaFX 2.0
- */
+*/
 public interface ObservableNumberValue extends ObservableValue<Number> {
 
     /**

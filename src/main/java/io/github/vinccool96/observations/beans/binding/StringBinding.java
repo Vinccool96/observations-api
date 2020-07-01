@@ -25,8 +25,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  *
  * @see Binding
  * @see StringExpression
- * @since JavaFX 2.0
- */
+*/
 public abstract class StringBinding extends StringExpression implements Binding<String> {
 
     private String value;

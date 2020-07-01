@@ -26,8 +26,7 @@ import io.github.vinccool96.observations.collections.ObservableMap;
  * @see WritableMapValue
  * @see ReadOnlyMapProperty
  * @see Property
- * @since JavaFX 2.1
- */
+*/
 public abstract class MapProperty<K, V> extends ReadOnlyMapProperty<K, V>
         implements Property<ObservableMap<K, V>>, WritableMapValue<K, V> {
 

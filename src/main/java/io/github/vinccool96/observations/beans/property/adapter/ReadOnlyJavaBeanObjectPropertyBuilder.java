@@ -26,8 +26,7 @@ import java.lang.reflect.Method;
  *         the type of the wrapped {@code Object}
  *
  * @see ReadOnlyJavaBeanObjectProperty
- * @since JavaFX 2.1
- */
+*/
 public final class ReadOnlyJavaBeanObjectPropertyBuilder<T> {
 
     private final ReadOnlyJavaBeanPropertyBuilderHelper helper = new ReadOnlyJavaBeanPropertyBuilderHelper();

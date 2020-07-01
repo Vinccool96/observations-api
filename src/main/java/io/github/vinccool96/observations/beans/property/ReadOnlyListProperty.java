@@ -17,8 +17,7 @@ import java.util.ListIterator;
  * @see io.github.vinccool96.observations.beans.value.ObservableListValue
  * @see ListExpression
  * @see ReadOnlyProperty
- * @since JavaFX 2.1
- */
+*/
 public abstract class ReadOnlyListProperty<E> extends ListExpression<E> implements ReadOnlyProperty<ObservableList<E>> {
 
     /**

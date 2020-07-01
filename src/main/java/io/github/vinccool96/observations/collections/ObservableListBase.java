@@ -66,8 +66,7 @@ import java.util.List;
  * @see ObservableList
  * @see ListChangeListener.Change
  * @see ModifiableObservableListBase
- * @since JavaFX 8.0
- */
+*/
 @SuppressWarnings({"unchecked", "SameParameterValue", "unused"})
 public abstract class ObservableListBase<E> extends AbstractList<E> implements ObservableList<E> {
 

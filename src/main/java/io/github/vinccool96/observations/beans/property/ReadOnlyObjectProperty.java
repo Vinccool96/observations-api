@@ -18,8 +18,7 @@ import io.github.vinccool96.observations.collections.ObservableSet;
  * @see io.github.vinccool96.observations.beans.value.ObservableObjectValue
  * @see ObjectExpression
  * @see ReadOnlyProperty
- * @since JavaFX 2.0
- */
+*/
 public abstract class ReadOnlyObjectProperty<T> extends ObjectExpression<T> implements ReadOnlyProperty<T> {
 
     /**

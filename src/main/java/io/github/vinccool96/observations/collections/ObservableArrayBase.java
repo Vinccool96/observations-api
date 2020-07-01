@@ -7,15 +7,15 @@ import io.github.vinccool96.observations.util.ArrayUtils;
 /**
  * Abstract class that serves as a base class for {@link ObservableArray} implementations. The base class provides
  * listener handling functionality by implementing {@code addListener} and {@code removeListener} methods. {@link
- * #fireChange(boolean, int, int) } method is provided for notifying the listeners.
+ * #fireChange(boolean, int, int)} method is provided for notifying the listeners.
  *
  * @param <T>
  *         actual array instance type
  *
  * @see ObservableArray
  * @see ArrayChangeListener
- * @since JavaFX 8.0
  */
+@SuppressWarnings("unchecked")
 public abstract class ObservableArrayBase<T extends ObservableArray<T>> implements ObservableArray<T> {
 
     private ArrayListenerHelper<T> listenerHelper;
@@ -23,7 +23,7 @@ public abstract class ObservableArrayBase<T extends ObservableArray<T>> implemen
     @Override
     public final void addListener(InvalidationListener listener) {
         if (listenerHelper == null || !isInvalidationListenerAlreadyAdded(listener)) {
-            listenerHelper = ArrayListenerHelper.<T>addListener(listenerHelper, (T) this, listener);
+            listenerHelper = ArrayListenerHelper.addListener(listenerHelper, (T) this, listener);
         }
     }
 
@@ -40,7 +40,7 @@ public abstract class ObservableArrayBase<T extends ObservableArray<T>> implemen
     @Override
     public final void addListener(ArrayChangeListener<T> listener) {
         if (listenerHelper == null || !isArrayChangeListenerAlreadyAdded(listener)) {
-            listenerHelper = ArrayListenerHelper.<T>addListener(listenerHelper, (T) this, listener);
+            listenerHelper = ArrayListenerHelper.addListener(listenerHelper, (T) this, listener);
         }
     }
 

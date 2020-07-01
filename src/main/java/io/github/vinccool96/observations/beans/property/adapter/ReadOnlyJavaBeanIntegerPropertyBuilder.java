@@ -23,8 +23,7 @@ import java.lang.reflect.Method;
  * {@link #build()}.
  *
  * @see ReadOnlyJavaBeanIntegerProperty
- * @since JavaFX 2.1
- */
+*/
 public final class ReadOnlyJavaBeanIntegerPropertyBuilder {
 
     private final ReadOnlyJavaBeanPropertyBuilderHelper helper = new ReadOnlyJavaBeanPropertyBuilderHelper();

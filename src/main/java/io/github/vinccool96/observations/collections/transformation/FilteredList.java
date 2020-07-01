@@ -16,8 +16,7 @@ import java.util.function.Predicate;
  * propagated immediately to the FilteredList.
  *
  * @see TransformationList
- * @since JavaFX 8.0
- */
+*/
 public final class FilteredList<E> extends TransformationList<E, E> {
 
     private int[] filtered;

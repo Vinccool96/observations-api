@@ -15,8 +15,7 @@ import java.lang.ref.WeakReference;
  *
  * @see InvalidationListener
  * @see Observable
- * @since JavaFX 2.0
- */
+*/
 public final class WeakInvalidationListener implements InvalidationListener, WeakListener {
 
     private final WeakReference<InvalidationListener> ref;

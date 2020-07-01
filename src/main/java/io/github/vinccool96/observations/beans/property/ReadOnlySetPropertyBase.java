@@ -15,8 +15,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  *         the type of the {@code Set} elements
  *
  * @see ReadOnlySetProperty
- * @since JavaFX 2.1
- */
+*/
 public abstract class ReadOnlySetPropertyBase<E> extends ReadOnlySetProperty<E> {
 
     private SetExpressionHelper<E> helper;

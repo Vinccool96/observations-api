@@ -7,8 +7,7 @@ package io.github.vinccool96.observations.beans.property;
  *         the type of the wrapped {@code Object}
  *
  * @see ObjectPropertyBase
- * @since JavaFX 2.0
- */
+*/
 public class SimpleObjectProperty<T> extends ObjectPropertyBase<T> {
 
     private static final Object DEFAULT_BEAN = null;

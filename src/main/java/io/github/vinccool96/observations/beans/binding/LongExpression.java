@@ -12,9 +12,7 @@ import io.github.vinccool96.observations.sun.collections.annotations.ReturnsUnmo
  * <p>
  * A concrete sub-class of {@code LongExpression} has to implement the method {@link ObservableLongValue#get()}, which
  * provides the actual value of this expression.
- *
- * @since JavaFX 2.0
- */
+*/
 public abstract class LongExpression extends NumberExpressionBase implements ObservableLongValue {
 
     @Override
@@ -110,7 +108,6 @@ public abstract class LongExpression extends NumberExpressionBase implements Obs
      *
      * @throws NullPointerException
      *         if {@code value} is {@code null}
-     * @since JavaFX 8.0
      */
     public static <T extends Number> LongExpression longExpression(final ObservableValue<T> value) {
         if (value == null) {
@@ -231,8 +228,6 @@ public abstract class LongExpression extends NumberExpressionBase implements Obs
      * {@code LongExpression} changes, the value of the {@code ObjectExpression} will be updated automatically.
      *
      * @return the new {@code ObjectExpression}
-     *
-     * @since JavaFX 8.0
      */
     public ObjectExpression<Long> asObject() {
         return new ObjectBinding<Long>() {

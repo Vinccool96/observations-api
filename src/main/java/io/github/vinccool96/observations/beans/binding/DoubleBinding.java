@@ -77,8 +77,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  * @see Binding
  * @see NumberBinding
  * @see DoubleExpression
- * @since JavaFX 2.0
- */
+*/
 public abstract class DoubleBinding extends DoubleExpression implements NumberBinding {
 
     private double value;

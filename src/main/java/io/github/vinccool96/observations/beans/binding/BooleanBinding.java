@@ -25,8 +25,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  *
  * @see Binding
  * @see BooleanExpression
- * @since JavaFX 2.0
- */
+*/
 public abstract class BooleanBinding extends BooleanExpression implements Binding<Boolean> {
 
     /**

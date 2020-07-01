@@ -28,9 +28,7 @@ import java.util.NoSuchElementException;
  *
  * @param <E>
  *         the type of the {@code Set} elements
- *
- * @since JavaFX 2.1
- */
+*/
 public abstract class SetExpression<E> implements ObservableSetValue<E> {
 
     private static final ObservableSet EMPTY_SET = new EmptyObservableSet();

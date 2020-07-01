@@ -12,8 +12,7 @@ import java.util.Set;
  *
  * @see SetChangeListener
  * @see SetChangeListener.Change
- * @since JavaFX 2.1
- */
+*/
 public interface ObservableSet<E> extends Set<E>, Observable {
 
     /**
