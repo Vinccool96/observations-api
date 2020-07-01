@@ -2,7 +2,6 @@ package io.github.vinccool96.observations.sun.binding;
 
 import io.github.vinccool96.observations.beans.Person;
 import io.github.vinccool96.observations.beans.binding.*;
-import io.github.vinccool96.observations.binding.Variable;
 import io.github.vinccool96.observations.collections.ObservableList;
 import org.junit.AfterClass;
 import org.junit.Before;
