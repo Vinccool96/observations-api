@@ -21,7 +21,6 @@ import java.security.PrivilegedAction;
  * #unbindBidirectional(Property)}.
  * <p>
  * The context of a {@code BooleanProperty} can be read with {@link #getBean()} and {@link #getName()}.
- *
  * <p>
  * Note: setting or binding this property to a null value will set the property to "false". See {@link
  * #setValue(Boolean) }.
@@ -51,7 +50,7 @@ public abstract class BooleanProperty extends ReadOnlyBooleanProperty
                     new NullPointerException());
             set(false);
         } else {
-            set(v.booleanValue());
+            set(v);
         }
     }
 
@@ -80,8 +79,7 @@ public abstract class BooleanProperty extends ReadOnlyBooleanProperty
     public String toString() {
         final Object bean = getBean();
         final String name = getName();
-        final StringBuilder result = new StringBuilder(
-                "BooleanProperty [");
+        final StringBuilder result = new StringBuilder("BooleanProperty [");
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }

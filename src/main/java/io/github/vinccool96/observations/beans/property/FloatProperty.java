@@ -22,8 +22,8 @@ import java.security.PrivilegedAction;
  * <p>
  * The context of a {@code FloatProperty} can be read with {@link #getBean()} and {@link #getName()}.
  * <p>
- * Note: setting or binding this property to a null value will set the property to "0.0". See {@link #setValue(Number)
- * }.
+ * Note: setting or binding this property to a null value will set the property to "0.0". See {@link
+ * #setValue(Number)}.
  *
  * @see io.github.vinccool96.observations.beans.value.ObservableFloatValue
  * @see WritableFloatValue
@@ -72,8 +72,7 @@ public abstract class FloatProperty extends ReadOnlyFloatProperty implements Pro
     public String toString() {
         final Object bean = getBean();
         final String name = getName();
-        final StringBuilder result = new StringBuilder(
-                "FloatProperty [");
+        final StringBuilder result = new StringBuilder("FloatProperty [");
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }
@@ -87,10 +86,8 @@ public abstract class FloatProperty extends ReadOnlyFloatProperty implements Pro
     /**
      * Returns a {@code FloatProperty} that wraps a {@link Property} and is bidirectionally bound to it. Changing this
      * property will result in a change of the original property.
-     *
      * <p>
      * This is very useful when bidirectionally binding an ObjectProperty&lt;Float&gt; and a FloatProperty.
-     *
      * <blockquote><pre>
      *   FloatProperty floatProperty = new SimpleFloatProperty(1.0f);
      *   ObjectProperty&lt;Float&gt; objectProperty = new SimpleObjectProperty&lt;&gt;(2.0f);
@@ -99,11 +96,9 @@ public abstract class FloatProperty extends ReadOnlyFloatProperty implements Pro
      *   FloatProperty objectAsFloat = FloatProperty.floatProperty(objectProperty);
      *
      *   floatProperty.bindBidirectional(objectAsFloat);
-     *
      * </pre></blockquote>
      * <p>
      * Another approach is to convert the FloatProperty to ObjectProperty using {@link #asObject()} method.
-     *
      * <p>
      * Note: null values in the source property will be interpreted as 0f
      *
@@ -157,10 +152,8 @@ public abstract class FloatProperty extends ReadOnlyFloatProperty implements Pro
      * Creates an {@link ObjectProperty} that bidirectionally bound to this {@code FloatProperty}. If the value of this
      * {@code FloatProperty} changes, the value of the {@code ObjectProperty} will be updated automatically and
      * vice-versa.
-     *
      * <p>
      * Can be used for binding an ObjectProperty to FloatProperty.
-     *
      * <blockquote><pre>
      *   FloatProperty floatProperty = new SimpleFloatProperty(1.0f);
      *   ObjectProperty&lt;Float&gt; objectProperty = new SimpleObjectProperty&lt;&gt;(2.0f);

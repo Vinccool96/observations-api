@@ -83,7 +83,7 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
         if (property1 instanceof ObservableValue) {
             ((ObservableValue) property1).removeListener(binding);
         }
-        if (property2 instanceof Observable) {
+        if (property2 instanceof ObservableValue) {
             ((ObservableValue) property2).removeListener(binding);
         }
     }
@@ -261,11 +261,9 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
                         } catch (Exception e2) {
                             e2.addSuppressed(e);
                             unbind(property1, property2);
-                            throw new RuntimeException(
-                                    "Bidirectional binding failed together with an attempt"
-                                            + " to restore the source property to the previous value."
-                                            + " Removing the bidirectional binding from properties " +
-                                            property1 + " and " + property2, e2);
+                            throw new RuntimeException("Bidirectional binding failed together with an attempt to " +
+                                    "restore the source property to the previous value. Removing the bidirectional " +
+                                    "binding from properties " + property1 + " and " + property2, e2);
                         }
                         throw new RuntimeException("Bidirectional binding failed, setting to the previous value", e);
                     } finally {
@@ -331,11 +329,9 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
                         } catch (Exception e2) {
                             e2.addSuppressed(e);
                             unbind(property1, property2);
-                            throw new RuntimeException(
-                                    "Bidirectional binding failed together with an attempt"
-                                            + " to restore the source property to the previous value."
-                                            + " Removing the bidirectional binding from properties " +
-                                            property1 + " and " + property2, e2);
+                            throw new RuntimeException("Bidirectional binding failed together with an attempt to " +
+                                    "restore the source property to the previous value. Removing the bidirectional " +
+                                    "binding from properties " + property1 + " and " + property2, e2);
                         }
                         throw new RuntimeException("Bidirectional binding failed, setting to the previous value", e);
                     } finally {
@@ -401,11 +397,9 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
                         } catch (Exception e2) {
                             e2.addSuppressed(e);
                             unbind(property1, property2);
-                            throw new RuntimeException(
-                                    "Bidirectional binding failed together with an attempt"
-                                            + " to restore the source property to the previous value."
-                                            + " Removing the bidirectional binding from properties " +
-                                            property1 + " and " + property2, e2);
+                            throw new RuntimeException("Bidirectional binding failed together with an attempt to " +
+                                    "restore the source property to the previous value. Removing the bidirectional " +
+                                    "binding from properties " + property1 + " and " + property2, e2);
                         }
                         throw new RuntimeException("Bidirectional binding failed, setting to the previous value", e);
                     } finally {
@@ -471,11 +465,9 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
                         } catch (Exception e2) {
                             e2.addSuppressed(e);
                             unbind(property1, property2);
-                            throw new RuntimeException(
-                                    "Bidirectional binding failed together with an attempt"
-                                            + " to restore the source property to the previous value."
-                                            + " Removing the bidirectional binding from properties " +
-                                            property1 + " and " + property2, e2);
+                            throw new RuntimeException("Bidirectional binding failed together with an attempt to " +
+                                    "restore the source property to the previous value. Removing the bidirectional " +
+                                    "binding from properties " + property1 + " and " + property2, e2);
                         }
                         throw new RuntimeException("Bidirectional binding failed, setting to the previous value", e);
                     } finally {
@@ -541,11 +533,9 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
                         } catch (Exception e2) {
                             e2.addSuppressed(e);
                             unbind(property1, property2);
-                            throw new RuntimeException(
-                                    "Bidirectional binding failed together with an attempt"
-                                            + " to restore the source property to the previous value."
-                                            + " Removing the bidirectional binding from properties " +
-                                            property1 + " and " + property2, e2);
+                            throw new RuntimeException("Bidirectional binding failed together with an attempt to " +
+                                    "restore the source property to the previous value. Removing the bidirectional " +
+                                    "binding from properties " + property1 + " and " + property2, e2);
                         }
                         throw new RuntimeException("Bidirectional binding failed, setting to the previous value", e);
                     } finally {

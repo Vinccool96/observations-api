@@ -1,7 +1,6 @@
 package io.github.vinccool96.observations.beans.property;
 
 import io.github.vinccool96.observations.beans.binding.Bindings;
-import io.github.vinccool96.observations.beans.value.ObservableDoubleValue;
 import io.github.vinccool96.observations.beans.value.ObservableValue;
 import io.github.vinccool96.observations.beans.value.WritableDoubleValue;
 import io.github.vinccool96.observations.sun.binding.BidirectionalBinding;
@@ -23,10 +22,10 @@ import java.security.PrivilegedAction;
  * <p>
  * The context of a {@code DoubleProperty} can be read with {@link #getBean()} and {@link #getName()}.
  * <p>
- * Note: setting or binding this property to a null value will set the property to "0.0". See {@link #setValue(Number)
- * }.
+ * Note: setting or binding this property to a null value will set the property to "0.0". See {@link
+ * #setValue(Number)}.
  *
- * @see ObservableDoubleValue
+ * @see io.github.vinccool96.observations.beans.value.ObservableDoubleValue
  * @see WritableDoubleValue
  * @see ReadOnlyDoubleProperty
  * @see Property
@@ -73,8 +72,7 @@ public abstract class DoubleProperty extends ReadOnlyDoubleProperty implements P
     public String toString() {
         final Object bean = getBean();
         final String name = getName();
-        final StringBuilder result = new StringBuilder(
-                "DoubleProperty [");
+        final StringBuilder result = new StringBuilder("DoubleProperty [");
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }
@@ -88,10 +86,8 @@ public abstract class DoubleProperty extends ReadOnlyDoubleProperty implements P
     /**
      * Returns a {@code DoubleProperty} that wraps a {@link Property} and is bidirectionally bound to it. Changing this
      * property will result in a change of the original property.
-     *
      * <p>
      * This is very useful when bidirectionally binding an ObjectProperty&lt;Double&gt; and a DoubleProperty.
-     *
      * <blockquote><pre>
      *   DoubleProperty doubleProperty = new SimpleDoubleProperty(1.0);
      *   ObjectProperty&lt;Double&gt; objectProperty = new SimpleObjectProperty&lt;&gt;(2.0);
@@ -100,7 +96,6 @@ public abstract class DoubleProperty extends ReadOnlyDoubleProperty implements P
      *   DoubleProperty objectAsDouble = DoubleProperty.doubleProperty(objectProperty);
      *
      *   doubleProperty.bindBidirectional(objectAsDouble);
-     *
      * </pre></blockquote>
      * <p>
      * Another approach is to convert the DoubleProperty to ObjectProperty using {@link #asObject()} method.
@@ -157,10 +152,8 @@ public abstract class DoubleProperty extends ReadOnlyDoubleProperty implements P
      * Creates an {@link ObjectProperty} that bidirectionally bound to this {@code DoubleProperty}. If the value of this
      * {@code DoubleProperty} changes, the value of the {@code ObjectProperty} will be updated automatically and
      * vice-versa.
-     *
      * <p>
      * Can be used for binding an ObjectProperty to DoubleProperty.
-     *
      * <blockquote><pre>
      *   DoubleProperty doubleProperty = new SimpleDoubleProperty(1.0);
      *   ObjectProperty&lt;Double&gt; objectProperty = new SimpleObjectProperty&lt;&gt;(2.0);

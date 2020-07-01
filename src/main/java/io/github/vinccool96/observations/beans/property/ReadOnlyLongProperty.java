@@ -12,8 +12,7 @@ import io.github.vinccool96.observations.beans.binding.LongExpression;
  * @see ReadOnlyProperty
  * @since JavaFX 2.0
  */
-public abstract class ReadOnlyLongProperty extends LongExpression implements
-        ReadOnlyProperty<Number> {
+public abstract class ReadOnlyLongProperty extends LongExpression implements ReadOnlyProperty<Number> {
 
     /**
      * The constructor of {@code ReadOnlyLongProperty}.
