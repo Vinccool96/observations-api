@@ -1,13 +1,13 @@
 package io.github.vinccool96.observations.beans.property;//package io.github.vinccool96.observations.beans.property;
 //
 //import static org.junit.Assert.assertEquals;
-//import io.github.vinccool96.observations.binding.expression.BooleanExpression;
-//import io.github.vinccool96.observations.binding.expression.DoubleExpression;
-//import io.github.vinccool96.observations.binding.expression.FloatExpression;
-//import io.github.vinccool96.observations.binding.expression.IntegerExpression;
-//import io.github.vinccool96.observations.binding.expression.LongExpression;
-//import io.github.vinccool96.observations.binding.expression.ObjectExpression;
-//import io.github.vinccool96.observations.binding.expression.StringExpression;
+//import io.github.vinccool96.observations.beans.binding.expression.BooleanExpression;
+//import io.github.vinccool96.observations.beans.binding.expression.DoubleExpression;
+//import io.github.vinccool96.observations.beans.binding.expression.FloatExpression;
+//import io.github.vinccool96.observations.beans.binding.expression.IntegerExpression;
+//import io.github.vinccool96.observations.beans.binding.expression.LongExpression;
+//import io.github.vinccool96.observations.beans.binding.expression.ObjectExpression;
+//import io.github.vinccool96.observations.beans.binding.expression.StringExpression;
 //
 //import org.junit.Before;
 //import org.junit.Test;

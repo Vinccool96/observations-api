@@ -1,10 +1,10 @@
 package io.github.vinccool96.observations.sun.binding;
 
 import io.github.vinccool96.observations.beans.binding.Bindings;
+import io.github.vinccool96.observations.beans.binding.DependencyUtils;
 import io.github.vinccool96.observations.beans.binding.StringBinding;
 import io.github.vinccool96.observations.beans.binding.StringExpression;
 import io.github.vinccool96.observations.beans.property.*;
-import io.github.vinccool96.observations.binding.DependencyUtils;
 import org.junit.Before;
 import org.junit.Test;
 
