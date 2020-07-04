@@ -31,6 +31,11 @@ public abstract class LongExpression extends NumberExpressionBase implements Obs
     }
 
     @Override
+    public short shortValue() {
+        return (short) get();
+    }
+
+    @Override
     public double doubleValue() {
         return (double) get();
     }

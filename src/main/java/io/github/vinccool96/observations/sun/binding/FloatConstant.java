@@ -81,4 +81,9 @@ public final class FloatConstant implements ObservableFloatValue {
         return value;
     }
 
+    @Override
+    public short shortValue() {
+        return (short) get();
+    }
+
 }

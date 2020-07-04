@@ -41,6 +41,7 @@ public abstract class WhenTestBase<T, P extends WritableValue<T> & ObservableVal
 
     private final T v3;
 
+    @SafeVarargs
     public WhenTestBase(T v0, T v1, T v2, T v3, P p0, P... properties) {
         this.v0 = v0;
         this.v1 = v1;

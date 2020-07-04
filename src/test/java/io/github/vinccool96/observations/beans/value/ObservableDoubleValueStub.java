@@ -46,4 +46,9 @@ public class ObservableDoubleValueStub extends ObservableValueBase<Number> imple
         return value;
     }
 
+    @Override
+    public short shortValue() {
+        return (short) get();
+    }
+
 }

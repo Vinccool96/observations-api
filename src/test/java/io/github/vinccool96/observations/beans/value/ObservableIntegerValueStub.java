@@ -46,4 +46,9 @@ public class ObservableIntegerValueStub extends ObservableValueBase<Number> impl
         return value;
     }
 
+    @Override
+    public short shortValue() {
+        return (short) get();
+    }
+
 }

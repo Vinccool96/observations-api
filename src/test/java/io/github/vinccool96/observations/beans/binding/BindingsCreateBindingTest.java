@@ -11,7 +11,9 @@ import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.concurrent.Callable;
+import java.util.logging.Level;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -20,6 +22,7 @@ import static org.junit.Assert.assertTrue;
  *
  */
 @RunWith(Parameterized.class)
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class BindingsCreateBindingTest<T> {
 
     private static final float EPSILON_FLOAT = 1e-5f;
@@ -28,11 +31,11 @@ public class BindingsCreateBindingTest<T> {
 
     private static final ErrorLoggingUtility log = new ErrorLoggingUtility();
 
-    private static interface Functions<S> {
+    private interface Functions<S> {
 
-        public Binding<S> create(Callable<S> func, Observable... dependencies);
+        Binding<S> create(Callable<S> func, Observable... dependencies);
 
-        public void check(S value0, S value1);
+        void check(S value0, S value1);
 
     }
 
@@ -90,21 +93,21 @@ public class BindingsCreateBindingTest<T> {
         final Callable<T> func2 = () -> {
             throw new Exception();
         };
-        final Binding<T> binding2 = f.create(func2, new Observable[0]);
+        final Binding<T> binding2 = f.create(func2);
 
         f.check(defaultValue, binding2.getValue());
-        log.check(java.util.logging.Level.WARNING, Exception.class);
+        log.check(Level.WARNING, Exception.class);
         assertTrue(binding2.getDependencies().isEmpty());
         binding2.dispose();
     }
 
     @Test
     public void testOneDependency() {
-        final Callable<T> func = () -> p0.getValue();
+        final Callable<T> func = p0::getValue;
         final Binding<T> binding = f.create(func, p0);
 
         f.check(p0.getValue(), binding.getValue());
-        assertEquals(binding.getDependencies(), Arrays.asList(p0));
+        assertEquals(binding.getDependencies(), Collections.singletonList(p0));
         p0.setValue(value1);
         f.check(p0.getValue(), binding.getValue());
         binding.dispose();
@@ -112,7 +115,7 @@ public class BindingsCreateBindingTest<T> {
 
     @Test
     public void testCreateBoolean_TwoDependencies() {
-        final Callable<T> func = () -> p0.getValue();
+        final Callable<T> func = p0::getValue;
         final Binding<T> binding = f.create(func, p0, p1);
 
         f.check(p0.getValue(), binding.getValue());
@@ -124,7 +127,7 @@ public class BindingsCreateBindingTest<T> {
     }
 
     @Parameterized.Parameters
-    public static Collection<Object[]> parameters() {
+    public static <S> Collection<Object[]> parameters() {
         return Arrays.asList(new Object[][]{
                 {
                         new SimpleBooleanProperty(), new SimpleBooleanProperty(),
@@ -139,8 +142,7 @@ public class BindingsCreateBindingTest<T> {
                             public void check(Boolean value0, Boolean value1) {
                                 assertEquals(value0, value1);
                             }
-                        },
-                        true, false, false
+                        }, true, false, false
                 },
                 {
                         new SimpleDoubleProperty(), new SimpleDoubleProperty(),
@@ -155,8 +157,7 @@ public class BindingsCreateBindingTest<T> {
                             public void check(Number value0, Number value1) {
                                 assertEquals(value0.doubleValue(), value1.doubleValue(), EPSILON_DOUBLE);
                             }
-                        },
-                        Math.PI, -Math.E, 0.0
+                        }, Math.PI, -Math.E, 0.0
                 },
                 {
                         new SimpleFloatProperty(), new SimpleFloatProperty(),
@@ -171,8 +172,7 @@ public class BindingsCreateBindingTest<T> {
                             public void check(Number value0, Number value1) {
                                 assertEquals(value0.floatValue(), value1.floatValue(), EPSILON_FLOAT);
                             }
-                        },
-                        (float) Math.PI, (float) -Math.E, 0.0f
+                        }, (float) Math.PI, (float) -Math.E, 0.0f
                 },
                 {
                         new SimpleIntegerProperty(), new SimpleIntegerProperty(),
@@ -187,8 +187,7 @@ public class BindingsCreateBindingTest<T> {
                             public void check(Number value0, Number value1) {
                                 assertEquals(value0.intValue(), value1.intValue());
                             }
-                        },
-                        Integer.MAX_VALUE, Integer.MIN_VALUE, 0
+                        }, Integer.MAX_VALUE, Integer.MIN_VALUE, 0
                 },
                 {
                         new SimpleLongProperty(), new SimpleLongProperty(),
@@ -203,24 +202,22 @@ public class BindingsCreateBindingTest<T> {
                             public void check(Number value0, Number value1) {
                                 assertEquals(value0.longValue(), value1.longValue());
                             }
-                        },
-                        Long.MAX_VALUE, Long.MIN_VALUE, 0L
+                        }, Long.MAX_VALUE, Long.MIN_VALUE, 0L
                 },
                 {
-                        new SimpleObjectProperty(), new SimpleObjectProperty(),
-                        new Functions<Object>() {
+                        new SimpleObjectProperty<S>(), new SimpleObjectProperty<S>(),
+                        new Functions<S>() {
 
                             @Override
-                            public Binding<Object> create(Callable<Object> func, Observable... dependencies) {
+                            public Binding<S> create(Callable<S> func, Observable... dependencies) {
                                 return Bindings.createObjectBinding(func, dependencies);
                             }
 
                             @Override
-                            public void check(Object value0, Object value1) {
+                            public void check(S value0, S value1) {
                                 assertEquals(value0, value1);
                             }
-                        },
-                        new Object(), new Object(), null
+                        }, new Object(), new Object(), null
                 },
                 {
                         new SimpleStringProperty(), new SimpleStringProperty(),
@@ -235,8 +232,7 @@ public class BindingsCreateBindingTest<T> {
                             public void check(String value0, String value1) {
                                 assertEquals(value0, value1);
                             }
-                        },
-                        "Hello World", "Goodbye World", ""
+                        }, "Hello World", "Goodbye World", ""
                 },
         });
     }

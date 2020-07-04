@@ -58,7 +58,7 @@ public class ErrorLoggingUtility {
         check(Level.FINE, expectedException);
     }
 
-    public void check(Level expectedLevel, Class<? extends Exception> expectedException) {
+    public void check(Level expectedLevel, Class<? extends Throwable> expectedException) {
         assertNotNull(lastRecord);
         assertEquals(expectedLevel, lastRecord.getLevel());
         assertEquals(expectedException, lastRecord.getThrown().getClass());

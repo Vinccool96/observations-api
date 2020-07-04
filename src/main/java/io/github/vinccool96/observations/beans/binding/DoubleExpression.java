@@ -37,6 +37,11 @@ public abstract class DoubleExpression extends NumberExpressionBase implements O
     }
 
     @Override
+    public short shortValue() {
+        return (short) get();
+    }
+
+    @Override
     public Double getValue() {
         return get();
     }
