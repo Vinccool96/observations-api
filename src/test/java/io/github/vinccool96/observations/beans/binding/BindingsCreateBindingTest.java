@@ -2,7 +2,7 @@ package io.github.vinccool96.observations.beans.binding;
 
 import io.github.vinccool96.observations.beans.Observable;
 import io.github.vinccool96.observations.beans.property.*;
-import io.github.vinccool96.observations.sun.binding.ErrorLoggingUtiltity;
+import io.github.vinccool96.observations.sun.binding.ErrorLoggingUtility;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -26,7 +26,7 @@ public class BindingsCreateBindingTest<T> {
 
     private static final double EPSILON_DOUBLE = 1e-10;
 
-    private static final ErrorLoggingUtiltity log = new ErrorLoggingUtiltity();
+    private static final ErrorLoggingUtility log = new ErrorLoggingUtility();
 
     private static interface Functions<S> {
 

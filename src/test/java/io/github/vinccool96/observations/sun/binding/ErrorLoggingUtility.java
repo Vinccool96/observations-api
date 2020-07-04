@@ -5,7 +5,8 @@ import java.util.logging.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class ErrorLoggingUtiltity {
+@SuppressWarnings("ResultOfMethodCallIgnored")
+public class ErrorLoggingUtility {
 
     static {
         // initialize PlatformLogger
@@ -34,6 +35,7 @@ public class ErrorLoggingUtiltity {
         @Override
         public void close() throws SecurityException {
         }
+
     };
 
     public void start() {
@@ -52,11 +54,11 @@ public class ErrorLoggingUtiltity {
         lastRecord = null;
     }
 
-    public void checkFine(Class expectedException) {
+    public void checkFine(Class<? extends Exception> expectedException) {
         check(Level.FINE, expectedException);
     }
 
-    public void check(Level expectedLevel, Class expectedException) {
+    public void check(Level expectedLevel, Class<? extends Exception> expectedException) {
         assertNotNull(lastRecord);
         assertEquals(expectedLevel, lastRecord.getLevel());
         assertEquals(expectedException, lastRecord.getThrown().getClass());

@@ -79,7 +79,7 @@ public class SelectBindingTest {
 
     private ObservableList<?> dependencies;
 
-    private static final ErrorLoggingUtiltity log = new ErrorLoggingUtiltity();
+    private static final ErrorLoggingUtility log = new ErrorLoggingUtility();
 
     @BeforeClass
     public static void setUpClass() {

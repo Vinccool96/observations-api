@@ -56,6 +56,7 @@ public class Variable {
             super.removeListener(listener);
             numChangedListenersForName = Math.max(0, numChangedListenersForName - 1);
         }
+
     };
 
     public final String getName() {
@@ -70,7 +71,8 @@ public class Variable {
         return name;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return name.get();
     }
 

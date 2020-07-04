@@ -80,7 +80,7 @@ public class ObjectExpressionTest {
 
     @Test
     public void testFactory() {
-        final ObservableObjectValueStub<Object> valueModel = new ObservableObjectValueStub<Object>();
+        final ObservableObjectValueStub<Object> valueModel = new ObservableObjectValueStub<>();
         final ObjectExpression<Object> exp = ObjectExpression.objectExpression(valueModel);
 
         assertTrue(exp instanceof ObjectBinding);

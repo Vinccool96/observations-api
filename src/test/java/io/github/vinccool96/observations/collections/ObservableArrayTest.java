@@ -16,6 +16,7 @@ import static org.junit.Assert.*;
 /**
  * Tests for ObservableArray.
  */
+@SuppressWarnings({"unused", "rawtypes", "unchecked"})
 @RunWith(Parameterized.class)
 public class ObservableArrayTest {
 
@@ -99,27 +100,33 @@ public class ObservableArrayTest {
 
         int nextValue = 0;
 
-        @Override IntegerArrayWrapper newInstance() {
+        @Override
+        IntegerArrayWrapper newInstance() {
             return new IntegerArrayWrapper();
         }
 
-        @Override ObservableIntegerArray createEmptyArray() {
+        @Override
+        ObservableIntegerArray createEmptyArray() {
             return array = ObservableCollections.observableIntegerArray();
         }
 
-        @Override ObservableIntegerArray createNotEmptyArray(int[] src) {
+        @Override
+        ObservableIntegerArray createNotEmptyArray(int[] src) {
             return array = ObservableCollections.observableIntegerArray(src);
         }
 
-        @Override Integer getNextValue() {
+        @Override
+        Integer getNextValue() {
             return nextValue++;
         }
 
-        @Override void set(int index, Integer value) {
+        @Override
+        void set(int index, Integer value) {
             array.set(index, value);
         }
 
-        @Override int[] createPrimitiveArray(int size, boolean fillWithData) {
+        @Override
+        int[] createPrimitiveArray(int size, boolean fillWithData) {
             int[] res = new int[size];
             if (fillWithData) {
                 for (int i = 0; i < size; i++) {
@@ -129,67 +136,83 @@ public class ObservableArrayTest {
             return res;
         }
 
-        @Override void setAllA(int[] src) {
+        @Override
+        void setAllA(int[] src) {
             array.setAll(src);
         }
 
-        @Override void setAllA(int[] src, int srcIndex, int length) {
+        @Override
+        void setAllA(int[] src, int srcIndex, int length) {
             array.setAll(src, srcIndex, length);
         }
 
-        @Override void setAllT(ObservableIntegerArray src) {
+        @Override
+        void setAllT(ObservableIntegerArray src) {
             array.setAll(src);
         }
 
-        @Override void setAllT(ObservableIntegerArray src, int srcIndex, int length) {
+        @Override
+        void setAllT(ObservableIntegerArray src, int srcIndex, int length) {
             array.setAll(src, srcIndex, length);
         }
 
-        @Override void addAllA(int[] src) {
+        @Override
+        void addAllA(int[] src) {
             array.addAll(src);
         }
 
-        @Override void addAllA(int[] src, int srcIndex, int length) {
+        @Override
+        void addAllA(int[] src, int srcIndex, int length) {
             array.addAll(src, srcIndex, length);
         }
 
-        @Override void addAllT(ObservableIntegerArray src) {
+        @Override
+        void addAllT(ObservableIntegerArray src) {
             array.addAll(src);
         }
 
-        @Override void addAllT(ObservableIntegerArray src, int srcIndex, int length) {
+        @Override
+        void addAllT(ObservableIntegerArray src, int srcIndex, int length) {
             array.addAll(src, srcIndex, length);
         }
 
-        @Override void copyToA(int srcIndex, int[] dest, int destIndex, int length) {
+        @Override
+        void copyToA(int srcIndex, int[] dest, int destIndex, int length) {
             array.copyTo(srcIndex, dest, destIndex, length);
         }
 
-        @Override void copyToT(int srcIndex, ObservableIntegerArray dest, int destIndex, int length) {
+        @Override
+        void copyToT(int srcIndex, ObservableIntegerArray dest, int destIndex, int length) {
             array.copyTo(srcIndex, dest, destIndex, length);
         }
 
-        @Override Integer get(int index) {
+        @Override
+        Integer get(int index) {
             return array.get(index);
         }
 
-        @Override int[] toArray(int[] src) {
+        @Override
+        int[] toArray(int[] src) {
             return array.toArray(src);
         }
 
-        @Override int[] toArray(int srcIndex, int[] dest, int length) {
+        @Override
+        int[] toArray(int srcIndex, int[] dest, int length) {
             return array.toArray(srcIndex, dest, length);
         }
 
-        @Override void setA(int destIndex, int[] src, int srcIndex, int length) {
+        @Override
+        void setA(int destIndex, int[] src, int srcIndex, int length) {
             array.set(destIndex, src, srcIndex, length);
         }
 
-        @Override void setT(int destIndex, ObservableIntegerArray src, int srcIndex, int length) {
+        @Override
+        void setT(int destIndex, ObservableIntegerArray src, int srcIndex, int length) {
             array.set(destIndex, src, srcIndex, length);
         }
 
-        @Override int arrayLength(int[] array) {
+        @Override
+        int arrayLength(int[] array) {
             return array.length;
         }
 
@@ -205,7 +228,8 @@ public class ObservableArrayTest {
             }
         }
 
-        @Override int[] clonePrimitiveArray(int[] array) {
+        @Override
+        int[] clonePrimitiveArray(int[] array) {
             return Arrays.copyOf(array, array.length);
         }
 
@@ -216,19 +240,166 @@ public class ObservableArrayTest {
 
     }
 
+    private static class LongArrayWrapper extends ArrayWrapper<ObservableLongArray, long[], Long> {
+
+        long nextValue = 0;
+
+        @Override
+        LongArrayWrapper newInstance() {
+            return new LongArrayWrapper();
+        }
+
+        @Override
+        ObservableLongArray createEmptyArray() {
+            return array = ObservableCollections.observableLongArray();
+        }
+
+        @Override
+        ObservableLongArray createNotEmptyArray(long[] src) {
+            return array = ObservableCollections.observableLongArray(src);
+        }
+
+        @Override
+        Long getNextValue() {
+            return nextValue++;
+        }
+
+        @Override
+        void set(int index, Long value) {
+            array.set(index, value);
+        }
+
+        @Override
+        long[] createPrimitiveArray(int size, boolean fillWithData) {
+            long[] res = new long[size];
+            if (fillWithData) {
+                for (int i = 0; i < size; i++) {
+                    res[i] = nextValue++;
+                }
+            }
+            return res;
+        }
+
+        @Override
+        void setAllA(long[] src) {
+            array.setAll(src);
+        }
+
+        @Override
+        void setAllA(long[] src, int srcIndex, int length) {
+            array.setAll(src, srcIndex, length);
+        }
+
+        @Override
+        void setAllT(ObservableLongArray src) {
+            array.setAll(src);
+        }
+
+        @Override
+        void setAllT(ObservableLongArray src, int srcIndex, int length) {
+            array.setAll(src, srcIndex, length);
+        }
+
+        @Override
+        void addAllA(long[] src) {
+            array.addAll(src);
+        }
+
+        @Override
+        void addAllA(long[] src, int srcIndex, int length) {
+            array.addAll(src, srcIndex, length);
+        }
+
+        @Override
+        void addAllT(ObservableLongArray src) {
+            array.addAll(src);
+        }
+
+        @Override
+        void addAllT(ObservableLongArray src, int srcIndex, int length) {
+            array.addAll(src, srcIndex, length);
+        }
+
+        @Override
+        void copyToA(int srcIndex, long[] dest, int destIndex, int length) {
+            array.copyTo(srcIndex, dest, destIndex, length);
+        }
+
+        @Override
+        void copyToT(int srcIndex, ObservableLongArray dest, int destIndex, int length) {
+            array.copyTo(srcIndex, dest, destIndex, length);
+        }
+
+        @Override
+        Long get(int index) {
+            return array.get(index);
+        }
+
+        @Override
+        long[] toArray(long[] src) {
+            return array.toArray(src);
+        }
+
+        @Override
+        long[] toArray(int srcIndex, long[] dest, int length) {
+            return array.toArray(srcIndex, dest, length);
+        }
+
+        @Override
+        void setA(int destIndex, long[] src, int srcIndex, int length) {
+            array.set(destIndex, src, srcIndex, length);
+        }
+
+        @Override
+        void setT(int destIndex, ObservableLongArray src, int srcIndex, int length) {
+            array.set(destIndex, src, srcIndex, length);
+        }
+
+        @Override
+        int arrayLength(long[] array) {
+            return array.length;
+        }
+
+        @Override
+        Long get(long[] array, int index) {
+            return array[index];
+        }
+
+        @Override
+        void assertElementsEqual(long[] actual, int from, int to, long[] expected, int expFrom) {
+            for (int i = from, j = expFrom; i < to; i++, j++) {
+                assertEquals(actual[i], expected[j]);
+            }
+        }
+
+        @Override
+        long[] clonePrimitiveArray(long[] array) {
+            return Arrays.copyOf(array, array.length);
+        }
+
+        @Override
+        String primitiveArrayToString(long[] array) {
+            return Arrays.toString(array);
+        }
+
+    }
+
     private static class FloatArrayWrapper extends ArrayWrapper<ObservableFloatArray, float[], Float> {
 
         float nextValue = 0;
 
-        @Override FloatArrayWrapper newInstance() {
+        @Override
+        FloatArrayWrapper newInstance() {
             return new FloatArrayWrapper();
         }
 
-        @Override ObservableFloatArray createEmptyArray() {
+        @Override
+        ObservableFloatArray createEmptyArray() {
             return array = ObservableCollections.observableFloatArray();
         }
 
-        @Override ObservableFloatArray createNotEmptyArray(float[] elements) {
+        @Override
+        ObservableFloatArray createNotEmptyArray(float[] elements) {
             return array = ObservableCollections.observableFloatArray(elements);
         }
 
@@ -237,11 +408,13 @@ public class ObservableArrayTest {
             return nextValue++;
         }
 
-        @Override void set(int index, Float value) {
+        @Override
+        void set(int index, Float value) {
             array.set(index, value);
         }
 
-        @Override float[] createPrimitiveArray(int size, boolean fillWithData) {
+        @Override
+        float[] createPrimitiveArray(int size, boolean fillWithData) {
             float[] res = new float[size];
             if (fillWithData) {
                 for (int i = 0; i < size; i++) {
@@ -251,35 +424,43 @@ public class ObservableArrayTest {
             return res;
         }
 
-        @Override void setAllA(float[] src) {
+        @Override
+        void setAllA(float[] src) {
             array.setAll(src);
         }
 
-        @Override void copyToA(int srcIndex, float[] dest, int destIndex, int length) {
+        @Override
+        void copyToA(int srcIndex, float[] dest, int destIndex, int length) {
             array.copyTo(srcIndex, dest, destIndex, length);
         }
 
-        @Override void copyToT(int srcIndex, ObservableFloatArray dest, int destIndex, int length) {
+        @Override
+        void copyToT(int srcIndex, ObservableFloatArray dest, int destIndex, int length) {
             array.copyTo(srcIndex, dest, destIndex, length);
         }
 
-        @Override Float get(int index) {
+        @Override
+        Float get(int index) {
             return array.get(index);
         }
 
-        @Override float[] toArray(float[] dest) {
+        @Override
+        float[] toArray(float[] dest) {
             return array.toArray(dest);
         }
 
-        @Override float[] toArray(int srcIndex, float[] dest, int length) {
+        @Override
+        float[] toArray(int srcIndex, float[] dest, int length) {
             return array.toArray(srcIndex, dest, length);
         }
 
-        @Override void setA(int destIndex, float[] src, int srcIndex, int length) {
+        @Override
+        void setA(int destIndex, float[] src, int srcIndex, int length) {
             array.set(destIndex, src, srcIndex, length);
         }
 
-        @Override int arrayLength(float[] array) {
+        @Override
+        int arrayLength(float[] array) {
             return array.length;
         }
 
@@ -297,44 +478,199 @@ public class ObservableArrayTest {
             }
         }
 
-        @Override float[] clonePrimitiveArray(float[] array) {
+        @Override
+        float[] clonePrimitiveArray(float[] array) {
             return Arrays.copyOf(array, array.length);
         }
 
-        @Override void setAllT(ObservableFloatArray src) {
+        @Override
+        void setAllT(ObservableFloatArray src) {
             array.setAll(src);
         }
 
-        @Override void setAllA(float[] src, int srcIndex, int length) {
+        @Override
+        void setAllA(float[] src, int srcIndex, int length) {
             array.setAll(src, srcIndex, length);
         }
 
-        @Override void setAllT(ObservableFloatArray src, int srcIndex, int length) {
+        @Override
+        void setAllT(ObservableFloatArray src, int srcIndex, int length) {
             array.setAll(src, srcIndex, length);
         }
 
-        @Override void addAllA(float[] src) {
+        @Override
+        void addAllA(float[] src) {
             array.addAll(src);
         }
 
-        @Override void addAllT(ObservableFloatArray src) {
+        @Override
+        void addAllT(ObservableFloatArray src) {
             array.addAll(src);
         }
 
-        @Override void addAllA(float[] src, int srcIndex, int length) {
+        @Override
+        void addAllA(float[] src, int srcIndex, int length) {
             array.addAll(src, srcIndex, length);
         }
 
-        @Override void addAllT(ObservableFloatArray src, int srcIndex, int length) {
+        @Override
+        void addAllT(ObservableFloatArray src, int srcIndex, int length) {
             array.addAll(src, srcIndex, length);
         }
 
-        @Override void setT(int destIndex, ObservableFloatArray src, int srcIndex, int length) {
+        @Override
+        void setT(int destIndex, ObservableFloatArray src, int srcIndex, int length) {
             array.set(destIndex, src, srcIndex, length);
         }
 
         @Override
         String primitiveArrayToString(float[] array) {
+            return Arrays.toString(array);
+        }
+
+    }
+
+    private static class DoubleArrayWrapper extends ArrayWrapper<ObservableDoubleArray, double[], Double> {
+
+        double nextValue = 0;
+
+        @Override
+        DoubleArrayWrapper newInstance() {
+            return new DoubleArrayWrapper();
+        }
+
+        @Override
+        ObservableDoubleArray createEmptyArray() {
+            return array = ObservableCollections.observableDoubleArray();
+        }
+
+        @Override
+        ObservableDoubleArray createNotEmptyArray(double[] elements) {
+            return array = ObservableCollections.observableDoubleArray(elements);
+        }
+
+        @Override
+        Double getNextValue() {
+            return nextValue++;
+        }
+
+        @Override
+        void set(int index, Double value) {
+            array.set(index, value);
+        }
+
+        @Override
+        double[] createPrimitiveArray(int size, boolean fillWithData) {
+            double[] res = new double[size];
+            if (fillWithData) {
+                for (int i = 0; i < size; i++) {
+                    res[i] = nextValue++;
+                }
+            }
+            return res;
+        }
+
+        @Override
+        void setAllA(double[] src) {
+            array.setAll(src);
+        }
+
+        @Override
+        void copyToA(int srcIndex, double[] dest, int destIndex, int length) {
+            array.copyTo(srcIndex, dest, destIndex, length);
+        }
+
+        @Override
+        void copyToT(int srcIndex, ObservableDoubleArray dest, int destIndex, int length) {
+            array.copyTo(srcIndex, dest, destIndex, length);
+        }
+
+        @Override
+        Double get(int index) {
+            return array.get(index);
+        }
+
+        @Override
+        double[] toArray(double[] dest) {
+            return array.toArray(dest);
+        }
+
+        @Override
+        double[] toArray(int srcIndex, double[] dest, int length) {
+            return array.toArray(srcIndex, dest, length);
+        }
+
+        @Override
+        void setA(int destIndex, double[] src, int srcIndex, int length) {
+            array.set(destIndex, src, srcIndex, length);
+        }
+
+        @Override
+        int arrayLength(double[] array) {
+            return array.length;
+        }
+
+        @Override
+        Double get(double[] array, int index) {
+            return array[index];
+        }
+
+        @Override
+        void assertElementsEqual(double[] actual, int from, int to, double[] expected, int expFrom) {
+            for (int i = from, j = expFrom; i < to; i++, j++) {
+                assertEquals("expected float = " + expected[j] + ", actual float = " + actual[i],
+                        Double.doubleToRawLongBits(expected[j]),
+                        Double.doubleToRawLongBits(actual[i]));
+            }
+        }
+
+        @Override
+        double[] clonePrimitiveArray(double[] array) {
+            return Arrays.copyOf(array, array.length);
+        }
+
+        @Override
+        void setAllT(ObservableDoubleArray src) {
+            array.setAll(src);
+        }
+
+        @Override
+        void setAllA(double[] src, int srcIndex, int length) {
+            array.setAll(src, srcIndex, length);
+        }
+
+        @Override
+        void setAllT(ObservableDoubleArray src, int srcIndex, int length) {
+            array.setAll(src, srcIndex, length);
+        }
+
+        @Override
+        void addAllA(double[] src) {
+            array.addAll(src);
+        }
+
+        @Override
+        void addAllT(ObservableDoubleArray src) {
+            array.addAll(src);
+        }
+
+        @Override
+        void addAllA(double[] src, int srcIndex, int length) {
+            array.addAll(src, srcIndex, length);
+        }
+
+        @Override
+        void addAllT(ObservableDoubleArray src, int srcIndex, int length) {
+            array.addAll(src, srcIndex, length);
+        }
+
+        @Override
+        void setT(int destIndex, ObservableDoubleArray src, int srcIndex, int length) {
+            array.set(destIndex, src, srcIndex, length);
+        }
+
+        @Override
+        String primitiveArrayToString(double[] array) {
             return Arrays.toString(array);
         }
 
@@ -360,7 +696,9 @@ public class ObservableArrayTest {
     public static Collection createParameters() {
         Object[][] data = new Object[][]{
                 {new FloatArrayWrapper()},
+                {new DoubleArrayWrapper()},
                 {new IntegerArrayWrapper()},
+                {new LongArrayWrapper()},
         };
         return Arrays.asList(data);
     }
@@ -391,27 +729,31 @@ public class ObservableArrayTest {
 
     // ========== pre-condition tests ================
 
-    @Test public void testSize() {
+    @Test
+    public void testSize() {
         mao.check0();
         assertEquals(INITIAL_SIZE, array.size());
     }
 
-    @Test public void testClear() {
+    @Test
+    public void testClear() {
         array.clear();
         mao.checkOnlySizeChanged(array);
         assertEquals(0, array.size());
     }
 
-    @Test public void testGet() {
+    @Test
+    public void testGet() {
         for (int i = 0; i < array.size(); i++) {
             Object expected = wrapper.get(initialElements, i);
-            Object actural = wrapper.get(i);
-            assertEquals(expected, actural);
+            Object actual = wrapper.get(i);
+            assertEquals(expected, actual);
         }
         assertUnchanged();
     }
 
-    @Test public void testToArray() {
+    @Test
+    public void testToArray() {
         Object expected = initialElements;
         Object actual = wrapper.toArray(null);
         assertEquals(INITIAL_SIZE, wrapper.arrayLength(actual));
@@ -421,7 +763,8 @@ public class ObservableArrayTest {
 
     // ========== add/remove listener tests ==========
 
-    @Test public void testAddRemoveListener() {
+    @Test
+    public void testAddRemoveListener() {
         MockArrayObserver mao2 = new MockArrayObserver();
         array.addListener(mao2);
         array.removeListener(mao);
@@ -430,7 +773,8 @@ public class ObservableArrayTest {
         mao2.check(array, false, 0, 1);
     }
 
-    @Test public void testAddTwoListenersElementChange() {
+    @Test
+    public void testAddTwoListenersElementChange() {
         MockArrayObserver mao2 = new MockArrayObserver();
         array.addListener(mao2);
         wrapper.set(0, wrapper.getNextValue());
@@ -438,7 +782,8 @@ public class ObservableArrayTest {
         mao2.check(array, false, 0, 1);
     }
 
-    @Test public void testAddTwoListenersSizeChange() {
+    @Test
+    public void testAddTwoListenersSizeChange() {
         MockArrayObserver mao2 = new MockArrayObserver();
         array.addListener(mao2);
         array.resize(3);
@@ -446,7 +791,8 @@ public class ObservableArrayTest {
         mao2.checkOnlySizeChanged(array);
     }
 
-    @Test public void testAddThreeListeners() {
+    @Test
+    public void testAddThreeListeners() {
         MockArrayObserver mao2 = new MockArrayObserver();
         MockArrayObserver mao3 = new MockArrayObserver();
         array.addListener(mao2);
@@ -457,7 +803,8 @@ public class ObservableArrayTest {
         mao3.check(array, false, 0, 1);
     }
 
-    @Test public void testAddThreeListenersSizeChange() {
+    @Test
+    public void testAddThreeListenersSizeChange() {
         MockArrayObserver mao2 = new MockArrayObserver();
         MockArrayObserver mao3 = new MockArrayObserver();
         array.addListener(mao2);
@@ -545,28 +892,34 @@ public class ObservableArrayTest {
                 wrapper.createPrimitiveArray(Math.max(0, newSize - matchingElements), false), 0);
     }
 
-    @Test public void testResizeTo0() {
+    @Test
+    public void testResizeTo0() {
         testResize(false, 0, 0);
     }
 
-    @Test public void testResizeToSmaller() {
+    @Test
+    public void testResizeToSmaller() {
         testResize(false, 3, 3);
     }
 
-    @Test public void testResizeToSameSize() {
+    @Test
+    public void testResizeToSameSize() {
         testResize(true, array.size(), array.size());
     }
 
-    @Test public void testResizeToBigger() {
+    @Test
+    public void testResizeToBigger() {
         testResize(false, 10, array.size());
     }
 
-    @Test public void testResizeOnEmpty() {
+    @Test
+    public void testResizeOnEmpty() {
         makeEmpty();
         testResize(false, 10, 0);
     }
 
-    @Test public void testResizeOnEmptyToEmpty() {
+    @Test
+    public void testResizeOnEmptyToEmpty() {
         makeEmpty();
         testResize(true, 0, 0);
     }
@@ -594,24 +947,29 @@ public class ObservableArrayTest {
         wrapper.assertElementsEqual(actual, 0, wrapper.arrayLength(expected), expected, 0);
     }
 
-    @Test public void testSetAllASmaller() {
+    @Test
+    public void testSetAllASmaller() {
         testSetAllA(true, 3);
     }
 
-    @Test public void testSetAllABigger() {
+    @Test
+    public void testSetAllABigger() {
         testSetAllA(true, 10);
     }
 
-    @Test public void testSetAllAOnSameSize() {
+    @Test
+    public void testSetAllAOnSameSize() {
         testSetAllA(false, INITIAL_SIZE);
     }
 
-    @Test public void testSetAllAOnEmpty() {
+    @Test
+    public void testSetAllAOnEmpty() {
         makeEmpty();
         testSetAllA(true, 3);
     }
 
-    @Test public void testSetAllAOnEmptyToEmpty() {
+    @Test
+    public void testSetAllAOnEmptyToEmpty() {
         makeEmpty();
         wrapper.setAllA(wrapper.createPrimitiveArray(0));
         assertUnchanged();
@@ -643,24 +1001,29 @@ public class ObservableArrayTest {
         wrapper.assertElementsEqual(actual, 0, wrapper.arrayLength(expected), expected, 0);
     }
 
-    @Test public void testSetAllTSmaller() {
+    @Test
+    public void testSetAllTSmaller() {
         testSetAllT(true, 3);
     }
 
-    @Test public void testSetAllTBigger() {
+    @Test
+    public void testSetAllTBigger() {
         testSetAllT(true, 10);
     }
 
-    @Test public void testSetAllTOnSameSize() {
+    @Test
+    public void testSetAllTOnSameSize() {
         testSetAllT(false, INITIAL_SIZE);
     }
 
-    @Test public void testSetAllTOnEmpty() {
+    @Test
+    public void testSetAllTOnEmpty() {
         makeEmpty();
         testSetAllT(true, 3);
     }
 
-    @Test public void testSetAllTOnEmptyToEmpty() {
+    @Test
+    public void testSetAllTOnEmptyToEmpty() {
         makeEmpty();
         wrapper.setAllT(wrapper.newInstance().createEmptyArray());
         assertUnchanged();
@@ -676,7 +1039,8 @@ public class ObservableArrayTest {
         }
     }
 
-    @Test public void testSetAllTSelf() {
+    @Test
+    public void testSetAllTSelf() {
 
         wrapper.setAllT(array);
 
@@ -687,7 +1051,8 @@ public class ObservableArrayTest {
         wrapper.assertElementsEqual(actual, 0, initialSize, initialElements, 0);
     }
 
-    @Test public void testSetAllTSelfEmpty() {
+    @Test
+    public void testSetAllTSelfEmpty() {
         makeEmpty();
 
         wrapper.setAllT(array);
@@ -712,44 +1077,54 @@ public class ObservableArrayTest {
         wrapper.assertElementsEqual(actual, 0, length, expected, srcIndex);
     }
 
-    @Test public void testSetAllARange1() {
+    @Test
+    public void testSetAllARange1() {
         testSetAllARange(false, INITIAL_SIZE, 0, INITIAL_SIZE);
     }
 
-    @Test public void testSetAllARange2() {
+    @Test
+    public void testSetAllARange2() {
         testSetAllARange(false, INITIAL_SIZE + 10, 0, INITIAL_SIZE);
     }
 
-    @Test public void testSetAllARange3() {
+    @Test
+    public void testSetAllARange3() {
         testSetAllARange(false, INITIAL_SIZE + 10, 10, INITIAL_SIZE);
     }
 
-    @Test public void testSetAllARange4() {
+    @Test
+    public void testSetAllARange4() {
         testSetAllARange(false, INITIAL_SIZE + 10, 2, INITIAL_SIZE);
     }
 
-    @Test public void testSetAllARange5() {
+    @Test
+    public void testSetAllARange5() {
         testSetAllARange(true, INITIAL_SIZE, 0, INITIAL_SIZE / 2);
     }
 
-    @Test public void testSetAllARange6() {
+    @Test
+    public void testSetAllARange6() {
         testSetAllARange(true, INITIAL_SIZE + 10, 0, INITIAL_SIZE + 10);
     }
 
-    @Test public void testSetAllARange7() {
+    @Test
+    public void testSetAllARange7() {
         testSetAllARange(true, INITIAL_SIZE + 20, 10, INITIAL_SIZE + 10);
     }
 
-    @Test public void testSetAllARange8() {
+    @Test
+    public void testSetAllARange8() {
         testSetAllARange(true, INITIAL_SIZE + 10, 2, INITIAL_SIZE - 3);
     }
 
-    @Test public void testSetAllARangeOnEmpty() {
+    @Test
+    public void testSetAllARangeOnEmpty() {
         makeEmpty();
         testSetAllARange(true, INITIAL_SIZE, 1, 3);
     }
 
-    @Test public void testSetAllARangeOnEmptyToEmpty() {
+    @Test
+    public void testSetAllARangeOnEmptyToEmpty() {
         makeEmpty();
         wrapper.setAllA(wrapper.createPrimitiveArray(INITIAL_SIZE), 1, 0);
         assertUnchanged();
@@ -815,44 +1190,54 @@ public class ObservableArrayTest {
         wrapper.assertElementsEqual(actual, 0, length, expected, srcIndex);
     }
 
-    @Test public void testSetAllTRange1() {
+    @Test
+    public void testSetAllTRange1() {
         testSetAllTRange(false, INITIAL_SIZE, 0, INITIAL_SIZE);
     }
 
-    @Test public void testSetAllTRange2() {
+    @Test
+    public void testSetAllTRange2() {
         testSetAllTRange(false, INITIAL_SIZE + 10, 0, INITIAL_SIZE);
     }
 
-    @Test public void testSetAllTRange3() {
+    @Test
+    public void testSetAllTRange3() {
         testSetAllTRange(false, INITIAL_SIZE + 10, 10, INITIAL_SIZE);
     }
 
-    @Test public void testSetAllTRange4() {
+    @Test
+    public void testSetAllTRange4() {
         testSetAllTRange(false, INITIAL_SIZE + 10, 2, INITIAL_SIZE);
     }
 
-    @Test public void testSetAllTRange5() {
+    @Test
+    public void testSetAllTRange5() {
         testSetAllTRange(true, INITIAL_SIZE, 0, INITIAL_SIZE / 2);
     }
 
-    @Test public void testSetAllTRange6() {
+    @Test
+    public void testSetAllTRange6() {
         testSetAllTRange(true, INITIAL_SIZE + 10, 0, INITIAL_SIZE + 10);
     }
 
-    @Test public void testSetAllTRange7() {
+    @Test
+    public void testSetAllTRange7() {
         testSetAllTRange(true, INITIAL_SIZE + 20, 10, INITIAL_SIZE + 10);
     }
 
-    @Test public void testSetAllTRange8() {
+    @Test
+    public void testSetAllTRange8() {
         testSetAllTRange(true, INITIAL_SIZE + 10, 2, INITIAL_SIZE - 3);
     }
 
-    @Test public void testSetAllTRangeOnEmpty() {
+    @Test
+    public void testSetAllTRangeOnEmpty() {
         makeEmpty();
         testSetAllTRange(true, INITIAL_SIZE, 1, 3);
     }
 
-    @Test public void testSetAllTRangeOnEmptyToEmpty() {
+    @Test
+    public void testSetAllTRangeOnEmptyToEmpty() {
         makeEmpty();
         wrapper.setAllT(wrapper.newInstance().createNotEmptyArray(wrapper.createPrimitiveArray(INITIAL_SIZE)), 1, 0);
         assertUnchanged();
@@ -946,23 +1331,28 @@ public class ObservableArrayTest {
         wrapper.assertElementsEqual(actual, 0, length, initialElements, srcIndex);
     }
 
-    @Test public void testSetAllTRangeSelf() {
+    @Test
+    public void testSetAllTRangeSelf() {
         testSetAllTRangeSelf(true, 0, INITIAL_SIZE);
     }
 
-    @Test public void testSetAllTRangeSelfBeginning() {
+    @Test
+    public void testSetAllTRangeSelfBeginning() {
         testSetAllTRangeSelf(true, 0, INITIAL_SIZE / 2);
     }
 
-    @Test public void testSetAllTRangeSelfTrailing() {
+    @Test
+    public void testSetAllTRangeSelfTrailing() {
         testSetAllTRangeSelf(true, INITIAL_SIZE / 2, INITIAL_SIZE / 2);
     }
 
-    @Test public void testSetAllTRangeSelfMiddle() {
+    @Test
+    public void testSetAllTRangeSelfMiddle() {
         testSetAllTRangeSelf(true, 3, 2);
     }
 
-    @Test public void testSetAllTRangeSelfEmpty() {
+    @Test
+    public void testSetAllTRangeSelfEmpty() {
         makeEmpty();
         testSetAllTRangeSelf(false, 0, 0);
     }
@@ -1041,43 +1431,52 @@ public class ObservableArrayTest {
         wrapper.assertElementsEqual(actual, oldSize, newSize, src, 0);
     }
 
-    @Test public void testAddAllA0() {
+    @Test
+    public void testAddAllA0() {
         wrapper.addAllA(wrapper.createPrimitiveArray(0));
         assertUnchanged();
     }
 
-    @Test public void testAddAllA1() {
+    @Test
+    public void testAddAllA1() {
         testAddAllA(1);
     }
 
-    @Test public void testAddAllA3() {
+    @Test
+    public void testAddAllA3() {
         testAddAllA(3);
     }
 
-    @Test public void testAddAllABig() {
+    @Test
+    public void testAddAllABig() {
         testAddAllA(INITIAL_SIZE * 2);
     }
 
-    @Test public void testAddAllASameSize() {
+    @Test
+    public void testAddAllASameSize() {
         testAddAllA(INITIAL_SIZE);
     }
 
-    @Test public void testAddAllAOnEmpty1() {
+    @Test
+    public void testAddAllAOnEmpty1() {
         makeEmpty();
         testAddAllA(1);
     }
 
-    @Test public void testAddAllAOnEmptySameSize() {
+    @Test
+    public void testAddAllAOnEmptySameSize() {
         makeEmpty();
         testAddAllA(INITIAL_SIZE);
     }
 
-    @Test public void testAddAllAOnEmptyBig() {
+    @Test
+    public void testAddAllAOnEmptyBig() {
         makeEmpty();
         testAddAllA(INITIAL_SIZE * 3);
     }
 
-    @Test public void testAddAllAOnEmpty0() {
+    @Test
+    public void testAddAllAOnEmpty0() {
         makeEmpty();
         wrapper.addAllA(wrapper.createPrimitiveArray(0));
         assertUnchanged();
@@ -1092,7 +1491,8 @@ public class ObservableArrayTest {
         }
     }
 
-    @Test public void testAddAllAManyPoints() {
+    @Test
+    public void testAddAllAManyPoints() {
         for (int i = 0; i < 65_000; i++) {
             wrapper.addAllA(wrapper.createPrimitiveArray(3));
         }
@@ -1116,43 +1516,52 @@ public class ObservableArrayTest {
         wrapper.assertElementsEqual(actual, oldSize, newSize, src, 0);
     }
 
-    @Test public void testAddAllT0() {
+    @Test
+    public void testAddAllT0() {
         wrapper.addAllT(wrapper.newInstance().createEmptyArray());
         assertUnchanged();
     }
 
-    @Test public void testAddAllT1() {
+    @Test
+    public void testAddAllT1() {
         testAddAllT(1);
     }
 
-    @Test public void testAddAllT3() {
+    @Test
+    public void testAddAllT3() {
         testAddAllT(3);
     }
 
-    @Test public void testAddAllTBig() {
+    @Test
+    public void testAddAllTBig() {
         testAddAllT(INITIAL_SIZE * 2);
     }
 
-    @Test public void testAddAllTSameSize() {
+    @Test
+    public void testAddAllTSameSize() {
         testAddAllT(INITIAL_SIZE);
     }
 
-    @Test public void testAddAllTOnEmpty1() {
+    @Test
+    public void testAddAllTOnEmpty1() {
         makeEmpty();
         testAddAllT(1);
     }
 
-    @Test public void testAddAllTOnEmptySameSize() {
+    @Test
+    public void testAddAllTOnEmptySameSize() {
         makeEmpty();
         testAddAllT(INITIAL_SIZE);
     }
 
-    @Test public void testAddAllTOnEmptyBig() {
+    @Test
+    public void testAddAllTOnEmptyBig() {
         makeEmpty();
         testAddAllT(INITIAL_SIZE * 3);
     }
 
-    @Test public void testAddAllTOnEmpty0() {
+    @Test
+    public void testAddAllTOnEmpty0() {
         makeEmpty();
         wrapper.addAllT(wrapper.newInstance().createEmptyArray());
         assertUnchanged();
@@ -1167,7 +1576,8 @@ public class ObservableArrayTest {
         }
     }
 
-    @Test public void testAddAllTSelf() {
+    @Test
+    public void testAddAllTSelf() {
         wrapper.addAllT(array);
 
         mao.check(array, true, initialSize, initialSize * 2);
@@ -1177,7 +1587,8 @@ public class ObservableArrayTest {
         wrapper.assertElementsEqual(actual, initialSize, initialSize * 2, initialElements, 0);
     }
 
-    @Test public void testAddAllTSelfEmpty() {
+    @Test
+    public void testAddAllTSelfEmpty() {
         makeEmpty();
 
         wrapper.addAllT(array);
@@ -1188,7 +1599,8 @@ public class ObservableArrayTest {
         assertEquals(0, wrapper.arrayLength(actual));
     }
 
-    @Test public void testAddAllTManyPoints() {
+    @Test
+    public void testAddAllTManyPoints() {
         for (int i = 0; i < 65_000; i++) {
             wrapper.addAllT(wrapper.createNotEmptyArray(wrapper.createPrimitiveArray(3)));
         }
@@ -1213,49 +1625,60 @@ public class ObservableArrayTest {
         wrapper.assertElementsEqual(actual, oldSize, newSize, src, srcIndex);
     }
 
-    @Test public void testAddAllARange1() {
+    @Test
+    public void testAddAllARange1() {
         testAddAllARange(INITIAL_SIZE, 0, INITIAL_SIZE);
     }
 
-    @Test public void testAddAllARange2() {
+    @Test
+    public void testAddAllARange2() {
         testAddAllARange(INITIAL_SIZE + 10, 0, INITIAL_SIZE);
     }
 
-    @Test public void testAddAllARange3() {
+    @Test
+    public void testAddAllARange3() {
         testAddAllARange(INITIAL_SIZE + 10, 10, INITIAL_SIZE);
     }
 
-    @Test public void testAddAllARange4() {
+    @Test
+    public void testAddAllARange4() {
         testAddAllARange(INITIAL_SIZE + 10, 2, INITIAL_SIZE);
     }
 
-    @Test public void testAddAllARange5() {
+    @Test
+    public void testAddAllARange5() {
         testAddAllARange(INITIAL_SIZE, 0, INITIAL_SIZE / 2);
     }
 
-    @Test public void testAddAllARange6() {
+    @Test
+    public void testAddAllARange6() {
         testAddAllARange(INITIAL_SIZE + 10, 0, INITIAL_SIZE + 10);
     }
 
-    @Test public void testAddAllARange7() {
+    @Test
+    public void testAddAllARange7() {
         testAddAllARange(INITIAL_SIZE + 20, 10, INITIAL_SIZE + 10);
     }
 
-    @Test public void testAddAllARange8() {
+    @Test
+    public void testAddAllARange8() {
         testAddAllARange(INITIAL_SIZE + 10, 2, INITIAL_SIZE - 3);
     }
 
-    @Test public void testAddAllARangeOnEmpty1() {
+    @Test
+    public void testAddAllARangeOnEmpty1() {
         makeEmpty();
         testAddAllARange(INITIAL_SIZE, 1, 3);
     }
 
-    @Test public void testAddAllARangeOnEmpty2() {
+    @Test
+    public void testAddAllARangeOnEmpty2() {
         makeEmpty();
         testAddAllARange(INITIAL_SIZE * 3, INITIAL_SIZE, INITIAL_SIZE * 2);
     }
 
-    @Test public void testAddAllARangeOnEmpty3() {
+    @Test
+    public void testAddAllARangeOnEmpty3() {
         makeEmpty();
         wrapper.addAllA(wrapper.createPrimitiveArray(INITIAL_SIZE), 1, 0);
         assertUnchanged();
@@ -1325,49 +1748,60 @@ public class ObservableArrayTest {
         wrapper.assertElementsEqual(actual, oldSize, newSize, src, srcIndex);
     }
 
-    @Test public void testAddAllTRange1() {
+    @Test
+    public void testAddAllTRange1() {
         testAddAllTRange(INITIAL_SIZE, 0, INITIAL_SIZE);
     }
 
-    @Test public void testAddAllTRange2() {
+    @Test
+    public void testAddAllTRange2() {
         testAddAllTRange(INITIAL_SIZE + 10, 0, INITIAL_SIZE);
     }
 
-    @Test public void testAddAllTRange3() {
+    @Test
+    public void testAddAllTRange3() {
         testAddAllTRange(INITIAL_SIZE + 10, 10, INITIAL_SIZE);
     }
 
-    @Test public void testAddAllTRange4() {
+    @Test
+    public void testAddAllTRange4() {
         testAddAllTRange(INITIAL_SIZE + 10, 2, INITIAL_SIZE);
     }
 
-    @Test public void testAddAllTRange5() {
+    @Test
+    public void testAddAllTRange5() {
         testAddAllTRange(INITIAL_SIZE, 0, INITIAL_SIZE / 2);
     }
 
-    @Test public void testAddAllTRange6() {
+    @Test
+    public void testAddAllTRange6() {
         testAddAllTRange(INITIAL_SIZE + 10, 0, INITIAL_SIZE + 10);
     }
 
-    @Test public void testAddAllTRange7() {
+    @Test
+    public void testAddAllTRange7() {
         testAddAllTRange(INITIAL_SIZE + 20, 10, INITIAL_SIZE + 10);
     }
 
-    @Test public void testAddAllTRange8() {
+    @Test
+    public void testAddAllTRange8() {
         testAddAllTRange(INITIAL_SIZE + 10, 2, INITIAL_SIZE - 3);
     }
 
-    @Test public void testAddAllTRangeOnEmpty1() {
+    @Test
+    public void testAddAllTRangeOnEmpty1() {
         makeEmpty();
         testAddAllTRange(INITIAL_SIZE, 1, 3);
     }
 
-    @Test public void testAddAllTRangeOnEmpty2() {
+    @Test
+    public void testAddAllTRangeOnEmpty2() {
         makeEmpty();
         testAddAllTRange(INITIAL_SIZE * 3, INITIAL_SIZE, INITIAL_SIZE * 2);
     }
 
-    @Test public void testAddAllTRangeOnEmpty3() {
+    @Test
+    public void testAddAllTRangeOnEmpty3() {
         makeEmpty();
         wrapper.addAllT(wrapper.newInstance().createNotEmptyArray(wrapper.createPrimitiveArray(INITIAL_SIZE)), 1, 0);
         assertUnchanged();
@@ -1454,19 +1888,23 @@ public class ObservableArrayTest {
         wrapper.assertElementsEqual(actual, initialSize, expSize, initialElements, srcIndex);
     }
 
-    @Test public void testAddAllTRangeSelf() {
+    @Test
+    public void testAddAllTRangeSelf() {
         testAddAllTRangeSelf(0, INITIAL_SIZE);
     }
 
-    @Test public void testAddAllTRangeSelfBeginning() {
+    @Test
+    public void testAddAllTRangeSelfBeginning() {
         testAddAllTRangeSelf(0, INITIAL_SIZE / 2);
     }
 
-    @Test public void testAddAllTRangeSelfTrailing() {
+    @Test
+    public void testAddAllTRangeSelfTrailing() {
         testAddAllTRangeSelf(INITIAL_SIZE / 2, INITIAL_SIZE / 2);
     }
 
-    @Test public void testAddAllTRangeSelfMiddle() {
+    @Test
+    public void testAddAllTRangeSelfMiddle() {
         testAddAllTRangeSelf(2, 2);
     }
 
@@ -1542,23 +1980,28 @@ public class ObservableArrayTest {
         wrapper.assertElementsEqual(actual, destIndex + length, INITIAL_SIZE, initialElements, destIndex + length);
     }
 
-    @Test public void testSetARange1() {
+    @Test
+    public void testSetARange1() {
         testSetARange(5, 0, 0, 5);
     }
 
-    @Test public void testSetARange2() {
+    @Test
+    public void testSetARange2() {
         testSetARange(3, 2, 0, 3);
     }
 
-    @Test public void testSetARange3() {
+    @Test
+    public void testSetARange3() {
         testSetARange(5, 0, 2, 3);
     }
 
-    @Test public void testSetARange4() {
+    @Test
+    public void testSetARange4() {
         testSetARange(5, 0, 0, 3);
     }
 
-    @Test public void testSetARange5() {
+    @Test
+    public void testSetARange5() {
         testSetARange(10, 3, 5, 3);
     }
 
@@ -1662,23 +2105,28 @@ public class ObservableArrayTest {
         wrapper.assertElementsEqual(actual, destIndex + length, initialSize, initialElements, destIndex + length);
     }
 
-    @Test public void testSetTRange1() {
+    @Test
+    public void testSetTRange1() {
         testSetTRange(5, 0, 0, 5);
     }
 
-    @Test public void testSetTRange2() {
+    @Test
+    public void testSetTRange2() {
         testSetTRange(3, 2, 0, 3);
     }
 
-    @Test public void testSetTRange3() {
+    @Test
+    public void testSetTRange3() {
         testSetTRange(5, 0, 2, 3);
     }
 
-    @Test public void testSetTRange4() {
+    @Test
+    public void testSetTRange4() {
         testSetTRange(5, 0, 0, 3);
     }
 
-    @Test public void testSetTRange5() {
+    @Test
+    public void testSetTRange5() {
         testSetTRange(10, 3, 5, 3);
     }
 
@@ -1804,23 +2252,28 @@ public class ObservableArrayTest {
         wrapper.assertElementsEqual(actual, destIndex + length, initialSize, initialElements, destIndex + length);
     }
 
-    @Test public void testSetTRangeSelf() {
+    @Test
+    public void testSetTRangeSelf() {
         testSetTRangeSelf(0, 0, INITIAL_SIZE);
     }
 
-    @Test public void testSetTRangeSelfLeft() {
+    @Test
+    public void testSetTRangeSelfLeft() {
         testSetTRangeSelf(0, 1, INITIAL_SIZE - 1);
     }
 
-    @Test public void testSetTRangeSelfRight() {
+    @Test
+    public void testSetTRangeSelfRight() {
         testSetTRangeSelf(1, 0, INITIAL_SIZE - 1);
     }
 
-    @Test public void testSetTRangeSelfRightDifferentParts() {
+    @Test
+    public void testSetTRangeSelfRightDifferentParts() {
         testSetTRangeSelf(0, INITIAL_SIZE / 2, INITIAL_SIZE / 2);
     }
 
-    @Test public void testSetTRangeSelfLeftDifferentParts() {
+    @Test
+    public void testSetTRangeSelfLeftDifferentParts() {
         testSetTRangeSelf(INITIAL_SIZE / 2, 0, INITIAL_SIZE / 2);
     }
 
@@ -1941,7 +2394,8 @@ public class ObservableArrayTest {
 
     // ================== set(index) tests ===============
 
-    @Test public void testSetValue() {
+    @Test
+    public void testSetValue() {
         for (int i = 0; i < INITIAL_SIZE; i++) {
             Object expected = wrapper.getNextValue();
 
@@ -2007,24 +2461,29 @@ public class ObservableArrayTest {
         wrapper.assertElementsEqual(actual, 0, array.size(), wrapper.toArray(null), 0);
     }
 
-    @Test public void testToArraySameSize() {
+    @Test
+    public void testToArraySameSize() {
         testToArray(array.size(), true);
     }
 
-    @Test public void testToArraySmaller() {
+    @Test
+    public void testToArraySmaller() {
         testToArray(3, false);
     }
 
-    @Test public void testToArrayBigger() {
+    @Test
+    public void testToArrayBigger() {
         testToArray(10, true);
     }
 
-    @Test public void testToArrayEmpty() {
+    @Test
+    public void testToArrayEmpty() {
         makeEmpty();
         testToArray(10, true);
     }
 
-    @Test public void testToArrayEmptyToEmpty() {
+    @Test
+    public void testToArrayEmptyToEmpty() {
         makeEmpty();
         testToArray(0, true);
     }
@@ -2041,44 +2500,54 @@ public class ObservableArrayTest {
         wrapper.assertElementsEqual(actual, length, wrapper.arrayLength(actual), initial, length);
     }
 
-    @Test public void testToArrayRange0() {
+    @Test
+    public void testToArrayRange0() {
         testToArrayRange(0, array.size(), array.size());
     }
 
-    @Test public void testToArrayRange1() {
+    @Test
+    public void testToArrayRange1() {
         testToArrayRange(3, array.size(), array.size() - 3);
     }
 
-    @Test public void testToArrayRange2() {
+    @Test
+    public void testToArrayRange2() {
         testToArrayRange(0, array.size(), array.size() - 3);
     }
 
-    @Test public void testToArrayRange3() {
+    @Test
+    public void testToArrayRange3() {
         testToArrayRange(2, array.size(), 2);
     }
 
-    @Test public void testToArrayRange4() {
+    @Test
+    public void testToArrayRange4() {
         testToArrayRange(2, 0, 0);
     }
 
-    @Test public void testToArrayRange5() {
+    @Test
+    public void testToArrayRange5() {
         makeEmpty();
         testToArrayRange(0, 0, 0);
     }
 
-    @Test public void testToArrayRange6() {
+    @Test
+    public void testToArrayRange6() {
         testToArrayRange(3, 2, 2);
     }
 
-    @Test public void testToArrayRange7() {
+    @Test
+    public void testToArrayRange7() {
         testToArrayRange(5, 1, 1);
     }
 
-    @Test public void testToArrayRange8() {
+    @Test
+    public void testToArrayRange8() {
         testToArrayRange(0, array.size() * 2, array.size());
     }
 
-    @Test public void testToArrayRange9() {
+    @Test
+    public void testToArrayRange9() {
         testToArrayRange(0, array.size() - 1, array.size());
     }
 
@@ -2153,43 +2622,53 @@ public class ObservableArrayTest {
                 destIndex + length);
     }
 
-    @Test public void testCopyToA0() {
+    @Test
+    public void testCopyToA0() {
         testCopyToA(0, array.size(), 0, array.size());
     }
 
-    @Test public void testCopyToA1() {
+    @Test
+    public void testCopyToA1() {
         testCopyToA(1, array.size(), 2, 3);
     }
 
-    @Test public void testCopyToA2() {
+    @Test
+    public void testCopyToA2() {
         testCopyToA(2, array.size(), 2, 2);
     }
 
-    @Test public void testCopyToA3() {
+    @Test
+    public void testCopyToA3() {
         testCopyToA(0, array.size(), 2, 2);
     }
 
-    @Test public void testCopyToA4() {
+    @Test
+    public void testCopyToA4() {
         testCopyToA(0, 3, 1, 2);
     }
 
-    @Test public void testCopyToA5() {
+    @Test
+    public void testCopyToA5() {
         testCopyToA(0, array.size() * 3, array.size() * 2, array.size());
     }
 
-    @Test public void testCopyToA6() {
+    @Test
+    public void testCopyToA6() {
         testCopyToA(3, array.size(), 0, array.size() - 3);
     }
 
-    @Test public void testCopyToA7() {
+    @Test
+    public void testCopyToA7() {
         testCopyToA(0, 10, 7, 3);
     }
 
-    @Test public void testCopyToA8() {
+    @Test
+    public void testCopyToA8() {
         testCopyToA(1, 0, 0, 0);
     }
 
-    @Test public void testCopyToA9() {
+    @Test
+    public void testCopyToA9() {
         makeEmpty();
         testCopyToA(0, 0, 0, 0);
     }
@@ -2307,43 +2786,53 @@ public class ObservableArrayTest {
                 destIndex + length);
     }
 
-    @Test public void testCopyToT0() {
+    @Test
+    public void testCopyToT0() {
         testCopyToT(0, array.size(), 0, array.size());
     }
 
-    @Test public void testCopyToT1() {
+    @Test
+    public void testCopyToT1() {
         testCopyToT(1, array.size(), 2, 3);
     }
 
-    @Test public void testCopyToT2() {
+    @Test
+    public void testCopyToT2() {
         testCopyToT(2, array.size(), 2, 2);
     }
 
-    @Test public void testCopyToT3() {
+    @Test
+    public void testCopyToT3() {
         testCopyToT(0, array.size(), 2, 2);
     }
 
-    @Test public void testCopyToT4() {
+    @Test
+    public void testCopyToT4() {
         testCopyToT(0, 3, 1, 2);
     }
 
-    @Test public void testCopyToT5() {
+    @Test
+    public void testCopyToT5() {
         testCopyToT(0, array.size() * 3, array.size() * 2, array.size());
     }
 
-    @Test public void testCopyToT6() {
+    @Test
+    public void testCopyToT6() {
         testCopyToT(3, array.size(), 0, array.size() - 3);
     }
 
-    @Test public void testCopyToT7() {
+    @Test
+    public void testCopyToT7() {
         testCopyToT(0, 10, 7, 3);
     }
 
-    @Test public void testCopyToT8() {
+    @Test
+    public void testCopyToT8() {
         testCopyToT(1, 0, 0, 0);
     }
 
-    @Test public void testCopyToT9() {
+    @Test
+    public void testCopyToT9() {
         makeEmpty();
         testCopyToT(0, 0, 0, 0);
     }
@@ -2482,23 +2971,28 @@ public class ObservableArrayTest {
         wrapper.assertElementsEqual(actual, destIndex + length, initialSize, initialElements, destIndex + length);
     }
 
-    @Test public void testCopyToTSelf() {
+    @Test
+    public void testCopyToTSelf() {
         testCopyToTSelf(0, 0, INITIAL_SIZE);
     }
 
-    @Test public void testCopyToTSelfRight() {
+    @Test
+    public void testCopyToTSelfRight() {
         testCopyToTSelf(0, 1, INITIAL_SIZE - 1);
     }
 
-    @Test public void testCopyToTSelfLeft() {
+    @Test
+    public void testCopyToTSelfLeft() {
         testCopyToTSelf(1, 0, INITIAL_SIZE - 1);
     }
 
-    @Test public void testCopyToTSelfRightDifferentParts() {
+    @Test
+    public void testCopyToTSelfRightDifferentParts() {
         testCopyToTSelf(0, INITIAL_SIZE / 2, INITIAL_SIZE / 2);
     }
 
-    @Test public void testCopyToTSelfLeftDifferentParts() {
+    @Test
+    public void testCopyToTSelfLeftDifferentParts() {
         testCopyToTSelf(INITIAL_SIZE / 2, 0, INITIAL_SIZE / 2);
     }
 
@@ -2587,18 +3081,21 @@ public class ObservableArrayTest {
 
     // ============ ensureCapacity() and trimToSize() tests ====================
 
-    @Test public void testTrimToSize() {
+    @Test
+    public void testTrimToSize() {
         array.trimToSize();
         assertUnchanged();
     }
 
-    @Test public void testTrimToSizeEmpty() {
+    @Test
+    public void testTrimToSizeEmpty() {
         makeEmpty();
         array.trimToSize();
         assertUnchanged();
     }
 
-    @Test public void testTrimToSizeResize() {
+    @Test
+    public void testTrimToSizeResize() {
         array.resize(3);
         initialSize = 3;
         mao.reset();
@@ -2608,7 +3105,8 @@ public class ObservableArrayTest {
         assertUnchanged();
     }
 
-    @Test public void testTrimToSizeAddRemove() {
+    @Test
+    public void testTrimToSizeAddRemove() {
         array.resize(1000);
         array.resize(INITIAL_SIZE);
         mao.reset();
@@ -2618,50 +3116,59 @@ public class ObservableArrayTest {
         assertUnchanged();
     }
 
-    @Test public void testEnsureCapacity0() {
+    @Test
+    public void testEnsureCapacity0() {
         array.ensureCapacity(0);
         assertUnchanged();
     }
 
-    @Test public void testEnsureCapacityBy1() {
+    @Test
+    public void testEnsureCapacityBy1() {
         array.ensureCapacity(INITIAL_SIZE + 1);
         assertUnchanged();
     }
 
-    @Test public void testEnsureCapacity1000() {
+    @Test
+    public void testEnsureCapacity1000() {
         array.ensureCapacity(1000);
         assertUnchanged();
     }
 
-    @Test public void testEnsureCapacitySmaller() {
+    @Test
+    public void testEnsureCapacitySmaller() {
         array.ensureCapacity(INITIAL_SIZE / 2);
         assertUnchanged();
     }
 
-    @Test public void testEnsureCapacityNegative() {
+    @Test
+    public void testEnsureCapacityNegative() {
         array.ensureCapacity(-1000);
         assertUnchanged();
     }
 
-    @Test public void testEnsureCapacityOnEmpty() {
+    @Test
+    public void testEnsureCapacityOnEmpty() {
         makeEmpty();
         array.ensureCapacity(100);
         assertUnchanged();
     }
 
-    @Test public void testEnsureCapacityOnEmpty0() {
+    @Test
+    public void testEnsureCapacityOnEmpty0() {
         makeEmpty();
         array.ensureCapacity(0);
         assertUnchanged();
     }
 
-    @Test public void testEnsureCapacityOnEmptyNegative() {
+    @Test
+    public void testEnsureCapacityOnEmptyNegative() {
         makeEmpty();
         array.ensureCapacity(-1);
         assertUnchanged();
     }
 
-    @Test public void testTrimToSizeEnsureCapacity() {
+    @Test
+    public void testTrimToSizeEnsureCapacity() {
         array.ensureCapacity(1000);
         array.trimToSize();
         assertUnchanged();
@@ -2669,14 +3176,16 @@ public class ObservableArrayTest {
 
     // ================= clear() tests ====================
 
-    @Test public void testClearEmpty() {
+    @Test
+    public void testClearEmpty() {
         makeEmpty();
         array.clear();
         mao.check0();
         assertEquals(0, array.size());
     }
 
-    @Test public void testClear1000() {
+    @Test
+    public void testClear1000() {
         array.resize(1000);
         mao.reset();
 
@@ -2688,26 +3197,29 @@ public class ObservableArrayTest {
 
     // ================= toString() tests ===================
 
-    @Test public void testToString() {
+    @Test
+    public void testToString() {
         String actual = array.toString();
         String expected = wrapper.primitiveArrayToString(wrapper.toArray(null));
         assertEquals(expected, actual);
-        String regex = "\\[[0-9]+(\\.[0-9]+){0,1}(\\, [0-9]+(.[0-9]+){0,1}){" + (initialSize - 1) + "}\\]";
+        String regex = "\\[[0-9]+(\\.[0-9]+)?(, [0-9]+(.[0-9]+)?){" + (initialSize - 1) + "}]";
         assertTrue("toString() output matches to regex '" + regex + "'. Actual = '" + actual + "'",
                 actual.matches(regex));
     }
 
-    @Test public void testToStringAfterResize() {
+    @Test
+    public void testToStringAfterResize() {
         array.resize(initialSize / 2);
         String actual = array.toString();
         String expected = wrapper.primitiveArrayToString(wrapper.toArray(null));
         assertEquals(expected, actual);
-        String regex = "\\[[0-9]+(\\.[0-9]+){0,1}(\\, [0-9]+(.[0-9]+){0,1}){" + (array.size() - 1) + "}\\]";
+        String regex = "\\[[0-9]+(\\.[0-9]+)?(, [0-9]+(.[0-9]+)?){" + (array.size() - 1) + "}]";
         assertTrue("toString() output matches to regex '" + regex + "'. Actual = '" + actual + "'",
                 actual.matches(regex));
     }
 
-    @Test public void testToStringAfterClear() {
+    @Test
+    public void testToStringAfterClear() {
         array.clear();
         String actual = array.toString();
         assertEquals("[]", actual);
