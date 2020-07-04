@@ -12,10 +12,9 @@ import org.junit.Test;
 
 import java.util.Locale;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-@SuppressWarnings("WebTest")
+@SuppressWarnings({"WebTest", "ConstantConditions"})
 public class AbstractNumberExpressionTest {
 
     private static final float EPSILON = 1e-6f;
@@ -67,103 +66,102 @@ public class AbstractNumberExpressionTest {
 
         final NumberBinding binding4 = op1.divide(op2);
         assertEquals(data1 / data2, binding4.doubleValue(), EPSILON);
-
     }
 
     @Test
     public void testEquals() {
         BooleanBinding binding = op1.isEqualTo(op1, EPSILON);
-        assertEquals(true, binding.get());
+        assertTrue(binding.get());
 
         binding = op2.isEqualTo(op2);
-        assertEquals(true, binding.get());
+        assertTrue(binding.get());
 
         binding = op1.isEqualTo(op2, EPSILON);
-        assertEquals(false, binding.get());
+        assertFalse(binding.get());
 
         binding = op1.isEqualTo(data1, EPSILON);
-        assertEquals(true, binding.get());
+        assertTrue(binding.get());
 
         binding = op1.isEqualTo(data2, EPSILON);
-        assertEquals(false, binding.get());
+        assertFalse(binding.get());
 
         binding = op1.isEqualTo(double1, EPSILON);
-        assertEquals(false, binding.get());
+        assertFalse(binding.get());
 
         binding = op1.isEqualTo(float1, EPSILON);
-        assertEquals(false, binding.get());
+        assertFalse(binding.get());
 
         binding = op1.isEqualTo(long1, EPSILON);
-        assertEquals(false, binding.get());
+        assertFalse(binding.get());
 
         binding = op1.isEqualTo(long1);
-        assertEquals(false, binding.get());
+        assertFalse(binding.get());
 
         binding = op1.isEqualTo(integer1, EPSILON);
-        assertEquals(false, binding.get());
+        assertFalse(binding.get());
 
         binding = op1.isEqualTo(integer1);
-        assertEquals(false, binding.get());
+        assertFalse(binding.get());
 
         binding = op1.isEqualTo(short1, EPSILON);
-        assertEquals(false, binding.get());
+        assertFalse(binding.get());
 
         binding = op1.isEqualTo(short1);
-        assertEquals(false, binding.get());
+        assertFalse(binding.get());
 
         binding = op1.isEqualTo(byte1, EPSILON);
-        assertEquals(false, binding.get());
+        assertFalse(binding.get());
 
         binding = op1.isEqualTo(byte1);
-        assertEquals(false, binding.get());
+        assertFalse(binding.get());
     }
 
     @Test
     public void testNotEquals() {
         BooleanBinding binding = op1.isNotEqualTo(op1, EPSILON);
-        assertEquals(false, binding.get());
+        assertFalse(binding.get());
 
         binding = op2.isNotEqualTo(op2);
-        assertEquals(false, binding.get());
+        assertFalse(binding.get());
 
         binding = op1.isNotEqualTo(op2, EPSILON);
-        assertEquals(true, binding.get());
+        assertTrue(binding.get());
 
         binding = op1.isNotEqualTo(data1, EPSILON);
-        assertEquals(false, binding.get());
+        assertFalse(binding.get());
 
         binding = op1.isNotEqualTo(data2, EPSILON);
-        assertEquals(true, binding.get());
+        assertTrue(binding.get());
 
         binding = op1.isNotEqualTo(double1, EPSILON);
-        assertEquals(true, binding.get());
+        assertTrue(binding.get());
 
         binding = op1.isNotEqualTo(float1, EPSILON);
-        assertEquals(true, binding.get());
+        assertTrue(binding.get());
 
         binding = op1.isNotEqualTo(long1, EPSILON);
-        assertEquals(true, binding.get());
+        assertTrue(binding.get());
 
         binding = op1.isNotEqualTo(long1);
-        assertEquals(true, binding.get());
+        assertTrue(binding.get());
 
         binding = op1.isNotEqualTo(integer1, EPSILON);
-        assertEquals(true, binding.get());
+        assertTrue(binding.get());
 
         binding = op1.isNotEqualTo(integer1);
-        assertEquals(true, binding.get());
+        assertTrue(binding.get());
 
         binding = op1.isNotEqualTo(short1, EPSILON);
-        assertEquals(true, binding.get());
+        assertTrue(binding.get());
 
         binding = op1.isNotEqualTo(short1);
-        assertEquals(true, binding.get());
+        assertTrue(binding.get());
 
         binding = op1.isNotEqualTo(byte1, EPSILON);
-        assertEquals(true, binding.get());
+        assertTrue(binding.get());
 
         binding = op1.isNotEqualTo(byte1);
-        assertEquals(true, binding.get());
+        assertTrue(binding.get());
     }
 
     @Test
@@ -346,6 +344,7 @@ public class AbstractNumberExpressionTest {
         assertEquals(data1 <= byte1, binding.get());
     }
 
+    @Test
     public void testFactory() {
         assertEquals(op1, NumberExpressionBase.numberExpression(op1));
 
@@ -395,44 +394,54 @@ public class AbstractNumberExpressionTest {
     public void testFactory_UnknownClass() {
         NumberExpressionBase.numberExpression(new ObservableNumberValue() {
 
-            @Override public void addListener(InvalidationListener observer) {
-            }
-
-            @Override public void removeListener(InvalidationListener observer) {
-            }
-
-            @Override public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-                return false;
-            }
-
-            @Override public void addListener(ChangeListener observer) {
-            }
-
-            @Override public void removeListener(ChangeListener observer) {
+            @Override
+            public void addListener(InvalidationListener observer) {
             }
 
             @Override
-            public boolean isChangeListenerAlreadyAdded(ChangeListener listener) {
+            public void removeListener(InvalidationListener observer) {
+            }
+
+            @Override
+            public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
                 return false;
             }
 
-            @Override public Number getValue() {
+            @Override
+            public void addListener(ChangeListener<? super Number> observer) {
+            }
+
+            @Override
+            public void removeListener(ChangeListener<? super Number> observer) {
+            }
+
+            @Override
+            public boolean isChangeListenerAlreadyAdded(ChangeListener<? super Number> listener) {
+                return false;
+            }
+
+            @Override
+            public Number getValue() {
                 return null;
             }
 
-            @Override public int intValue() {
+            @Override
+            public int intValue() {
                 return 0;
             }
 
-            @Override public long longValue() {
+            @Override
+            public long longValue() {
                 return 0L;
             }
 
-            @Override public float floatValue() {
+            @Override
+            public float floatValue() {
                 return 0.0f;
             }
 
-            @Override public double doubleValue() {
+            @Override
+            public double doubleValue() {
                 return 0.0;
             }
         });

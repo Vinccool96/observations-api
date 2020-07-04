@@ -3,7 +3,7 @@ package io.github.vinccool96.observations.beans.property;
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.beans.value.ChangeListener;
 import io.github.vinccool96.observations.beans.value.ObservableValue;
-import io.github.vinccool96.observations.sun.binding.ErrorLoggingUtiltity;
+import io.github.vinccool96.observations.sun.binding.ErrorLoggingUtility;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -27,7 +27,7 @@ public class DoublePropertyTest {
 
     private static final double EPSILON = 1e-12;
 
-    private static final ErrorLoggingUtiltity log = new ErrorLoggingUtiltity();
+    private static final ErrorLoggingUtility log = new ErrorLoggingUtility();
 
     @BeforeClass
     public static void setUpClass() {

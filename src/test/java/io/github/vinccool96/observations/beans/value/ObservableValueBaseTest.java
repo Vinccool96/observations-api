@@ -22,9 +22,9 @@ public class ObservableValueBaseTest {
 
     @Before
     public void setUp() {
-        valueModel = new ObservableObjectValueStub<Object>();
+        valueModel = new ObservableObjectValueStub<>();
         invalidationListener = new InvalidationListenerMock();
-        changeListener = new ChangeListenerMock<Object>(UNDEFINED_VALUE);
+        changeListener = new ChangeListenerMock<>(UNDEFINED_VALUE);
     }
 
     @Test
@@ -176,7 +176,8 @@ public class ObservableValueBaseTest {
 
     private class AddingListenerMock extends InvalidationListenerMock {
 
-        @Override public void invalidated(Observable valueModel) {
+        @Override
+        public void invalidated(Observable valueModel) {
             super.invalidated(valueModel);
             valueModel.addListener(invalidationListener);
         }
@@ -185,7 +186,8 @@ public class ObservableValueBaseTest {
 
     private class RemovingListenerMock extends InvalidationListenerMock {
 
-        @Override public void invalidated(Observable valueModel) {
+        @Override
+        public void invalidated(Observable valueModel) {
             super.invalidated(valueModel);
             valueModel.removeListener(invalidationListener);
         }

@@ -305,6 +305,72 @@ public class ObservableCollections {
     }
 
     /**
+     * Creates a new empty observable double array.
+     *
+     * @return a newly created ObservableDoubleArray
+     */
+    public static ObservableDoubleArray observableDoubleArray() {
+        return new ObservableDoubleArrayImpl();
+    }
+
+    /**
+     * Creates a new observable double array with {@code values} set to it.
+     *
+     * @param values
+     *         the values that will be in the new observable double array
+     *
+     * @return a newly created ObservableDoubleArray
+     */
+    public static ObservableDoubleArray observableDoubleArray(double... values) {
+        return new ObservableDoubleArrayImpl(values);
+    }
+
+    /**
+     * Creates a new observable double array with copy of elements in given {@code array}.
+     *
+     * @param array
+     *         observable double array to copy
+     *
+     * @return a newly created ObservableDoubleArray
+     */
+    public static ObservableDoubleArray observableDoubleArray(ObservableDoubleArray array) {
+        return new ObservableDoubleArrayImpl(array);
+    }
+
+    /**
+     * Creates a new empty observable long array.
+     *
+     * @return a newly created ObservableLongArray
+     */
+    public static ObservableLongArray observableLongArray() {
+        return new ObservableLongArrayImpl();
+    }
+
+    /**
+     * Creates a new observable long array with {@code values} set to it.
+     *
+     * @param values
+     *         the values that will be in the new observable long array
+     *
+     * @return a newly created ObservableLongArray
+     */
+    public static ObservableLongArray observableLongArray(long... values) {
+        return new ObservableLongArrayImpl(values);
+    }
+
+    /**
+     * Creates a new observable long array with copy of elements in given {@code array}.
+     *
+     * @param array
+     *         observable long array to copy
+     *
+     * @return a newly created ObservableLongArray
+     */
+    public static ObservableLongArray observableLongArray(ObservableLongArray array) {
+        return new ObservableLongArrayImpl(array);
+    }
+
+    /**
      * Creates a new empty observable list that is backed by an arraylist.
      *
      * @param <E>

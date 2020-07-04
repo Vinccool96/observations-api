@@ -7,7 +7,7 @@ import io.github.vinccool96.observations.beans.property.StringProperty;
 import io.github.vinccool96.observations.beans.value.ObservableValue;
 import io.github.vinccool96.observations.collections.ObservableCollections;
 import io.github.vinccool96.observations.collections.ObservableMap;
-import io.github.vinccool96.observations.sun.binding.ErrorLoggingUtiltity;
+import io.github.vinccool96.observations.sun.binding.ErrorLoggingUtility;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -31,7 +31,7 @@ public class BindingsMapTest {
 
     private static final Object data2 = new Object();
 
-    private static final ErrorLoggingUtiltity log = new ErrorLoggingUtiltity();
+    private static final ErrorLoggingUtility log = new ErrorLoggingUtility();
 
     private MapProperty<String, Object> property;
 

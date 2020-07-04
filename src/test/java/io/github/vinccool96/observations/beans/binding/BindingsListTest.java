@@ -6,7 +6,7 @@ import io.github.vinccool96.observations.beans.property.SimpleIntegerProperty;
 import io.github.vinccool96.observations.beans.property.SimpleListProperty;
 import io.github.vinccool96.observations.collections.ObservableCollections;
 import io.github.vinccool96.observations.collections.ObservableList;
-import io.github.vinccool96.observations.sun.binding.ErrorLoggingUtiltity;
+import io.github.vinccool96.observations.sun.binding.ErrorLoggingUtility;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -27,7 +27,7 @@ public class BindingsListTest {
 
     private static final Object data2 = new Object();
 
-    private static final ErrorLoggingUtiltity log = new ErrorLoggingUtiltity();
+    private static final ErrorLoggingUtility log = new ErrorLoggingUtility();
 
     private ListProperty<Object> property;
 

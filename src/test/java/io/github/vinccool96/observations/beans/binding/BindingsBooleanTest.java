@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings({"PointlessBooleanExpression", "ConstantConditions", "unused", "UnusedAssignment"})
 public class BindingsBooleanTest {
 
     private BooleanProperty op1;
@@ -26,7 +27,6 @@ public class BindingsBooleanTest {
         observer = new InvalidationListenerMock();
     }
 
-    @SuppressWarnings("unused")
     @Test
     public void testAnd() {
         final BooleanBinding binding = Bindings.and(op1, op2);
@@ -72,7 +72,6 @@ public class BindingsBooleanTest {
         observer.check(null, 0);
     }
 
-    @SuppressWarnings("unused")
     @Test
     public void testAnd_Self() {
         final BooleanBinding binding = Bindings.and(op1, op1);
@@ -121,7 +120,6 @@ public class BindingsBooleanTest {
         Bindings.and(op1, null);
     }
 
-    @SuppressWarnings("unused")
     @Test
     public void testOr() {
         final BooleanBinding binding = Bindings.or(op1, op2);
@@ -167,7 +165,6 @@ public class BindingsBooleanTest {
         observer.check(null, 0);
     }
 
-    @SuppressWarnings("unused")
     @Test
     public void testOr_Self() {
         final BooleanBinding binding = Bindings.or(op1, op1);
