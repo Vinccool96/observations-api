@@ -45,4 +45,12 @@ public interface ObservableNumberValue extends ObservableValue<Number> {
      */
     double doubleValue();
 
+    /**
+     * Returns the value of this {@code ObservableNumberValue} as a {@code short}. If the value is not a {@code short},
+     * a standard cast is performed.
+     *
+     * @return The value of this {@code ObservableNumberValue} as a {@code short}
+     */
+    short shortValue();
+
 }

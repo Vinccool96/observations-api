@@ -135,7 +135,7 @@ public final class Bindings {
                 return ((dependencies == null) || (dependencies.length == 0)) ?
                         ObservableCollections.emptyObservableList() :
                         (dependencies.length == 1) ? ObservableCollections.singletonObservableList(dependencies[0]) :
-                                new ImmutableObservableList<Observable>(dependencies);
+                                new ImmutableObservableList<>(dependencies);
             }
         };
     }
@@ -178,7 +178,7 @@ public final class Bindings {
                 return ((dependencies == null) || (dependencies.length == 0)) ?
                         ObservableCollections.emptyObservableList() :
                         (dependencies.length == 1) ? ObservableCollections.singletonObservableList(dependencies[0]) :
-                                new ImmutableObservableList<Observable>(dependencies);
+                                new ImmutableObservableList<>(dependencies);
             }
         };
     }
@@ -264,7 +264,7 @@ public final class Bindings {
                 return ((dependencies == null) || (dependencies.length == 0)) ?
                         ObservableCollections.emptyObservableList() :
                         (dependencies.length == 1) ? ObservableCollections.singletonObservableList(dependencies[0]) :
-                                new ImmutableObservableList<Observable>(dependencies);
+                                new ImmutableObservableList<>(dependencies);
             }
         };
     }
@@ -309,7 +309,7 @@ public final class Bindings {
                 return ((dependencies == null) || (dependencies.length == 0)) ?
                         ObservableCollections.emptyObservableList() :
                         (dependencies.length == 1) ? ObservableCollections.singletonObservableList(dependencies[0]) :
-                                new ImmutableObservableList<Observable>(dependencies);
+                                new ImmutableObservableList<>(dependencies);
             }
         };
     }
@@ -352,7 +352,7 @@ public final class Bindings {
                 return ((dependencies == null) || (dependencies.length == 0)) ?
                         ObservableCollections.emptyObservableList() :
                         (dependencies.length == 1) ? ObservableCollections.singletonObservableList(dependencies[0]) :
-                                new ImmutableObservableList<Observable>(dependencies);
+                                new ImmutableObservableList<>(dependencies);
             }
         };
     }

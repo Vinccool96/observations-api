@@ -20,7 +20,7 @@ public class BindingsEqualsTest<T> {
 
     private static final double EPSILON_DOUBLE = 1e-10;
 
-    public static interface Functions<T> {
+    public interface Functions<T> {
 
         BooleanBinding generateExpressionExpression(Object op1, Object op2);
 
@@ -36,9 +36,9 @@ public class BindingsEqualsTest<T> {
 
     }
 
-    private final ObservableValue op1;
+    private final ObservableValue<T> op1;
 
-    private final ObservableValue op2;
+    private final ObservableValue<T> op2;
 
     private final Functions<T> func;
 
@@ -46,7 +46,8 @@ public class BindingsEqualsTest<T> {
 
     private InvalidationListenerMock observer;
 
-    public BindingsEqualsTest(ObservableValue op1, ObservableValue op2, Functions<T> func, T... v) {
+    @SafeVarargs
+    public BindingsEqualsTest(ObservableValue<T> op1, ObservableValue<T> op2, Functions<T> func, T... v) {
         this.op1 = op1;
         this.op2 = op2;
         this.func = func;
@@ -191,8 +192,8 @@ public class BindingsEqualsTest<T> {
         final String[] stringData = new String[]{null, "Hello", "Hello World"};
         final String[] ciStringData = new String[]{null, "hello", "HELLO"};
 
-        final ObjectProperty<Object> object1 = new SimpleObjectProperty<Object>();
-        final ObjectProperty<Object> object2 = new SimpleObjectProperty<Object>();
+        final ObjectProperty<Object> object1 = new SimpleObjectProperty<>();
+        final ObjectProperty<Object> object2 = new SimpleObjectProperty<>();
         final Object[] objectData = new Object[]{new Object(), new Object(), new Object()};
 
         return Arrays.asList(new Object[][]{
@@ -208,12 +209,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Float op2) {
-                                return Bindings.equal((ObservableFloatValue) op1, op2.floatValue(), EPSILON_FLOAT);
+                                return Bindings.equal((ObservableFloatValue) op1, op2, EPSILON_FLOAT);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Float op1, Object op2) {
-                                return Bindings.equal(op1.floatValue(), (ObservableFloatValue) op2, EPSILON_FLOAT);
+                                return Bindings.equal(op1, (ObservableFloatValue) op2, EPSILON_FLOAT);
                             }
 
                             @Override
@@ -245,12 +246,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Float op2) {
-                                return Bindings.notEqual((ObservableFloatValue) op1, op2.floatValue(), EPSILON_FLOAT);
+                                return Bindings.notEqual((ObservableFloatValue) op1, op2, EPSILON_FLOAT);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Float op1, Object op2) {
-                                return Bindings.notEqual(op1.floatValue(), (ObservableFloatValue) op2, EPSILON_FLOAT);
+                                return Bindings.notEqual(op1, (ObservableFloatValue) op2, EPSILON_FLOAT);
                             }
 
                             @Override
@@ -281,12 +282,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Float op2) {
-                                return Bindings.greaterThan((ObservableFloatValue) op1, op2.floatValue());
+                                return Bindings.greaterThan((ObservableFloatValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Float op1, Object op2) {
-                                return Bindings.greaterThan(op1.floatValue(), (ObservableFloatValue) op2);
+                                return Bindings.greaterThan(op1, (ObservableFloatValue) op2);
                             }
 
                             @Override
@@ -317,12 +318,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Float op2) {
-                                return Bindings.lessThan((ObservableFloatValue) op1, op2.floatValue());
+                                return Bindings.lessThan((ObservableFloatValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Float op1, Object op2) {
-                                return Bindings.lessThan(op1.floatValue(), (ObservableFloatValue) op2);
+                                return Bindings.lessThan(op1, (ObservableFloatValue) op2);
                             }
 
                             @Override
@@ -354,12 +355,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Float op2) {
-                                return Bindings.greaterThanOrEqual((ObservableFloatValue) op1, op2.floatValue());
+                                return Bindings.greaterThanOrEqual((ObservableFloatValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Float op1, Object op2) {
-                                return Bindings.greaterThanOrEqual(op1.floatValue(), (ObservableFloatValue) op2);
+                                return Bindings.greaterThanOrEqual(op1, (ObservableFloatValue) op2);
                             }
 
                             @Override
@@ -390,12 +391,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Float op2) {
-                                return Bindings.lessThanOrEqual((ObservableFloatValue) op1, op2.floatValue());
+                                return Bindings.lessThanOrEqual((ObservableFloatValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Float op1, Object op2) {
-                                return Bindings.lessThanOrEqual(op1.floatValue(), (ObservableFloatValue) op2);
+                                return Bindings.lessThanOrEqual(op1, (ObservableFloatValue) op2);
                             }
 
                             @Override
@@ -429,12 +430,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Double op2) {
-                                return Bindings.equal((ObservableDoubleValue) op1, op2.doubleValue(), EPSILON_DOUBLE);
+                                return Bindings.equal((ObservableDoubleValue) op1, op2, EPSILON_DOUBLE);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Double op1, Object op2) {
-                                return Bindings.equal(op1.doubleValue(), (ObservableDoubleValue) op2, EPSILON_DOUBLE);
+                                return Bindings.equal(op1, (ObservableDoubleValue) op2, EPSILON_DOUBLE);
                             }
 
                             @Override
@@ -467,13 +468,13 @@ public class BindingsEqualsTest<T> {
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Double op2) {
                                 return Bindings
-                                        .notEqual((ObservableDoubleValue) op1, op2.doubleValue(), EPSILON_DOUBLE);
+                                        .notEqual((ObservableDoubleValue) op1, op2, EPSILON_DOUBLE);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Double op1, Object op2) {
                                 return Bindings
-                                        .notEqual(op1.doubleValue(), (ObservableDoubleValue) op2, EPSILON_DOUBLE);
+                                        .notEqual(op1, (ObservableDoubleValue) op2, EPSILON_DOUBLE);
                             }
 
                             @Override
@@ -504,12 +505,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Double op2) {
-                                return Bindings.greaterThan((ObservableDoubleValue) op1, op2.doubleValue());
+                                return Bindings.greaterThan((ObservableDoubleValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Double op1, Object op2) {
-                                return Bindings.greaterThan(op1.doubleValue(), (ObservableDoubleValue) op2);
+                                return Bindings.greaterThan(op1, (ObservableDoubleValue) op2);
                             }
 
                             @Override
@@ -540,12 +541,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Double op2) {
-                                return Bindings.lessThan((ObservableDoubleValue) op1, op2.doubleValue());
+                                return Bindings.lessThan((ObservableDoubleValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Double op1, Object op2) {
-                                return Bindings.lessThan(op1.doubleValue(), (ObservableDoubleValue) op2);
+                                return Bindings.lessThan(op1, (ObservableDoubleValue) op2);
                             }
 
                             @Override
@@ -577,12 +578,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Double op2) {
-                                return Bindings.greaterThanOrEqual((ObservableDoubleValue) op1, op2.doubleValue());
+                                return Bindings.greaterThanOrEqual((ObservableDoubleValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Double op1, Object op2) {
-                                return Bindings.greaterThanOrEqual(op1.doubleValue(), (ObservableDoubleValue) op2);
+                                return Bindings.greaterThanOrEqual(op1, (ObservableDoubleValue) op2);
                             }
 
                             @Override
@@ -614,12 +615,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Double op2) {
-                                return Bindings.lessThanOrEqual((ObservableDoubleValue) op1, op2.doubleValue());
+                                return Bindings.lessThanOrEqual((ObservableDoubleValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Double op1, Object op2) {
-                                return Bindings.lessThanOrEqual(op1.doubleValue(), (ObservableDoubleValue) op2);
+                                return Bindings.lessThanOrEqual(op1, (ObservableDoubleValue) op2);
                             }
 
                             @Override
@@ -652,12 +653,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Integer op2) {
-                                return Bindings.equal((ObservableIntegerValue) op1, op2.intValue());
+                                return Bindings.equal((ObservableIntegerValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Integer op1, Object op2) {
-                                return Bindings.equal(op1.intValue(), (ObservableIntegerValue) op2);
+                                return Bindings.equal(op1, (ObservableIntegerValue) op2);
                             }
 
                             @Override
@@ -688,12 +689,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Integer op2) {
-                                return Bindings.equal((ObservableIntegerValue) op1, op2.intValue(), 1);
+                                return Bindings.equal((ObservableIntegerValue) op1, op2, 1);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Integer op1, Object op2) {
-                                return Bindings.equal(op1.intValue(), (ObservableIntegerValue) op2, 1);
+                                return Bindings.equal(op1, (ObservableIntegerValue) op2, 1);
                             }
 
                             @Override
@@ -724,12 +725,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Integer op2) {
-                                return Bindings.notEqual((ObservableIntegerValue) op1, op2.intValue());
+                                return Bindings.notEqual((ObservableIntegerValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Integer op1, Object op2) {
-                                return Bindings.notEqual(op1.intValue(), (ObservableIntegerValue) op2);
+                                return Bindings.notEqual(op1, (ObservableIntegerValue) op2);
                             }
 
                             @Override
@@ -760,12 +761,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Integer op2) {
-                                return Bindings.notEqual((ObservableIntegerValue) op1, op2.intValue(), 1);
+                                return Bindings.notEqual((ObservableIntegerValue) op1, op2, 1);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Integer op1, Object op2) {
-                                return Bindings.notEqual(op1.intValue(), (ObservableIntegerValue) op2, 1);
+                                return Bindings.notEqual(op1, (ObservableIntegerValue) op2, 1);
                             }
 
                             @Override
@@ -796,12 +797,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Integer op2) {
-                                return Bindings.greaterThan((ObservableIntegerValue) op1, op2.intValue());
+                                return Bindings.greaterThan((ObservableIntegerValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Integer op1, Object op2) {
-                                return Bindings.greaterThan(op1.intValue(), (ObservableIntegerValue) op2);
+                                return Bindings.greaterThan(op1, (ObservableIntegerValue) op2);
                             }
 
                             @Override
@@ -832,12 +833,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Integer op2) {
-                                return Bindings.lessThan((ObservableIntegerValue) op1, op2.intValue());
+                                return Bindings.lessThan((ObservableIntegerValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Integer op1, Object op2) {
-                                return Bindings.lessThan(op1.intValue(), (ObservableIntegerValue) op2);
+                                return Bindings.lessThan(op1, (ObservableIntegerValue) op2);
                             }
 
                             @Override
@@ -869,12 +870,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Integer op2) {
-                                return Bindings.greaterThanOrEqual((ObservableIntegerValue) op1, op2.intValue());
+                                return Bindings.greaterThanOrEqual((ObservableIntegerValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Integer op1, Object op2) {
-                                return Bindings.greaterThanOrEqual(op1.intValue(), (ObservableIntegerValue) op2);
+                                return Bindings.greaterThanOrEqual(op1, (ObservableIntegerValue) op2);
                             }
 
                             @Override
@@ -906,12 +907,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Integer op2) {
-                                return Bindings.lessThanOrEqual((ObservableIntegerValue) op1, op2.intValue());
+                                return Bindings.lessThanOrEqual((ObservableIntegerValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Integer op1, Object op2) {
-                                return Bindings.lessThanOrEqual(op1.intValue(), (ObservableIntegerValue) op2);
+                                return Bindings.lessThanOrEqual(op1, (ObservableIntegerValue) op2);
                             }
 
                             @Override
@@ -944,12 +945,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Long op2) {
-                                return Bindings.equal((ObservableLongValue) op1, op2.longValue());
+                                return Bindings.equal((ObservableLongValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Long op1, Object op2) {
-                                return Bindings.equal(op1.longValue(), (ObservableLongValue) op2);
+                                return Bindings.equal(op1, (ObservableLongValue) op2);
                             }
 
                             @Override
@@ -980,12 +981,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Long op2) {
-                                return Bindings.equal((ObservableLongValue) op1, op2.longValue(), 1);
+                                return Bindings.equal((ObservableLongValue) op1, op2, 1);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Long op1, Object op2) {
-                                return Bindings.equal(op1.longValue(), (ObservableLongValue) op2, 1);
+                                return Bindings.equal(op1, (ObservableLongValue) op2, 1);
                             }
 
                             @Override
@@ -1016,12 +1017,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Long op2) {
-                                return Bindings.notEqual((ObservableLongValue) op1, op2.longValue());
+                                return Bindings.notEqual((ObservableLongValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Long op1, Object op2) {
-                                return Bindings.notEqual(op1.longValue(), (ObservableLongValue) op2);
+                                return Bindings.notEqual(op1, (ObservableLongValue) op2);
                             }
 
                             @Override
@@ -1052,12 +1053,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Long op2) {
-                                return Bindings.notEqual((ObservableLongValue) op1, op2.longValue(), 1);
+                                return Bindings.notEqual((ObservableLongValue) op1, op2, 1);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Long op1, Object op2) {
-                                return Bindings.notEqual(op1.longValue(), (ObservableLongValue) op2, 1);
+                                return Bindings.notEqual(op1, (ObservableLongValue) op2, 1);
                             }
 
                             @Override
@@ -1088,12 +1089,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Long op2) {
-                                return Bindings.greaterThan((ObservableLongValue) op1, op2.longValue());
+                                return Bindings.greaterThan((ObservableLongValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Long op1, Object op2) {
-                                return Bindings.greaterThan(op1.longValue(), (ObservableLongValue) op2);
+                                return Bindings.greaterThan(op1, (ObservableLongValue) op2);
                             }
 
                             @Override
@@ -1124,12 +1125,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Long op2) {
-                                return Bindings.lessThan((ObservableLongValue) op1, op2.longValue());
+                                return Bindings.lessThan((ObservableLongValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Long op1, Object op2) {
-                                return Bindings.lessThan(op1.longValue(), (ObservableLongValue) op2);
+                                return Bindings.lessThan(op1, (ObservableLongValue) op2);
                             }
 
                             @Override
@@ -1161,12 +1162,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Long op2) {
-                                return Bindings.greaterThanOrEqual((ObservableLongValue) op1, op2.longValue());
+                                return Bindings.greaterThanOrEqual((ObservableLongValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Long op1, Object op2) {
-                                return Bindings.greaterThanOrEqual(op1.longValue(), (ObservableLongValue) op2);
+                                return Bindings.greaterThanOrEqual(op1, (ObservableLongValue) op2);
                             }
 
                             @Override
@@ -1197,12 +1198,12 @@ public class BindingsEqualsTest<T> {
 
                             @Override
                             public BooleanBinding generateExpressionPrimitive(Object op1, Long op2) {
-                                return Bindings.lessThanOrEqual((ObservableLongValue) op1, op2.longValue());
+                                return Bindings.lessThanOrEqual((ObservableLongValue) op1, op2);
                             }
 
                             @Override
                             public BooleanBinding generatePrimitiveExpression(Long op1, Object op2) {
-                                return Bindings.lessThanOrEqual(op1.longValue(), (ObservableLongValue) op2);
+                                return Bindings.lessThanOrEqual(op1, (ObservableLongValue) op2);
                             }
 
                             @Override
@@ -1746,7 +1747,5 @@ public class BindingsEqualsTest<T> {
                 },
         });
     }
-
-    ;
 
 }

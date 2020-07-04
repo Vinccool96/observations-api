@@ -444,6 +444,12 @@ public class AbstractNumberExpressionTest {
             public double doubleValue() {
                 return 0.0;
             }
+
+            @Override
+            public short shortValue() {
+                return (short) 0;
+            }
+
         });
     }
 

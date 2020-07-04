@@ -36,6 +36,11 @@ public abstract class IntegerExpression extends NumberExpressionBase implements 
     }
 
     @Override
+    public short shortValue() {
+        return (short) get();
+    }
+
+    @Override
     public Integer getValue() {
         return get();
     }

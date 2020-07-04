@@ -81,4 +81,9 @@ public final class LongConstant implements ObservableLongValue {
         return value;
     }
 
+    @Override
+    public short shortValue() {
+        return (short) get();
+    }
+
 }

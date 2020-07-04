@@ -46,4 +46,9 @@ public class ObservableLongValueStub extends ObservableValueBase<Number> impleme
         return value;
     }
 
+    @Override
+    public short shortValue() {
+        return (short) get();
+    }
+
 }

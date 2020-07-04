@@ -81,4 +81,9 @@ public final class IntegerConstant implements ObservableIntegerValue {
         return value;
     }
 
+    @Override
+    public short shortValue() {
+        return (short) get();
+    }
+
 }

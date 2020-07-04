@@ -81,4 +81,9 @@ public final class DoubleConstant implements ObservableDoubleValue {
         return value;
     }
 
+    @Override
+    public short shortValue() {
+        return (short) get();
+    }
+
 }

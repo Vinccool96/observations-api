@@ -36,6 +36,11 @@ public abstract class FloatExpression extends NumberExpressionBase implements Ob
     }
 
     @Override
+    public short shortValue() {
+        return (short) get();
+    }
+
+    @Override
     public Float getValue() {
         return get();
     }

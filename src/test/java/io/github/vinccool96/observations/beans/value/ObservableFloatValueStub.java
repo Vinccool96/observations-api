@@ -46,4 +46,9 @@ public class ObservableFloatValueStub extends ObservableValueBase<Number> implem
         return value;
     }
 
+    @Override
+    public short shortValue() {
+        return (short) get();
+    }
+
 }
