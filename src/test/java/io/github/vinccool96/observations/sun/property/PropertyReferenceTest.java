@@ -1,12 +1,12 @@
-package io.github.vinccool96.observations.beans.property;
+package io.github.vinccool96.observations.sun.property;
 
 import io.github.vinccool96.observations.beans.Person;
-import io.github.vinccool96.observations.sun.property.PropertyReference;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings("AssertEqualsBetweenInconvertibleTypes")
 public class PropertyReferenceTest {
 
     private Person person;
@@ -18,7 +18,7 @@ public class PropertyReferenceTest {
 
     @Test
     public void testInteger() {
-        final PropertyReference<Integer> property = new PropertyReference<Integer>(Person.class, "age");
+        final PropertyReference<Integer> property = new PropertyReference<>(Person.class, "age");
         assertTrue(property.isReadable());
         assertTrue(property.isWritable());
         assertTrue((int.class.equals(property.getType())) || (Integer.class.equals(property.getType())));
@@ -34,7 +34,7 @@ public class PropertyReferenceTest {
 
     @Test
     public void testNoRead() {
-        final PropertyReference<Integer> property = new PropertyReference<Integer>(Person.class, "noRead");
+        final PropertyReference<Integer> property = new PropertyReference<>(Person.class, "noRead");
         assertFalse(property.isReadable());
         assertTrue(property.isWritable());
         assertTrue((int.class.equals(property.getType())) || (Integer.class.equals(property.getType())));
@@ -56,7 +56,7 @@ public class PropertyReferenceTest {
 
     @Test
     public void testNoWrite() {
-        final PropertyReference<Integer> property = new PropertyReference<Integer>(Person.class, "noWrite");
+        final PropertyReference<Integer> property = new PropertyReference<>(Person.class, "noWrite");
         assertTrue(property.isReadable());
         assertFalse(property.isWritable());
         assertTrue((int.class.equals(property.getType())) || (Integer.class.equals(property.getType())));
@@ -77,7 +77,7 @@ public class PropertyReferenceTest {
 
     @Test
     public void testNoReadWrite() {
-        final PropertyReference<Integer> property = new PropertyReference<Integer>(Person.class, "noReadWrite");
+        final PropertyReference<Integer> property = new PropertyReference<>(Person.class, "noReadWrite");
         assertFalse(property.isReadable());
         assertFalse(property.isWritable());
     }
