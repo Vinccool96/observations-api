@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings("SimplifiableJUnitAssertion")
 public class ObjectPropertyBaseTest {
 
     private static final Object NO_BEAN = null;
@@ -36,7 +37,7 @@ public class ObjectPropertyBaseTest {
     public void setUp() throws Exception {
         property = new ObjectPropertyMock();
         invalidationListener = new InvalidationListenerMock();
-        changeListener = new ChangeListenerMock<Object>(UNDEFINED);
+        changeListener = new ChangeListenerMock<>(UNDEFINED);
     }
 
     private void attachInvalidationListener() {
@@ -53,12 +54,12 @@ public class ObjectPropertyBaseTest {
 
     @Test
     public void testConstructor() {
-        final ObjectProperty<Object> p1 = new SimpleObjectProperty<Object>();
+        final ObjectProperty<Object> p1 = new SimpleObjectProperty<>();
         assertEquals(null, p1.get());
         assertEquals(null, p1.getValue());
         assertFalse(property.isBound());
 
-        final ObjectProperty<Object> p2 = new SimpleObjectProperty<Object>(VALUE_1b);
+        final ObjectProperty<Object> p2 = new SimpleObjectProperty<>(VALUE_1b);
         assertEquals(VALUE_1b, p2.get());
         assertEquals(VALUE_1b, p2.getValue());
         assertFalse(property.isBound());
@@ -183,18 +184,25 @@ public class ObjectPropertyBaseTest {
     }
 
     @Test(expected = RuntimeException.class)
-    public void testSetBoundValue() {
-        final ObjectProperty<Object> v = new SimpleObjectProperty<Object>(VALUE_1a);
+    public void testSetBound() {
+        final ObjectProperty<Object> v = new SimpleObjectProperty<>(VALUE_1a);
         property.bind(v);
-        property.set(VALUE_1a);
+        property.set(VALUE_2b);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testSetValueBound() {
+        final ObjectProperty<Object> v = new SimpleObjectProperty<>(VALUE_1a);
+        property.bind(v);
+        property.setValue(VALUE_2b);
     }
 
     @Test
     public void testLazyBind() {
         attachInvalidationListener();
-        final ObservableObjectValueStub<Object> v = new ObservableObjectValueStub<Object>(VALUE_1a);
-
+        final ObservableObjectValueStub<Object> v = new ObservableObjectValueStub<>(VALUE_1a);
         property.bind(v);
+
         assertEquals(VALUE_1a, property.get());
         assertTrue(property.isBound());
         property.check(1);
@@ -224,9 +232,9 @@ public class ObjectPropertyBaseTest {
     @Test
     public void testEagerBind() {
         attachChangeListener();
-        final ObservableObjectValueStub<Object> v = new ObservableObjectValueStub<Object>(VALUE_1a);
-
+        final ObservableObjectValueStub<Object> v = new ObservableObjectValueStub<>(VALUE_1a);
         property.bind(v);
+
         assertEquals(VALUE_1a, property.get());
         assertTrue(property.isBound());
         property.check(1);
@@ -261,8 +269,8 @@ public class ObjectPropertyBaseTest {
     @Test
     public void testRebind() {
         attachInvalidationListener();
-        final ObjectProperty<Object> v1 = new SimpleObjectProperty<Object>(VALUE_1a);
-        final ObjectProperty<Object> v2 = new SimpleObjectProperty<Object>(VALUE_2a);
+        final ObjectProperty<Object> v1 = new SimpleObjectProperty<>(VALUE_1a);
+        final ObjectProperty<Object> v2 = new SimpleObjectProperty<>(VALUE_2a);
         property.bind(v1);
         property.get();
         property.reset();
@@ -272,36 +280,33 @@ public class ObjectPropertyBaseTest {
         property.bind(v2);
         assertEquals(VALUE_2a, property.get());
         assertTrue(property.isBound());
-        assertEquals(1, property.counter);
+        property.check(1);
         invalidationListener.check(property, 1);
-        property.reset();
 
         // change old binding
         v1.set(VALUE_1b);
         assertEquals(VALUE_2a, property.get());
-        assertEquals(0, property.counter);
+        property.check(0);
         invalidationListener.check(null, 0);
-        property.reset();
 
         // change new binding
         v2.set(VALUE_2b);
         assertEquals(VALUE_2b, property.get());
-        assertEquals(1, property.counter);
+        property.check(1);
         invalidationListener.check(property, 1);
-        property.reset();
 
         // rebind to same observable should have no effect
         property.bind(v2);
         assertEquals(VALUE_2b, property.get());
         assertTrue(property.isBound());
-        assertEquals(0, property.counter);
+        property.check(0);
         invalidationListener.check(null, 0);
     }
 
     @Test
     public void testUnbind() {
         attachInvalidationListener();
-        final ObjectProperty<Object> v = new SimpleObjectProperty<Object>(VALUE_1a);
+        final ObjectProperty<Object> v = new SimpleObjectProperty<>(VALUE_1a);
         property.bind(v);
         property.unbind();
         assertEquals(VALUE_1a, property.get());
@@ -312,20 +317,19 @@ public class ObjectPropertyBaseTest {
         // change binding
         v.set(VALUE_2a);
         assertEquals(VALUE_1a, property.get());
-        assertEquals(0, property.counter);
+        property.check(0);
         invalidationListener.check(null, 0);
-        property.reset();
 
         // set value
         property.set(VALUE_1b);
         assertEquals(VALUE_1b, property.get());
-        assertEquals(1, property.counter);
+        property.check(1);
         invalidationListener.check(property, 1);
     }
 
     @Test
     public void testAddingListenerWillAlwaysReceiveInvalidationEvent() {
-        final ObjectProperty<Object> v = new SimpleObjectProperty<Object>(VALUE_1a);
+        final ObjectProperty<Object> v = new SimpleObjectProperty<>(VALUE_1a);
         final InvalidationListenerMock listener2 = new InvalidationListenerMock();
         final InvalidationListenerMock listener3 = new InvalidationListenerMock();
 
@@ -350,7 +354,7 @@ public class ObjectPropertyBaseTest {
     public void testToString() {
         final Object value1 = new Object();
         final Object value2 = new Object();
-        final ObjectProperty<Object> v = new SimpleObjectProperty<Object>(value2);
+        final ObjectProperty<Object> v = new SimpleObjectProperty<>(value2);
 
         property.set(value1);
         assertEquals("ObjectProperty [value: " + value1 + "]", property.toString());
@@ -366,24 +370,22 @@ public class ObjectPropertyBaseTest {
 
         final Object bean = new Object();
         final String name = "My name";
-        final ObjectProperty<Object> v1 = new ObjectPropertyMock(bean, name);
-        assertEquals("ObjectProperty [bean: " + bean.toString() + ", name: My name, value: " + null + "]",
-                v1.toString());
+        final ObjectPropertyBase<Object> v1 = new ObjectPropertyMock(bean, name);
+        assertEquals("ObjectProperty [bean: " + bean + ", name: My name, value: " + null + "]", v1.toString());
         v1.set(value1);
-        assertEquals("ObjectProperty [bean: " + bean.toString() + ", name: My name, value: " + value1 + "]",
-                v1.toString());
+        assertEquals("ObjectProperty [bean: " + bean + ", name: My name, value: " + value1 + "]", v1.toString());
 
-        final ObjectProperty<Object> v2 = new ObjectPropertyMock(bean, NO_NAME_1);
-        assertEquals("ObjectProperty [bean: " + bean.toString() + ", value: " + null + "]", v2.toString());
+        final ObjectPropertyBase<Object> v2 = new ObjectPropertyMock(bean, NO_NAME_1);
+        assertEquals("ObjectProperty [bean: " + bean + ", value: " + null + "]", v2.toString());
         v2.set(value1);
-        assertEquals("ObjectProperty [bean: " + bean.toString() + ", value: " + value1 + "]", v2.toString());
+        assertEquals("ObjectProperty [bean: " + bean + ", value: " + value1 + "]", v2.toString());
 
-        final ObjectProperty<Object> v3 = new ObjectPropertyMock(bean, NO_NAME_2);
-        assertEquals("ObjectProperty [bean: " + bean.toString() + ", value: " + null + "]", v3.toString());
+        final ObjectPropertyBase<Object> v3 = new ObjectPropertyMock(bean, NO_NAME_2);
+        assertEquals("ObjectProperty [bean: " + bean + ", value: " + null + "]", v3.toString());
         v3.set(value1);
-        assertEquals("ObjectProperty [bean: " + bean.toString() + ", value: " + value1 + "]", v3.toString());
+        assertEquals("ObjectProperty [bean: " + bean + ", value: " + value1 + "]", v3.toString());
 
-        final ObjectProperty<Object> v4 = new ObjectPropertyMock(NO_BEAN, name);
+        final ObjectPropertyBase<Object> v4 = new ObjectPropertyMock(NO_BEAN, name);
         assertEquals("ObjectProperty [name: My name, value: " + null + "]", v4.toString());
         v4.set(value1);
         assertEquals("ObjectProperty [name: My name, value: " + value1 + "]", v4.toString());
@@ -407,11 +409,6 @@ public class ObjectPropertyBaseTest {
             this.name = name;
         }
 
-        @Override
-        protected void invalidated() {
-            counter++;
-        }
-
         private void check(int expected) {
             assertEquals(expected, counter);
             reset();
@@ -421,11 +418,18 @@ public class ObjectPropertyBaseTest {
             counter = 0;
         }
 
-        @Override public Object getBean() {
+        @Override
+        protected void invalidated() {
+            counter++;
+        }
+
+        @Override
+        public Object getBean() {
             return bean;
         }
 
-        @Override public String getName() {
+        @Override
+        public String getName() {
             return name;
         }
 

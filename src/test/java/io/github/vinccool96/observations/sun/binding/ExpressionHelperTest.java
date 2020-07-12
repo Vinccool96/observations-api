@@ -15,6 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@SuppressWarnings("unchecked")
 public class ExpressionHelperTest {
 
     private static final Object UNDEFINED = new Object();
@@ -23,9 +24,9 @@ public class ExpressionHelperTest {
 
     private static final Object DATA_2 = new Object();
 
-    private ExpressionHelper helper;
+    private ExpressionHelper<Object> helper;
 
-    private ObservableValueStub observable;
+    private ObservableValueStub<Object> observable;
 
     private InvalidationListenerMock[] invalidationListener;
 
@@ -34,14 +35,14 @@ public class ExpressionHelperTest {
     @Before
     public void setUp() {
         helper = null;
-        observable = new ObservableValueStub(DATA_1);
+        observable = new ObservableValueStub<>(DATA_1);
         invalidationListener = new InvalidationListenerMock[]{
                 new InvalidationListenerMock(), new InvalidationListenerMock(), new InvalidationListenerMock(),
                 new InvalidationListenerMock()
         };
         changeListener = new ChangeListenerMock[]{
-                new ChangeListenerMock<Object>(UNDEFINED), new ChangeListenerMock<Object>(UNDEFINED),
-                new ChangeListenerMock<Object>(UNDEFINED), new ChangeListenerMock<Object>(UNDEFINED)
+                new ChangeListenerMock<>(UNDEFINED), new ChangeListenerMock<>(UNDEFINED),
+                new ChangeListenerMock<>(UNDEFINED), new ChangeListenerMock<>(UNDEFINED)
         };
     }
 
@@ -67,12 +68,12 @@ public class ExpressionHelperTest {
 
     @Test(expected = NullPointerException.class)
     public void testAddChange_X_Null() {
-        ExpressionHelper.addListener(helper, observable, (ChangeListener) null);
+        ExpressionHelper.addListener(helper, observable, (ChangeListener<Object>) null);
     }
 
     @Test(expected = NullPointerException.class)
     public void testRemoveChange_Null() {
-        ExpressionHelper.removeListener(helper, (ChangeListener) null);
+        ExpressionHelper.removeListener(helper, (ChangeListener<Object>) null);
     }
 
     @Test
@@ -235,11 +236,12 @@ public class ExpressionHelperTest {
 
     @Test
     public void testAddInvalidationWhileLocked() {
-        final ChangeListener<Object> addingListener = new ChangeListener() {
+        final ChangeListener<Object> addingListener = new ChangeListener<Object>() {
 
             int index = 0;
 
-            @Override public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+            @Override
+            public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
                 if (index < invalidationListener.length) {
                     helper = ExpressionHelper
                             .addListener(helper, ExpressionHelperTest.this.observable, invalidationListener[index++]);
@@ -281,11 +283,12 @@ public class ExpressionHelperTest {
 
     @Test
     public void testRemoveInvalidationWhileLocked() {
-        final ChangeListener<Object> removingListener = new ChangeListener() {
+        final ChangeListener<Object> removingListener = new ChangeListener<Object>() {
 
             int index = 0;
 
-            @Override public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+            @Override
+            public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
                 if (index < invalidationListener.length) {
                     helper = ExpressionHelper.removeListener(helper, invalidationListener[index++]);
                 }
@@ -393,7 +396,8 @@ public class ExpressionHelperTest {
 
             int index = 0;
 
-            @Override public void invalidated(Observable observable) {
+            @Override
+            public void invalidated(Observable observable) {
                 if (index < invalidationListener.length) {
                     helper = ExpressionHelper
                             .addListener(helper, ExpressionHelperTest.this.observable, changeListener[index++]);
@@ -439,7 +443,8 @@ public class ExpressionHelperTest {
 
             int index = 0;
 
-            @Override public void invalidated(Observable observable) {
+            @Override
+            public void invalidated(Observable observable) {
                 if (index < invalidationListener.length) {
                     helper = ExpressionHelper.removeListener(helper, changeListener[index++]);
                 }

@@ -21,40 +21,40 @@ import static org.junit.Assert.assertTrue;
 
 public class ExpressionHelperUtilityTest {
 
-    private ObservableValue observableValue;
+    private ObservableValue<String> observableValue;
 
-    private ObservableListValue observableList;
+    private ObservableListValue<?> observableList;
 
-    private ObservableMapValue observableMap;
+    private ObservableMapValue<?, ?> observableMap;
 
-    private ObservableSetValue observableSet;
+    private ObservableSetValue<?> observableSet;
 
     private InvalidationListener invalidationListener1;
 
     private InvalidationListener invalidationListener2;
 
-    private ChangeListener changeListener1;
+    private ChangeListener<Object> changeListener1;
 
-    private ChangeListener changeListener2;
+    private ChangeListener<Object> changeListener2;
 
-    private ListChangeListener listChangeListener1;
+    private ListChangeListener<Object> listChangeListener1;
 
-    private ListChangeListener listChangeListener2;
+    private ListChangeListener<Object> listChangeListener2;
 
-    private MapChangeListener mapChangeListener1;
+    private MapChangeListener<Object, Object> mapChangeListener1;
 
-    private MapChangeListener mapChangeListener2;
+    private MapChangeListener<Object, Object> mapChangeListener2;
 
-    private SetChangeListener setChangeListener1;
+    private SetChangeListener<Object> setChangeListener1;
 
-    private SetChangeListener setChangeListener2;
+    private SetChangeListener<Object> setChangeListener2;
 
     @Before
     public void setUp() {
         observableValue = new SimpleStringProperty();
-        observableList = new SimpleListProperty();
-        observableMap = new SimpleMapProperty();
-        observableSet = new SimpleSetProperty();
+        observableList = new SimpleListProperty<>();
+        observableMap = new SimpleMapProperty<>();
+        observableSet = new SimpleSetProperty<>();
 
         invalidationListener1 = new EmptyInvalidationListener();
         invalidationListener2 = new EmptyInvalidationListener();
@@ -445,7 +445,8 @@ public class ExpressionHelperUtilityTest {
 
     private static class EmptyInvalidationListener implements InvalidationListener {
 
-        @Override public void invalidated(Observable observable) {
+        @Override
+        public void invalidated(Observable observable) {
         }
 
     }
@@ -453,28 +454,31 @@ public class ExpressionHelperUtilityTest {
     private static class EmptyChangeListener implements ChangeListener<Object> {
 
         @Override
-        public void changed(ObservableValue<? extends Object> observableValue, Object oldValue, Object newValue) {
+        public void changed(ObservableValue<?> observableValue, Object oldValue, Object newValue) {
         }
 
     }
 
     private static class EmptyListChangeListener implements ListChangeListener<Object> {
 
-        @Override public void onChanged(Change<? extends Object> change) {
+        @Override
+        public void onChanged(Change<?> change) {
         }
 
     }
 
     private static class EmptyMapChangeListener implements MapChangeListener<Object, Object> {
 
-        @Override public void onChanged(Change<? extends Object, ? extends Object> change) {
+        @Override
+        public void onChanged(Change<?, ?> change) {
         }
 
     }
 
     private static class EmptySetChangeListener implements SetChangeListener<Object> {
 
-        @Override public void onChanged(Change<? extends Object> change) {
+        @Override
+        public void onChanged(Change<?> change) {
         }
 
     }

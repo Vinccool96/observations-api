@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings({"SimplifiableJUnitAssertion", "EqualsWithItself"})
 public class StringExpressionTest {
 
     private String data1;

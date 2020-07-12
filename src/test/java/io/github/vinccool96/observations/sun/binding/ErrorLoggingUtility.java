@@ -17,11 +17,11 @@ public class ErrorLoggingUtility {
     private static final Logger logger =
             LogManager.getLogManager().getLogger("io.github.vinccool96.observations.beans");
 
-    Level level;
+    private Level level;
 
-    LogRecord lastRecord;
+    private LogRecord lastRecord;
 
-    Handler handler = new Handler() {
+    private final Handler handler = new Handler() {
 
         @Override
         public void publish(LogRecord record) {

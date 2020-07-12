@@ -10,6 +10,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@SuppressWarnings("SimplifiableJUnitAssertion")
 public class ObjectExpressionTest {
 
     private Object data1;
@@ -24,8 +25,8 @@ public class ObjectExpressionTest {
     public void setUp() {
         data1 = new Object();
         data2 = new Object();
-        op1 = new SimpleObjectProperty<Object>(data1);
-        op2 = new SimpleObjectProperty<Object>(data2);
+        op1 = new SimpleObjectProperty<>(data1);
+        op2 = new SimpleObjectProperty<>(data2);
     }
 
     @Test
@@ -63,7 +64,7 @@ public class ObjectExpressionTest {
         BooleanBinding binding = op1.isNull();
         assertEquals(false, binding.get());
 
-        ObjectProperty<Object> op3 = new SimpleObjectProperty<Object>(null);
+        ObjectProperty<Object> op3 = new SimpleObjectProperty<>(null);
         binding = op3.isNull();
         assertEquals(true, binding.get());
     }
@@ -73,7 +74,7 @@ public class ObjectExpressionTest {
         BooleanBinding binding = op1.isNotNull();
         assertEquals(true, binding.get());
 
-        ObjectProperty<Object> op3 = new SimpleObjectProperty<Object>(null);
+        ObjectProperty<Object> op3 = new SimpleObjectProperty<>(null);
         binding = op3.isNotNull();
         assertEquals(false, binding.get());
     }
@@ -123,6 +124,7 @@ public class ObjectExpressionTest {
     @Test
     public void testAsString_Format() {
         final StringBinding binding = op1.asString("%h");
+        DependencyUtils.checkDependencies(binding.getDependencies(), op1);
         op1.set(new Object() {
 
             @Override
@@ -131,9 +133,7 @@ public class ObjectExpressionTest {
             }
 
         });
-        DependencyUtils.checkDependencies(binding.getDependencies(), op1);
         assertEquals(Integer.toHexString(op1.get().hashCode()), binding.get());
-
     }
 
 }

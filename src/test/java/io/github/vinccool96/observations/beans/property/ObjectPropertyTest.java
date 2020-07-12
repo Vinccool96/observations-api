@@ -24,8 +24,8 @@ public class ObjectPropertyTest {
 
     @Test
     public void testBindBidirectional() {
-        final ObjectProperty<Object> p1 = new SimpleObjectProperty<Object>(VALUE_2);
-        final ObjectProperty<Object> p2 = new SimpleObjectProperty<Object>(VALUE_1);
+        final ObjectProperty<Object> p1 = new SimpleObjectProperty<>(VALUE_2);
+        final ObjectProperty<Object> p2 = new SimpleObjectProperty<>(VALUE_1);
 
         p1.bindBidirectional(p2);
         assertEquals(VALUE_1, p1.get());
@@ -61,21 +61,19 @@ public class ObjectPropertyTest {
         final Object bean = new Object();
         final String name = "My name";
         final ObjectProperty<Object> v2 = new ObjectPropertyStub(bean, name);
-        assertEquals("ObjectProperty [bean: " + bean.toString() + ", name: My name, value: " + DEFAULT + "]",
-                v2.toString());
+        assertEquals("ObjectProperty [bean: " + bean + ", name: My name, value: " + DEFAULT + "]", v2.toString());
         v2.set(VALUE_1);
-        assertEquals("ObjectProperty [bean: " + bean.toString() + ", name: My name, value: " + VALUE_1 + "]",
-                v2.toString());
+        assertEquals("ObjectProperty [bean: " + bean + ", name: My name, value: " + VALUE_1 + "]", v2.toString());
 
         final ObjectProperty<Object> v3 = new ObjectPropertyStub(bean, NO_NAME_1);
-        assertEquals("ObjectProperty [bean: " + bean.toString() + ", value: " + DEFAULT + "]", v3.toString());
+        assertEquals("ObjectProperty [bean: " + bean + ", value: " + DEFAULT + "]", v3.toString());
         v3.set(VALUE_1);
-        assertEquals("ObjectProperty [bean: " + bean.toString() + ", value: " + VALUE_1 + "]", v3.toString());
+        assertEquals("ObjectProperty [bean: " + bean + ", value: " + VALUE_1 + "]", v3.toString());
 
         final ObjectProperty<Object> v4 = new ObjectPropertyStub(bean, NO_NAME_2);
-        assertEquals("ObjectProperty [bean: " + bean.toString() + ", value: " + DEFAULT + "]", v4.toString());
+        assertEquals("ObjectProperty [bean: " + bean + ", value: " + DEFAULT + "]", v4.toString());
         v4.set(VALUE_1);
-        assertEquals("ObjectProperty [bean: " + bean.toString() + ", value: " + VALUE_1 + "]", v4.toString());
+        assertEquals("ObjectProperty [bean: " + bean + ", value: " + VALUE_1 + "]", v4.toString());
 
         final ObjectProperty<Object> v5 = new ObjectPropertyStub(NO_BEAN, name);
         assertEquals("ObjectProperty [name: My name, value: " + DEFAULT + "]", v5.toString());
@@ -83,7 +81,7 @@ public class ObjectPropertyTest {
         assertEquals("ObjectProperty [name: My name, value: " + VALUE_1 + "]", v5.toString());
     }
 
-    private class ObjectPropertyStub extends ObjectProperty<Object> {
+    private static class ObjectPropertyStub extends ObjectProperty<Object> {
 
         private final Object bean;
 
@@ -117,7 +115,7 @@ public class ObjectPropertyTest {
         }
 
         @Override
-        public void bind(ObservableValue<? extends Object> observable) {
+        public void bind(ObservableValue<?> observable) {
             fail("Not in use");
         }
 

@@ -21,7 +21,7 @@ public class BindingsIsNullTest {
 
     @Before
     public void setUp() {
-        oo = new SimpleObjectProperty<Object>();
+        oo = new SimpleObjectProperty<>();
         os = new SimpleStringProperty();
         observer = new InvalidationListenerMock();
     }

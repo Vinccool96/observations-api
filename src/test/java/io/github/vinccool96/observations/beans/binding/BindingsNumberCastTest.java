@@ -16,11 +16,11 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Parameterized.class)
 public class BindingsNumberCastTest {
 
-    public static interface Functions {
+    public interface Functions {
 
-        Binding generateExpression(ObservableNumberValue op1, ObservableNumberValue op2);
+        Binding<?> generateExpression(ObservableNumberValue op1, ObservableNumberValue op2);
 
-        void check(double op1, double op2, Binding binding);
+        void check(double op1, double op2, Binding<?> binding);
 
     }
 
@@ -50,10 +50,10 @@ public class BindingsNumberCastTest {
 
     @Before
     public void setUp() {
-        double0 = Double.valueOf(3.1415);
-        float0 = Float.valueOf(2.71f);
-        long0 = Long.valueOf(111L);
-        integer0 = Integer.valueOf(42);
+        double0 = 3.1415;
+        float0 = 2.71f;
+        long0 = 111L;
+        integer0 = 42;
 
         double1 = new SimpleDoubleProperty(double0);
         float1 = new SimpleFloatProperty(float0);
@@ -63,7 +63,7 @@ public class BindingsNumberCastTest {
 
     @Test
     public void testDouble() {
-        Binding binding = func.generateExpression(double1, double1);
+        Binding<?> binding = func.generateExpression(double1, double1);
         assertTrue(binding instanceof DoubleExpression || binding instanceof BooleanExpression);
         func.check(double0, double0, binding);
 
@@ -82,7 +82,7 @@ public class BindingsNumberCastTest {
 
     @Test
     public void testFloat() {
-        Binding binding = func.generateExpression(float1, double1);
+        Binding<?> binding = func.generateExpression(float1, double1);
         assertTrue(binding instanceof DoubleExpression || binding instanceof BooleanExpression);
         func.check(float0, double0, binding);
 
@@ -101,7 +101,7 @@ public class BindingsNumberCastTest {
 
     @Test
     public void testLong() {
-        Binding binding = func.generateExpression(long1, double1);
+        Binding<?> binding = func.generateExpression(long1, double1);
         assertTrue(binding instanceof DoubleExpression || binding instanceof BooleanExpression);
         func.check(long0, double0, binding);
 
@@ -120,7 +120,7 @@ public class BindingsNumberCastTest {
 
     @Test
     public void testInteger() {
-        Binding binding = func.generateExpression(integer1, double1);
+        Binding<?> binding = func.generateExpression(integer1, double1);
         assertTrue(binding instanceof DoubleExpression || binding instanceof BooleanExpression);
         func.check(integer0, double0, binding);
 
@@ -144,12 +144,12 @@ public class BindingsNumberCastTest {
                         new Functions() {
 
                             @Override
-                            public Binding generateExpression(ObservableNumberValue op1, ObservableNumberValue op2) {
+                            public Binding<?> generateExpression(ObservableNumberValue op1, ObservableNumberValue op2) {
                                 return Bindings.add(op1, op2);
                             }
 
                             @Override
-                            public void check(double op1, double op2, Binding binding) {
+                            public void check(double op1, double op2, Binding<?> binding) {
                                 assertTrue(binding instanceof NumberExpression);
                                 assertEquals(op1 + op2, ((NumberExpression) binding).doubleValue(), EPSILON);
                             }
@@ -160,12 +160,12 @@ public class BindingsNumberCastTest {
                         new Functions() {
 
                             @Override
-                            public Binding generateExpression(ObservableNumberValue op1, ObservableNumberValue op2) {
+                            public Binding<?> generateExpression(ObservableNumberValue op1, ObservableNumberValue op2) {
                                 return Bindings.multiply(op1, op2);
                             }
 
                             @Override
-                            public void check(double op1, double op2, Binding binding) {
+                            public void check(double op1, double op2, Binding<?> binding) {
                                 assertTrue(binding instanceof NumberExpression);
                                 assertEquals(op1 * op2, ((NumberExpression) binding).doubleValue(), EPSILON);
                             }
@@ -176,12 +176,12 @@ public class BindingsNumberCastTest {
                         new Functions() {
 
                             @Override
-                            public Binding generateExpression(ObservableNumberValue op1, ObservableNumberValue op2) {
+                            public Binding<?> generateExpression(ObservableNumberValue op1, ObservableNumberValue op2) {
                                 return Bindings.divide(op1, op2);
                             }
 
                             @Override
-                            public void check(double op1, double op2, Binding binding) {
+                            public void check(double op1, double op2, Binding<?> binding) {
                                 assertTrue(binding instanceof NumberExpression);
                                 if ((binding instanceof DoubleExpression) || (binding instanceof FloatExpression)) {
                                     assertEquals(op1 / op2, ((NumberExpression) binding).doubleValue(), EPSILON);
@@ -196,12 +196,12 @@ public class BindingsNumberCastTest {
                         new Functions() {
 
                             @Override
-                            public Binding generateExpression(ObservableNumberValue op1, ObservableNumberValue op2) {
+                            public Binding<?> generateExpression(ObservableNumberValue op1, ObservableNumberValue op2) {
                                 return Bindings.min(op1, op2);
                             }
 
                             @Override
-                            public void check(double op1, double op2, Binding binding) {
+                            public void check(double op1, double op2, Binding<?> binding) {
                                 assertTrue(binding instanceof NumberExpression);
                                 assertEquals(Math.min(op1, op2), ((NumberExpression) binding).doubleValue(), EPSILON);
                             }
@@ -212,12 +212,12 @@ public class BindingsNumberCastTest {
                         new Functions() {
 
                             @Override
-                            public Binding generateExpression(ObservableNumberValue op1, ObservableNumberValue op2) {
+                            public Binding<?> generateExpression(ObservableNumberValue op1, ObservableNumberValue op2) {
                                 return Bindings.max(op1, op2);
                             }
 
                             @Override
-                            public void check(double op1, double op2, Binding binding) {
+                            public void check(double op1, double op2, Binding<?> binding) {
                                 assertTrue(binding instanceof NumberExpression);
                                 assertEquals(Math.max(op1, op2), ((NumberExpression) binding).doubleValue(), EPSILON);
                             }
@@ -228,12 +228,12 @@ public class BindingsNumberCastTest {
                         new Functions() {
 
                             @Override
-                            public Binding generateExpression(ObservableNumberValue op1, ObservableNumberValue op2) {
+                            public Binding<?> generateExpression(ObservableNumberValue op1, ObservableNumberValue op2) {
                                 return Bindings.equal(op1, op2);
                             }
 
                             @Override
-                            public void check(double op1, double op2, Binding binding) {
+                            public void check(double op1, double op2, Binding<?> binding) {
                                 assertTrue(binding instanceof BooleanExpression);
                                 assertEquals(Math.abs(op1 - op2) < EPSILON, ((BooleanExpression) binding).get());
                             }
@@ -244,12 +244,12 @@ public class BindingsNumberCastTest {
                         new Functions() {
 
                             @Override
-                            public Binding generateExpression(ObservableNumberValue op1, ObservableNumberValue op2) {
+                            public Binding<?> generateExpression(ObservableNumberValue op1, ObservableNumberValue op2) {
                                 return Bindings.greaterThan(op1, op2);
                             }
 
                             @Override
-                            public void check(double op1, double op2, Binding binding) {
+                            public void check(double op1, double op2, Binding<?> binding) {
                                 assertTrue(binding instanceof BooleanExpression);
                                 assertEquals(op1 > op2, ((BooleanExpression) binding).get());
                             }
