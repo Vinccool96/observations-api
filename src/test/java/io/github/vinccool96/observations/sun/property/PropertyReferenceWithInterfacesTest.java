@@ -1,7 +1,7 @@
-package io.github.vinccool96.observations.beans.property;
+package io.github.vinccool96.observations.sun.property;
 
-import io.github.vinccool96.observations.sun.property.PropertyReference;
-import org.junit.Before;
+import io.github.vinccool96.observations.beans.property.SimpleStringProperty;
+import io.github.vinccool96.observations.beans.property.StringProperty;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -11,11 +11,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class PropertyReferenceWithInterfacesTest {
 
-    @Before public void setUp() {
-
-    }
-
-    @Test public void shouldBeAbleToReadPropertyValueFromPropertyReferenceDeclaredOnInterface() {
+    @Test
+    public void shouldBeAbleToReadPropertyValueFromPropertyReferenceDeclaredOnInterface() {
         NamedBean test = new NamedBean();
         test.setName("A");
         assertEquals("A", test.getName());
@@ -24,9 +21,9 @@ public class PropertyReferenceWithInterfacesTest {
 
     public interface Named {
 
-        public static final PropertyReference<String> NAME = new PropertyReference<String>(Named.class, "name");
+        PropertyReference<String> NAME = new PropertyReference<>(Named.class, "name");
 
-        public String getName();
+        String getName();
 
     }
 
