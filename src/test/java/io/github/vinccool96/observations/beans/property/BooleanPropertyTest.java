@@ -11,6 +11,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+@SuppressWarnings("SimplifiableJUnitAssertion")
 public class BooleanPropertyTest {
 
     private static final Object NO_BEAN = null;
@@ -84,21 +85,19 @@ public class BooleanPropertyTest {
         final Object bean = new Object();
         final String name = "My name";
         final BooleanProperty v2 = new BooleanPropertyStub(bean, name);
-        assertEquals("BooleanProperty [bean: " + bean.toString() + ", name: My name, value: " + DEFAULT + "]",
-                v2.toString());
+        assertEquals("BooleanProperty [bean: " + bean + ", name: My name, value: " + DEFAULT + "]", v2.toString());
         v2.set(VALUE_1);
-        assertEquals("BooleanProperty [bean: " + bean.toString() + ", name: My name, value: " + VALUE_1 + "]",
-                v2.toString());
+        assertEquals("BooleanProperty [bean: " + bean + ", name: My name, value: " + VALUE_1 + "]", v2.toString());
 
         final BooleanProperty v3 = new BooleanPropertyStub(bean, NO_NAME_1);
-        assertEquals("BooleanProperty [bean: " + bean.toString() + ", value: " + DEFAULT + "]", v3.toString());
+        assertEquals("BooleanProperty [bean: " + bean + ", value: " + DEFAULT + "]", v3.toString());
         v3.set(VALUE_1);
-        assertEquals("BooleanProperty [bean: " + bean.toString() + ", value: " + VALUE_1 + "]", v3.toString());
+        assertEquals("BooleanProperty [bean: " + bean + ", value: " + VALUE_1 + "]", v3.toString());
 
         final BooleanProperty v4 = new BooleanPropertyStub(bean, NO_NAME_2);
-        assertEquals("BooleanProperty [bean: " + bean.toString() + ", value: " + DEFAULT + "]", v4.toString());
+        assertEquals("BooleanProperty [bean: " + bean + ", value: " + DEFAULT + "]", v4.toString());
         v4.set(VALUE_1);
-        assertEquals("BooleanProperty [bean: " + bean.toString() + ", value: " + VALUE_1 + "]", v4.toString());
+        assertEquals("BooleanProperty [bean: " + bean + ", value: " + VALUE_1 + "]", v4.toString());
 
         final BooleanProperty v5 = new BooleanPropertyStub(NO_BEAN, name);
         assertEquals("BooleanProperty [name: My name, value: " + DEFAULT + "]", v5.toString());
@@ -123,10 +122,10 @@ public class BooleanPropertyTest {
 
     @Test
     public void testObjectToBoolean() {
-        final ObjectProperty<Boolean> valueModel = new SimpleObjectProperty<Boolean>(true);
+        final ObjectProperty<Boolean> valueModel = new SimpleObjectProperty<>(null);
         final BooleanProperty exp = BooleanProperty.booleanProperty(valueModel);
 
-        assertEquals(true, exp.get());
+        assertEquals(false, exp.get());
         valueModel.set(true);
         assertEquals(true, exp.get());
         valueModel.set(false);
@@ -136,7 +135,7 @@ public class BooleanPropertyTest {
         assertEquals(true, valueModel.get());
     }
 
-    private class BooleanPropertyStub extends BooleanProperty {
+    private static class BooleanPropertyStub extends BooleanProperty {
 
         private final Object bean;
 

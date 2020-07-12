@@ -1,4 +1,4 @@
-package io.github.vinccool96.observations.beans.binding;
+package io.github.vinccool96.observations.sun.binding;
 
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.beans.property.ObjectProperty;

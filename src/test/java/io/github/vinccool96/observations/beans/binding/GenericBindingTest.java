@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 @RunWith(Parameterized.class)
+@SuppressWarnings("SimplifiableJUnitAssertion")
 public class GenericBindingTest<T> {
 
     private static final Object UNDEFINED = null;
@@ -42,10 +43,7 @@ public class GenericBindingTest<T> {
 
     private ChangeListenerMock<Object> changeListener;
 
-    public GenericBindingTest(
-            T value1, T value2,
-            ObservableStub dependency1,
-            ObservableStub dependency2,
+    public GenericBindingTest(T value1, T value2, ObservableStub dependency1, ObservableStub dependency2,
             BindingMock<T> binding0, BindingMock<T> binding1, BindingMock<T> binding2) {
         this.value1 = value1;
         this.value2 = value2;
@@ -59,7 +57,7 @@ public class GenericBindingTest<T> {
     @Before
     public void setUp() {
         invalidationListener = new InvalidationListenerMock();
-        changeListener = new ChangeListenerMock<Object>(UNDEFINED);
+        changeListener = new ChangeListenerMock<>(UNDEFINED);
         binding0.setValue(value2);
         binding1.setValue(value2);
         binding2.setValue(value2);
@@ -281,18 +279,18 @@ public class GenericBindingTest<T> {
         final ObservableStub dependency2 = new ObservableStub();
         return Arrays.asList(new Object[][]{
                 {
-                        Float.MIN_VALUE, Float.MAX_VALUE,
-                        dependency1, dependency2,
-                        new FloatBindingImpl(),
-                        new FloatBindingImpl(dependency1),
-                        new FloatBindingImpl(dependency1, dependency2),
-                },
-                {
                         Double.MIN_VALUE, Double.MAX_VALUE,
                         dependency1, dependency2,
                         new DoubleBindingImpl(),
                         new DoubleBindingImpl(dependency1),
                         new DoubleBindingImpl(dependency1, dependency2),
+                },
+                {
+                        Float.MIN_VALUE, Float.MAX_VALUE,
+                        dependency1, dependency2,
+                        new FloatBindingImpl(),
+                        new FloatBindingImpl(dependency1),
+                        new FloatBindingImpl(dependency1, dependency2),
                 },
                 {
                         Long.MIN_VALUE, Long.MAX_VALUE,
@@ -316,18 +314,18 @@ public class GenericBindingTest<T> {
                         new BooleanBindingImpl(dependency1, dependency2),
                 },
                 {
-                        "Hello World", "Goodbye",
-                        dependency1, dependency2,
-                        new StringBindingImpl(),
-                        new StringBindingImpl(dependency1),
-                        new StringBindingImpl(dependency1, dependency2),
-                },
-                {
                         new Object(), new Object(),
                         dependency1, dependency2,
                         new ObjectBindingImpl(),
                         new ObjectBindingImpl(dependency1),
                         new ObjectBindingImpl(dependency1, dependency2),
+                },
+                {
+                        "Hello World", "Goodbye",
+                        dependency1, dependency2,
+                        new StringBindingImpl(),
+                        new StringBindingImpl(dependency1),
+                        new StringBindingImpl(dependency1, dependency2),
                 },
                 {
                         ObservableCollections.observableArrayList(), ObservableCollections.observableArrayList(),
@@ -341,7 +339,8 @@ public class GenericBindingTest<T> {
 
     public static class ObservableStub extends ObservableValueBase<Object> {
 
-        @Override public void fireValueChangedEvent() {
+        @Override
+        public void fireValueChangedEvent() {
             super.fireValueChangedEvent();
         }
 
@@ -352,7 +351,7 @@ public class GenericBindingTest<T> {
 
     }
 
-    public static interface BindingMock<T> extends Binding<T> {
+    public interface BindingMock<T> extends Binding<T> {
 
         int getComputeValueCounter();
 
@@ -377,13 +376,15 @@ public class GenericBindingTest<T> {
             super.bind(dep);
         }
 
-        @Override public int getComputeValueCounter() {
+        @Override
+        public int getComputeValueCounter() {
             final int result = computeValueCounter;
             reset();
             return result;
         }
 
-        @Override public void reset() {
+        @Override
+        public void reset() {
             computeValueCounter = 0;
         }
 
@@ -393,7 +394,8 @@ public class GenericBindingTest<T> {
             return value;
         }
 
-        @Override @ReturnsUnmodifiableCollection
+        @Override
+        @ReturnsUnmodifiableCollection
         public ObservableList<?> getDependencies() {
             fail("Should not reach here");
             return null;
@@ -416,13 +418,15 @@ public class GenericBindingTest<T> {
             super.bind(dep);
         }
 
-        @Override public int getComputeValueCounter() {
+        @Override
+        public int getComputeValueCounter() {
             final int result = computeValueCounter;
             reset();
             return result;
         }
 
-        @Override public void reset() {
+        @Override
+        public void reset() {
             computeValueCounter = 0;
         }
 
@@ -432,7 +436,8 @@ public class GenericBindingTest<T> {
             return value;
         }
 
-        @Override @ReturnsUnmodifiableCollection
+        @Override
+        @ReturnsUnmodifiableCollection
         public ObservableList<?> getDependencies() {
             fail("Should not reach here");
             return null;
@@ -455,13 +460,15 @@ public class GenericBindingTest<T> {
             super.bind(dep);
         }
 
-        @Override public int getComputeValueCounter() {
+        @Override
+        public int getComputeValueCounter() {
             final int result = computeValueCounter;
             reset();
             return result;
         }
 
-        @Override public void reset() {
+        @Override
+        public void reset() {
             computeValueCounter = 0;
         }
 
@@ -471,7 +478,8 @@ public class GenericBindingTest<T> {
             return value;
         }
 
-        @Override @ReturnsUnmodifiableCollection
+        @Override
+        @ReturnsUnmodifiableCollection
         public ObservableList<?> getDependencies() {
             fail("Should not reach here");
             return null;
@@ -494,13 +502,15 @@ public class GenericBindingTest<T> {
             super.bind(dep);
         }
 
-        @Override public int getComputeValueCounter() {
+        @Override
+        public int getComputeValueCounter() {
             final int result = computeValueCounter;
             reset();
             return result;
         }
 
-        @Override public void reset() {
+        @Override
+        public void reset() {
             computeValueCounter = 0;
         }
 
@@ -510,7 +520,8 @@ public class GenericBindingTest<T> {
             return value;
         }
 
-        @Override @ReturnsUnmodifiableCollection
+        @Override
+        @ReturnsUnmodifiableCollection
         public ObservableList<?> getDependencies() {
             fail("Should not reach here");
             return null;
@@ -533,13 +544,15 @@ public class GenericBindingTest<T> {
             super.bind(dep);
         }
 
-        @Override public int getComputeValueCounter() {
+        @Override
+        public int getComputeValueCounter() {
             final int result = computeValueCounter;
             reset();
             return result;
         }
 
-        @Override public void reset() {
+        @Override
+        public void reset() {
             computeValueCounter = 0;
         }
 
@@ -549,7 +562,8 @@ public class GenericBindingTest<T> {
             return value;
         }
 
-        @Override @ReturnsUnmodifiableCollection
+        @Override
+        @ReturnsUnmodifiableCollection
         public ObservableList<?> getDependencies() {
             fail("Should not reach here");
             return null;
@@ -572,13 +586,15 @@ public class GenericBindingTest<T> {
             super.bind(dep);
         }
 
-        @Override public int getComputeValueCounter() {
+        @Override
+        public int getComputeValueCounter() {
             final int result = computeValueCounter;
             reset();
             return result;
         }
 
-        @Override public void reset() {
+        @Override
+        public void reset() {
             computeValueCounter = 0;
         }
 
@@ -588,7 +604,8 @@ public class GenericBindingTest<T> {
             return value;
         }
 
-        @Override @ReturnsUnmodifiableCollection
+        @Override
+        @ReturnsUnmodifiableCollection
         public ObservableList<?> getDependencies() {
             fail("Should not reach here");
             return null;
@@ -611,13 +628,15 @@ public class GenericBindingTest<T> {
             super.bind(dep);
         }
 
-        @Override public int getComputeValueCounter() {
+        @Override
+        public int getComputeValueCounter() {
             final int result = computeValueCounter;
             reset();
             return result;
         }
 
-        @Override public void reset() {
+        @Override
+        public void reset() {
             computeValueCounter = 0;
         }
 
@@ -627,7 +646,8 @@ public class GenericBindingTest<T> {
             return value;
         }
 
-        @Override @ReturnsUnmodifiableCollection
+        @Override
+        @ReturnsUnmodifiableCollection
         public ObservableList<?> getDependencies() {
             fail("Should not reach here");
             return null;
@@ -650,13 +670,15 @@ public class GenericBindingTest<T> {
             super.bind(dep);
         }
 
-        @Override public int getComputeValueCounter() {
+        @Override
+        public int getComputeValueCounter() {
             final int result = computeValueCounter;
             reset();
             return result;
         }
 
-        @Override public void reset() {
+        @Override
+        public void reset() {
             computeValueCounter = 0;
         }
 
@@ -666,7 +688,8 @@ public class GenericBindingTest<T> {
             return value;
         }
 
-        @Override @ReturnsUnmodifiableCollection
+        @Override
+        @ReturnsUnmodifiableCollection
         public ObservableList<?> getDependencies() {
             fail("Should not reach here");
             return null;

@@ -12,6 +12,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@SuppressWarnings({"SimplifiableJUnitAssertion", "PointlessBooleanExpression", "ConstantConditions"})
 public class BooleanExpressionTest {
 
     private BooleanProperty op1;
@@ -151,7 +152,7 @@ public class BooleanExpressionTest {
 
     @Test
     public void testObjectToBoolean() {
-        final ObservableValueStub<Boolean> valueModel = new ObservableValueStub<Boolean>();
+        final ObservableValueStub<Boolean> valueModel = new ObservableValueStub<>();
         final BooleanExpression exp = BooleanExpression.booleanExpression(valueModel);
 
         assertTrue(exp instanceof BooleanBinding);
@@ -165,7 +166,7 @@ public class BooleanExpressionTest {
         assertEquals(false, exp.get());
 
         // make sure we do not create unnecessary bindings
-        assertEquals(op1, BooleanExpression.booleanExpression((ObservableValue) op1));
+        assertEquals(op1, BooleanExpression.booleanExpression((ObservableValue<Boolean>) op1));
     }
 
     @Test(expected = NullPointerException.class)

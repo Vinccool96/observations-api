@@ -3,16 +3,11 @@ package io.github.vinccool96.observations.beans.binding;
 import io.github.vinccool96.observations.beans.property.*;
 import io.github.vinccool96.observations.collections.ObservableCollections;
 import io.github.vinccool96.observations.collections.ObservableList;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class BindingToStringTest {
-
-    @Before
-    public void setUp() throws Exception {
-    }
 
     @Test
     public void testBooleanToString() {
@@ -29,6 +24,7 @@ public class BindingToStringTest {
             protected boolean computeValue() {
                 return v.get();
             }
+
         };
 
         assertEquals("BooleanBinding [invalid]", binding.toString());
@@ -148,7 +144,7 @@ public class BindingToStringTest {
     public void testObjectToString() {
         final Object value1 = new Object();
         final Object value2 = new Object();
-        final ObjectProperty<Object> v = new SimpleObjectProperty<Object>(value1);
+        final ObjectProperty<Object> v = new SimpleObjectProperty<>(value1);
         final ObjectBinding<Object> binding = new ObjectBinding<Object>() {
 
             {
@@ -200,7 +196,7 @@ public class BindingToStringTest {
     public void testListToString() {
         final ObservableList<Object> value1 = ObservableCollections.observableArrayList(new Object());
         final ObservableList<Object> value2 = ObservableCollections.observableArrayList(new Object(), new Object());
-        final ListProperty<Object> v = new SimpleListProperty<Object>(value1);
+        final ListProperty<Object> v = new SimpleListProperty<>(value1);
         final ListBinding<Object> binding = new ListBinding<Object>() {
 
             {

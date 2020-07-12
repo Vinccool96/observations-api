@@ -3,7 +3,6 @@ package io.github.vinccool96.observations.beans.binding;
 import io.github.vinccool96.observations.beans.property.DoubleProperty;
 import io.github.vinccool96.observations.beans.property.SimpleDoubleProperty;
 import io.github.vinccool96.observations.beans.value.ObservableDoubleValueStub;
-import io.github.vinccool96.observations.beans.value.ObservableValue;
 import io.github.vinccool96.observations.beans.value.ObservableValueStub;
 import io.github.vinccool96.observations.collections.ObservableCollections;
 import org.junit.Before;
@@ -46,7 +45,7 @@ public class DoubleExpressionTest {
 
     @Test
     public void testGetters() {
-        assertEquals((double) data, op1.doubleValue(), EPSILON);
+        assertEquals(data, op1.doubleValue(), EPSILON);
         assertEquals((float) data, op1.floatValue(), EPSILON);
         assertEquals((long) data, op1.longValue());
         assertEquals((int) data, op1.intValue());
@@ -175,7 +174,7 @@ public class DoubleExpressionTest {
 
     @Test
     public void testObjectToDouble() {
-        final ObservableValueStub<Double> valueModel = new ObservableValueStub<Double>();
+        final ObservableValueStub<Double> valueModel = new ObservableValueStub<>();
         final DoubleExpression exp = DoubleExpression.doubleExpression(valueModel);
 
         assertTrue(exp instanceof DoubleBinding);
@@ -189,7 +188,7 @@ public class DoubleExpressionTest {
         assertEquals(double1, exp.doubleValue(), EPSILON);
 
         // make sure we do not create unnecessary bindings
-        assertEquals(op1, DoubleExpression.doubleExpression((ObservableValue) op1));
+        assertEquals(op1, DoubleExpression.doubleExpression(op1));
     }
 
     @Test(expected = NullPointerException.class)

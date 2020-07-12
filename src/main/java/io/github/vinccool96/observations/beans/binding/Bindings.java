@@ -12,10 +12,7 @@ import io.github.vinccool96.observations.util.StringConverter;
 
 import java.lang.ref.WeakReference;
 import java.text.Format;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.Callable;
 
 /**
@@ -46,6 +43,7 @@ import java.util.concurrent.Callable;
  * @see Binding
  * @see NumberBinding
  */
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public final class Bindings {
 
     private Bindings() {
@@ -379,7 +377,7 @@ public final class Bindings {
      * @return the created {@link ObjectBinding}
      */
     public static <T> ObjectBinding<T> select(ObservableValue<?> root, String... steps) {
-        return new SelectBinding.AsObject<T>(root, steps);
+        return new SelectBinding.AsObject<>(root, steps);
     }
 
     /**
@@ -523,7 +521,7 @@ public final class Bindings {
      * @return the created {@link ObjectBinding}
      */
     public static <T> ObjectBinding<T> select(Object root, String... steps) {
-        return new SelectBinding.AsObject<T>(root, steps);
+        return new SelectBinding.AsObject<>(root, steps);
     }
 
     /**
@@ -4012,7 +4010,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableFloatValue) || (op2 instanceof ObservableFloatValue)) {
@@ -4037,7 +4035,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableLongValue) || (op2 instanceof ObservableLongValue)) {
@@ -4062,7 +4060,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else {
@@ -4087,7 +4085,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         }
@@ -4287,7 +4285,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableFloatValue) || (op2 instanceof ObservableFloatValue)) {
@@ -4312,7 +4310,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else if ((op1 instanceof ObservableLongValue) || (op2 instanceof ObservableLongValue)) {
@@ -4337,7 +4335,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         } else {
@@ -4362,7 +4360,7 @@ public final class Bindings {
                 public ObservableList<?> getDependencies() {
                     return (dependencies.length == 1) ?
                             ObservableCollections.singletonObservableList(dependencies[0])
-                            : new ImmutableObservableList<Observable>(dependencies);
+                            : new ImmutableObservableList<>(dependencies);
                 }
             };
         }
@@ -5756,7 +5754,7 @@ public final class Bindings {
             protected boolean computeValue() {
                 final Object obj1 = op1.get();
                 final Object obj2 = op2.get();
-                return obj1 == null ? obj2 == null : obj1.equals(obj2);
+                return Objects.equals(obj1, obj2);
             }
 
             @Override
@@ -5764,7 +5762,7 @@ public final class Bindings {
             public ObservableList<?> getDependencies() {
                 return (dependencies.length == 1) ?
                         ObservableCollections.singletonObservableList(dependencies[0])
-                        : new ImmutableObservableList<Observable>(dependencies);
+                        : new ImmutableObservableList<>(dependencies);
             }
         };
     }
@@ -5845,7 +5843,7 @@ public final class Bindings {
             protected boolean computeValue() {
                 final Object obj1 = op1.get();
                 final Object obj2 = op2.get();
-                return obj1 == null ? obj2 != null : !obj1.equals(obj2);
+                return !Objects.equals(obj1, obj2);
             }
 
             @Override
@@ -5853,7 +5851,7 @@ public final class Bindings {
             public ObservableList<?> getDependencies() {
                 return (dependencies.length == 1) ?
                         ObservableCollections.singletonObservableList(dependencies[0])
-                        : new ImmutableObservableList<Observable>(dependencies);
+                        : new ImmutableObservableList<>(dependencies);
             }
         };
     }
@@ -6246,7 +6244,7 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return new ImmutableObservableList<Observable>(op, index);
+                return new ImmutableObservableList<>(op, index);
             }
         };
     }
@@ -6380,7 +6378,7 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return new ImmutableObservableList<Observable>(op, index);
+                return new ImmutableObservableList<>(op, index);
             }
         };
     }
@@ -6516,7 +6514,7 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return new ImmutableObservableList<Observable>(op, index);
+                return new ImmutableObservableList<>(op, index);
             }
         };
     }
@@ -6652,7 +6650,7 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return new ImmutableObservableList<Observable>(op, index);
+                return new ImmutableObservableList<>(op, index);
             }
         };
     }
@@ -6788,7 +6786,7 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return new ImmutableObservableList<Observable>(op, index);
+                return new ImmutableObservableList<>(op, index);
             }
         };
     }
@@ -6924,7 +6922,7 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return new ImmutableObservableList<Observable>(op, index);
+                return new ImmutableObservableList<>(op, index);
             }
         };
     }
@@ -7046,7 +7044,7 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return new ImmutableObservableList<Observable>(op, index);
+                return new ImmutableObservableList<>(op, index);
             }
         };
     }
@@ -7194,7 +7192,7 @@ public final class Bindings {
      * @throws NullPointerException
      *         if the {@code ObservableArray} is {@code null}
      */
-    public static IntegerBinding size(final ObservableArray op) {
+    public static <T extends ObservableArray<T>> IntegerBinding size(final ObservableArray<T> op) {
         if (op == null) {
             throw new NullPointerException("Array cannot be null.");
         }
@@ -7639,10 +7637,7 @@ public final class Bindings {
             protected V computeValue() {
                 try {
                     return op.get(key);
-                } catch (ClassCastException ex) {
-                    Logging.getLogger().warning("Exception while evaluating binding", ex);
-                    // ignore
-                } catch (NullPointerException ex) {
+                } catch (ClassCastException | NullPointerException ex) {
                     Logging.getLogger().warning("Exception while evaluating binding", ex);
                     // ignore
                 }
@@ -7695,10 +7690,7 @@ public final class Bindings {
             protected V computeValue() {
                 try {
                     return op.get(key.getValue());
-                } catch (ClassCastException ex) {
-                    Logging.getLogger().warning("Exception while evaluating binding", ex);
-                    // ignore
-                } catch (NullPointerException ex) {
+                } catch (ClassCastException | NullPointerException ex) {
                     Logging.getLogger().warning("Exception while evaluating binding", ex);
                     // ignore
                 }
@@ -7708,7 +7700,7 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return new ImmutableObservableList<Observable>(op, key);
+                return new ImmutableObservableList<>(op, key);
             }
         };
     }
@@ -7755,10 +7747,7 @@ public final class Bindings {
                     } else {
                         return value;
                     }
-                } catch (ClassCastException ex) {
-                    Logging.getLogger().warning("Exception while evaluating binding", ex);
-                    // ignore
-                } catch (NullPointerException ex) {
+                } catch (ClassCastException | NullPointerException ex) {
                     Logging.getLogger().warning("Exception while evaluating binding", ex);
                     // ignore
                 }
@@ -7816,10 +7805,7 @@ public final class Bindings {
                     } else {
                         return value;
                     }
-                } catch (ClassCastException ex) {
-                    Logging.getLogger().warning("Exception while evaluating binding", ex);
-                    // ignore
-                } catch (NullPointerException ex) {
+                } catch (ClassCastException | NullPointerException ex) {
                     Logging.getLogger().warning("Exception while evaluating binding", ex);
                     // ignore
                 }
@@ -7829,7 +7815,7 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return new ImmutableObservableList<Observable>(op, key);
+                return new ImmutableObservableList<>(op, key);
             }
         };
     }
@@ -7876,10 +7862,7 @@ public final class Bindings {
                     } else {
                         return value.doubleValue();
                     }
-                } catch (ClassCastException ex) {
-                    Logging.getLogger().warning("Exception while evaluating binding", ex);
-                    // ignore
-                } catch (NullPointerException ex) {
+                } catch (ClassCastException | NullPointerException ex) {
                     Logging.getLogger().warning("Exception while evaluating binding", ex);
                     // ignore
                 }
@@ -7937,10 +7920,7 @@ public final class Bindings {
                     } else {
                         return value.doubleValue();
                     }
-                } catch (ClassCastException ex) {
-                    Logging.getLogger().warning("Exception while evaluating binding", ex);
-                    // ignore
-                } catch (NullPointerException ex) {
+                } catch (ClassCastException | NullPointerException ex) {
                     Logging.getLogger().warning("Exception while evaluating binding", ex);
                     // ignore
                 }
@@ -7950,7 +7930,7 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return new ImmutableObservableList<Observable>(op, key);
+                return new ImmutableObservableList<>(op, key);
             }
         };
     }
@@ -7997,10 +7977,7 @@ public final class Bindings {
                     } else {
                         return value.floatValue();
                     }
-                } catch (ClassCastException ex) {
-                    Logging.getLogger().warning("Exception while evaluating binding", ex);
-                    // ignore
-                } catch (NullPointerException ex) {
+                } catch (ClassCastException | NullPointerException ex) {
                     Logging.getLogger().warning("Exception while evaluating binding", ex);
                     // ignore
                 }
@@ -8058,10 +8035,7 @@ public final class Bindings {
                     } else {
                         return value.floatValue();
                     }
-                } catch (ClassCastException ex) {
-                    Logging.getLogger().warning("Exception while evaluating binding", ex);
-                    // ignore
-                } catch (NullPointerException ex) {
+                } catch (ClassCastException | NullPointerException ex) {
                     Logging.getLogger().warning("Exception while evaluating binding", ex);
                     // ignore
                 }
@@ -8071,7 +8045,7 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return new ImmutableObservableList<Observable>(op, key);
+                return new ImmutableObservableList<>(op, key);
             }
         };
     }
@@ -8118,10 +8092,7 @@ public final class Bindings {
                     } else {
                         return value.intValue();
                     }
-                } catch (ClassCastException ex) {
-                    Logging.getLogger().warning("Exception while evaluating binding", ex);
-                    // ignore
-                } catch (NullPointerException ex) {
+                } catch (ClassCastException | NullPointerException ex) {
                     Logging.getLogger().warning("Exception while evaluating binding", ex);
                     // ignore
                 }
@@ -8179,10 +8150,7 @@ public final class Bindings {
                     } else {
                         return value.intValue();
                     }
-                } catch (ClassCastException ex) {
-                    Logging.getLogger().warning("Exception while evaluating binding", ex);
-                    // ignore
-                } catch (NullPointerException ex) {
+                } catch (ClassCastException | NullPointerException ex) {
                     Logging.getLogger().warning("Exception while evaluating binding", ex);
                     // ignore
                 }
@@ -8192,7 +8160,7 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return new ImmutableObservableList<Observable>(op, key);
+                return new ImmutableObservableList<>(op, key);
             }
         };
     }
@@ -8239,10 +8207,7 @@ public final class Bindings {
                     } else {
                         return value.longValue();
                     }
-                } catch (ClassCastException ex) {
-                    Logging.getLogger().warning("Exception while evaluating binding", ex);
-                    // ignore
-                } catch (NullPointerException ex) {
+                } catch (ClassCastException | NullPointerException ex) {
                     Logging.getLogger().warning("Exception while evaluating binding", ex);
                     // ignore
                 }
@@ -8300,10 +8265,7 @@ public final class Bindings {
                     } else {
                         return value.longValue();
                     }
-                } catch (ClassCastException ex) {
-                    Logging.getLogger().warning("Exception while evaluating binding", ex);
-                    // ignore
-                } catch (NullPointerException ex) {
+                } catch (ClassCastException | NullPointerException ex) {
                     Logging.getLogger().warning("Exception while evaluating binding", ex);
                     // ignore
                 }
@@ -8313,7 +8275,7 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return new ImmutableObservableList<Observable>(op, key);
+                return new ImmutableObservableList<>(op, key);
             }
         };
     }
@@ -8354,10 +8316,7 @@ public final class Bindings {
             protected String computeValue() {
                 try {
                     return op.get(key);
-                } catch (ClassCastException ex) {
-                    Logging.getLogger().warning("Exception while evaluating binding", ex);
-                    // ignore
-                } catch (NullPointerException ex) {
+                } catch (ClassCastException | NullPointerException ex) {
                     Logging.getLogger().warning("Exception while evaluating binding", ex);
                     // ignore
                 }
@@ -8409,10 +8368,7 @@ public final class Bindings {
             protected String computeValue() {
                 try {
                     return op.get(key.getValue());
-                } catch (ClassCastException ex) {
-                    Logging.getLogger().warning("Exception while evaluating binding", ex);
-                    // ignore
-                } catch (NullPointerException ex) {
+                } catch (ClassCastException | NullPointerException ex) {
                     Logging.getLogger().warning("Exception while evaluating binding", ex);
                     // ignore
                 }
@@ -8422,7 +8378,7 @@ public final class Bindings {
             @Override
             @ReturnsUnmodifiableCollection
             public ObservableList<?> getDependencies() {
-                return new ImmutableObservableList<Observable>(op, key);
+                return new ImmutableObservableList<>(op, key);
             }
         };
     }

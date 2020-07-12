@@ -75,8 +75,8 @@ public abstract class StringFormatter extends StringBinding {
         }
         if (args.length == 1) {
             final Object cur = args[0];
-            return cur instanceof ObservableValue ? convert((ObservableValue<?>) cur)
-                    : StringConstant.valueOf(cur.toString());
+            return cur instanceof ObservableValue ? convert((ObservableValue<?>) cur) :
+                    StringConstant.valueOf(cur.toString());
         }
         if (extractDependencies(args).length == 0) {
             final StringBuilder builder = new StringBuilder();

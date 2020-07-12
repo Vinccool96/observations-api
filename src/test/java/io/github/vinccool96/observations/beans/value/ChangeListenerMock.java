@@ -24,7 +24,8 @@ public class ChangeListenerMock<T> implements ChangeListener<T> {
         this.newValue = undefined;
     }
 
-    @Override public void changed(ObservableValue<? extends T> valueModel, T oldValue, T newValue) {
+    @Override
+    public void changed(ObservableValue<? extends T> valueModel, T oldValue, T newValue) {
         this.valueModel = valueModel;
         this.oldValue = oldValue;
         this.newValue = newValue;

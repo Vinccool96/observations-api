@@ -3,7 +3,6 @@ package io.github.vinccool96.observations.beans.binding;
 import io.github.vinccool96.observations.beans.property.IntegerProperty;
 import io.github.vinccool96.observations.beans.property.SimpleIntegerProperty;
 import io.github.vinccool96.observations.beans.value.ObservableIntegerValueStub;
-import io.github.vinccool96.observations.beans.value.ObservableValue;
 import io.github.vinccool96.observations.beans.value.ObservableValueStub;
 import io.github.vinccool96.observations.collections.ObservableCollections;
 import org.junit.Before;
@@ -46,10 +45,10 @@ public class IntegerExpressionTest {
 
     @Test
     public void testGetters() {
-        assertEquals((double) data, op1.doubleValue(), EPSILON);
+        assertEquals(data, op1.doubleValue(), EPSILON);
         assertEquals((float) data, op1.floatValue(), EPSILON);
-        assertEquals((long) data, op1.longValue());
-        assertEquals((int) data, op1.intValue());
+        assertEquals(data, op1.longValue());
+        assertEquals(data, op1.intValue());
     }
 
     @Test
@@ -175,7 +174,7 @@ public class IntegerExpressionTest {
 
     @Test
     public void testObjectToInteger() {
-        final ObservableValueStub<Integer> valueModel = new ObservableValueStub<Integer>();
+        final ObservableValueStub<Integer> valueModel = new ObservableValueStub<>();
         final IntegerExpression exp = IntegerExpression.integerExpression(valueModel);
 
         assertTrue(exp instanceof IntegerBinding);
@@ -189,7 +188,7 @@ public class IntegerExpressionTest {
         assertEquals(integer1, exp.intValue());
 
         // make sure we do not create unnecessary bindings
-        assertEquals(op1, IntegerExpression.integerExpression((ObservableValue) op1));
+        assertEquals(op1, IntegerExpression.integerExpression(op1));
     }
 
     @Test(expected = NullPointerException.class)

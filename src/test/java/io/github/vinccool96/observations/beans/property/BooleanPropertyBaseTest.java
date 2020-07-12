@@ -486,11 +486,13 @@ public class BooleanPropertyBaseTest {
             counter = 0;
         }
 
-        @Override public Object getBean() {
+        @Override
+        public Object getBean() {
             return bean;
         }
 
-        @Override public String getName() {
+        @Override
+        public String getName() {
             return name;
         }
 

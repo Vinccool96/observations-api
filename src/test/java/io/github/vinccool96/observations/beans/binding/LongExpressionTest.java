@@ -3,7 +3,6 @@ package io.github.vinccool96.observations.beans.binding;
 import io.github.vinccool96.observations.beans.property.LongProperty;
 import io.github.vinccool96.observations.beans.property.SimpleLongProperty;
 import io.github.vinccool96.observations.beans.value.ObservableLongValueStub;
-import io.github.vinccool96.observations.beans.value.ObservableValue;
 import io.github.vinccool96.observations.beans.value.ObservableValueStub;
 import io.github.vinccool96.observations.collections.ObservableCollections;
 import org.junit.Before;
@@ -48,7 +47,7 @@ public class LongExpressionTest {
     public void testGetters() {
         assertEquals((double) data, op1.doubleValue(), EPSILON);
         assertEquals((float) data, op1.floatValue(), EPSILON);
-        assertEquals((long) data, op1.longValue());
+        assertEquals(data, op1.longValue());
         assertEquals((int) data, op1.intValue());
     }
 
@@ -174,7 +173,7 @@ public class LongExpressionTest {
 
     @Test
     public void testObjectToLong() {
-        final ObservableValueStub<Long> valueModel = new ObservableValueStub<Long>();
+        final ObservableValueStub<Long> valueModel = new ObservableValueStub<>();
         final LongExpression exp = LongExpression.longExpression(valueModel);
 
         assertTrue(exp instanceof LongBinding);
@@ -187,7 +186,7 @@ public class LongExpressionTest {
         assertEquals(long1, exp.longValue());
 
         // make sure we do not create unnecessary bindings
-        assertEquals(op1, LongExpression.longExpression((ObservableValue) op1));
+        assertEquals(op1, LongExpression.longExpression(op1));
     }
 
     @Test(expected = NullPointerException.class)
