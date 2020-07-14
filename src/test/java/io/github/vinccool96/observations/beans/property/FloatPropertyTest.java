@@ -126,7 +126,7 @@ public class FloatPropertyTest {
 
     @Test
     public void testObjectToFloat() {
-        final ObjectProperty<Float> valueModel = new SimpleObjectProperty<Float>(2f);
+        final ObjectProperty<Float> valueModel = new SimpleObjectProperty<>(2f);
         final FloatProperty exp = FloatProperty.floatProperty(valueModel);
 
         assertEquals(2f, exp.floatValue(), EPSILON);
@@ -139,7 +139,7 @@ public class FloatPropertyTest {
         assertEquals(1234.0f, valueModel.getValue(), EPSILON);
     }
 
-    private class FloatPropertyStub extends FloatProperty {
+    private static class FloatPropertyStub extends FloatProperty {
 
         private final Object bean;
 

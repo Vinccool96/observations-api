@@ -83,7 +83,7 @@ public class StringPropertyTest {
         assertEquals("StringProperty [name: My name, value: " + VALUE_1 + "]", v5.toString());
     }
 
-    private class StringPropertyStub extends StringProperty {
+    private static class StringPropertyStub extends StringProperty {
 
         private final Object bean;
 

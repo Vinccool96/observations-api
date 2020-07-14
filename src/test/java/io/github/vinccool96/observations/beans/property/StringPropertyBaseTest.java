@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class StringPropertyBaseTest {
+@SuppressWarnings("SimplifiableJUnitAssertion") public class StringPropertyBaseTest {
 
     private static final Object NO_BEAN = null;
 
@@ -36,7 +36,7 @@ public class StringPropertyBaseTest {
     public void setUp() throws Exception {
         property = new StringPropertyMock();
         invalidationListener = new InvalidationListenerMock();
-        changeListener = new ChangeListenerMock<String>(UNDEFINED);
+        changeListener = new ChangeListenerMock<>(UNDEFINED);
     }
 
     private void attachInvalidationListener() {
@@ -64,6 +64,7 @@ public class StringPropertyBaseTest {
         assertFalse(property.isBound());
     }
 
+    @Test
     public void testInvalidationListener() {
         attachInvalidationListener();
         property.set(VALUE_2a);

@@ -31,7 +31,7 @@ public class DoublePropertyBaseTest {
     public void setUp() throws Exception {
         property = new DoublePropertyMock();
         invalidationListener = new InvalidationListenerMock();
-        changeListener = new ChangeListenerMock<Number>(UNDEFINED);
+        changeListener = new ChangeListenerMock<>(UNDEFINED);
     }
 
     private void attachInvalidationListener() {
@@ -50,12 +50,12 @@ public class DoublePropertyBaseTest {
     public void testConstructor() {
         final DoubleProperty p1 = new SimpleDoubleProperty();
         assertEquals(0.0, p1.get(), EPSILON);
-        assertEquals(Double.valueOf(0.0), p1.getValue(), EPSILON);
+        assertEquals(0.0, p1.getValue(), EPSILON);
         assertFalse(property.isBound());
 
         final DoubleProperty p2 = new SimpleDoubleProperty(-Math.PI);
         assertEquals(-Math.PI, p2.get(), EPSILON);
-        assertEquals(Double.valueOf(-Math.PI), p2.getValue(), EPSILON);
+        assertEquals(-Math.PI, p2.getValue(), EPSILON);
         assertFalse(property.isBound());
     }
 
@@ -253,7 +253,7 @@ public class DoublePropertyBaseTest {
         final double value1 = Math.PI;
         final double value2 = Math.E;
         attachInvalidationListener();
-        final ObservableValueStub<Number> v = new ObservableValueStub<Number>(value1);
+        final ObservableValueStub<Number> v = new ObservableValueStub<>(value1);
 
         property.bind(v);
         assertEquals(value1, property.get(), EPSILON);
@@ -293,7 +293,7 @@ public class DoublePropertyBaseTest {
         final double value1 = Math.PI;
         final double value2 = Math.E;
         attachChangeListener();
-        final ObservableValueStub<Number> v = new ObservableValueStub<Number>(value1);
+        final ObservableValueStub<Number> v = new ObservableValueStub<>(value1);
 
         property.bind(v);
         assertEquals(value1, property.get(), EPSILON);
@@ -404,7 +404,7 @@ public class DoublePropertyBaseTest {
         final double value2 = Math.E;
 
         attachInvalidationListener();
-        final ObservableValueStub<Number> v = new ObservableValueStub<Number>(value1);
+        final ObservableValueStub<Number> v = new ObservableValueStub<>(value1);
         property.bind(v);
         property.unbind();
         assertEquals(value1, property.get(), EPSILON);
@@ -524,11 +524,13 @@ public class DoublePropertyBaseTest {
             counter = 0;
         }
 
-        @Override public Object getBean() {
+        @Override
+        public Object getBean() {
             return bean;
         }
 
-        @Override public String getName() {
+        @Override
+        public String getName() {
             return name;
         }
 

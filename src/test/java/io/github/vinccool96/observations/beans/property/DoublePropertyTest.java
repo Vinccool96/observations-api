@@ -121,12 +121,11 @@ public class DoublePropertyTest {
 
         exp.set(1234.0);
         assertEquals(1234.0, valueModel.doubleValue(), EPSILON);
-
     }
 
     @Test
     public void testObjectToDouble() {
-        final ObjectProperty<Double> valueModel = new SimpleObjectProperty<Double>();
+        final ObjectProperty<Double> valueModel = new SimpleObjectProperty<>();
         final DoubleProperty exp = DoubleProperty.doubleProperty(valueModel);
 
         assertEquals(0.0, exp.doubleValue(), EPSILON);
@@ -139,7 +138,7 @@ public class DoublePropertyTest {
         assertEquals(1234.0, valueModel.getValue(), EPSILON);
     }
 
-    private class DoublePropertyStub extends DoubleProperty {
+    private static class DoublePropertyStub extends DoubleProperty {
 
         private final Object bean;
 

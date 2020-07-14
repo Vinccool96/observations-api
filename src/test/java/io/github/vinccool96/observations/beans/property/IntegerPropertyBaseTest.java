@@ -33,7 +33,7 @@ public class IntegerPropertyBaseTest {
     public void setUp() throws Exception {
         property = new IntegerPropertyMock();
         invalidationListener = new InvalidationListenerMock();
-        changeListener = new ChangeListenerMock<Number>(UNDEFINED);
+        changeListener = new ChangeListenerMock<>(UNDEFINED);
     }
 
     private void attachInvalidationListener() {
@@ -255,7 +255,7 @@ public class IntegerPropertyBaseTest {
         final int value1 = 42;
         final int value2 = -7;
         attachInvalidationListener();
-        final ObservableValueStub<Number> v = new ObservableValueStub<Number>(value1);
+        final ObservableValueStub<Number> v = new ObservableValueStub<>(value1);
 
         property.bind(v);
         assertEquals(value1, property.get());
@@ -295,7 +295,7 @@ public class IntegerPropertyBaseTest {
         final int value1 = 42;
         final int value2 = -7;
         attachChangeListener();
-        final ObservableValueStub<Number> v = new ObservableValueStub<Number>(value1);
+        final ObservableValueStub<Number> v = new ObservableValueStub<>(value1);
 
         property.bind(v);
         assertEquals(value1, property.get());
@@ -400,7 +400,7 @@ public class IntegerPropertyBaseTest {
         final int value2 = -42;
 
         attachInvalidationListener();
-        final ObservableValueStub<Number> v = new ObservableValueStub<Number>(value1);
+        final ObservableValueStub<Number> v = new ObservableValueStub<>(value1);
         property.bind(v);
         property.unbind();
         assertEquals(value1, property.get());
@@ -519,11 +519,13 @@ public class IntegerPropertyBaseTest {
             counter = 0;
         }
 
-        @Override public Object getBean() {
+        @Override
+        public Object getBean() {
             return bean;
         }
 
-        @Override public String getName() {
+        @Override
+        public String getName() {
             return name;
         }
 

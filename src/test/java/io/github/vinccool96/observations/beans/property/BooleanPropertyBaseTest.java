@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings("SimplifiableJUnitAssertion")
 public class BooleanPropertyBaseTest {
 
     private static final Object NO_BEAN = null;
@@ -29,7 +30,7 @@ public class BooleanPropertyBaseTest {
     public void setUp() throws Exception {
         property = new BooleanPropertyMock();
         invalidationListener = new InvalidationListenerMock();
-        changeListener = new ChangeListenerMock<Boolean>(UNDEFINED);
+        changeListener = new ChangeListenerMock<>(UNDEFINED);
     }
 
     private void attachInvalidationListener() {
@@ -249,7 +250,7 @@ public class BooleanPropertyBaseTest {
     @Test
     public void testLazyBind_generic() {
         attachInvalidationListener();
-        final ObservableObjectValueStub<Boolean> v = new ObservableObjectValueStub<Boolean>(true);
+        final ObservableObjectValueStub<Boolean> v = new ObservableObjectValueStub<>(true);
 
         property.bind(v);
         assertEquals(true, property.get());
@@ -287,7 +288,7 @@ public class BooleanPropertyBaseTest {
     @Test
     public void testEagerBind_generic() {
         attachChangeListener();
-        final ObservableObjectValueStub<Boolean> v = new ObservableObjectValueStub<Boolean>(true);
+        final ObservableObjectValueStub<Boolean> v = new ObservableObjectValueStub<>(true);
 
         property.bind(v);
         assertEquals(true, property.get());
