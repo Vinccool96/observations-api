@@ -123,7 +123,7 @@ public class LongPropertyTest {
 
     @Test
     public void testObjectToLong() {
-        final ObjectProperty<Long> valueModel = new SimpleObjectProperty<Long>(2L);
+        final ObjectProperty<Long> valueModel = new SimpleObjectProperty<>(2L);
         final LongProperty exp = LongProperty.longProperty(valueModel);
 
         assertEquals(2L, exp.longValue());
@@ -136,7 +136,7 @@ public class LongPropertyTest {
         assertEquals(Long.valueOf(10L), valueModel.getValue());
     }
 
-    private class LongPropertyStub extends LongProperty {
+    private static class LongPropertyStub extends LongProperty {
 
         private final Object bean;
 

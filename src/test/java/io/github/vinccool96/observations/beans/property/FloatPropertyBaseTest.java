@@ -35,7 +35,7 @@ public class FloatPropertyBaseTest {
     public void setUp() throws Exception {
         property = new FloatPropertyMock();
         invalidationListener = new InvalidationListenerMock();
-        changeListener = new ChangeListenerMock<Number>(UNDEFINED);
+        changeListener = new ChangeListenerMock<>(UNDEFINED);
     }
 
     private void attachInvalidationListener() {
@@ -54,12 +54,12 @@ public class FloatPropertyBaseTest {
     public void testConstructor() {
         final FloatProperty p1 = new SimpleFloatProperty();
         assertEquals(0.0f, p1.get(), EPSILON);
-        assertEquals(Float.valueOf(0.0f), p1.getValue(), EPSILON);
+        assertEquals(0.0f, p1.getValue(), EPSILON);
         assertFalse(property.isBound());
 
         final FloatProperty p2 = new SimpleFloatProperty(-PI);
         assertEquals(-PI, p2.get(), EPSILON);
-        assertEquals(Float.valueOf(-PI), p2.getValue(), EPSILON);
+        assertEquals(-PI, p2.getValue(), EPSILON);
         assertFalse(property.isBound());
     }
 
@@ -259,7 +259,7 @@ public class FloatPropertyBaseTest {
         final float value1 = (float) Math.PI;
         final float value2 = (float) Math.E;
         attachInvalidationListener();
-        final ObservableValueStub<Number> v = new ObservableValueStub<Number>(value1);
+        final ObservableValueStub<Number> v = new ObservableValueStub<>(value1);
 
         property.bind(v);
         assertEquals(value1, property.get(), EPSILON);
@@ -299,7 +299,7 @@ public class FloatPropertyBaseTest {
         final float value1 = (float) Math.PI;
         final float value2 = (float) Math.E;
         attachChangeListener();
-        final ObservableValueStub<Number> v = new ObservableValueStub<Number>(value1);
+        final ObservableValueStub<Number> v = new ObservableValueStub<>(value1);
 
         property.bind(v);
         assertEquals(value1, property.get(), EPSILON);
@@ -410,7 +410,7 @@ public class FloatPropertyBaseTest {
         final float value2 = (float) Math.E;
 
         attachInvalidationListener();
-        final ObservableValueStub<Number> v = new ObservableValueStub<Number>(value1);
+        final ObservableValueStub<Number> v = new ObservableValueStub<>(value1);
         property.bind(v);
         property.unbind();
         assertEquals(value1, property.get(), EPSILON);
@@ -530,11 +530,13 @@ public class FloatPropertyBaseTest {
             counter = 0;
         }
 
-        @Override public Object getBean() {
+        @Override
+        public Object getBean() {
             return bean;
         }
 
-        @Override public String getName() {
+        @Override
+        public String getName() {
             return name;
         }
 

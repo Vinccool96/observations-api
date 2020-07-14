@@ -30,10 +30,10 @@ public class LongPropertyBaseTest {
     private ChangeListenerMock<Number> changeListener;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         property = new LongPropertyMock();
         invalidationListener = new InvalidationListenerMock();
-        changeListener = new ChangeListenerMock<Number>(UNDEFINED);
+        changeListener = new ChangeListenerMock<>(UNDEFINED);
     }
 
     private void attachInvalidationListener() {
@@ -255,7 +255,7 @@ public class LongPropertyBaseTest {
         final long value1 = 9876543212345L;
         final long value2 = -123456789098765L;
         attachInvalidationListener();
-        final ObservableValueStub<Number> v = new ObservableValueStub<Number>(value1);
+        final ObservableValueStub<Number> v = new ObservableValueStub<>(value1);
 
         property.bind(v);
         assertEquals(value1, property.get());
@@ -295,7 +295,7 @@ public class LongPropertyBaseTest {
         final long value1 = 9876543212345L;
         final long value2 = -123456789098765L;
         attachChangeListener();
-        final ObservableValueStub<Number> v = new ObservableValueStub<Number>(value1);
+        final ObservableValueStub<Number> v = new ObservableValueStub<>(value1);
 
         property.bind(v);
         assertEquals(value1, property.get());
@@ -400,7 +400,7 @@ public class LongPropertyBaseTest {
         final long value2 = -123456789098765L;
 
         attachInvalidationListener();
-        final ObservableValueStub<Number> v = new ObservableValueStub<Number>(value1);
+        final ObservableValueStub<Number> v = new ObservableValueStub<>(value1);
         property.bind(v);
         property.unbind();
         assertEquals(value1, property.get());
@@ -519,11 +519,13 @@ public class LongPropertyBaseTest {
             counter = 0;
         }
 
-        @Override public Object getBean() {
+        @Override
+        public Object getBean() {
             return bean;
         }
 
-        @Override public String getName() {
+        @Override
+        public String getName() {
             return name;
         }
 
