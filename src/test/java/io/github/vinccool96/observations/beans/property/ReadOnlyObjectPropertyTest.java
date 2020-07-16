@@ -2,7 +2,6 @@ package io.github.vinccool96.observations.beans.property;
 
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.beans.value.ChangeListener;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -10,10 +9,6 @@ import static org.junit.Assert.assertEquals;
 public class ReadOnlyObjectPropertyTest {
 
     private static final Object DEFAULT = null;
-
-    @Before
-    public void setUp() throws Exception {
-    }
 
     @Test
     public void testToString() {
@@ -51,29 +46,19 @@ public class ReadOnlyObjectPropertyTest {
             this.name = name;
         }
 
-        @Override public Object getBean() {
+        @Override
+        public Object getBean() {
             return bean;
         }
 
-        @Override public String getName() {
+        @Override
+        public String getName() {
             return name;
         }
 
-        @Override public Object get() {
+        @Override
+        public Object get() {
             return null;
-        }
-
-        @Override
-        public void addListener(ChangeListener<? super Object> listener) {
-        }
-
-        @Override
-        public void removeListener(ChangeListener<? super Object> listener) {
-        }
-
-        @Override
-        public boolean isChangeListenerAlreadyAdded(ChangeListener<? super Object> listener) {
-            return false;
         }
 
         @Override
@@ -86,6 +71,19 @@ public class ReadOnlyObjectPropertyTest {
 
         @Override
         public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return false;
+        }
+
+        @Override
+        public void addListener(ChangeListener<? super Object> listener) {
+        }
+
+        @Override
+        public void removeListener(ChangeListener<? super Object> listener) {
+        }
+
+        @Override
+        public boolean isChangeListenerAlreadyAdded(ChangeListener<? super Object> listener) {
             return false;
         }
 

@@ -18,40 +18,47 @@ import io.github.vinccool96.observations.util.ArrayUtils;
 @SuppressWarnings("unchecked")
 public abstract class ObservableArrayBase<T extends ObservableArray<T>> implements ObservableArray<T> {
 
-    private ArrayListenerHelper<T> listenerHelper;
+    private ArrayListenerHelper<T> helper;
 
     @Override
     public final void addListener(InvalidationListener listener) {
-        if (listenerHelper == null || !isInvalidationListenerAlreadyAdded(listener)) {
-            listenerHelper = ArrayListenerHelper.addListener(listenerHelper, (T) this, listener);
+        if (!isInvalidationListenerAlreadyAdded(listener)) {
+            helper = ArrayListenerHelper.addListener(helper, (T) this, listener);
         }
     }
 
     @Override
     public final void removeListener(InvalidationListener listener) {
-        listenerHelper = ArrayListenerHelper.removeListener(listenerHelper, listener);
+        if (isInvalidationListenerAlreadyAdded(listener)) {
+            helper = ArrayListenerHelper.removeListener(helper, listener);
+        }
     }
 
     @Override
     public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-        return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
+        if (listener == null) {
+            throw new NullPointerException();
+        }
+        return helper != null && ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     @Override
     public final void addListener(ArrayChangeListener<T> listener) {
-        if (listenerHelper == null || !isArrayChangeListenerAlreadyAdded(listener)) {
-            listenerHelper = ArrayListenerHelper.addListener(listenerHelper, (T) this, listener);
+        if (!isArrayChangeListenerAlreadyAdded(listener)) {
+            helper = ArrayListenerHelper.addListener(helper, (T) this, listener);
         }
     }
 
     @Override
     public final void removeListener(ArrayChangeListener<T> listener) {
-        listenerHelper = ArrayListenerHelper.removeListener(listenerHelper, listener);
+        if (isArrayChangeListenerAlreadyAdded(listener)) {
+            helper = ArrayListenerHelper.removeListener(helper, listener);
+        }
     }
 
     @Override
     public boolean isArrayChangeListenerAlreadyAdded(ArrayChangeListener<T> listener) {
-        return ArrayUtils.getInstance().contains(this.listenerHelper.getChangeListeners(), listener);
+        return helper != null && ArrayUtils.getInstance().contains(this.helper.getChangeListeners(), listener);
     }
 
     /**
@@ -65,7 +72,7 @@ public abstract class ObservableArrayBase<T extends ObservableArray<T>> implemen
      *         index of the change to
      */
     protected final void fireChange(boolean sizeChanged, int from, int to) {
-        ArrayListenerHelper.fireValueChangedEvent(listenerHelper, sizeChanged, from, to);
+        ArrayListenerHelper.fireValueChangedEvent(helper, sizeChanged, from, to);
     }
 
 }
