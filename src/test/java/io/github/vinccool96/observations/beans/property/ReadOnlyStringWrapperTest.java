@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings("SimplifiableJUnitAssertion")
 public class ReadOnlyStringWrapperTest {
 
     private static final String UNDEFINED = null;
@@ -32,13 +33,13 @@ public class ReadOnlyStringWrapperTest {
     private ChangeListenerMock<String> publicChangeListener;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         property = new ReadOnlyStringWrapperMock();
         readOnlyProperty = property.getReadOnlyProperty();
         internalInvalidationListener = new InvalidationListenerMock();
         publicInvalidationListener = new InvalidationListenerMock();
-        internalChangeListener = new ChangeListenerMock<String>(UNDEFINED);
-        publicChangeListener = new ChangeListenerMock<String>(UNDEFINED);
+        internalChangeListener = new ChangeListenerMock<>(UNDEFINED);
+        publicChangeListener = new ChangeListenerMock<>(UNDEFINED);
     }
 
     private void attachInvalidationListeners() {
@@ -66,13 +67,13 @@ public class ReadOnlyStringWrapperTest {
     public void testConstructor_NoArguments() {
         final ReadOnlyStringWrapper p1 = new ReadOnlyStringWrapper();
         assertEquals(DEFAULT, p1.get());
-        assertEquals((String) DEFAULT, p1.getValue());
+        assertEquals(DEFAULT, p1.getValue());
         assertFalse(property.isBound());
         assertEquals(null, p1.getBean());
         assertEquals("", p1.getName());
         final ReadOnlyStringProperty r1 = p1.getReadOnlyProperty();
         assertEquals(DEFAULT, r1.get());
-        assertEquals((String) DEFAULT, r1.getValue());
+        assertEquals(DEFAULT, r1.getValue());
         assertEquals(null, r1.getBean());
         assertEquals("", r1.getName());
     }
@@ -81,13 +82,13 @@ public class ReadOnlyStringWrapperTest {
     public void testConstructor_InitialValue() {
         final ReadOnlyStringWrapper p1 = new ReadOnlyStringWrapper(VALUE_1);
         assertEquals(VALUE_1, p1.get());
-        assertEquals((String) VALUE_1, p1.getValue());
+        assertEquals(VALUE_1, p1.getValue());
         assertFalse(property.isBound());
         assertEquals(null, p1.getBean());
         assertEquals("", p1.getName());
         final ReadOnlyStringProperty r1 = p1.getReadOnlyProperty();
         assertEquals(VALUE_1, r1.get());
-        assertEquals((String) VALUE_1, r1.getValue());
+        assertEquals(VALUE_1, r1.getValue());
         assertEquals(null, r1.getBean());
         assertEquals("", r1.getName());
     }
@@ -98,13 +99,13 @@ public class ReadOnlyStringWrapperTest {
         final String name = "My name";
         final ReadOnlyStringWrapper p1 = new ReadOnlyStringWrapper(bean, name);
         assertEquals(DEFAULT, p1.get());
-        assertEquals((String) DEFAULT, p1.getValue());
+        assertEquals(DEFAULT, p1.getValue());
         assertFalse(property.isBound());
         assertEquals(bean, p1.getBean());
         assertEquals(name, p1.getName());
         final ReadOnlyStringProperty r1 = p1.getReadOnlyProperty();
         assertEquals(DEFAULT, r1.get());
-        assertEquals((String) DEFAULT, r1.getValue());
+        assertEquals(DEFAULT, r1.getValue());
         assertEquals(bean, r1.getBean());
         assertEquals(name, r1.getName());
     }
@@ -115,13 +116,13 @@ public class ReadOnlyStringWrapperTest {
         final String name = "My name";
         final ReadOnlyStringWrapper p1 = new ReadOnlyStringWrapper(bean, name, VALUE_1);
         assertEquals(VALUE_1, p1.get());
-        assertEquals((String) VALUE_1, p1.getValue());
+        assertEquals(VALUE_1, p1.getValue());
         assertFalse(property.isBound());
         assertEquals(bean, p1.getBean());
         assertEquals(name, p1.getName());
         final ReadOnlyStringProperty r1 = p1.getReadOnlyProperty();
         assertEquals(VALUE_1, r1.get());
-        assertEquals((String) VALUE_1, r1.getValue());
+        assertEquals(VALUE_1, r1.getValue());
         assertEquals(bean, r1.getBean());
         assertEquals(name, r1.getName());
     }
@@ -416,7 +417,7 @@ public class ReadOnlyStringWrapperTest {
     @Test
     public void testLazyBind_generic() {
         attachInvalidationListeners();
-        final ObservableObjectValueStub<String> v = new ObservableObjectValueStub<String>(VALUE_1);
+        final ObservableObjectValueStub<String> v = new ObservableObjectValueStub<>(VALUE_1);
 
         property.bind(v);
         assertEquals(VALUE_1, property.get());
@@ -456,7 +457,7 @@ public class ReadOnlyStringWrapperTest {
     @Test
     public void testInternalEagerBind_generic() {
         attachInternalChangeListener();
-        final ObservableObjectValueStub<String> v = new ObservableObjectValueStub<String>(VALUE_1);
+        final ObservableObjectValueStub<String> v = new ObservableObjectValueStub<>(VALUE_1);
 
         property.bind(v);
         assertEquals(VALUE_1, property.get());
@@ -492,7 +493,7 @@ public class ReadOnlyStringWrapperTest {
     @Test
     public void testPublicEagerBind_generic() {
         attachPublicChangeListener();
-        final ObservableObjectValueStub<String> v = new ObservableObjectValueStub<String>(VALUE_1);
+        final ObservableObjectValueStub<String> v = new ObservableObjectValueStub<>(VALUE_1);
 
         property.bind(v);
         assertEquals(VALUE_1, property.get());

@@ -2,7 +2,6 @@ package io.github.vinccool96.observations.beans.property;
 
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.beans.value.ChangeListener;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -12,10 +11,6 @@ public class ReadOnlyFloatPropertyTest {
     private static final float DEFAULT = 0.0f;
 
     private static final float EPSILON = 1e-6f;
-
-    @Before
-    public void setUp() throws Exception {
-    }
 
     @Test
     public void testToString() {
@@ -56,7 +51,7 @@ public class ReadOnlyFloatPropertyTest {
 
     @Test
     public void testObjectToFloat() {
-        final ReadOnlyObjectWrapper<Float> valueModel = new ReadOnlyObjectWrapper<Float>();
+        final ReadOnlyObjectWrapper<Float> valueModel = new ReadOnlyObjectWrapper<>();
         final ReadOnlyFloatProperty exp = ReadOnlyFloatProperty.readOnlyFloatProperty(valueModel.getReadOnlyProperty());
 
         assertEquals(0.0, exp.floatValue(), EPSILON);
@@ -77,15 +72,18 @@ public class ReadOnlyFloatPropertyTest {
             this.name = name;
         }
 
-        @Override public Object getBean() {
+        @Override
+        public Object getBean() {
             return bean;
         }
 
-        @Override public String getName() {
+        @Override
+        public String getName() {
             return name;
         }
 
-        @Override public float get() {
+        @Override
+        public float get() {
             return 0.0f;
         }
 

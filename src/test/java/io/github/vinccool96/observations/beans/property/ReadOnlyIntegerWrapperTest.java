@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings("SimplifiableJUnitAssertion")
 public class ReadOnlyIntegerWrapperTest {
 
     private static final Integer UNDEFINED = null;
@@ -32,13 +33,13 @@ public class ReadOnlyIntegerWrapperTest {
     private ChangeListenerMock<Number> publicChangeListener;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         property = new ReadOnlyIntegerWrapperMock();
         readOnlyProperty = property.getReadOnlyProperty();
         internalInvalidationListener = new InvalidationListenerMock();
         publicInvalidationListener = new InvalidationListenerMock();
-        internalChangeListener = new ChangeListenerMock<Number>(UNDEFINED);
-        publicChangeListener = new ChangeListenerMock<Number>(UNDEFINED);
+        internalChangeListener = new ChangeListenerMock<>(UNDEFINED);
+        publicChangeListener = new ChangeListenerMock<>(UNDEFINED);
     }
 
     private void attachInvalidationListeners() {
@@ -416,7 +417,7 @@ public class ReadOnlyIntegerWrapperTest {
     @Test
     public void testLazyBind_generic() {
         attachInvalidationListeners();
-        final ObservableObjectValueStub<Integer> v = new ObservableObjectValueStub<Integer>(VALUE_1);
+        final ObservableObjectValueStub<Integer> v = new ObservableObjectValueStub<>(VALUE_1);
 
         property.bind(v);
         assertEquals(VALUE_1, property.get());
@@ -456,7 +457,7 @@ public class ReadOnlyIntegerWrapperTest {
     @Test
     public void testInternalEagerBind_generic() {
         attachInternalChangeListener();
-        final ObservableObjectValueStub<Integer> v = new ObservableObjectValueStub<Integer>(VALUE_1);
+        final ObservableObjectValueStub<Integer> v = new ObservableObjectValueStub<>(VALUE_1);
 
         property.bind(v);
         assertEquals(VALUE_1, property.get());
@@ -492,7 +493,7 @@ public class ReadOnlyIntegerWrapperTest {
     @Test
     public void testPublicEagerBind_generic() {
         attachPublicChangeListener();
-        final ObservableObjectValueStub<Integer> v = new ObservableObjectValueStub<Integer>(VALUE_1);
+        final ObservableObjectValueStub<Integer> v = new ObservableObjectValueStub<>(VALUE_1);
 
         property.bind(v);
         assertEquals(VALUE_1, property.get());

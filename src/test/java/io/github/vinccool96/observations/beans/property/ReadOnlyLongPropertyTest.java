@@ -2,7 +2,6 @@ package io.github.vinccool96.observations.beans.property;
 
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.beans.value.ChangeListener;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -10,10 +9,6 @@ import static org.junit.Assert.assertEquals;
 public class ReadOnlyLongPropertyTest {
 
     private static final long DEFAULT = 0L;
-
-    @Before
-    public void setUp() throws Exception {
-    }
 
     @Test
     public void testToString() {
@@ -54,7 +49,7 @@ public class ReadOnlyLongPropertyTest {
 
     @Test
     public void testObjectToLong() {
-        final ReadOnlyObjectWrapper<Long> valueModel = new ReadOnlyObjectWrapper<Long>();
+        final ReadOnlyObjectWrapper<Long> valueModel = new ReadOnlyObjectWrapper<>();
         final ReadOnlyLongProperty exp = ReadOnlyLongProperty.readOnlyLongProperty(valueModel.getReadOnlyProperty());
 
         assertEquals(0L, exp.longValue());
@@ -75,15 +70,18 @@ public class ReadOnlyLongPropertyTest {
             this.name = name;
         }
 
-        @Override public Object getBean() {
+        @Override
+        public Object getBean() {
             return bean;
         }
 
-        @Override public String getName() {
+        @Override
+        public String getName() {
             return name;
         }
 
-        @Override public long get() {
+        @Override
+        public long get() {
             return 0L;
         }
 

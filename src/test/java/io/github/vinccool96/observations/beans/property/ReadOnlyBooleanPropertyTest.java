@@ -2,18 +2,15 @@ package io.github.vinccool96.observations.beans.property;
 
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.beans.value.ChangeListener;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
+@SuppressWarnings("SimplifiableJUnitAssertion")
 public class ReadOnlyBooleanPropertyTest {
 
     private static final boolean DEFAULT = false;
-
-    @Before
-    public void setUp() throws Exception {
-    }
 
     @Test
     public void testToString() {
@@ -54,11 +51,11 @@ public class ReadOnlyBooleanPropertyTest {
 
     @Test
     public void testObjectToBoolean() {
-        final ReadOnlyObjectWrapper<Boolean> valueModel = new ReadOnlyObjectWrapper<Boolean>();
+        final ReadOnlyObjectWrapper<Boolean> valueModel = new ReadOnlyObjectWrapper<>();
         final ReadOnlyBooleanProperty exp =
                 ReadOnlyBooleanProperty.readOnlyBooleanProperty(valueModel.getReadOnlyProperty());
 
-        assertEquals(false, exp.get());
+        assertFalse(exp.get());
         valueModel.set(true);
         assertEquals(true, exp.get());
         valueModel.set(false);
@@ -92,19 +89,6 @@ public class ReadOnlyBooleanPropertyTest {
         }
 
         @Override
-        public void addListener(ChangeListener<? super Boolean> listener) {
-        }
-
-        @Override
-        public void removeListener(ChangeListener<? super Boolean> listener) {
-        }
-
-        @Override
-        public boolean isChangeListenerAlreadyAdded(ChangeListener<? super Boolean> listener) {
-            return false;
-        }
-
-        @Override
         public void addListener(InvalidationListener listener) {
         }
 
@@ -114,6 +98,19 @@ public class ReadOnlyBooleanPropertyTest {
 
         @Override
         public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return false;
+        }
+
+        @Override
+        public void addListener(ChangeListener<? super Boolean> listener) {
+        }
+
+        @Override
+        public void removeListener(ChangeListener<? super Boolean> listener) {
+        }
+
+        @Override
+        public boolean isChangeListenerAlreadyAdded(ChangeListener<? super Boolean> listener) {
             return false;
         }
 

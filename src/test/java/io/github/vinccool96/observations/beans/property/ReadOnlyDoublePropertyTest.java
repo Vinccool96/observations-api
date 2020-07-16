@@ -2,7 +2,6 @@ package io.github.vinccool96.observations.beans.property;
 
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.beans.value.ChangeListener;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -12,10 +11,6 @@ public class ReadOnlyDoublePropertyTest {
     private static final double DEFAULT = 0.0;
 
     private static final float EPSILON = 1e-6f;
-
-    @Before
-    public void setUp() throws Exception {
-    }
 
     @Test
     public void testToString() {
@@ -56,7 +51,7 @@ public class ReadOnlyDoublePropertyTest {
 
     @Test
     public void testObjectToDouble() {
-        final ReadOnlyObjectWrapper<Double> valueModel = new ReadOnlyObjectWrapper<Double>();
+        final ReadOnlyObjectWrapper<Double> valueModel = new ReadOnlyObjectWrapper<>();
         final ReadOnlyDoubleProperty exp =
                 ReadOnlyDoubleProperty.readOnlyDoubleProperty(valueModel.getReadOnlyProperty());
 
@@ -78,15 +73,18 @@ public class ReadOnlyDoublePropertyTest {
             this.name = name;
         }
 
-        @Override public Object getBean() {
+        @Override
+        public Object getBean() {
             return bean;
         }
 
-        @Override public String getName() {
+        @Override
+        public String getName() {
             return name;
         }
 
-        @Override public double get() {
+        @Override
+        public double get() {
             return 0.0;
         }
 

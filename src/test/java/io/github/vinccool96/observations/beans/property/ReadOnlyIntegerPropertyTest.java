@@ -2,7 +2,6 @@ package io.github.vinccool96.observations.beans.property;
 
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.beans.value.ChangeListener;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -10,10 +9,6 @@ import static org.junit.Assert.assertEquals;
 public class ReadOnlyIntegerPropertyTest {
 
     private static final int DEFAULT = 0;
-
-    @Before
-    public void setUp() throws Exception {
-    }
 
     @Test
     public void testToString() {
@@ -54,7 +49,7 @@ public class ReadOnlyIntegerPropertyTest {
 
     @Test
     public void testObjectToInteger() {
-        final ReadOnlyObjectWrapper<Integer> valueModel = new ReadOnlyObjectWrapper<Integer>();
+        final ReadOnlyObjectWrapper<Integer> valueModel = new ReadOnlyObjectWrapper<>();
         final ReadOnlyIntegerProperty exp =
                 ReadOnlyIntegerProperty.readOnlyIntegerProperty(valueModel.getReadOnlyProperty());
 
