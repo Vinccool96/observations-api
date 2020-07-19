@@ -1,7 +1,5 @@
-package io.github.vinccool96.observations.sun.adapter;
+package io.github.vinccool96.observations.sun.property.adapter;
 
-import io.github.vinccool96.observations.sun.property.adapter.JavaBeanPropertyBuilderHelper;
-import io.github.vinccool96.observations.sun.property.adapter.PropertyDescriptor;
 import org.junit.Before;
 import org.junit.Test;
 
