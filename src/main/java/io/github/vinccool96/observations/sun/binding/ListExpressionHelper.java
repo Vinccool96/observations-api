@@ -21,7 +21,7 @@ import java.util.Arrays;
  * thread-safe.
  * <p>
  * For the {@code ExpressionHelperBase} that is used with {@link io.github.vinccool96.observations.collections.ObservableListBase},
- * please refer to {@link io.github.vinccool96.observations.sun.collections.ListListenerHelper}
+ * please refer to {@link io.github.vinccool96.observations.sun.collections.ListListenerHelper}.
  */
 @SuppressWarnings("unchecked")
 public abstract class ListExpressionHelper<E> extends ExpressionHelperBase {
