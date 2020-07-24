@@ -1,7 +1,7 @@
 package io.github.vinccool96.observations.collections;
 
 import io.github.vinccool96.observations.beans.InvalidationListener;
-import io.github.vinccool96.observations.sun.binding.ListListenerHelper;
+import io.github.vinccool96.observations.sun.collections.ListListenerHelper;
 import io.github.vinccool96.observations.util.ArrayUtils;
 
 import java.util.AbstractList;

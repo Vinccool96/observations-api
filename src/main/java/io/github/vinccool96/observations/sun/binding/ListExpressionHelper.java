@@ -19,6 +19,9 @@ import java.util.Arrays;
  * <p>
  * This implementation can handle adding and removing listeners while the observers are being notified, but it is not
  * thread-safe.
+ * <p>
+ * For the {@code ExpressionHelperBase} that is used with {@link io.github.vinccool96.observations.collections.ObservableListBase},
+ * please refer to {@link io.github.vinccool96.observations.sun.collections.ListListenerHelper}
  */
 @SuppressWarnings("unchecked")
 public abstract class ListExpressionHelper<E> extends ExpressionHelperBase {

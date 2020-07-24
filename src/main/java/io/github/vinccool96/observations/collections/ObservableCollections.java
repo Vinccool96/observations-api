@@ -2,7 +2,6 @@ package io.github.vinccool96.observations.collections;
 
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.beans.Observable;
-import io.github.vinccool96.observations.sun.binding.ListListenerHelper;
 import io.github.vinccool96.observations.sun.collections.*;
 import io.github.vinccool96.observations.sun.collections.annotations.ReturnsUnmodifiableCollection;
 import io.github.vinccool96.observations.util.ArrayUtils;
