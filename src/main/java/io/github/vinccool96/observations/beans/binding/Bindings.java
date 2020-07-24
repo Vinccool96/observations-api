@@ -43,7 +43,7 @@ import java.util.concurrent.Callable;
  * @see Binding
  * @see NumberBinding
  */
-@SuppressWarnings({"unused", "UnusedReturnValue"})
+@SuppressWarnings({"unused", "UnusedReturnValue", "RedundantSuppression"})
 public final class Bindings {
 
     private Bindings() {
