@@ -1382,7 +1382,7 @@ public class ObservableCollections {
 
     private static class SynchronizedObservableList<T> extends SynchronizedList<T> implements ObservableList<T> {
 
-        private ListListenerHelper helper;
+        private ListListenerHelper<T> helper;
 
         private final ObservableList<T> backingList;
 
@@ -1393,7 +1393,7 @@ public class ObservableCollections {
             this.backingList = seq;
             listener = c -> ListListenerHelper
                     .fireValueChangedEvent(helper, new SourceAdapterChange<>(SynchronizedObservableList.this, c));
-            backingList.addListener(new WeakListChangeListener<T>(listener));
+            backingList.addListener(new WeakListChangeListener<>(listener));
         }
 
         SynchronizedObservableList(ObservableList<T> seq) {
@@ -1445,7 +1445,7 @@ public class ObservableCollections {
         @Override
         public final void addListener(InvalidationListener listener) {
             synchronized (mutex) {
-                if (helper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+                if (!isInvalidationListenerAlreadyAdded(listener)) {
                     helper = ListListenerHelper.addListener(helper, listener);
                 }
             }
@@ -1454,19 +1454,21 @@ public class ObservableCollections {
         @Override
         public final void removeListener(InvalidationListener listener) {
             synchronized (mutex) {
-                helper = ListListenerHelper.removeListener(helper, listener);
+                if (isInvalidationListenerAlreadyAdded(listener)) {
+                    helper = ListListenerHelper.removeListener(helper, listener);
+                }
             }
         }
 
         @Override
         public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-            return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
+            return helper != null && ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
         }
 
         @Override
         public void addListener(ListChangeListener<? super T> listener) {
             synchronized (mutex) {
-                if (helper == null || !isListChangeListenerAlreadyAdded(listener)) {
+                if (!isListChangeListenerAlreadyAdded(listener)) {
                     helper = ListListenerHelper.addListener(helper, listener);
                 }
             }
@@ -1475,19 +1477,20 @@ public class ObservableCollections {
         @Override
         public void removeListener(ListChangeListener<? super T> listener) {
             synchronized (mutex) {
-                helper = ListListenerHelper.removeListener(helper, listener);
+                if (isListChangeListenerAlreadyAdded(listener)) {
+                    helper = ListListenerHelper.removeListener(helper, listener);
+                }
             }
         }
 
         @Override
         public boolean isListChangeListenerAlreadyAdded(ListChangeListener<? super T> listener) {
-            return ArrayUtils.getInstance().contains(this.helper.getChangeListeners(), listener);
+            return helper != null && ArrayUtils.getInstance().contains(this.helper.getChangeListeners(), listener);
         }
 
     }
 
-    private static class CheckedObservableList<T> extends ObservableListBase<T>
-            implements ObservableList<T> {
+    private static class CheckedObservableList<T> extends ObservableListBase<T> implements ObservableList<T> {
 
         private final ObservableList<T> list;
 

@@ -23,7 +23,7 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
         }
     }
 
-    public static <T> BidirectionalBinding bind(Property<T> property1, Property<T> property2) {
+    public static <T> BidirectionalBinding<T> bind(Property<T> property1, Property<T> property2) {
         checkParameters(property1, property2);
         final BidirectionalBinding binding =
                 ((property1 instanceof DoubleProperty) && (property2 instanceof DoubleProperty)) ?
