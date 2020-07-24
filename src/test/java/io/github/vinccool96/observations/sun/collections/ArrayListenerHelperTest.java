@@ -5,7 +5,6 @@ import io.github.vinccool96.observations.beans.InvalidationListenerMock;
 import io.github.vinccool96.observations.beans.Observable;
 import io.github.vinccool96.observations.collections.ArrayChangeListener;
 import io.github.vinccool96.observations.collections.MockArrayObserver;
-import io.github.vinccool96.observations.collections.ObservableArray;
 import io.github.vinccool96.observations.collections.ObservableIntegerArray;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +23,7 @@ public class ArrayListenerHelperTest {
 
     private ArrayListenerHelper helper;
 
-    private ObservableArray array;
+    private ObservableIntegerArray array;
 
     @Before
     public void setUp() {
