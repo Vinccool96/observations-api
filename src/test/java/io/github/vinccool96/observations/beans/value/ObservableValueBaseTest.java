@@ -94,22 +94,18 @@ public class ObservableValueBaseTest {
         observer2.check(valueModel, 1);
 
         // remove first observer
-        invalidationListener.reset();
-        observer2.reset();
         valueModel.removeListener(invalidationListener);
         valueModel.fireValueChangedEvent();
         invalidationListener.check(null, 0);
         observer2.check(valueModel, 1);
 
         // remove second observer
-        observer2.reset();
         valueModel.removeListener(observer2);
         valueModel.fireValueChangedEvent();
         invalidationListener.check(null, 0);
         observer2.check(null, 0);
 
         // remove observers in reverse order
-        observer2.reset();
         valueModel.removeListener(observer2);
         valueModel.removeListener(invalidationListener);
         valueModel.fireValueChangedEvent();
@@ -129,7 +125,6 @@ public class ObservableValueBaseTest {
 
         // fire event again, this time both observers need to be notified
         invalidationListener.reset();
-        observer2.reset();
         valueModel.fireValueChangedEvent();
         invalidationListener.check(valueModel, 1);
         observer2.check(valueModel, 1);
@@ -148,7 +143,6 @@ public class ObservableValueBaseTest {
 
         // fire event again, this time only non-removed observer is notified
         invalidationListener.reset();
-        observer2.reset();
         valueModel.fireValueChangedEvent();
         invalidationListener.check(null, 0);
         observer2.check(valueModel, 1);

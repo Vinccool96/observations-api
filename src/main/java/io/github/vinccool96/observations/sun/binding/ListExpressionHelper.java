@@ -20,6 +20,7 @@ import java.util.Arrays;
  * This implementation can handle adding and removing listeners while the observers are being notified, but it is not
  * thread-safe.
  */
+@SuppressWarnings("unchecked")
 public abstract class ListExpressionHelper<E> extends ExpressionHelperBase {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -113,9 +114,9 @@ public abstract class ListExpressionHelper<E> extends ExpressionHelperBase {
 
     public abstract InvalidationListener[] getInvalidationListeners();
 
-    public abstract ChangeListener[] getChangeListeners();
+    public abstract ChangeListener<? super ObservableList<E>>[] getChangeListeners();
 
-    public abstract ListChangeListener[] getListChangeListeners();
+    public abstract ListChangeListener<? super E>[] getListChangeListeners();
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Implementations
@@ -175,12 +176,12 @@ public abstract class ListExpressionHelper<E> extends ExpressionHelperBase {
         }
 
         @Override
-        public ChangeListener[] getChangeListeners() {
-            return new ChangeListener[0];
+        public ChangeListener<? super ObservableList<E>>[] getChangeListeners() {
+            return new ChangeListener[]{};
         }
 
         @Override
-        public ListChangeListener[] getListChangeListeners() {
+        public ListChangeListener<? super E>[] getListChangeListeners() {
             return new ListChangeListener[0];
         }
 
@@ -248,12 +249,12 @@ public abstract class ListExpressionHelper<E> extends ExpressionHelperBase {
         }
 
         @Override
-        public ChangeListener[] getChangeListeners() {
+        public ChangeListener<? super ObservableList<E>>[] getChangeListeners() {
             return new ChangeListener[]{this.listener};
         }
 
         @Override
-        public ListChangeListener[] getListChangeListeners() {
+        public ListChangeListener<? super E>[] getListChangeListeners() {
             return new ListChangeListener[0];
         }
 
@@ -327,12 +328,12 @@ public abstract class ListExpressionHelper<E> extends ExpressionHelperBase {
         }
 
         @Override
-        public ChangeListener[] getChangeListeners() {
+        public ChangeListener<? super ObservableList<E>>[] getChangeListeners() {
             return new ChangeListener[0];
         }
 
         @Override
-        public ListChangeListener[] getListChangeListeners() {
+        public ListChangeListener<E>[] getListChangeListeners() {
             return new ListChangeListener[]{this.listener};
         }
 
@@ -610,7 +611,7 @@ public abstract class ListExpressionHelper<E> extends ExpressionHelperBase {
                         final ObservableList<E> safeOldValue =
                                 (oldValue == null) ? ObservableCollections.<E>emptyObservableList() :
                                         ObservableCollections.unmodifiableObservableList(oldValue);
-                        change = new NonIterableChange.GenericAddRemoveChange(0, safeSize, safeOldValue, observable);
+                        change = new NonIterableChange.GenericAddRemoveChange<>(0, safeSize, safeOldValue, observable);
                     }
                     notifyListeners(oldValue, change, false);
                 } else {
@@ -631,12 +632,12 @@ public abstract class ListExpressionHelper<E> extends ExpressionHelperBase {
         }
 
         @Override
-        public ChangeListener[] getChangeListeners() {
+        public ChangeListener<? super ObservableList<E>>[] getChangeListeners() {
             return ArrayUtils.getInstance().clone(this.changeListeners, ChangeListener.class);
         }
 
         @Override
-        public ListChangeListener[] getListChangeListeners() {
+        public ListChangeListener<? super E>[] getListChangeListeners() {
             return ArrayUtils.getInstance().clone(this.listChangeListeners, ListChangeListener.class);
         }
 

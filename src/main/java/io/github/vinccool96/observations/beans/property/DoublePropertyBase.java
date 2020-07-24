@@ -50,19 +50,21 @@ public abstract class DoublePropertyBase extends DoubleProperty {
 
     @Override
     public void addListener(InvalidationListener listener) {
-        if (helper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+        if (!isInvalidationListenerAlreadyAdded(listener)) {
             helper = ExpressionHelper.addListener(helper, this, listener);
         }
     }
 
     @Override
     public void removeListener(InvalidationListener listener) {
-        helper = ExpressionHelper.removeListener(helper, listener);
+        if (isInvalidationListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.removeListener(helper, listener);
+        }
     }
 
     @Override
     public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
+        return helper != null && ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     @Override

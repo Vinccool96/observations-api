@@ -13,7 +13,7 @@ import java.lang.ref.WeakReference;
  * WeakChangeListener} should then be registered to listen for changes of the observed object.
  * <p>
  * Note: You have to keep a reference to the {@code ChangeListener}, that was passed in as long as it is in use,
- * otherwise it will be garbage collected to soon.
+ * otherwise it will be garbage collected too soon.
  *
  * @param <T>
  *         The type of the observed value

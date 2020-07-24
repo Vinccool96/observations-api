@@ -14,20 +14,21 @@ import java.util.Collection;
 import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
+@SuppressWarnings({"ConstantConditions", "EqualsWithItself", "EqualsBetweenInconvertibleTypes"})
 public class BidirectionalBindingTest<T> {
 
     @FunctionalInterface
-    public static interface PropertyFactory<T> {
+    private interface PropertyFactory<T> {
 
         Property<T> createProperty();
 
     }
 
-    public static class Factory<T> {
+    private static class Factory<T> {
 
-        private PropertyFactory<T> propertyFactory;
+        private final PropertyFactory<T> propertyFactory;
 
-        private T[] values;
+        private final T[] values;
 
         public Factory(PropertyFactory<T> propertyFactory, T[] values) {
             this.propertyFactory = propertyFactory;
@@ -44,7 +45,7 @@ public class BidirectionalBindingTest<T> {
 
     }
 
-    private Factory<T> factory;
+    private final Factory<T> factory;
 
     private Property<T> op1;
 
@@ -196,35 +197,35 @@ public class BidirectionalBindingTest<T> {
 
     @Test
     public void testEquals() {
-        final BidirectionalBinding golden = BidirectionalBinding.bind(op1, op2);
+        final BidirectionalBinding<T> golden = BidirectionalBinding.bind(op1, op2);
 
-        assertTrue(golden.equals(golden));
-        assertFalse(golden.equals(null));
-        assertFalse(golden.equals(op1));
-        assertTrue(golden.equals(BidirectionalBinding.bind(op1, op2)));
-        assertTrue(golden.equals(BidirectionalBinding.bind(op2, op1)));
-        assertFalse(golden.equals(BidirectionalBinding.bind(op1, op3)));
-        assertFalse(golden.equals(BidirectionalBinding.bind(op3, op1)));
-        assertFalse(golden.equals(BidirectionalBinding.bind(op3, op2)));
-        assertFalse(golden.equals(BidirectionalBinding.bind(op2, op3)));
+        assertEquals(golden, golden);
+        assertNotNull(golden);
+        assertNotEquals(golden, op1);
+        assertEquals(golden, BidirectionalBinding.bind(op1, op2));
+        assertEquals(golden, BidirectionalBinding.bind(op2, op1));
+        assertNotEquals(golden, BidirectionalBinding.bind(op1, op3));
+        assertNotEquals(golden, BidirectionalBinding.bind(op3, op1));
+        assertNotEquals(golden, BidirectionalBinding.bind(op3, op2));
+        assertNotEquals(golden, BidirectionalBinding.bind(op2, op3));
     }
 
     @Test
     public void testEqualsWithGCedProperty() {
-        final BidirectionalBinding binding1 = BidirectionalBinding.bind(op1, op2);
-        final BidirectionalBinding binding2 = BidirectionalBinding.bind(op1, op2);
-        final BidirectionalBinding binding3 = BidirectionalBinding.bind(op2, op1);
-        final BidirectionalBinding binding4 = BidirectionalBinding.bind(op2, op1);
+        final BidirectionalBinding<T> binding1 = BidirectionalBinding.bind(op1, op2);
+        final BidirectionalBinding<T> binding2 = BidirectionalBinding.bind(op1, op2);
+        final BidirectionalBinding<T> binding3 = BidirectionalBinding.bind(op2, op1);
+        final BidirectionalBinding<T> binding4 = BidirectionalBinding.bind(op2, op1);
         op1 = null;
         System.gc();
 
-        assertTrue(binding1.equals(binding1));
-        assertFalse(binding1.equals(binding2));
-        assertFalse(binding1.equals(binding3));
+        assertEquals(binding1, binding1);
+        assertNotEquals(binding1, binding2);
+        assertNotEquals(binding1, binding3);
 
-        assertTrue(binding3.equals(binding3));
-        assertFalse(binding3.equals(binding1));
-        assertFalse(binding3.equals(binding4));
+        assertEquals(binding3, binding3);
+        assertNotEquals(binding3, binding1);
+        assertNotEquals(binding3, binding4);
     }
 
     @Test(expected = NullPointerException.class)
@@ -292,26 +293,26 @@ public class BidirectionalBindingTest<T> {
         final Boolean[] booleanData = new Boolean[]{true, false, true, false};
         final Double[] doubleData = new Double[]{2348.2345, -92.214, -214.0214, -908.214};
         final Float[] floatData = new Float[]{-3592.9f, 234872.8347f, 3897.274f, 3958.938745f};
-        final Integer[] integerData = new Integer[]{248, -9384, -234, -34};
         final Long[] longData = new Long[]{9823984L, 2908934L, -234234L, 9089234L};
+        final Integer[] integerData = new Integer[]{248, -9384, -234, -34};
         final Object[] objectData = new Object[]{new Object(), new Object(), new Object(), new Object()};
         final String[] stringData = new String[]{"A", "B", "C", "D"};
 
         return Arrays.asList(new Object[][]{
-                {new Factory(() -> new SimpleBooleanProperty(), booleanData)},
-                {new Factory(() -> new SimpleDoubleProperty(), doubleData)},
-                {new Factory(() -> new SimpleFloatProperty(), floatData)},
-                {new Factory(() -> new SimpleIntegerProperty(), integerData)},
-                {new Factory(() -> new SimpleLongProperty(), longData)},
-                {new Factory(() -> new SimpleObjectProperty<>(), objectData)},
-                {new Factory(() -> new SimpleStringProperty(), stringData)},
-                {new Factory(() -> new ReadOnlyBooleanWrapper(), booleanData)},
-                {new Factory(() -> new ReadOnlyDoubleWrapper(), doubleData)},
-                {new Factory(() -> new ReadOnlyFloatWrapper(), floatData)},
-                {new Factory(() -> new ReadOnlyIntegerWrapper(), integerData)},
-                {new Factory(() -> new ReadOnlyLongWrapper(), longData)},
-                {new Factory(() -> new ReadOnlyObjectWrapper<>(), objectData)},
-                {new Factory(() -> new ReadOnlyStringWrapper(), stringData)},
+                {new Factory<>(SimpleBooleanProperty::new, booleanData)},
+                {new Factory<>(SimpleDoubleProperty::new, doubleData)},
+                {new Factory<>(SimpleFloatProperty::new, floatData)},
+                {new Factory<>(SimpleIntegerProperty::new, integerData)},
+                {new Factory<>(SimpleLongProperty::new, longData)},
+                {new Factory<>(SimpleObjectProperty::new, objectData)},
+                {new Factory<>(SimpleStringProperty::new, stringData)},
+                {new Factory<>(ReadOnlyBooleanWrapper::new, booleanData)},
+                {new Factory<>(ReadOnlyDoubleWrapper::new, doubleData)},
+                {new Factory<>(ReadOnlyFloatWrapper::new, floatData)},
+                {new Factory<>(ReadOnlyLongWrapper::new, longData)},
+                {new Factory<>(ReadOnlyIntegerWrapper::new, integerData)},
+                {new Factory<>(ReadOnlyObjectWrapper::new, objectData)},
+                {new Factory<>(ReadOnlyStringWrapper::new, stringData)},
         });
     }
 

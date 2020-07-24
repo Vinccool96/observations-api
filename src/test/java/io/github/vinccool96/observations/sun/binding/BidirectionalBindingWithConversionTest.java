@@ -23,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Parameterized.class)
 public class BidirectionalBindingWithConversionTest<S, T> {
 
-    public static interface Functions<U, V> {
+    public interface Functions<U, V> {
 
         PropertyMock<U> create0();
 
@@ -32,8 +32,6 @@ public class BidirectionalBindingWithConversionTest<S, T> {
         void bind(PropertyMock<U> obj0, PropertyMock<V> obj1);
 
         void unbind(Object obj0, Object obj1);
-
-        Object createBindingDirectly(PropertyMock<U> op0, PropertyMock<V> op1);
 
         void check0(U obj0, U obj1);
 
@@ -157,8 +155,7 @@ public class BidirectionalBindingWithConversionTest<S, T> {
     public static Collection<Object[]> parameters() {
         final DateFormat format = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, Locale.US);
         final Date[] dates = new Date[]{new Date(), new Date(0), new Date(Integer.MAX_VALUE), new Date(Long.MAX_VALUE)};
-        final String[] strings = new String[]{format.format(dates[0]), format.format(dates[1]), format.format(dates[2]),
-                format.format(dates[3])};
+        final String[] strings = Arrays.stream(dates).map(format::format).toArray(String[]::new);
 
         final StringConverter<Date> converter = new StringConverter<Date>() {
 
@@ -189,7 +186,7 @@ public class BidirectionalBindingWithConversionTest<S, T> {
 
                             @Override
                             public PropertyMock<Date> create1() {
-                                return new ObjectPropertyMock<Date>();
+                                return new ObjectPropertyMock<>();
                             }
 
                             @Override
@@ -200,11 +197,6 @@ public class BidirectionalBindingWithConversionTest<S, T> {
                             @Override
                             public void unbind(Object op0, Object op1) {
                                 Bindings.unbindBidirectional(op0, op1);
-                            }
-
-                            @Override
-                            public Object createBindingDirectly(PropertyMock<String> op0, PropertyMock<Date> op1) {
-                                return BidirectionalBinding.bind(op0, op1, format);
                             }
 
                             @Override
@@ -231,7 +223,7 @@ public class BidirectionalBindingWithConversionTest<S, T> {
 
                             @Override
                             public PropertyMock<Date> create1() {
-                                return new ObjectPropertyMock<Date>();
+                                return new ObjectPropertyMock<>();
                             }
 
                             @Override
@@ -242,11 +234,6 @@ public class BidirectionalBindingWithConversionTest<S, T> {
                             @Override
                             public void unbind(Object op0, Object op1) {
                                 Bindings.unbindBidirectional(op0, op1);
-                            }
-
-                            @Override
-                            public Object createBindingDirectly(PropertyMock<String> op0, PropertyMock<Date> op1) {
-                                return BidirectionalBinding.bind(op0, op1, converter);
                             }
 
                             @Override

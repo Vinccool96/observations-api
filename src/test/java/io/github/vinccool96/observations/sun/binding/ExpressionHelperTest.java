@@ -253,26 +253,26 @@ public class ExpressionHelperTest {
 
         observable.set(DATA_2);
         ExpressionHelper.fireValueChangedEvent(helper);
-
         invalidationListener[0].reset();
+
         observable.set(DATA_1);
         ExpressionHelper.fireValueChangedEvent(helper);
         invalidationListener[0].check(observable, 1);
-
         invalidationListener[1].reset();
+
         observable.set(DATA_2);
         ExpressionHelper.fireValueChangedEvent(helper);
         invalidationListener[0].check(observable, 1);
         invalidationListener[1].check(observable, 1);
-
         invalidationListener[2].reset();
+
         observable.set(DATA_1);
         ExpressionHelper.fireValueChangedEvent(helper);
         invalidationListener[0].check(observable, 1);
         invalidationListener[1].check(observable, 1);
         invalidationListener[2].check(observable, 1);
-
         invalidationListener[3].reset();
+
         observable.set(DATA_2);
         ExpressionHelper.fireValueChangedEvent(helper);
         invalidationListener[0].check(observable, 1);
@@ -297,8 +297,8 @@ public class ExpressionHelperTest {
         helper = ExpressionHelper.addListener(helper, observable, removingListener);
         helper = ExpressionHelper.addListener(helper, observable, changeListener[0]);
         helper = ExpressionHelper.addListener(helper, observable, invalidationListener[0]);
-        helper = ExpressionHelper.addListener(helper, observable, invalidationListener[2]);
         helper = ExpressionHelper.addListener(helper, observable, invalidationListener[1]);
+        helper = ExpressionHelper.addListener(helper, observable, invalidationListener[2]);
 
         observable.set(DATA_2);
         ExpressionHelper.fireValueChangedEvent(helper);
@@ -365,8 +365,8 @@ public class ExpressionHelperTest {
 
         helper = ExpressionHelper.removeListener(helper, changeListener[1]);
 
-        helper = ExpressionHelper.addListener(helper, observable, changeListener[2]);
         helper = ExpressionHelper.addListener(helper, observable, changeListener[1]);
+        helper = ExpressionHelper.addListener(helper, observable, changeListener[2]);
 
         helper = ExpressionHelper.removeListener(helper, changeListener[0]);
         observable.set(DATA_2);

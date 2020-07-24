@@ -5,17 +5,18 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings("UnusedAssignment")
 public class WeakChangeListenerTest {
 
     @Test(expected = NullPointerException.class)
     public void testConstructWithNull() {
-        new WeakChangeListener<Object>(null);
+        new WeakChangeListener<>(null);
     }
 
     @Test
     public void testHandle() {
-        ChangeListenerMock<Object> listener = new ChangeListenerMock<Object>(new Object());
-        final WeakChangeListener<Object> weakListener = new WeakChangeListener<Object>(listener);
+        ChangeListenerMock<Object> listener = new ChangeListenerMock<>(new Object());
+        final WeakChangeListener<Object> weakListener = new WeakChangeListener<>(listener);
         final ObservableMock o = new ObservableMock();
         final Object obj1 = new Object();
         final Object obj2 = new Object();
@@ -43,6 +44,11 @@ public class WeakChangeListenerTest {
         }
 
         @Override
+        public void removeListener(ChangeListener<? super Object> listener) {
+            removeCounter++;
+        }
+
+        @Override
         public Object getValue() {
             return null;
         }
@@ -66,11 +72,6 @@ public class WeakChangeListenerTest {
         @Override
         public void addListener(ChangeListener<? super Object> listener) {
             // not used
-        }
-
-        @Override
-        public void removeListener(ChangeListener<? super Object> listener) {
-            removeCounter++;
         }
 
         @Override

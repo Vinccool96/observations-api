@@ -23,7 +23,7 @@ public abstract class ObservableValueBase<T> implements ObservableValue<T> {
      */
     @Override
     public void addListener(InvalidationListener listener) {
-        if (helper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+        if (!isInvalidationListenerAlreadyAdded(listener)) {
             helper = ExpressionHelper.addListener(helper, this, listener);
         }
     }
@@ -33,12 +33,17 @@ public abstract class ObservableValueBase<T> implements ObservableValue<T> {
      */
     @Override
     public void removeListener(InvalidationListener listener) {
-        helper = ExpressionHelper.removeListener(helper, listener);
+        if (isInvalidationListenerAlreadyAdded(listener)) {
+            helper = ExpressionHelper.removeListener(helper, listener);
+        }
     }
 
     @Override
     public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
+        if (listener == null) {
+            throw new NullPointerException();
+        }
+        return helper != null && ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     /**

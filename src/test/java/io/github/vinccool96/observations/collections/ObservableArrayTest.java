@@ -16,8 +16,8 @@ import static org.junit.Assert.*;
 /**
  * Tests for ObservableArray.
  */
-@SuppressWarnings({"unused", "rawtypes", "unchecked"})
 @RunWith(Parameterized.class)
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class ObservableArrayTest {
 
     public static final int INITIAL_SIZE = 6;
