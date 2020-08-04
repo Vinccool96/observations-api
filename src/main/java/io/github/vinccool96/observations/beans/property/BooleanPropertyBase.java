@@ -207,7 +207,7 @@ public abstract class BooleanPropertyBase extends BooleanProperty {
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }
-        if ((name != null) && (!name.equals(""))) {
+        if (name != null && !name.equals("")) {
             result.append("name: ").append(name).append(", ");
         }
         if (isBound()) {

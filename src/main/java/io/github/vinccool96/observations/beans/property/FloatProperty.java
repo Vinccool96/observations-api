@@ -75,7 +75,7 @@ public abstract class FloatProperty extends ReadOnlyFloatProperty implements Pro
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }
-        if ((name != null) && (!name.equals(""))) {
+        if (name != null && !name.equals("")) {
             result.append("name: ").append(name).append(", ");
         }
         result.append("value: ").append(get()).append("]");

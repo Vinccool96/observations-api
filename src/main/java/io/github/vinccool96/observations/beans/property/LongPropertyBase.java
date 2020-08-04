@@ -224,7 +224,7 @@ public abstract class LongPropertyBase extends LongProperty {
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }
-        if ((name != null) && (!name.equals(""))) {
+        if (name != null && !name.equals("")) {
             result.append("name: ").append(name).append(", ");
         }
         if (isBound()) {
