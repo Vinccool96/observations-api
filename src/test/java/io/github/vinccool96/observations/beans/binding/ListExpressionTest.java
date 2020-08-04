@@ -4,6 +4,7 @@ import io.github.vinccool96.observations.beans.property.IntegerProperty;
 import io.github.vinccool96.observations.beans.property.ListProperty;
 import io.github.vinccool96.observations.beans.property.SimpleIntegerProperty;
 import io.github.vinccool96.observations.beans.property.SimpleListProperty;
+import io.github.vinccool96.observations.beans.value.ObservableListValueStub;
 import io.github.vinccool96.observations.collections.ObservableCollections;
 import io.github.vinccool96.observations.collections.ObservableList;
 import io.github.vinccool96.observations.sun.binding.ErrorLoggingUtility;
@@ -306,6 +307,35 @@ public class ListExpressionTest {
         arrayOut = op2.toArray(arrayIn);
         assertArrayEquals(new Integer[]{datax}, arrayIn);
         assertArrayEquals(new Integer[]{data2_0, data2_1}, arrayOut);
+    }
+
+    @Test
+    public void testObservableListValueToExpression() {
+        final ObservableListValueStub<Object> valueModel = new ObservableListValueStub<Object>();
+        final ListExpression<Object> exp = ListExpression.listExpression(valueModel);
+        final Object o1 = new Object();
+        final Object o2 = new Object();
+        final Object o3 = new Object();
+
+        assertTrue(exp instanceof ListBinding);
+        assertEquals(ObservableCollections.singletonObservableList(valueModel),
+                ((ListBinding<Object>) exp).getDependencies());
+
+        assertEquals(null, exp.get());
+        valueModel.set(ObservableCollections.observableArrayList(o1));
+        assertEquals(ObservableCollections.singletonObservableList(o1), exp.get());
+        valueModel.get().add(o2);
+        assertEquals(ObservableCollections.observableList(Arrays.asList(o1, o2)), exp.get());
+        exp.add(o3);
+        assertEquals(ObservableCollections.observableList(Arrays.asList(o1, o2, o3)), exp.get());
+
+        // make sure we do not create unnecessary bindings
+        assertSame(op1, ListExpression.listExpression(op1));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testFactory_Null() {
+        ListExpression.listExpression(null);
     }
 
 }
