@@ -72,7 +72,7 @@ public abstract class ObjectProperty<T> extends ReadOnlyObjectProperty<T>
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }
-        if ((name != null) && (!name.equals(""))) {
+        if (name != null && !name.equals("")) {
             result.append("name: ").append(name).append(", ");
         }
         result.append("value: ").append(get()).append("]");

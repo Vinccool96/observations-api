@@ -230,7 +230,7 @@ public final class JavaBeanLongProperty extends LongProperty implements JavaBean
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }
-        if ((name != null) && (!name.equals(""))) {
+        if (name != null && !name.equals("")) {
             result.append("name: ").append(name).append(", ");
         }
         if (isBound()) {
