@@ -3,12 +3,12 @@ package io.github.vinccool96.observations.beans.property;
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.beans.value.ChangeListener;
 import io.github.vinccool96.observations.collections.ListChangeListener;
+import io.github.vinccool96.observations.collections.ObservableCollections;
 import io.github.vinccool96.observations.collections.ObservableList;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 public class ReadOnlyListPropertyTest {
 
@@ -16,6 +16,47 @@ public class ReadOnlyListPropertyTest {
 
     @Before
     public void setUp() throws Exception {
+    }
+
+    @Test
+    public void testBidirectionalContentBinding() {
+        ObservableList<Object> model = ObservableCollections.observableArrayList(new Object(), new Object());
+        ObservableList<Object> list2 = ObservableCollections.observableArrayList(new Object(), new Object(),
+                new Object());
+        ReadOnlyListProperty<Object> list1 = new SimpleListProperty<>(model);
+        assertNotEquals(list1, list2);
+        list1.bindContentBidirectional(list2);
+        assertEquals(list1, list2);
+        list2.add(new Object());
+        assertEquals(list1, list2);
+        list1.add(new Object());
+        assertEquals(list1, list2);
+        list1.unbindContentBidirectional(list2);
+        list2.add(new Object());
+        assertNotEquals(list1, list2);
+        list1.add(new Object());
+        assertNotEquals(list1, list2);
+    }
+
+    @Test
+    public void testContentBinding() {
+        ObservableList<Object> model = ObservableCollections.observableArrayList(new Object(), new Object());
+        ObservableList<Object> list2 = ObservableCollections.observableArrayList(new Object(), new Object(),
+                new Object());
+        ReadOnlyListProperty<Object> list1 = new SimpleListProperty<>(model);
+        assertNotEquals(list1, list2);
+        list1.bindContent(list2);
+        assertEquals(list1, list2);
+        list2.add(new Object());
+        assertEquals(list1, list2);
+        list1.add(new Object());
+        assertNotEquals(list1, list2);
+        list1.remove(list1.size() - 1);
+        list1.unbindContent(list2);
+        list2.add(new Object());
+        assertNotEquals(list1, list2);
+        list1.add(new Object());
+        assertNotEquals(list1, list2);
     }
 
     @Test
@@ -49,6 +90,17 @@ public class ReadOnlyListPropertyTest {
 
         private final String name;
 
+        private ObservableList<Object> list = null;
+
+        public ReadOnlyListPropertyStub(ObservableList<Object> list) {
+            this(null, null);
+            this.list = list;
+        }
+
+        private ReadOnlyListPropertyStub() {
+            this(null, null);
+        }
+
         private ReadOnlyListPropertyStub(Object bean, String name) {
             this.bean = bean;
             this.name = name;
@@ -63,7 +115,11 @@ public class ReadOnlyListPropertyTest {
         }
 
         @Override public ObservableList<Object> get() {
-            return null;
+            return list;
+        }
+
+        private void set(ObservableList<Object> list) {
+            this.list = list;
         }
 
         @Override

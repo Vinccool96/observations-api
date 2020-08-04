@@ -11,7 +11,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-@SuppressWarnings({"PointlessBooleanExpression", "ConstantConditions", "unused", "UnusedAssignment"})
+@SuppressWarnings({"PointlessBooleanExpression", "ConstantConditions", "unused", "UnusedAssignment",
+        "DuplicateCondition", "RedundantSuppression"})
 public class BindingsBooleanTest {
 
     private BooleanProperty op1;
