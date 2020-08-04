@@ -46,7 +46,7 @@ public abstract class SetPropertyBase<E> extends SetProperty<E> {
     private EmptyProperty empty0;
 
     /**
-     * The Constructor of {@code SetPropertyBase}
+     * The constructor of {@code SetPropertyBase}
      */
     public SetPropertyBase() {
     }

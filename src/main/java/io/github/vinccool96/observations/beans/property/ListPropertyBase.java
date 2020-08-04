@@ -46,7 +46,7 @@ public abstract class ListPropertyBase<E> extends ListProperty<E> {
     private EmptyProperty empty0;
 
     /**
-     * The Constructor of {@code ListPropertyBase}
+     * The constructor of {@code ListPropertyBase}
      */
     public ListPropertyBase() {
     }

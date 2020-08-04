@@ -48,7 +48,7 @@ public abstract class MapPropertyBase<K, V> extends MapProperty<K, V> {
     private EmptyProperty empty0;
 
     /**
-     * The Constructor of {@code MapPropertyBase}
+     * The constructor of {@code MapPropertyBase}
      */
     public MapPropertyBase() {
     }
