@@ -5,18 +5,14 @@ import io.github.vinccool96.observations.beans.value.ChangeListener;
 import io.github.vinccool96.observations.collections.ListChangeListener;
 import io.github.vinccool96.observations.collections.ObservableCollections;
 import io.github.vinccool96.observations.collections.ObservableList;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class ReadOnlyListPropertyTest {
 
     private static final Object DEFAULT = null;
-
-    @Before
-    public void setUp() throws Exception {
-    }
 
     @Test
     public void testBidirectionalContentBinding() {
@@ -90,36 +86,24 @@ public class ReadOnlyListPropertyTest {
 
         private final String name;
 
-        private ObservableList<Object> list = null;
-
-        public ReadOnlyListPropertyStub(ObservableList<Object> list) {
-            this(null, null);
-            this.list = list;
-        }
-
-        private ReadOnlyListPropertyStub() {
-            this(null, null);
-        }
-
         private ReadOnlyListPropertyStub(Object bean, String name) {
             this.bean = bean;
             this.name = name;
         }
 
-        @Override public Object getBean() {
+        @Override
+        public Object getBean() {
             return bean;
         }
 
-        @Override public String getName() {
+        @Override
+        public String getName() {
             return name;
         }
 
-        @Override public ObservableList<Object> get() {
-            return list;
-        }
-
-        private void set(ObservableList<Object> list) {
-            this.list = list;
+        @Override
+        public ObservableList<Object> get() {
+            return null;
         }
 
         @Override

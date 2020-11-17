@@ -21,26 +21,33 @@ public class SimpleListProperty<E> extends ListPropertyBase<E> {
     private final String name;
 
     /**
-     * {@inheritDoc}
+     * The constructor of {@code SimpleListProperty}
+     *
+     * @param bean
+     *         the bean of this {@code ListProperty}
+     * @param name
+     *         the name of this {@code ListProperty}
+     * @param initialValue
+     *         the initial value of the wrapped value
      */
-    @Override
-    public Object getBean() {
-        return bean;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getName() {
-        return name;
+    public SimpleListProperty(Object bean, String name, ObservableList<E> initialValue) {
+        super(initialValue);
+        this.bean = bean;
+        this.name = (name == null) ? DEFAULT_NAME : name;
     }
 
     /**
      * The constructor of {@code SimpleListProperty}
+     *
+     * @param bean
+     *         the bean of this {@code SetProperty}
+     * @param name
+     *         the name of this {@code SetProperty}
      */
-    public SimpleListProperty() {
-        this(DEFAULT_BEAN, DEFAULT_NAME);
+    public SimpleListProperty(Object bean, String name) {
+        super();
+        this.bean = bean;
+        this.name = (name == null) ? DEFAULT_NAME : name;
     }
 
     /**
@@ -55,31 +62,25 @@ public class SimpleListProperty<E> extends ListPropertyBase<E> {
 
     /**
      * The constructor of {@code SimpleListProperty}
-     *
-     * @param bean
-     *         the bean of this {@code SetProperty}
-     * @param name
-     *         the name of this {@code SetProperty}
      */
-    public SimpleListProperty(Object bean, String name) {
-        this.bean = bean;
-        this.name = (name == null) ? DEFAULT_NAME : name;
+    public SimpleListProperty() {
+        this(DEFAULT_BEAN, DEFAULT_NAME);
     }
 
     /**
-     * The constructor of {@code SimpleListProperty}
-     *
-     * @param bean
-     *         the bean of this {@code ListProperty}
-     * @param name
-     *         the name of this {@code ListProperty}
-     * @param initialValue
-     *         the initial value of the wrapped value
+     * {@inheritDoc}
      */
-    public SimpleListProperty(Object bean, String name, ObservableList<E> initialValue) {
-        super(initialValue);
-        this.bean = bean;
-        this.name = (name == null) ? DEFAULT_NAME : name;
+    @Override
+    public Object getBean() {
+        return bean;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getName() {
+        return name;
     }
 
 }

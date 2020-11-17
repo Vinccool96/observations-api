@@ -20,17 +20,14 @@ import static org.junit.Assert.*;
 /**
  *
  */
+@SuppressWarnings({"SimplifiableJUnitAssertion", "SameParameterValue"})
 public class ListBindingTest {
 
-    private ObservableStub dependency1;
-
-    private ObservableStub dependency2;
+    private ObservableStub dependency;
 
     private ListBindingImpl binding0;
 
     private ListBindingImpl binding1;
-
-    private ListBindingImpl binding2;
 
     private ObservableList<Object> emptyList;
 
@@ -42,22 +39,23 @@ public class ListBindingTest {
 
     @Before
     public void setUp() {
-        dependency1 = new ObservableStub();
-        dependency2 = new ObservableStub();
+        dependency = new ObservableStub();
         binding0 = new ListBindingImpl();
-        binding1 = new ListBindingImpl(dependency1);
-        binding2 = new ListBindingImpl(dependency1, dependency2);
+        binding1 = new ListBindingImpl(dependency);
         emptyList = ObservableCollections.observableArrayList();
         list1 = ObservableCollections.observableArrayList(new Object());
         list2 = ObservableCollections.observableArrayList(new Object(), new Object());
         listener = new ListChangeListenerMock();
         binding0.setValue(list2);
         binding1.setValue(list2);
-        binding2.setValue(list2);
     }
 
     @Test
     public void testSizeProperty() {
+        ObservableStub dependency2 = new ObservableStub();
+        ListBindingImpl binding2 = new ListBindingImpl(dependency, dependency2);
+        binding2.setValue(list2);
+
         assertEquals(binding0, binding0.sizeProperty().getBean());
         assertEquals(binding1, binding1.sizeProperty().getBean());
         assertEquals(binding2, binding2.sizeProperty().getBean());
@@ -67,18 +65,27 @@ public class ListBindingTest {
 
         assertEquals(2, size.get());
         binding1.setValue(emptyList);
-        dependency1.fireValueChangedEvent();
-        assertEquals(0, size.get());
-        binding1.setValue(null);
-        dependency1.fireValueChangedEvent();
+        dependency.fireValueChangedEvent();
         assertEquals(0, size.get());
         binding1.setValue(list1);
-        dependency1.fireValueChangedEvent();
+        dependency.fireValueChangedEvent();
         assertEquals(1, size.get());
+        binding1.setValue(null);
+        dependency.fireValueChangedEvent();
+        assertEquals(0, size.get());
+
+        assertEquals(2, binding2.sizeProperty().get());
+        binding2.setValue(emptyList);
+        dependency2.fireValueChangedEvent();
+        assertEquals(0, binding2.sizeProperty().get());
     }
 
     @Test
     public void testEmptyProperty() {
+        ObservableStub dependency2 = new ObservableStub();
+        ListBindingImpl binding2 = new ListBindingImpl(dependency, dependency2);
+        binding2.setValue(list2);
+
         assertEquals(binding0, binding0.emptyProperty().getBean());
         assertEquals(binding1, binding1.emptyProperty().getBean());
         assertEquals(binding2, binding2.emptyProperty().getBean());
@@ -88,14 +95,19 @@ public class ListBindingTest {
 
         assertFalse(empty.get());
         binding1.setValue(emptyList);
-        dependency1.fireValueChangedEvent();
-        assertTrue(empty.get());
-        binding1.setValue(null);
-        dependency1.fireValueChangedEvent();
+        dependency.fireValueChangedEvent();
         assertTrue(empty.get());
         binding1.setValue(list1);
-        dependency1.fireValueChangedEvent();
+        dependency.fireValueChangedEvent();
         assertFalse(empty.get());
+        binding1.setValue(null);
+        dependency.fireValueChangedEvent();
+        assertTrue(empty.get());
+
+        assertFalse(binding2.emptyProperty().get());
+        binding2.setValue(emptyList);
+        dependency2.fireValueChangedEvent();
+        assertTrue(binding2.emptyProperty().get());
     }
 
     @Test
@@ -124,7 +136,7 @@ public class ListBindingTest {
         binding1.reset();
         listener.reset();
         binding1.setValue(list1);
-        dependency1.fireValueChangedEvent();
+        dependency.fireValueChangedEvent();
         assertEquals(1, binding1.getComputeValueCounter());
         listener.check(list2, list1, 1);
         assertEquals(true, binding1.isValid());
@@ -136,7 +148,7 @@ public class ListBindingTest {
 
         // fire single change event with same value
         binding1.setValue(list1);
-        dependency1.fireValueChangedEvent();
+        dependency.fireValueChangedEvent();
         assertEquals(1, binding1.getComputeValueCounter());
         listener.checkNotCalled();
         assertEquals(true, binding1.isValid());
@@ -148,9 +160,9 @@ public class ListBindingTest {
 
         // fire two change events
         binding1.setValue(list2);
-        dependency1.fireValueChangedEvent();
+        dependency.fireValueChangedEvent();
         binding1.setValue(list1);
-        dependency1.fireValueChangedEvent();
+        dependency.fireValueChangedEvent();
         assertEquals(2, binding1.getComputeValueCounter());
         listener.check(list2, list1, 2);
         assertEquals(true, binding1.isValid());
@@ -162,9 +174,9 @@ public class ListBindingTest {
 
         // fire two change events with same value
         binding1.setValue(list2);
-        dependency1.fireValueChangedEvent();
+        dependency.fireValueChangedEvent();
         binding1.setValue(list2);
-        dependency1.fireValueChangedEvent();
+        dependency.fireValueChangedEvent();
         assertEquals(2, binding1.getComputeValueCounter());
         listener.check(list1, list2, 1);
         assertEquals(true, binding1.isValid());
@@ -192,7 +204,7 @@ public class ListBindingTest {
 
     @Test
     public void testChangeContent_ChangeListener() {
-        final ChangeListenerMock listenerMock = new ChangeListenerMock(null);
+        final ChangeListenerMock<Object> listenerMock = new ChangeListenerMock<>(null);
         binding1.get();
         binding1.addListener(listenerMock);
         assertTrue(binding1.isValid());
@@ -221,15 +233,18 @@ public class ListBindingTest {
         assertTrue(binding1.isValid());
     }
 
-    public static class ObservableStub extends ObservableValueBase<Object> {
+    private static class ObservableStub extends ObservableValueBase<Object> {
 
-        @Override public void fireValueChangedEvent() {
+        private final Object value = new Object();
+
+        @Override
+        public void fireValueChangedEvent() {
             super.fireValueChangedEvent();
         }
 
         @Override
         public Object getValue() {
-            return null;
+            return value;
         }
 
     }
@@ -272,14 +287,14 @@ public class ListBindingTest {
 
     }
 
-    private class ListChangeListenerMock implements ListChangeListener<Object> {
+    private static class ListChangeListenerMock implements ListChangeListener<Object> {
 
-        private Change<? extends Object> change;
+        private Change<?> change;
 
         private int counter;
 
         @Override
-        public void onChanged(Change<? extends Object> change) {
+        public void onChanged(Change<?> change) {
             this.change = change;
             counter++;
         }

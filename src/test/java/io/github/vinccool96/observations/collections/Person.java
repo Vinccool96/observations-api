@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings({"StringEquality", "RedundantIfStatement"})
 public class Person implements Comparable<Person> {
 
-    public StringProperty name = new StringPropertyBase("foo") {
+    public StringProperty name = new StringPropertyBase() {
 
         @Override
         public Object getBean() {
@@ -22,6 +22,7 @@ public class Person implements Comparable<Person> {
         public String getName() {
             return "name";
         }
+
     };
 
     public Person(String name) {
@@ -29,6 +30,7 @@ public class Person implements Comparable<Person> {
     }
 
     public Person() {
+        this("foo");
     }
 
     @Override
@@ -65,19 +67,17 @@ public class Person implements Comparable<Person> {
     }
 
     public static ObservableList<Person> createPersonsList(Person... persons) {
-        ObservableList<Person> list = ObservableCollections.observableArrayList(
-                (Person p) -> new Observable[]{p.name});
+        ObservableList<Person> list = ObservableCollections.observableArrayList((Person p) -> new Observable[]{p.name});
         list.addAll(persons);
         return list;
     }
 
     public static List<Person> createPersonsFromNames(String... names) {
-        return Arrays.stream(names).map(name -> new Person(name)).collect(Collectors.toList());
+        return Arrays.stream(names).map(Person::new).collect(Collectors.toList());
     }
 
     public static ObservableList<Person> createPersonsList(String... names) {
-        ObservableList<Person> list = ObservableCollections.observableArrayList(
-                (Person p) -> new Observable[]{p.name});
+        ObservableList<Person> list = ObservableCollections.observableArrayList((Person p) -> new Observable[]{p.name});
         list.addAll(createPersonsFromNames(names));
         return list;
     }

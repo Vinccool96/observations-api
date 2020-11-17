@@ -10,6 +10,7 @@ import java.util.Set;
 /**
  *
  */
+@SuppressWarnings({"rawtypes", "unchecked", "UnusedReturnValue"})
 public class BidirectionalContentBinding {
 
     private static void checkParameters(Object property1, Object property2) {
@@ -23,7 +24,7 @@ public class BidirectionalContentBinding {
 
     public static <E> Object bind(ObservableList<E> list1, ObservableList<E> list2) {
         checkParameters(list1, list2);
-        final ListContentBinding<E> binding = new ListContentBinding<E>(list1, list2);
+        final ListContentBinding<E> binding = new ListContentBinding<>(list1, list2);
         list1.setAll(list2);
         list1.addListener(binding);
         list2.addListener(binding);
@@ -32,7 +33,7 @@ public class BidirectionalContentBinding {
 
     public static <E> Object bind(ObservableSet<E> set1, ObservableSet<E> set2) {
         checkParameters(set1, set2);
-        final SetContentBinding<E> binding = new SetContentBinding<E>(set1, set2);
+        final SetContentBinding<E> binding = new SetContentBinding<>(set1, set2);
         set1.clear();
         set1.addAll(set2);
         set1.addListener(binding);
@@ -42,7 +43,7 @@ public class BidirectionalContentBinding {
 
     public static <K, V> Object bind(ObservableMap<K, V> map1, ObservableMap<K, V> map2) {
         checkParameters(map1, map2);
-        final MapContentBinding<K, V> binding = new MapContentBinding<K, V>(map1, map2);
+        final MapContentBinding<K, V> binding = new MapContentBinding<>(map1, map2);
         map1.clear();
         map1.putAll(map2);
         map1.addListener(binding);
@@ -73,6 +74,7 @@ public class BidirectionalContentBinding {
         }
     }
 
+    @SuppressWarnings("RedundantIfStatement")
     private static class ListContentBinding<E> implements ListChangeListener<E>, WeakListener {
 
         private final WeakReference<ObservableList<E>> propertyRef1;
@@ -82,8 +84,8 @@ public class BidirectionalContentBinding {
         private boolean updating = false;
 
         public ListContentBinding(ObservableList<E> list1, ObservableList<E> list2) {
-            propertyRef1 = new WeakReference<ObservableList<E>>(list1);
-            propertyRef2 = new WeakReference<ObservableList<E>>(list2);
+            propertyRef1 = new WeakReference<>(list1);
+            propertyRef2 = new WeakReference<>(list2);
         }
 
         @Override
@@ -169,6 +171,7 @@ public class BidirectionalContentBinding {
 
     }
 
+    @SuppressWarnings("RedundantIfStatement")
     private static class SetContentBinding<E> implements SetChangeListener<E>, WeakListener {
 
         private final WeakReference<ObservableSet<E>> propertyRef1;
@@ -178,8 +181,8 @@ public class BidirectionalContentBinding {
         private boolean updating = false;
 
         public SetContentBinding(ObservableSet<E> list1, ObservableSet<E> list2) {
-            propertyRef1 = new WeakReference<ObservableSet<E>>(list1);
-            propertyRef2 = new WeakReference<ObservableSet<E>>(list2);
+            propertyRef1 = new WeakReference<>(list1);
+            propertyRef2 = new WeakReference<>(list2);
         }
 
         @Override
@@ -256,6 +259,7 @@ public class BidirectionalContentBinding {
 
     }
 
+    @SuppressWarnings("RedundantIfStatement")
     private static class MapContentBinding<K, V> implements MapChangeListener<K, V>, WeakListener {
 
         private final WeakReference<ObservableMap<K, V>> propertyRef1;
@@ -265,8 +269,8 @@ public class BidirectionalContentBinding {
         private boolean updating = false;
 
         public MapContentBinding(ObservableMap<K, V> list1, ObservableMap<K, V> list2) {
-            propertyRef1 = new WeakReference<ObservableMap<K, V>>(list1);
-            propertyRef2 = new WeakReference<ObservableMap<K, V>>(list2);
+            propertyRef1 = new WeakReference<>(list1);
+            propertyRef2 = new WeakReference<>(list2);
         }
 
         @Override

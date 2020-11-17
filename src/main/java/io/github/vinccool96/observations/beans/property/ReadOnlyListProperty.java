@@ -6,6 +6,7 @@ import io.github.vinccool96.observations.collections.ObservableList;
 
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 
 /**
  * Super class for all readonly properties wrapping an {@link ObservableList}.
@@ -18,6 +19,7 @@ import java.util.ListIterator;
  * @see ListExpression
  * @see ReadOnlyProperty
  */
+@SuppressWarnings("unchecked")
 public abstract class ReadOnlyListProperty<E> extends ListExpression<E> implements ReadOnlyProperty<ObservableList<E>> {
 
     /**
@@ -105,18 +107,18 @@ public abstract class ReadOnlyListProperty<E> extends ListExpression<E> implemen
         if (!(obj instanceof List)) {
             return false;
         }
-        final List list = (List) obj;
+        final List<E> list = (List<E>) obj;
 
         if (size() != list.size()) {
             return false;
         }
 
         ListIterator<E> e1 = listIterator();
-        ListIterator e2 = list.listIterator();
+        ListIterator<E> e2 = list.listIterator();
         while (e1.hasNext() && e2.hasNext()) {
             E o1 = e1.next();
             Object o2 = e2.next();
-            if (!(o1 == null ? o2 == null : o1.equals(o2))) {
+            if (!(Objects.equals(o1, o2))) {
                 return false;
             }
         }
@@ -141,8 +143,7 @@ public abstract class ReadOnlyListProperty<E> extends ListExpression<E> implemen
     public String toString() {
         final Object bean = getBean();
         final String name = getName();
-        final StringBuilder result = new StringBuilder(
-                "ReadOnlyListProperty [");
+        final StringBuilder result = new StringBuilder("ReadOnlyListProperty [");
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }

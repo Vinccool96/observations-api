@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
  * A mock observer that tracks calls to its onChanged() method, combined with utility methods to make assertions on the
  * calls made.
  */
-@SuppressWarnings({"ConstantConditions", "unused"})
+@SuppressWarnings({"ConstantConditions", "unused", "RedundantSuppression"})
 public class MockListObserver<E> implements ListChangeListener<E> {
 
     private boolean tooManyCalls;

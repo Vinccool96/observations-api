@@ -11,12 +11,12 @@ import io.github.vinccool96.observations.collections.Person;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings({"SimplifiableAssertion", "MismatchedQueryAndUpdateOfCollection", "ConstantConditions"})
 public class ListPropertyBaseTest {
 
     private static final Object NO_BEAN = null;
@@ -31,11 +31,11 @@ public class ListPropertyBaseTest {
 
     private static final ObservableList<Object> VALUE_1b = ObservableCollections.observableArrayList(new Object());
 
-    private static final ObservableList<Object> VALUE_2a =
-            ObservableCollections.observableArrayList(new Object(), new Object());
+    private static final ObservableList<Object> VALUE_2a = ObservableCollections.observableArrayList(new Object(),
+            new Object());
 
-    private static final ObservableList<Object> VALUE_2b =
-            ObservableCollections.observableArrayList(new Object(), new Object(), new Object());
+    private static final ObservableList<Object> VALUE_2b = ObservableCollections.observableArrayList(new Object(),
+            new Object(), new Object());
 
     private static final List<Object> EMPTY_LIST = Collections.emptyList();
 
@@ -51,8 +51,8 @@ public class ListPropertyBaseTest {
     public void setUp() throws Exception {
         property = new ListPropertyMock();
         invalidationListener = new InvalidationListenerMock();
-        changeListener = new ChangeListenerMock<ObservableList<Object>>(UNDEFINED);
-        listChangeListener = new MockListObserver<Object>();
+        changeListener = new ChangeListenerMock<>(UNDEFINED);
+        listChangeListener = new MockListObserver<>();
     }
 
     private void attachInvalidationListener() {
@@ -75,21 +75,21 @@ public class ListPropertyBaseTest {
 
     @Test
     public void testConstructor() {
-        final ListProperty<Object> p1 = new SimpleListProperty<Object>();
+        final ListProperty<Object> p1 = new ListPropertyMock();
         assertEquals(null, p1.get());
         assertEquals(null, p1.getValue());
-        assertFalse(property.isBound());
+        assertFalse(p1.isBound());
 
-        final ListProperty<Object> p2 = new SimpleListProperty<Object>(VALUE_1b);
+        final ListProperty<Object> p2 = new ListPropertyMock(VALUE_1b);
         assertEquals(VALUE_1b, p2.get());
         assertEquals(VALUE_1b, p2.getValue());
-        assertFalse(property.isBound());
+        assertFalse(p1.isBound());
     }
 
     @Test
     public void testEmptyProperty() {
         assertEquals("empty", property.emptyProperty().getName());
-        assertEquals(property, property.emptyProperty().getBean());
+        assertSame(property, property.emptyProperty().getBean());
         assertTrue(property.emptyProperty().get());
 
         property.set(VALUE_2a);
@@ -101,7 +101,7 @@ public class ListPropertyBaseTest {
     @Test
     public void testSizeProperty() {
         assertEquals("size", property.sizeProperty().getName());
-        assertEquals(property, property.sizeProperty().getBean());
+        assertSame(property, property.sizeProperty().getBean());
         assertEquals(0, property.sizeProperty().get());
 
         property.set(VALUE_2a);
@@ -276,14 +276,14 @@ public class ListPropertyBaseTest {
         source1.set(0, value2);
         assertEquals(value2, property.get(0));
         property.check(1);
-        listChangeListener.check1AddRemove(property, Arrays.asList(value1), 0, 1);
+        listChangeListener.check1AddRemove(property, Collections.singletonList(value1), 0, 1);
         listChangeListener.clear();
 
         // remove element
         source1.remove(0);
         assertTrue(property.isEmpty());
         property.check(1);
-        listChangeListener.check1AddRemove(property, Arrays.asList(value2), 0, 0);
+        listChangeListener.check1AddRemove(property, Collections.singletonList(value2), 0, 0);
         listChangeListener.clear();
 
         // set
@@ -303,14 +303,14 @@ public class ListPropertyBaseTest {
         source2.set(0, value2);
         assertEquals(value2, property.get(0));
         property.check(1);
-        listChangeListener.check1AddRemove(property, Arrays.asList(value1), 0, 1);
+        listChangeListener.check1AddRemove(property, Collections.singletonList(value1), 0, 1);
         listChangeListener.clear();
 
         // remove element
         source2.remove(0);
         assertTrue(property.isEmpty());
         property.check(1);
-        listChangeListener.check1AddRemove(property, Arrays.asList(value2), 0, 0);
+        listChangeListener.check1AddRemove(property, Collections.singletonList(value2), 0, 0);
         listChangeListener.clear();
     }
 
@@ -464,7 +464,7 @@ public class ListPropertyBaseTest {
 
     @Test(expected = RuntimeException.class)
     public void testSetBoundValue() {
-        final ListProperty<Object> v = new SimpleListProperty<Object>(VALUE_1a);
+        final ListProperty<Object> v = new SimpleListProperty<>(VALUE_2b);
         property.bind(v);
         property.set(VALUE_1a);
     }
@@ -473,8 +473,7 @@ public class ListPropertyBaseTest {
     public void testBind_Invalidation() {
         attachInvalidationListener();
         final ObservableObjectValueStub<ObservableList<Object>> v =
-                new ObservableObjectValueStub<ObservableList<Object>>(
-                        ObservableCollections.observableArrayList(VALUE_1a));
+                new ObservableObjectValueStub<>(ObservableCollections.observableArrayList(VALUE_1a));
 
         property.bind(v);
         assertEquals(VALUE_1a, property.get());
@@ -507,8 +506,7 @@ public class ListPropertyBaseTest {
     public void testBind_Change() {
         attachChangeListener();
         final ObservableObjectValueStub<ObservableList<Object>> v =
-                new ObservableObjectValueStub<ObservableList<Object>>(
-                        ObservableCollections.observableArrayList(VALUE_1a));
+                new ObservableObjectValueStub<>(ObservableCollections.observableArrayList(VALUE_1a));
 
         property.bind(v);
         assertEquals(VALUE_1a, property.get());
@@ -541,8 +539,7 @@ public class ListPropertyBaseTest {
     public void testBind_ListChange() {
         attachListChangeListener();
         final ObservableObjectValueStub<ObservableList<Object>> v =
-                new ObservableObjectValueStub<ObservableList<Object>>(
-                        ObservableCollections.observableArrayList(VALUE_1a));
+                new ObservableObjectValueStub<>(ObservableCollections.observableArrayList(VALUE_1a));
 
         property.bind(v);
         assertEquals(VALUE_1a, property.get());
@@ -582,8 +579,8 @@ public class ListPropertyBaseTest {
     @Test
     public void testRebind() {
         attachInvalidationListener();
-        final ListProperty<Object> v1 = new SimpleListProperty<Object>(VALUE_1a);
-        final ListProperty<Object> v2 = new SimpleListProperty<Object>(VALUE_2a);
+        final ListProperty<Object> v1 = new SimpleListProperty<>(VALUE_1a);
+        final ListProperty<Object> v2 = new SimpleListProperty<>(VALUE_2a);
         property.bind(v1);
         property.get();
         property.reset();
@@ -593,36 +590,33 @@ public class ListPropertyBaseTest {
         property.bind(v2);
         assertEquals(VALUE_2a, property.get());
         assertTrue(property.isBound());
-        assertEquals(1, property.counter);
+        property.check(1);
         invalidationListener.check(property, 1);
-        property.reset();
 
         // change old binding
         v1.set(VALUE_1b);
         assertEquals(VALUE_2a, property.get());
-        assertEquals(0, property.counter);
+        property.check(0);
         invalidationListener.check(null, 0);
-        property.reset();
 
         // change new binding
         v2.set(VALUE_2b);
         assertEquals(VALUE_2b, property.get());
-        assertEquals(1, property.counter);
+        property.check(1);
         invalidationListener.check(property, 1);
-        property.reset();
 
         // rebind to same observable should have no effect
         property.bind(v2);
         assertEquals(VALUE_2b, property.get());
         assertTrue(property.isBound());
-        assertEquals(0, property.counter);
+        property.check(0);
         invalidationListener.check(null, 0);
     }
 
     @Test
     public void testUnbind() {
         attachInvalidationListener();
-        final ListProperty<Object> v = new SimpleListProperty<Object>(VALUE_1a);
+        final ListProperty<Object> v = new SimpleListProperty<>(VALUE_1a);
         property.bind(v);
         property.unbind();
         assertEquals(VALUE_1a, property.get());
@@ -633,20 +627,19 @@ public class ListPropertyBaseTest {
         // change binding
         v.set(VALUE_2a);
         assertEquals(VALUE_1a, property.get());
-        assertEquals(0, property.counter);
+        property.check(0);
         invalidationListener.check(null, 0);
-        property.reset();
 
         // set value
         property.set(VALUE_1b);
         assertEquals(VALUE_1b, property.get());
-        assertEquals(1, property.counter);
+        property.check(1);
         invalidationListener.check(property, 1);
     }
 
     @Test
     public void testAddingListenerWillAlwaysReceiveInvalidationEvent() {
-        final ListProperty<Object> v = new SimpleListProperty<Object>(VALUE_1a);
+        final ListProperty<Object> v = new SimpleListProperty<>(VALUE_1a);
         final InvalidationListenerMock listener2 = new InvalidationListenerMock();
         final InvalidationListenerMock listener3 = new InvalidationListenerMock();
 
@@ -674,9 +667,8 @@ public class ListPropertyBaseTest {
         MockListObserver<Person> mlo = new MockListObserver<>();
         property.addListener(mlo);
         list.get(3).name.set("zero"); // four -> zero
-        ObservableList<Person> expected = ObservableCollections.observableArrayList(
-                new Person("one"), new Person("two"), new Person("three"),
-                new Person("zero"), new Person("five"));
+        ObservableList<Person> expected = ObservableCollections.observableArrayList(new Person("one"),
+                new Person("two"), new Person("three"), new Person("zero"), new Person("five"));
         mlo.check1Update(expected, 3, 4);
     }
 
@@ -687,34 +679,30 @@ public class ListPropertyBaseTest {
         MockListObserver<Person> mlo = new MockListObserver<>();
         property.addListener(mlo);
         ObservableCollections.sort(list);
-        ObservableList<Person> expected = ObservableCollections.observableArrayList(
-                new Person("five"), new Person("four"), new Person("one"),
-                new Person("three"), new Person("two"));
+        ObservableList<Person> expected = ObservableCollections.observableArrayList(new Person("five"),
+                new Person("four"), new Person("one"), new Person("three"), new Person("two"));
         mlo.check1Permutation(expected, new int[]{2, 4, 3, 1, 0});
     }
 
     @Test
     public void testPermutationUpdate() {
         ObservableList<Person> list = createPersonsList();
-        ObservableList<Person> sorted = list.sorted((o1, o2) -> o1.compareTo(o2));
+        ObservableList<Person> sorted = list.sorted(Person::compareTo);
         ListProperty<Person> property = new SimpleListProperty<>(sorted);
         MockListObserver<Person> mlo = new MockListObserver<>();
         property.addListener(mlo);
         // add another listener to test Generic code path instead of SingleChange
         property.addListener(new MockListObserver<>());
         list.get(3).name.set("zero"); // four -> zero
-        ObservableList<Person> expected = ObservableCollections.observableArrayList(
-                new Person("five"), new Person("one"), new Person("three"),
-                new Person("two"), new Person("zero"));
+        ObservableList<Person> expected = ObservableCollections.observableArrayList(new Person("five"),
+                new Person("one"), new Person("three"), new Person("two"), new Person("zero"));
         mlo.checkPermutation(0, expected, 0, expected.size(), new int[]{0, 4, 1, 2, 3});
         mlo.checkUpdate(1, expected, 4, 5);
     }
 
     private ObservableList<Person> createPersonsList() {
-        ObservableList<Person> list = ObservableCollections.observableArrayList(
-                (Person p) -> new Observable[]{p.name});
-        list.addAll(
-                new Person("one"), new Person("two"), new Person("three"),
+        ObservableList<Person> list = ObservableCollections.observableArrayList((Person p) -> new Observable[]{p.name});
+        list.addAll(new Person("one"), new Person("two"), new Person("three"),
                 new Person("four"), new Person("five"));
         return list;
     }
@@ -724,7 +712,7 @@ public class ListPropertyBaseTest {
         final ObservableList<Object> value0 = null;
         final ObservableList<Object> value1 = ObservableCollections.observableArrayList(new Object(), new Object());
         final ObservableList<Object> value2 = ObservableCollections.observableArrayList();
-        final ListProperty<Object> v = new SimpleListProperty<Object>(value2);
+        final ListProperty<Object> v = new SimpleListProperty<>(value2);
 
         property.set(value1);
         assertEquals("ListProperty [value: " + value1 + "]", property.toString());
@@ -741,36 +729,31 @@ public class ListPropertyBaseTest {
         final Object bean = new Object();
         final String name = "My name";
         final ListProperty<Object> v1 = new ListPropertyMock(bean, name);
-        assertEquals("ListProperty [bean: " + bean.toString() + ", name: My name, value: " + null + "]", v1.toString());
+        assertEquals("ListProperty [bean: " + bean + ", name: My name, value: " + null + "]", v1.toString());
         v1.set(value1);
-        assertEquals("ListProperty [bean: " + bean.toString() + ", name: My name, value: " + value1 + "]",
-                v1.toString());
+        assertEquals("ListProperty [bean: " + bean + ", name: My name, value: " + value1 + "]", v1.toString());
         v1.set(value0);
-        assertEquals("ListProperty [bean: " + bean.toString() + ", name: My name, value: " + value0 + "]",
-                v1.toString());
+        assertEquals("ListProperty [bean: " + bean + ", name: My name, value: " + value0 + "]", v1.toString());
 
         final ListProperty<Object> v2 = new ListPropertyMock(bean, NO_NAME_1);
-        assertEquals("ListProperty [bean: " + bean.toString() + ", value: " + null + "]", v2.toString());
+        assertEquals("ListProperty [bean: " + bean + ", value: " + null + "]", v2.toString());
         v2.set(value1);
-        assertEquals("ListProperty [bean: " + bean.toString() + ", value: " + value1 + "]", v2.toString());
+        assertEquals("ListProperty [bean: " + bean + ", value: " + value1 + "]", v2.toString());
         v1.set(value0);
-        assertEquals("ListProperty [bean: " + bean.toString() + ", name: My name, value: " + value0 + "]",
-                v1.toString());
+        assertEquals("ListProperty [bean: " + bean + ", name: My name, value: " + value0 + "]", v1.toString());
 
         final ListProperty<Object> v3 = new ListPropertyMock(bean, NO_NAME_2);
-        assertEquals("ListProperty [bean: " + bean.toString() + ", value: " + null + "]", v3.toString());
+        assertEquals("ListProperty [bean: " + bean + ", value: " + null + "]", v3.toString());
         v3.set(value1);
-        assertEquals("ListProperty [bean: " + bean.toString() + ", value: " + value1 + "]", v3.toString());
+        assertEquals("ListProperty [bean: " + bean + ", value: " + value1 + "]", v3.toString());
         v1.set(value0);
-        assertEquals("ListProperty [bean: " + bean.toString() + ", name: My name, value: " + value0 + "]",
-                v1.toString());
+        assertEquals("ListProperty [bean: " + bean + ", name: My name, value: " + value0 + "]", v1.toString());
 
         final ListProperty<Object> v4 = new ListPropertyMock(NO_BEAN, name);
         assertEquals("ListProperty [name: My name, value: " + null + "]", v4.toString());
         v4.set(value1);
         v1.set(value0);
-        assertEquals("ListProperty [bean: " + bean.toString() + ", name: My name, value: " + value0 + "]",
-                v1.toString());
+        assertEquals("ListProperty [bean: " + bean + ", name: My name, value: " + value0 + "]", v1.toString());
         assertEquals("ListProperty [name: My name, value: " + value1 + "]", v4.toString());
     }
 
@@ -782,12 +765,8 @@ public class ListPropertyBaseTest {
 
         private int counter;
 
-        private ListPropertyMock() {
-            this.bean = NO_BEAN;
-            this.name = NO_NAME_1;
-        }
-
         private ListPropertyMock(Object bean, String name) {
+            super();
             this.bean = bean;
             this.name = name;
         }
@@ -796,6 +775,10 @@ public class ListPropertyBaseTest {
             super(initialValue);
             this.bean = NO_BEAN;
             this.name = NO_NAME_1;
+        }
+
+        private ListPropertyMock() {
+            this(NO_BEAN, NO_NAME_1);
         }
 
         @Override

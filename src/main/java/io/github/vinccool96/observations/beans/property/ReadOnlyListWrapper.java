@@ -15,18 +15,16 @@ public class ReadOnlyListWrapper<E> extends SimpleListProperty<E> {
 
     /**
      * The constructor of {@code ReadOnlyListWrapper}
-     */
-    public ReadOnlyListWrapper() {
-    }
-
-    /**
-     * The constructor of {@code ReadOnlyListWrapper}
      *
+     * @param bean
+     *         the bean of this {@code ReadOnlyListWrapper}
+     * @param name
+     *         the name of this {@code ReadOnlyListWrapper}
      * @param initialValue
      *         the initial value of the wrapped value
      */
-    public ReadOnlyListWrapper(ObservableList<E> initialValue) {
-        super(initialValue);
+    public ReadOnlyListWrapper(Object bean, String name, ObservableList<E> initialValue) {
+        super(bean, name, initialValue);
     }
 
     /**
@@ -44,16 +42,17 @@ public class ReadOnlyListWrapper<E> extends SimpleListProperty<E> {
     /**
      * The constructor of {@code ReadOnlyListWrapper}
      *
-     * @param bean
-     *         the bean of this {@code ReadOnlyListWrapper}
-     * @param name
-     *         the name of this {@code ReadOnlyListWrapper}
      * @param initialValue
      *         the initial value of the wrapped value
      */
-    public ReadOnlyListWrapper(Object bean, String name,
-            ObservableList<E> initialValue) {
-        super(bean, name, initialValue);
+    public ReadOnlyListWrapper(ObservableList<E> initialValue) {
+        super(initialValue);
+    }
+
+    /**
+     * The constructor of {@code ReadOnlyListWrapper}
+     */
+    public ReadOnlyListWrapper() {
     }
 
     /**

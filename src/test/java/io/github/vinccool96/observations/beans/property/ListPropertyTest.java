@@ -11,6 +11,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class ListPropertyTest {
 
     private static final Object NO_BEAN = null;
@@ -27,8 +28,8 @@ public class ListPropertyTest {
 
     @Test
     public void testBindBidirectional() {
-        final ListProperty<Object> p1 = new SimpleListProperty<Object>(VALUE_2);
-        final ListProperty<Object> p2 = new SimpleListProperty<Object>(VALUE_1);
+        final ListProperty<Object> p1 = new SimpleListProperty<>(VALUE_2);
+        final ListProperty<Object> p2 = new SimpleListProperty<>(VALUE_1);
 
         p1.bindBidirectional(p2);
         assertEquals(VALUE_1, p1.get());
@@ -86,7 +87,7 @@ public class ListPropertyTest {
         assertEquals("ListProperty [name: My name, value: " + VALUE_1 + "]", v5.toString());
     }
 
-    private class ListPropertyStub extends ListProperty<Object> {
+    private static class ListPropertyStub extends ListProperty<Object> {
 
         private final Object bean;
 
@@ -136,6 +137,22 @@ public class ListPropertyTest {
         }
 
         @Override
+        public void addListener(InvalidationListener listener) {
+            fail("Not in use");
+        }
+
+        @Override
+        public void removeListener(InvalidationListener listener) {
+            fail("Not in use");
+        }
+
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            fail("Not in use");
+            return false;
+        }
+
+        @Override
         public void addListener(ChangeListener<? super ObservableList<Object>> listener) {
             fail("Not in use");
         }
@@ -149,16 +166,6 @@ public class ListPropertyTest {
         public boolean isChangeListenerAlreadyAdded(ChangeListener<? super ObservableList<Object>> listener) {
             fail("Not in use");
             return false;
-        }
-
-        @Override
-        public void addListener(InvalidationListener listener) {
-            fail("Not in use");
-        }
-
-        @Override
-        public void removeListener(InvalidationListener listener) {
-            fail("Not in use");
         }
 
         @Override
@@ -187,12 +194,6 @@ public class ListPropertyTest {
         public ReadOnlyBooleanProperty emptyProperty() {
             fail("Not in use");
             return null;
-        }
-
-        @Override
-        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-            fail("Not in use");
-            return false;
         }
 
     }
