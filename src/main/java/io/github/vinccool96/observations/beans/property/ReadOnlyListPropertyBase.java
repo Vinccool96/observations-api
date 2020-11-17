@@ -3,6 +3,7 @@ package io.github.vinccool96.observations.beans.property;
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.beans.value.ChangeListener;
 import io.github.vinccool96.observations.collections.ListChangeListener;
+import io.github.vinccool96.observations.collections.ListChangeListener.Change;
 import io.github.vinccool96.observations.collections.ObservableList;
 import io.github.vinccool96.observations.sun.binding.ListExpressionHelper;
 import io.github.vinccool96.observations.util.ArrayUtils;
@@ -19,19 +20,21 @@ public abstract class ReadOnlyListPropertyBase<E> extends ReadOnlyListProperty<E
 
     @Override
     public void addListener(InvalidationListener listener) {
-        if (helper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+        if (!isInvalidationListenerAlreadyAdded(listener)) {
             helper = ListExpressionHelper.addListener(helper, this, listener);
         }
     }
 
     @Override
     public void removeListener(InvalidationListener listener) {
-        helper = ListExpressionHelper.removeListener(helper, listener);
+        if (isInvalidationListenerAlreadyAdded(listener)) {
+            helper = ListExpressionHelper.removeListener(helper, listener);
+        }
     }
 
     @Override
     public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
+        return helper != null && ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     @Override
@@ -58,19 +61,21 @@ public abstract class ReadOnlyListPropertyBase<E> extends ReadOnlyListProperty<E
 
     @Override
     public void addListener(ListChangeListener<? super E> listener) {
-        if (helper == null || !isListChangeListenerAlreadyAdded(listener)) {
+        if (!isListChangeListenerAlreadyAdded(listener)) {
             helper = ListExpressionHelper.addListener(helper, this, listener);
         }
     }
 
     @Override
     public void removeListener(ListChangeListener<? super E> listener) {
-        helper = ListExpressionHelper.removeListener(helper, listener);
+        if (isListChangeListenerAlreadyAdded(listener)) {
+            helper = ListExpressionHelper.removeListener(helper, listener);
+        }
     }
 
     @Override
     public boolean isListChangeListenerAlreadyAdded(ListChangeListener<? super E> listener) {
-        return ArrayUtils.getInstance().contains(this.helper.getListChangeListeners(), listener);
+        return helper != null && ArrayUtils.getInstance().contains(this.helper.getListChangeListeners(), listener);
     }
 
     /**
@@ -96,7 +101,7 @@ public abstract class ReadOnlyListPropertyBase<E> extends ReadOnlyListProperty<E
      * @param change
      *         the change that needs to be propagated
      */
-    protected void fireValueChangedEvent(ListChangeListener.Change<? extends E> change) {
+    protected void fireValueChangedEvent(Change<? extends E> change) {
         ListExpressionHelper.fireValueChangedEvent(helper, change);
     }
 

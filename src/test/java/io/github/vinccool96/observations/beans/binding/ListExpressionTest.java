@@ -19,6 +19,7 @@ import java.util.Iterator;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings({"SimplifiableAssertion", "UnusedAssignment"})
 public class ListExpressionTest {
 
     private static final Integer data1_0 = 7;
@@ -41,10 +42,10 @@ public class ListExpressionTest {
 
     @Before
     public void setUp() {
-        opNull = new SimpleListProperty<Integer>();
-        opEmpty = new SimpleListProperty<Integer>(ObservableCollections.<Integer>observableArrayList());
-        op1 = new SimpleListProperty<Integer>(ObservableCollections.observableArrayList(data1_0));
-        op2 = new SimpleListProperty<Integer>(ObservableCollections.observableArrayList(data2_0, data2_1));
+        opNull = new SimpleListProperty<>();
+        opEmpty = new SimpleListProperty<>(ObservableCollections.observableArrayList());
+        op1 = new SimpleListProperty<>(ObservableCollections.observableArrayList(data1_0));
+        op2 = new SimpleListProperty<>(ObservableCollections.observableArrayList(data2_0, data2_1));
     }
 
     @BeforeClass
@@ -218,7 +219,7 @@ public class ListExpressionTest {
     public void testAsString() {
         assertEquals("null", opNull.asString().get());
         assertEquals(Collections.emptyList().toString(), opEmpty.asString().get());
-        assertEquals(Arrays.asList(data1_0).toString(), op1.asString().get());
+        assertEquals(Collections.singletonList(data1_0).toString(), op1.asString().get());
         assertEquals(Arrays.asList(data2_0, data2_1).toString(), op2.asString().get());
     }
 
@@ -311,7 +312,7 @@ public class ListExpressionTest {
 
     @Test
     public void testObservableListValueToExpression() {
-        final ObservableListValueStub<Object> valueModel = new ObservableListValueStub<Object>();
+        final ObservableListValueStub<Object> valueModel = new ObservableListValueStub<>();
         final ListExpression<Object> exp = ListExpression.listExpression(valueModel);
         final Object o1 = new Object();
         final Object o2 = new Object();
@@ -327,7 +328,7 @@ public class ListExpressionTest {
         valueModel.get().add(o2);
         assertEquals(ObservableCollections.observableList(Arrays.asList(o1, o2)), exp.get());
         exp.add(o3);
-        assertEquals(ObservableCollections.observableList(Arrays.asList(o1, o2, o3)), exp.get());
+        assertEquals(ObservableCollections.observableList(Arrays.asList(o1, o2, o3)), valueModel.get());
 
         // make sure we do not create unnecessary bindings
         assertSame(op1, ListExpression.listExpression(op1));

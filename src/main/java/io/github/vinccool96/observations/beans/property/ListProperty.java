@@ -61,8 +61,7 @@ public abstract class ListProperty<E> extends ReadOnlyListProperty<E>
     public String toString() {
         final Object bean = getBean();
         final String name = getName();
-        final StringBuilder result = new StringBuilder(
-                "ListProperty [");
+        final StringBuilder result = new StringBuilder("ListProperty [");
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }

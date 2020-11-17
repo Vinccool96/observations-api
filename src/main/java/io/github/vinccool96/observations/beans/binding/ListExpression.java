@@ -27,9 +27,10 @@ import java.util.ListIterator;
  * @param <E>
  *         the type of the {@code List} elements.
  */
+@SuppressWarnings({"SuspiciousToArrayCall", "unchecked"})
 public abstract class ListExpression<E> implements ObservableListValue<E> {
 
-    private static final ObservableList EMPTY_LIST = ObservableCollections.emptyObservableList();
+    private final ObservableList<E> EMPTY_LIST = ObservableCollections.emptyObservableList();
 
     @Override
     public ObservableList<E> getValue() {
@@ -228,7 +229,7 @@ public abstract class ListExpression<E> implements ObservableListValue<E> {
     @Override
     public <T> T[] toArray(T[] array) {
         final ObservableList<E> list = get();
-        return (list == null) ? (T[]) EMPTY_LIST.toArray(array) : list.toArray(array);
+        return (list == null) ? EMPTY_LIST.toArray(array) : list.toArray(array);
     }
 
     @Override
@@ -246,7 +247,7 @@ public abstract class ListExpression<E> implements ObservableListValue<E> {
     @Override
     public boolean containsAll(Collection<?> objects) {
         final ObservableList<E> list = get();
-        return (list == null) ? EMPTY_LIST.contains(objects) : list.containsAll(objects);
+        return (list == null) ? EMPTY_LIST.containsAll(objects) : list.containsAll(objects);
     }
 
     @Override
@@ -286,13 +287,13 @@ public abstract class ListExpression<E> implements ObservableListValue<E> {
     @Override
     public E get(int i) {
         final ObservableList<E> list = get();
-        return (list == null) ? (E) EMPTY_LIST.get(i) : list.get(i);
+        return (list == null) ? EMPTY_LIST.get(i) : list.get(i);
     }
 
     @Override
     public E set(int i, E element) {
         final ObservableList<E> list = get();
-        return (list == null) ? (E) EMPTY_LIST.set(i, element) : list.set(i, element);
+        return (list == null) ? EMPTY_LIST.set(i, element) : list.set(i, element);
     }
 
     @Override
@@ -308,7 +309,7 @@ public abstract class ListExpression<E> implements ObservableListValue<E> {
     @Override
     public E remove(int i) {
         final ObservableList<E> list = get();
-        return (list == null) ? (E) EMPTY_LIST.remove(i) : list.remove(i);
+        return (list == null) ? EMPTY_LIST.remove(i) : list.remove(i);
     }
 
     @Override

@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+@SuppressWarnings("SuspiciousToArrayCall")
 public class ObservableListValueStub<E> implements ObservableListValue<E> {
 
     private final ObservableList<E> EMPTY_LIST = ObservableCollections.emptyObservableList();
@@ -117,12 +118,6 @@ public class ObservableListValueStub<E> implements ObservableListValue<E> {
         return helper != null && ArrayUtils.getInstance().contains(this.helper.getListChangeListeners(), listener);
     }
 
-    /**
-     * Notify the currently registered observers of a value change.
-     * <p>
-     * This implementation will ignore all adds and removes of observers that are done while a notification is
-     * processed. The changes take effect in the following call to fireValueChangedEvent.
-     */
     protected void fireValueChangedEvent() {
         ListExpressionHelper.fireValueChangedEvent(helper);
     }
@@ -274,12 +269,14 @@ public class ObservableListValueStub<E> implements ObservableListValue<E> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean addAll(E... elements) {
         final ObservableList<E> list = get();
         return (list == null) ? EMPTY_LIST.addAll(elements) : list.addAll(elements);
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean setAll(E... elements) {
         final ObservableList<E> list = get();
         return (list == null) ? EMPTY_LIST.setAll(elements) : list.setAll(elements);
@@ -292,12 +289,14 @@ public class ObservableListValueStub<E> implements ObservableListValue<E> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean removeAll(E... elements) {
         final ObservableList<E> list = get();
         return (list == null) ? EMPTY_LIST.removeAll(elements) : list.removeAll(elements);
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean retainAll(E... elements) {
         final ObservableList<E> list = get();
         return (list == null) ? EMPTY_LIST.retainAll(elements) : list.retainAll(elements);

@@ -12,14 +12,16 @@ import java.util.*;
 
 /**
  * Utility class that consists of static methods that are 1:1 copies of Collections methods.
- * <br><br>
+ * <p>
  * The wrapper methods (like synchronizedObservableList or emptyObservableList) has exactly the same functionality as
  * the methods in Collections, with exception that they return ObservableList and are therefore suitable for methods
  * that require ObservableList on input.
- * <br><br>
+ * <p>
  * The utility methods are here mainly for performance reasons. All methods are optimized in a way that they yield only
  * limited number of notifications. On the other hand, Collections methods might call "modification methods" on an
  * ObservableList multiple times, resulting in a number of notifications.
+ * <p>
+ * Some methods have been added for convenience.
  */
 @SuppressWarnings("unused")
 public class ObservableCollections {
@@ -535,7 +537,7 @@ public class ObservableCollections {
     }
 
     /**
-     * Creates and empty unmodifiable observable list.
+     * Creates an empty unmodifiable observable list.
      *
      * @param <E>
      *         the list element type
@@ -574,7 +576,7 @@ public class ObservableCollections {
      * @param set
      *         an ObservableSet that is to be wrapped
      *
-     * @return an ObserableSet wrapper that is unmodifiable
+     * @return an ObservableSet wrapper that is unmodifiable
      *
      * @see Collections#unmodifiableSet(Set)
      */

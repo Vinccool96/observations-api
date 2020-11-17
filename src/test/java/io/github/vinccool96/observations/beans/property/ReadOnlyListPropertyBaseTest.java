@@ -26,10 +26,10 @@ public class ReadOnlyListPropertyBaseTest {
     private ChangeListenerMock<Object> changeListener;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         property = new ReadOnlyPropertyMock();
         invalidationListener = new InvalidationListenerMock();
-        changeListener = new ChangeListenerMock<Object>(UNDEFINED);
+        changeListener = new ChangeListenerMock<>(UNDEFINED);
     }
 
     @Test
@@ -74,14 +74,14 @@ public class ReadOnlyListPropertyBaseTest {
             return null;
         }
 
-        private void set(ObservableList<Object> value) {
-            this.value = value;
-            fireValueChangedEvent();
-        }
-
         @Override
         public ObservableList<Object> get() {
             return value;
+        }
+
+        private void set(ObservableList<Object> value) {
+            this.value = value;
+            fireValueChangedEvent();
         }
 
         @Override
