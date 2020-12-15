@@ -22,7 +22,7 @@ import java.util.*;
  * provides the actual value of this expression.
  * <p>
  * If the wrapped list of a {@code MapExpression} is {@code null}, all methods implementing the {@code Map} interface
- * will behave as if they were applied to an immutable empty list.
+ * will behave as if they were applied to an immutable empty map.
  *
  * @param <K>
  *         the type of the key elements
