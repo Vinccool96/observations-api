@@ -180,9 +180,9 @@ public class BidirectionalContentBinding {
 
         private boolean updating = false;
 
-        public SetContentBinding(ObservableSet<E> list1, ObservableSet<E> list2) {
-            propertyRef1 = new WeakReference<>(list1);
-            propertyRef2 = new WeakReference<>(list2);
+        public SetContentBinding(ObservableSet<E> set1, ObservableSet<E> set2) {
+            propertyRef1 = new WeakReference<>(set1);
+            propertyRef2 = new WeakReference<>(set2);
         }
 
         @Override
@@ -268,9 +268,9 @@ public class BidirectionalContentBinding {
 
         private boolean updating = false;
 
-        public MapContentBinding(ObservableMap<K, V> list1, ObservableMap<K, V> list2) {
-            propertyRef1 = new WeakReference<>(list1);
-            propertyRef2 = new WeakReference<>(list2);
+        public MapContentBinding(ObservableMap<K, V> map1, ObservableMap<K, V> map2) {
+            propertyRef1 = new WeakReference<>(map1);
+            propertyRef2 = new WeakReference<>(map2);
         }
 
         @Override
