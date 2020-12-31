@@ -223,7 +223,7 @@ public abstract class ModifiableObservableListBase<E> extends ObservableListBase
      * @return the removed element
      *
      * @throws IndexOutOfBoundsException
-     *         if the index is out of range (<tt>index &lt; 0 || index &gt;= size()</tt>)
+     *         if the index is out of range ({@code index < 0 || index >= size()})
      */
     protected abstract E doRemove(int index);
 
