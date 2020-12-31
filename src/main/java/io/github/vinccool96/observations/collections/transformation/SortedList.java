@@ -144,7 +144,7 @@ public final class SortedList<E> extends TransformationList<E, E> {
      * @return the element at the specified position in this list
      *
      * @throws IndexOutOfBoundsException
-     *         if the index is out of range (<tt>index &lt; 0 || index &gt;= size()</tt>)
+     *         if the index is out of range ({@code index < 0 || index >= size()})
      */
     @Override
     public E get(int index) {

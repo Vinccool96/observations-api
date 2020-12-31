@@ -504,7 +504,7 @@ public class ObservableCollections {
      * @param list
      *         an Observable list to be wrapped
      * @param type
-     *         the type of element that <tt>list</tt> is permitted to hold
+     *         the type of element that {@code list} is permitted to hold
      *
      * @return a dynamically typesafe view of the specified list
      *
@@ -596,7 +596,7 @@ public class ObservableCollections {
      * @param set
      *         an Observable set to be wrapped
      * @param type
-     *         the type of element that <tt>set</tt> is permitted to hold
+     *         the type of element that {@code set} is permitted to hold
      *
      * @return a dynamically typesafe view of the specified set
      *
