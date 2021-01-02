@@ -4,6 +4,7 @@ import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.beans.value.ChangeListener;
 import io.github.vinccool96.observations.beans.value.ObservableMapValue;
 import io.github.vinccool96.observations.collections.MapChangeListener;
+import io.github.vinccool96.observations.collections.MapChangeListener.Change;
 import io.github.vinccool96.observations.collections.ObservableMap;
 import io.github.vinccool96.observations.util.ArrayUtils;
 
@@ -11,8 +12,17 @@ import java.util.Arrays;
 import java.util.Map;
 
 /**
- *
+ * A convenience class for creating implementations of {@link io.github.vinccool96.observations.beans.value.ObservableValue}.
+ * It contains all of the infrastructure support for value invalidation- and change event notification.
+ * <p>
+ * This implementation can handle adding and removing listeners while the observers are being notified, but it is not
+ * thread-safe.
+ * <p>
+ * For the {@code ExpressionHelperBase} that is used with the {@link ObservableMap ObservableMaps} created with the
+ * methods of {@link io.github.vinccool96.observations.collections.ObservableCollections}, please refer to {@link
+ * io.github.vinccool96.observations.sun.collections.MapListenerHelper}.
  */
+@SuppressWarnings("unchecked")
 public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,7 +34,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
             throw new NullPointerException();
         }
         observable.getValue(); // validate observable
-        return (helper == null) ? new SingleInvalidation<K, V>(observable, listener) : helper.addListener(listener);
+        return (helper == null) ? new SingleInvalidation<>(observable, listener) : helper.addListener(listener);
     }
 
     public static <K, V> MapExpressionHelper<K, V> removeListener(MapExpressionHelper<K, V> helper,
@@ -40,7 +50,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
         if ((observable == null) || (listener == null)) {
             throw new NullPointerException();
         }
-        return (helper == null) ? new SingleChange<K, V>(observable, listener) : helper.addListener(listener);
+        return (helper == null) ? new SingleChange<>(observable, listener) : helper.addListener(listener);
     }
 
     public static <K, V> MapExpressionHelper<K, V> removeListener(MapExpressionHelper<K, V> helper,
@@ -56,7 +66,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
         if ((observable == null) || (listener == null)) {
             throw new NullPointerException();
         }
-        return (helper == null) ? new SingleMapChange<K, V>(observable, listener) : helper.addListener(listener);
+        return (helper == null) ? new SingleMapChange<>(observable, listener) : helper.addListener(listener);
     }
 
     public static <K, V> MapExpressionHelper<K, V> removeListener(MapExpressionHelper<K, V> helper,
@@ -74,7 +84,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
     }
 
     public static <K, V> void fireValueChangedEvent(MapExpressionHelper<K, V> helper,
-            MapChangeListener.Change<? extends K, ? extends V> change) {
+            Change<? extends K, ? extends V> change) {
         if (helper != null) {
             helper.fireValueChangedEvent(change);
         }
@@ -103,13 +113,13 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
 
     protected abstract void fireValueChangedEvent();
 
-    protected abstract void fireValueChangedEvent(MapChangeListener.Change<? extends K, ? extends V> change);
+    protected abstract void fireValueChangedEvent(Change<? extends K, ? extends V> change);
 
     public abstract InvalidationListener[] getInvalidationListeners();
 
-    public abstract ChangeListener[] getChangeListeners();
+    public abstract ChangeListener<? super ObservableMap<K, V>>[] getChangeListeners();
 
-    public abstract MapChangeListener[] getMapChangeListeners();
+    public abstract MapChangeListener<? super K, ? super V>[] getMapChangeListeners();
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Implementations
@@ -125,7 +135,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
 
         @Override
         protected MapExpressionHelper<K, V> addListener(InvalidationListener listener) {
-            return new MapExpressionHelper.Generic<K, V>(observable, this.listener, listener);
+            return new Generic<>(observable, this.listener, listener);
         }
 
         @Override
@@ -135,7 +145,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
 
         @Override
         protected MapExpressionHelper<K, V> addListener(ChangeListener<? super ObservableMap<K, V>> listener) {
-            return new MapExpressionHelper.Generic<K, V>(observable, this.listener, listener);
+            return new Generic<>(observable, this.listener, listener);
         }
 
         @Override
@@ -145,7 +155,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
 
         @Override
         protected MapExpressionHelper<K, V> addListener(MapChangeListener<? super K, ? super V> listener) {
-            return new MapExpressionHelper.Generic<K, V>(observable, this.listener, listener);
+            return new Generic<>(observable, this.listener, listener);
         }
 
         @Override
@@ -159,7 +169,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
         }
 
         @Override
-        protected void fireValueChangedEvent(MapChangeListener.Change<? extends K, ? extends V> change) {
+        protected void fireValueChangedEvent(Change<? extends K, ? extends V> change) {
             listener.invalidated(observable);
         }
 
@@ -169,12 +179,12 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
         }
 
         @Override
-        public ChangeListener[] getChangeListeners() {
+        public ChangeListener<? super ObservableMap<K, V>>[] getChangeListeners() {
             return new ChangeListener[0];
         }
 
         @Override
-        public MapChangeListener[] getMapChangeListeners() {
+        public MapChangeListener<? super K, ? super V>[] getMapChangeListeners() {
             return new MapChangeListener[0];
         }
 
@@ -195,7 +205,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
 
         @Override
         protected MapExpressionHelper<K, V> addListener(InvalidationListener listener) {
-            return new MapExpressionHelper.Generic<K, V>(observable, listener, this.listener);
+            return new Generic<>(observable, listener, this.listener);
         }
 
         @Override
@@ -205,7 +215,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
 
         @Override
         protected MapExpressionHelper<K, V> addListener(ChangeListener<? super ObservableMap<K, V>> listener) {
-            return new MapExpressionHelper.Generic<K, V>(observable, this.listener, listener);
+            return new Generic<>(observable, this.listener, listener);
         }
 
         @Override
@@ -215,7 +225,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
 
         @Override
         protected MapExpressionHelper<K, V> addListener(MapChangeListener<? super K, ? super V> listener) {
-            return new MapExpressionHelper.Generic<K, V>(observable, this.listener, listener);
+            return new Generic<>(observable, this.listener, listener);
         }
 
         @Override
@@ -233,7 +243,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
         }
 
         @Override
-        protected void fireValueChangedEvent(MapChangeListener.Change<? extends K, ? extends V> change) {
+        protected void fireValueChangedEvent(Change<? extends K, ? extends V> change) {
             listener.changed(observable, currentValue, currentValue);
         }
 
@@ -243,12 +253,12 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
         }
 
         @Override
-        public ChangeListener[] getChangeListeners() {
+        public ChangeListener<? super ObservableMap<K, V>>[] getChangeListeners() {
             return new ChangeListener[]{this.listener};
         }
 
         @Override
-        public MapChangeListener[] getMapChangeListeners() {
+        public MapChangeListener<? super K, ? super V>[] getMapChangeListeners() {
             return new MapChangeListener[0];
         }
 
@@ -268,7 +278,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
 
         @Override
         protected MapExpressionHelper<K, V> addListener(InvalidationListener listener) {
-            return new MapExpressionHelper.Generic<K, V>(observable, listener, this.listener);
+            return new Generic<>(observable, listener, this.listener);
         }
 
         @Override
@@ -278,7 +288,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
 
         @Override
         protected MapExpressionHelper<K, V> addListener(ChangeListener<? super ObservableMap<K, V>> listener) {
-            return new MapExpressionHelper.Generic<K, V>(observable, listener, this.listener);
+            return new Generic<>(observable, listener, this.listener);
         }
 
         @Override
@@ -288,7 +298,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
 
         @Override
         protected MapExpressionHelper<K, V> addListener(MapChangeListener<? super K, ? super V> listener) {
-            return new MapExpressionHelper.Generic<K, V>(observable, this.listener, listener);
+            return new Generic<>(observable, this.listener, listener);
         }
 
         @Override
@@ -301,8 +311,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
             final ObservableMap<K, V> oldValue = currentValue;
             currentValue = observable.getValue();
             if (currentValue != oldValue) {
-                final MapExpressionHelper.SimpleChange<K, V>
-                        change = new MapExpressionHelper.SimpleChange<K, V>(observable);
+                final SimpleChange<K, V> change = new SimpleChange<>(observable);
                 if (currentValue == null) {
                     for (final Map.Entry<K, V> element : oldValue.entrySet()) {
                         listener.onChanged(change.setRemoved(element.getKey(), element.getValue()));
@@ -335,8 +344,8 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
         }
 
         @Override
-        protected void fireValueChangedEvent(final MapChangeListener.Change<? extends K, ? extends V> change) {
-            listener.onChanged(new MapExpressionHelper.SimpleChange<K, V>(observable, change));
+        protected void fireValueChangedEvent(final Change<? extends K, ? extends V> change) {
+            listener.onChanged(new SimpleChange<>(observable, change));
         }
 
         @Override
@@ -345,12 +354,12 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
         }
 
         @Override
-        public ChangeListener[] getChangeListeners() {
+        public ChangeListener<? super ObservableMap<K, V>>[] getChangeListeners() {
             return new ChangeListener[0];
         }
 
         @Override
-        public MapChangeListener[] getMapChangeListeners() {
+        public MapChangeListener<? super K, ? super V>[] getMapChangeListeners() {
             return new MapChangeListener[]{this.listener};
         }
 
@@ -456,9 +465,9 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
                     if (listener.equals(invalidationListeners[index])) {
                         if (invalidationSize == 1) {
                             if ((changeSize == 1) && (mapChangeSize == 0)) {
-                                return new MapExpressionHelper.SingleChange<K, V>(observable, changeListeners[0]);
+                                return new SingleChange<>(observable, changeListeners[0]);
                             } else if ((changeSize == 0) && (mapChangeSize == 1)) {
-                                return new MapExpressionHelper.SingleMapChange<K, V>(observable, mapChangeListeners[0]);
+                                return new SingleMapChange<>(observable, mapChangeListeners[0]);
                             }
                             invalidationListeners = null;
                             invalidationSize = 0;
@@ -516,10 +525,9 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
                     if (listener.equals(changeListeners[index])) {
                         if (changeSize == 1) {
                             if ((invalidationSize == 1) && (mapChangeSize == 0)) {
-                                return new MapExpressionHelper.SingleInvalidation<K, V>(observable,
-                                        invalidationListeners[0]);
+                                return new SingleInvalidation<>(observable, invalidationListeners[0]);
                             } else if ((invalidationSize == 0) && (mapChangeSize == 1)) {
-                                return new MapExpressionHelper.SingleMapChange<K, V>(observable, mapChangeListeners[0]);
+                                return new SingleMapChange<>(observable, mapChangeListeners[0]);
                             }
                             changeListeners = null;
                             changeSize = 0;
@@ -577,10 +585,9 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
                     if (listener.equals(mapChangeListeners[index])) {
                         if (mapChangeSize == 1) {
                             if ((invalidationSize == 1) && (changeSize == 0)) {
-                                return new MapExpressionHelper.SingleInvalidation<K, V>(observable,
-                                        invalidationListeners[0]);
+                                return new SingleInvalidation<>(observable, invalidationListeners[0]);
                             } else if ((invalidationSize == 0) && (changeSize == 1)) {
-                                return new MapExpressionHelper.SingleChange<K, V>(observable, changeListeners[0]);
+                                return new SingleChange<>(observable, changeListeners[0]);
                             }
                             mapChangeListeners = null;
                             mapChangeSize = 0;
@@ -608,7 +615,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
 
         @Override
         protected void fireValueChangedEvent() {
-            if ((changeSize == 0) && (mapChangeSize == 0)) {
+            if (changeSize == 0 && mapChangeSize == 0) {
                 notifyListeners(currentValue, null);
             } else {
                 final ObservableMap<K, V> oldValue = currentValue;
@@ -618,10 +625,8 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
         }
 
         @Override
-        protected void fireValueChangedEvent(final MapChangeListener.Change<? extends K, ? extends V> change) {
-            final MapExpressionHelper.SimpleChange<K, V>
-                    mappedChange =
-                    (mapChangeSize == 0) ? null : new MapExpressionHelper.SimpleChange<K, V>(observable, change);
+        protected void fireValueChangedEvent(final Change<? extends K, ? extends V> change) {
+            final SimpleChange<K, V> mappedChange = mapChangeSize == 0 ? null : new SimpleChange<>(observable, change);
             notifyListeners(currentValue, mappedChange);
         }
 
@@ -631,50 +636,50 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
         }
 
         @Override
-        public ChangeListener[] getChangeListeners() {
+        public ChangeListener<? super ObservableMap<K, V>>[] getChangeListeners() {
             return ArrayUtils.getInstance().clone(this.changeListeners, ChangeListener.class);
         }
 
         @Override
-        public MapChangeListener[] getMapChangeListeners() {
+        public MapChangeListener<? super K, ? super V>[] getMapChangeListeners() {
             return ArrayUtils.getInstance().clone(this.mapChangeListeners, MapChangeListener.class);
         }
 
-        private void notifyListeners(ObservableMap<K, V> oldValue, MapExpressionHelper.SimpleChange<K, V> change) {
+        private void notifyListeners(ObservableMap<K, V> oldValue, SimpleChange<K, V> change) {
             final InvalidationListener[] curInvalidationList = invalidationListeners;
             final int curInvalidationSize = invalidationSize;
             final ChangeListener<? super ObservableMap<K, V>>[] curChangeList = changeListeners;
             final int curChangeSize = changeSize;
-            final MapChangeListener<? super K, ? super V>[] curListChangeList = mapChangeListeners;
-            final int curListChangeSize = mapChangeSize;
+            final MapChangeListener<? super K, ? super V>[] curMapChangeList = mapChangeListeners;
+            final int curMapChangeSize = mapChangeSize;
             try {
                 locked = true;
                 for (int i = 0; i < curInvalidationSize; i++) {
                     curInvalidationList[i].invalidated(observable);
                 }
-                if ((currentValue != oldValue) || (change != null)) {
+                if (currentValue != oldValue || change != null) {
                     for (int i = 0; i < curChangeSize; i++) {
                         curChangeList[i].changed(observable, oldValue, currentValue);
                     }
-                    if (curListChangeSize > 0) {
+                    if (curMapChangeSize > 0) {
                         if (change != null) {
-                            for (int i = 0; i < curListChangeSize; i++) {
-                                curListChangeList[i].onChanged(change);
+                            for (int i = 0; i < curMapChangeSize; i++) {
+                                curMapChangeList[i].onChanged(change);
                             }
                         } else {
-                            change = new MapExpressionHelper.SimpleChange<K, V>(observable);
+                            change = new SimpleChange<>(observable);
                             if (currentValue == null) {
                                 for (final Map.Entry<K, V> element : oldValue.entrySet()) {
                                     change.setRemoved(element.getKey(), element.getValue());
-                                    for (int i = 0; i < curListChangeSize; i++) {
-                                        curListChangeList[i].onChanged(change);
+                                    for (int i = 0; i < curMapChangeSize; i++) {
+                                        curMapChangeList[i].onChanged(change);
                                     }
                                 }
                             } else if (oldValue == null) {
                                 for (final Map.Entry<K, V> element : currentValue.entrySet()) {
                                     change.setAdded(element.getKey(), element.getValue());
-                                    for (int i = 0; i < curListChangeSize; i++) {
-                                        curListChangeList[i].onChanged(change);
+                                    for (int i = 0; i < curMapChangeSize; i++) {
+                                        curMapChangeList[i].onChanged(change);
                                     }
                                 }
                             } else {
@@ -685,14 +690,14 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
                                         final V newEntry = currentValue.get(key);
                                         if (oldEntry == null ? newEntry != null : !newEntry.equals(oldEntry)) {
                                             change.setPut(key, oldEntry, newEntry);
-                                            for (int i = 0; i < curListChangeSize; i++) {
-                                                curListChangeList[i].onChanged(change);
+                                            for (int i = 0; i < curMapChangeSize; i++) {
+                                                curMapChangeList[i].onChanged(change);
                                             }
                                         }
                                     } else {
                                         change.setRemoved(key, oldEntry);
-                                        for (int i = 0; i < curListChangeSize; i++) {
-                                            curListChangeList[i].onChanged(change);
+                                        for (int i = 0; i < curMapChangeSize; i++) {
+                                            curMapChangeList[i].onChanged(change);
                                         }
                                     }
                                 }
@@ -700,8 +705,8 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
                                     final K key = element.getKey();
                                     if (!oldValue.containsKey(key)) {
                                         change.setAdded(key, element.getValue());
-                                        for (int i = 0; i < curListChangeSize; i++) {
-                                            curListChangeList[i].onChanged(change);
+                                        for (int i = 0; i < curMapChangeSize; i++) {
+                                            curMapChangeList[i].onChanged(change);
                                         }
                                     }
                                 }
@@ -716,7 +721,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
 
     }
 
-    public static class SimpleChange<K, V> extends MapChangeListener.Change<K, V> {
+    public static class SimpleChange<K, V> extends Change<K, V> {
 
         private K key;
 
@@ -732,7 +737,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
             super(set);
         }
 
-        public SimpleChange(ObservableMap<K, V> set, MapChangeListener.Change<? extends K, ? extends V> source) {
+        public SimpleChange(ObservableMap<K, V> set, Change<? extends K, ? extends V> source) {
             super(set);
             key = source.getKey();
             old = source.getValueRemoved();
@@ -798,7 +803,7 @@ public abstract class MapExpressionHelper<K, V> extends ExpressionHelperBase {
             StringBuilder builder = new StringBuilder();
             if (addOp) {
                 if (removeOp) {
-                    builder.append("replaced ").append(old).append("by ").append(added);
+                    builder.append("replaced ").append(old).append(" by ").append(added);
                 } else {
                     builder.append("added ").append(added);
                 }

@@ -11,6 +11,7 @@ import java.util.Set;
 /**
  *
  */
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class ContentBinding {
 
     private static void checkParameters(Object property1, Object property2) {

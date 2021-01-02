@@ -27,8 +27,8 @@ import io.github.vinccool96.observations.collections.ObservableMap;
  * @see ReadOnlyMapProperty
  * @see Property
  */
-public abstract class MapProperty<K, V> extends ReadOnlyMapProperty<K, V>
-        implements Property<ObservableMap<K, V>>, WritableMapValue<K, V> {
+public abstract class MapProperty<K, V> extends ReadOnlyMapProperty<K, V> implements Property<ObservableMap<K, V>>,
+        WritableMapValue<K, V> {
 
     /**
      * {@inheritDoc}
@@ -63,8 +63,7 @@ public abstract class MapProperty<K, V> extends ReadOnlyMapProperty<K, V>
     public String toString() {
         final Object bean = getBean();
         final String name = getName();
-        final StringBuilder result = new StringBuilder(
-                "MapProperty [");
+        final StringBuilder result = new StringBuilder("MapProperty [");
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }
