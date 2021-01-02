@@ -4,8 +4,10 @@ import io.github.vinccool96.observations.beans.property.IntegerProperty;
 import io.github.vinccool96.observations.beans.property.MapProperty;
 import io.github.vinccool96.observations.beans.property.SimpleIntegerProperty;
 import io.github.vinccool96.observations.beans.property.SimpleMapProperty;
+import io.github.vinccool96.observations.beans.value.ObservableMapValueStub;
 import io.github.vinccool96.observations.collections.ObservableCollections;
 import io.github.vinccool96.observations.collections.ObservableMap;
+import io.github.vinccool96.observations.util.Pair;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -251,6 +253,36 @@ public class MapExpressionTest {
         assertFalse(op2.containsValue(data1_0));
         assertTrue(op2.containsValue(data2_0));
         assertTrue(op2.containsValue(data2_1));
+    }
+
+    @Test
+    public void testObservableMapValueToExpression() {
+        final ObservableMapValueStub<Number, Integer> valueModel = new ObservableMapValueStub<Number, Integer>();
+        final MapExpression<Number, Integer> exp = MapExpression.mapExpression(valueModel);
+        final Number k1 = 1.0;
+        final Number k2 = 2.0f;
+        final Number k3 = 3L;
+        final Integer v1 = 4;
+        final Integer v2 = 5;
+        final Integer v3 = 6;
+
+        assertTrue(exp instanceof MapBinding);
+        assertEquals(ObservableCollections.singletonObservableList(valueModel),
+                ((MapBinding<Number, Integer>) exp).getDependencies());
+
+        assertEquals(null, exp.get());
+        valueModel.set(ObservableCollections.observableHashMap(new Pair<Number, Integer>(k1, v1)));
+        assertEquals(ObservableCollections.singletonObservableMap(k1, v1), exp.get());
+        valueModel.get().put(k2, v2);
+        assertEquals(ObservableCollections
+                .observableHashMap(new Pair<Number, Integer>(k1, v1), new Pair<Number, Integer>(k2, v2)), exp.get());
+        exp.put(k3, v3);
+        assertEquals(ObservableCollections
+                .observableHashMap(new Pair<Number, Integer>(k1, v1), new Pair<Number, Integer>(k2, v2),
+                        new Pair<Number, Integer>(k3, v3)), valueModel.get());
+
+        // make sure we do not create unnecessary bindings
+        assertSame(op1, MapExpression.mapExpression(op1));
     }
 
 }
