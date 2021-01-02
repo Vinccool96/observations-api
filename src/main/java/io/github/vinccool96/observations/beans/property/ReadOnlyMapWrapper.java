@@ -15,18 +15,16 @@ public class ReadOnlyMapWrapper<K, V> extends SimpleMapProperty<K, V> {
 
     /**
      * The constructor of {@code ReadOnlyMapWrapper}
-     */
-    public ReadOnlyMapWrapper() {
-    }
-
-    /**
-     * The constructor of {@code ReadOnlyMapWrapper}
      *
+     * @param bean
+     *         the bean of this {@code ReadOnlyMapWrapper}
+     * @param name
+     *         the name of this {@code ReadOnlyMapWrapper}
      * @param initialValue
      *         the initial value of the wrapped value
      */
-    public ReadOnlyMapWrapper(ObservableMap<K, V> initialValue) {
-        super(initialValue);
+    public ReadOnlyMapWrapper(Object bean, String name, ObservableMap<K, V> initialValue) {
+        super(bean, name, initialValue);
     }
 
     /**
@@ -44,16 +42,17 @@ public class ReadOnlyMapWrapper<K, V> extends SimpleMapProperty<K, V> {
     /**
      * The constructor of {@code ReadOnlyMapWrapper}
      *
-     * @param bean
-     *         the bean of this {@code ReadOnlyMapWrapper}
-     * @param name
-     *         the name of this {@code ReadOnlyMapWrapper}
      * @param initialValue
      *         the initial value of the wrapped value
      */
-    public ReadOnlyMapWrapper(Object bean, String name,
-            ObservableMap<K, V> initialValue) {
-        super(bean, name, initialValue);
+    public ReadOnlyMapWrapper(ObservableMap<K, V> initialValue) {
+        super(initialValue);
+    }
+
+    /**
+     * The constructor of {@code ReadOnlyMapWrapper}
+     */
+    public ReadOnlyMapWrapper() {
     }
 
     /**

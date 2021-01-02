@@ -19,8 +19,9 @@ import java.util.Map;
  * @see MapExpression
  * @see ReadOnlyProperty
  */
-public abstract class ReadOnlyMapProperty<K, V> extends MapExpression<K, V> implements
-        ReadOnlyProperty<ObservableMap<K, V>> {
+@SuppressWarnings("unchecked")
+public abstract class ReadOnlyMapProperty<K, V> extends MapExpression<K, V>
+        implements ReadOnlyProperty<ObservableMap<K, V>> {
 
     /**
      * The constructor of {@code ReadOnlyMapProperty}.
@@ -68,8 +69,8 @@ public abstract class ReadOnlyMapProperty<K, V> extends MapExpression<K, V> impl
      * and another {@code ObservableMap}.
      * <p>
      * A content binding ensures that the content of the wrapped {@code ObservableMaps} is the same as that of the other
-     * map. If the content of the other map changes, the wrapped map will be updated automatically. Once the wrapped
-     * list is bound to another map, you must not change it directly.
+     * map. If the content of the other map changes, the wrapped map will be updated automatically. Once the wrapped map
+     * is bound to another map, you must not change it directly.
      *
      * @param map
      *         the {@code ObservableMap} this property should be bound to
@@ -127,9 +128,7 @@ public abstract class ReadOnlyMapProperty<K, V> extends MapExpression<K, V> impl
                     }
                 }
             }
-        } catch (ClassCastException unused) {
-            return false;
-        } catch (NullPointerException unused) {
+        } catch (ClassCastException | NullPointerException unused) {
             return false;
         }
 
@@ -159,8 +158,7 @@ public abstract class ReadOnlyMapProperty<K, V> extends MapExpression<K, V> impl
     public String toString() {
         final Object bean = getBean();
         final String name = getName();
-        final StringBuilder result = new StringBuilder(
-                "ReadOnlyMapProperty [");
+        final StringBuilder result = new StringBuilder("ReadOnlyMapProperty [");
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }

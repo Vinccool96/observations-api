@@ -40,16 +40,6 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  */
 public abstract class MapBinding<K, V> extends MapExpression<K, V> implements Binding<ObservableMap<K, V>> {
 
-    private final MapChangeListener<K, V> mapChangeListener = new MapChangeListener<K, V>() {
-
-        @Override
-        public void onChanged(Change<? extends K, ? extends V> change) {
-            invalidateProperties();
-            onInvalidating();
-            MapExpressionHelper.fireValueChangedEvent(helper, change);
-        }
-    };
-
     private ObservableMap<K, V> value;
 
     private boolean valid = false;
@@ -57,6 +47,12 @@ public abstract class MapBinding<K, V> extends MapExpression<K, V> implements Bi
     private BindingHelperObserver observer;
 
     private MapExpressionHelper<K, V> helper = null;
+
+    private final MapChangeListener<K, V> mapChangeListener = change -> {
+        invalidateProperties();
+        onInvalidating();
+        MapExpressionHelper.fireValueChangedEvent(helper, change);
+    };
 
     private SizeProperty size0;
 
@@ -126,19 +122,21 @@ public abstract class MapBinding<K, V> extends MapExpression<K, V> implements Bi
 
     @Override
     public void addListener(InvalidationListener listener) {
-        if (helper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+        if (!isInvalidationListenerAlreadyAdded(listener)) {
             helper = MapExpressionHelper.addListener(helper, this, listener);
         }
     }
 
     @Override
     public void removeListener(InvalidationListener listener) {
-        helper = MapExpressionHelper.removeListener(helper, listener);
+        if (isInvalidationListenerAlreadyAdded(listener)) {
+            helper = MapExpressionHelper.removeListener(helper, listener);
+        }
     }
 
     @Override
     public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
+        return helper != null && ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     @Override
@@ -165,19 +163,21 @@ public abstract class MapBinding<K, V> extends MapExpression<K, V> implements Bi
 
     @Override
     public void addListener(MapChangeListener<? super K, ? super V> listener) {
-        if (helper == null || !isMapChangeListenerAlreadyAdded(listener)) {
+        if (!isMapChangeListenerAlreadyAdded(listener)) {
             helper = MapExpressionHelper.addListener(helper, this, listener);
         }
     }
 
     @Override
     public void removeListener(MapChangeListener<? super K, ? super V> listener) {
-        helper = MapExpressionHelper.removeListener(helper, listener);
+        if (isMapChangeListenerAlreadyAdded(listener)) {
+            helper = MapExpressionHelper.removeListener(helper, listener);
+        }
     }
 
     @Override
     public boolean isMapChangeListenerAlreadyAdded(MapChangeListener<? super K, ? super V> listener) {
-        return ArrayUtils.getInstance().contains(helper.getMapChangeListeners(), listener);
+        return helper != null && ArrayUtils.getInstance().contains(helper.getMapChangeListeners(), listener);
     }
 
     /**

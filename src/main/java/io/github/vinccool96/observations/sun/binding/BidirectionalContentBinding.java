@@ -278,7 +278,7 @@ public class BidirectionalContentBinding {
             if (!updating) {
                 final ObservableMap<K, V> map1 = propertyRef1.get();
                 final ObservableMap<K, V> map2 = propertyRef2.get();
-                if ((map1 == null) || (map2 == null)) {
+                if (map1 == null || map2 == null) {
                     if (map1 != null) {
                         map1.removeListener(this);
                     }

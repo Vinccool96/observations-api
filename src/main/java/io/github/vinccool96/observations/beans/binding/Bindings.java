@@ -957,7 +957,7 @@ public final class Bindings {
      * @throws NullPointerException
      *         if one of the sets is {@code null}
      * @throws IllegalArgumentException
-     *         if {@code set1} == {@code set2}
+     *         if {@code set1 == set2}
      */
     public static <E> void bindContent(Set<E> set1, ObservableSet<? extends E> set2) {
         ContentBinding.bind(set1, set2);
@@ -986,7 +986,7 @@ public final class Bindings {
      * @throws NullPointerException
      *         if one of the maps is {@code null}
      * @throws IllegalArgumentException
-     *         if {@code map1} == {@code map2}
+     *         if {@code map1 == map2}
      */
     public static <K, V> void bindContent(Map<K, V> map1, ObservableMap<? extends K, ? extends V> map2) {
         ContentBinding.bind(map1, map2);

@@ -23,36 +23,19 @@ public class SimpleMapProperty<K, V> extends MapPropertyBase<K, V> {
     private final String name;
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Object getBean() {
-        return bean;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * The constructor of {@code SimpleMapProperty}
-     */
-    public SimpleMapProperty() {
-        this(DEFAULT_BEAN, DEFAULT_NAME);
-    }
-
-    /**
      * The constructor of {@code SimpleMapProperty}
      *
+     * @param bean
+     *         the bean of this {@code MapProperty}
+     * @param name
+     *         the name of this {@code MapProperty}
      * @param initialValue
      *         the initial value of the wrapped value
      */
-    public SimpleMapProperty(ObservableMap<K, V> initialValue) {
-        this(DEFAULT_BEAN, DEFAULT_NAME, initialValue);
+    public SimpleMapProperty(Object bean, String name, ObservableMap<K, V> initialValue) {
+        super(initialValue);
+        this.bean = bean;
+        this.name = (name == null) ? DEFAULT_NAME : name;
     }
 
     /**
@@ -71,17 +54,34 @@ public class SimpleMapProperty<K, V> extends MapPropertyBase<K, V> {
     /**
      * The constructor of {@code SimpleMapProperty}
      *
-     * @param bean
-     *         the bean of this {@code MapProperty}
-     * @param name
-     *         the name of this {@code MapProperty}
      * @param initialValue
      *         the initial value of the wrapped value
      */
-    public SimpleMapProperty(Object bean, String name, ObservableMap<K, V> initialValue) {
-        super(initialValue);
-        this.bean = bean;
-        this.name = (name == null) ? DEFAULT_NAME : name;
+    public SimpleMapProperty(ObservableMap<K, V> initialValue) {
+        this(DEFAULT_BEAN, DEFAULT_NAME, initialValue);
+    }
+
+    /**
+     * The constructor of {@code SimpleMapProperty}
+     */
+    public SimpleMapProperty() {
+        this(DEFAULT_BEAN, DEFAULT_NAME);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object getBean() {
+        return bean;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getName() {
+        return name;
     }
 
 }
