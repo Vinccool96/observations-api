@@ -3,12 +3,13 @@ package io.github.vinccool96.observations.beans.property;
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.beans.value.ChangeListener;
 import io.github.vinccool96.observations.collections.MapChangeListener;
+import io.github.vinccool96.observations.collections.ObservableCollections;
 import io.github.vinccool96.observations.collections.ObservableMap;
+import io.github.vinccool96.observations.util.Pair;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 public class ReadOnlyMapPropertyTest {
 
@@ -16,6 +17,52 @@ public class ReadOnlyMapPropertyTest {
 
     @Before
     public void setUp() throws Exception {
+    }
+
+    @Test
+    public void testBidirectionalContentBinding() {
+        ObservableMap<String, String> model = ObservableCollections.observableHashMap(new Pair<>("A", "a"),
+                new Pair<>("B", "b"));
+        ObservableMap<String, String> map2 = ObservableCollections.observableHashMap(new Pair<>("A", "a"),
+                new Pair<>("B", "b"),
+                new Pair<>("C", "c"));
+        ReadOnlyMapProperty<String, String> map1 = new SimpleMapProperty<>(model);
+        assertNotEquals(map1, map2);
+        map1.bindContentBidirectional(map2);
+        assertEquals(map1, map2);
+        map2.put("D", "d");
+        assertEquals(map1, map2);
+        map1.put("E", "e");
+        assertEquals(map1, map2);
+        map1.unbindContentBidirectional(map2);
+        assertEquals(map1, map2);
+        map2.remove("E");
+        assertNotEquals(map1, map2);
+        map2.put("E", "e");
+        assertEquals(map1, map2);
+        map1.put("F", "f");
+        assertNotEquals(map1, map2);
+    }
+
+    @Test
+    public void testContentBinding() {
+        ObservableMap<String, String> model = ObservableCollections.observableHashMap(new Pair<>("A", "a"),
+                new Pair<>("B", "b"));
+        ObservableMap<String, String> map2 = ObservableCollections.observableHashMap(new Pair<>("A", "a"),
+                new Pair<>("B", "b"),
+                new Pair<>("C", "c"));
+        ReadOnlyMapProperty<String, String> map1 = new SimpleMapProperty<>(model);
+        assertNotEquals(map1, map2);
+        map1.bindContent(map2);
+        assertEquals(map1, map2);
+        map2.put("D", "d");
+        assertEquals(map1, map2);
+        map1.put("E", "e");
+        assertNotEquals(map1, map2);
+        map1.remove("E");
+        map1.unbindContent(map2);
+        map2.put("E", "e");
+        assertNotEquals(map1, map2);
     }
 
     @Test
