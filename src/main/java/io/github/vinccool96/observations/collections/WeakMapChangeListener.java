@@ -14,7 +14,7 @@ import java.lang.ref.WeakReference;
  * WeakMapChangeListener} should then be registered to listen for changes of the observed object.
  * <p>
  * Note: You have to keep a reference to the {@code MapChangeListener}, that was passed in as long as it is in use,
- * otherwise it will be garbage collected to soon.
+ * otherwise it will be garbage collected too soon.
  *
  * @param <K>
  *         the key element type
@@ -59,9 +59,8 @@ public final class WeakMapChangeListener<K, V> implements MapChangeListener<K, V
         if (listener != null) {
             listener.onChanged(change);
         } else {
-            // The weakly reference listener has been garbage collected,
-            // so this WeakListener will now unhook itself from the
-            // source bean
+            // The weakly reference listener has been garbage collected, so this WeakListener will now unhook itself
+            // from the source bean
             change.getMap().removeListener(this);
         }
     }
