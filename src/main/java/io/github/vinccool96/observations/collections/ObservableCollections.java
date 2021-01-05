@@ -6,6 +6,7 @@ import io.github.vinccool96.observations.sun.collections.*;
 import io.github.vinccool96.observations.sun.collections.annotations.ReturnsUnmodifiableCollection;
 import io.github.vinccool96.observations.util.ArrayUtils;
 import io.github.vinccool96.observations.util.Callback;
+import io.github.vinccool96.observations.util.Pair;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -23,13 +24,46 @@ import java.util.*;
  * <p>
  * Some methods have been added for convenience.
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "TypeParameterHidesVisibleType", "SuspiciousToArrayCall", "FieldCanBeLocal",
+        "EqualsWhichDoesntCheckParameterClass"})
 public class ObservableCollections {
 
     /**
      * Not to be instantiated.
      */
     private ObservableCollections() {
+    }
+
+    @SuppressWarnings("EqualsReplaceableByObjectsCall")
+    static boolean eq(Object o1, Object o2) {
+        return o1 == null ? o2 == null : o1.equals(o2);
+    }
+
+    static <E> Iterator<E> singletonIterator(E e) {
+        return new Iterator<E>() {
+
+            private boolean hasNext = true;
+
+            @Override
+            public boolean hasNext() {
+                return hasNext;
+            }
+
+            @Override
+            public E next() {
+                if (hasNext) {
+                    hasNext = false;
+                    return e;
+                }
+                throw new NoSuchElementException();
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+
+        };
     }
 
     /**
@@ -164,8 +198,7 @@ public class ObservableCollections {
      * @return a newly created UnmodifiableObservableMap
      */
     @ReturnsUnmodifiableCollection
-    public static <K, V> ObservableMap<K, V> unmodifiableObservableMap(
-            ObservableMap<K, V> map) {
+    public static <K, V> ObservableMap<K, V> unmodifiableObservableMap(ObservableMap<K, V> map) {
         if (map == null) {
             throw new NullPointerException();
         }
@@ -190,12 +223,12 @@ public class ObservableCollections {
      *
      * @see Collections#checkedMap(Map, Class, Class)
      */
-    public static <K, V> ObservableMap<K, V> checkedObservableMap(
-            ObservableMap<K, V> map, Class<K> keyType, Class<V> valueType) {
+    public static <K, V> ObservableMap<K, V> checkedObservableMap(ObservableMap<K, V> map, Class<K> keyType,
+            Class<V> valueType) {
         if (map == null || keyType == null || valueType == null) {
             throw new NullPointerException();
         }
-        return new CheckedObservableMap<K, V>(map, keyType, valueType);
+        return new CheckedObservableMap<>(map, keyType, valueType);
     }
 
     /**
@@ -219,8 +252,6 @@ public class ObservableCollections {
         return new SynchronizedObservableMap<K, V>(map);
     }
 
-    private static ObservableMap EMPTY_OBSERVABLE_MAP = new EmptyObservableMap();
-
     /**
      * Creates and empty unmodifiable observable map.
      *
@@ -233,10 +264,28 @@ public class ObservableCollections {
      *
      * @see Collections#emptyMap()
      */
-    @SuppressWarnings("unchecked")
     @ReturnsUnmodifiableCollection
     public static <K, V> ObservableMap<K, V> emptyObservableMap() {
-        return EMPTY_OBSERVABLE_MAP;
+        return new EmptyObservableMap<>();
+    }
+
+    /**
+     * Returns an immutable map, mapping only the specified key to the specified value.
+     *
+     * @param <K>
+     *         the class of the map keys
+     * @param <V>
+     *         the class of the map values
+     * @param key
+     *         the sole key to be stored in the returned map.
+     * @param value
+     *         the value to which the returned map maps {@code key}.
+     *
+     * @return an immutable map containing only the specified key-value mapping.
+     */
+    @ReturnsUnmodifiableCollection
+    public static <K, V> ObservableMap<K, V> singletonObservableMap(K key, V value) {
+        return new SingletonObservableMap<>(key, value);
     }
 
     /**
@@ -415,6 +464,7 @@ public class ObservableCollections {
      *
      * @see #observableArrayList()
      */
+    @SafeVarargs
     public static <E> ObservableList<E> observableArrayList(E... items) {
         ObservableList<E> list = observableArrayList();
         list.addAll(items);
@@ -448,7 +498,28 @@ public class ObservableCollections {
      * @return a newly created observable HashMap
      */
     public static <K, V> ObservableMap<K, V> observableHashMap() {
-        return observableMap(new HashMap<K, V>());
+        return observableMap(new HashMap<>());
+    }
+
+    /**
+     * Constructs an ObservableMap that is backed by a HashMap, containing the specified key-value {@link Pair Pairs}.
+     * Mutation operations on the ObservableMap instance will be reported to observers that have registered on that
+     * instance.
+     *
+     * @param <K>
+     *         the type of keys maintained by this map
+     * @param <V>
+     *         the type of mapped values
+     * @param pairs
+     *         the key-value pairs
+     *
+     * @return a newly created ObservableMap
+     */
+    @SafeVarargs
+    public static <K, V> ObservableMap<K, V> observableHashMap(Pair<K, V>... pairs) {
+        HashMap<K, V> map = new HashMap<>();
+        Arrays.stream(pairs).forEach(pair -> map.put(pair.getKey(), pair.getValue()));
+        return observableMap(map);
     }
 
     /**
@@ -514,7 +585,7 @@ public class ObservableCollections {
         if (list == null) {
             throw new NullPointerException();
         }
-        return new CheckedObservableList<E>(list, type);
+        return new CheckedObservableList<>(list, type);
     }
 
     /**
@@ -533,7 +604,7 @@ public class ObservableCollections {
         if (list == null) {
             throw new NullPointerException();
         }
-        return new SynchronizedObservableList<E>(list);
+        return new SynchronizedObservableList<>(list);
     }
 
     /**
@@ -626,10 +697,8 @@ public class ObservableCollections {
         if (set == null) {
             throw new NullPointerException();
         }
-        return new SynchronizedObservableSet<E>(set);
+        return new SynchronizedObservableSet<>(set);
     }
-
-    private static ObservableSet EMPTY_OBSERVABLE_SET = new EmptyObservableSet();
 
     /**
      * Creates and empty unmodifiable observable set.
@@ -641,10 +710,23 @@ public class ObservableCollections {
      *
      * @see Collections#emptySet()
      */
-    @SuppressWarnings("unchecked")
     @ReturnsUnmodifiableCollection
     public static <E> ObservableSet<E> emptyObservableSet() {
-        return EMPTY_OBSERVABLE_SET;
+        return new EmptyObservableSet<>();
+    }
+
+    /**
+     * Returns an immutable set containing only the specified object. The returned set is serializable.
+     *
+     * @param <E>
+     *         the class of the objects in the set
+     * @param o
+     *         the sole object to be stored in the returned set.
+     *
+     * @return an immutable set containing only the specified object.
+     */
+    public static <E> ObservableSet<E> singletonObservable(E o) {
+        return new SingletonObservableSet<>(o);
     }
 
     /**
@@ -1353,8 +1435,7 @@ public class ObservableCollections {
         @Override
         public List<T> subList(int fromIndex, int toIndex) {
             synchronized (mutex) {
-                return new SynchronizedList<T>(backingList.subList(fromIndex, toIndex),
-                        mutex);
+                return new SynchronizedList<>(backingList.subList(fromIndex, toIndex), mutex);
             }
         }
 
@@ -1402,6 +1483,7 @@ public class ObservableCollections {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         public boolean addAll(T... elements) {
             synchronized (mutex) {
                 return backingList.addAll(elements);
@@ -1409,6 +1491,7 @@ public class ObservableCollections {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         public boolean setAll(T... elements) {
             synchronized (mutex) {
                 return backingList.setAll(elements);
@@ -1416,6 +1499,7 @@ public class ObservableCollections {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         public boolean removeAll(T... elements) {
             synchronized (mutex) {
                 return backingList.removeAll(elements);
@@ -1423,6 +1507,7 @@ public class ObservableCollections {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         public boolean retainAll(T... elements) {
             synchronized (mutex) {
                 return backingList.retainAll(elements);
@@ -1505,17 +1590,14 @@ public class ObservableCollections {
             }
             this.list = list;
             this.type = type;
-            listener = c -> {
-                fireChange(new SourceAdapterChange<T>(CheckedObservableList.this, c));
-            };
-            list.addListener(new WeakListChangeListener<T>(listener));
+            listener = c -> fireChange(new SourceAdapterChange<>(CheckedObservableList.this, c));
+            list.addListener(new WeakListChangeListener<>(listener));
         }
 
         void typeCheck(Object o) {
             if (o != null && !type.isInstance(o)) {
-                throw new ClassCastException("Attempt to insert "
-                        + o.getClass() + " element into collection with element type "
-                        + type);
+                throw new ClassCastException(
+                        "Attempt to insert " + o.getClass() + " element into collection with element type " + type);
             }
         }
 
@@ -1570,11 +1652,13 @@ public class ObservableCollections {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         public boolean removeAll(T... elements) {
             return list.removeAll(elements);
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         public boolean retainAll(T... elements) {
             return list.retainAll(elements);
         }
@@ -1634,7 +1718,7 @@ public class ObservableCollections {
         @Override
         @SuppressWarnings("unchecked")
         public boolean addAll(int index, Collection<? extends T> c) {
-            T[] a = null;
+            T[] a;
             try {
                 a = c.toArray((T[]) Array.newInstance(type, 0));
             } catch (ArrayStoreException e) {
@@ -1647,7 +1731,7 @@ public class ObservableCollections {
         @Override
         @SuppressWarnings("unchecked")
         public boolean addAll(Collection<? extends T> coll) {
-            T[] a = null;
+            T[] a;
             try {
                 a = coll.toArray((T[]) Array.newInstance(type, 0));
             } catch (ArrayStoreException e) {
@@ -1666,7 +1750,7 @@ public class ObservableCollections {
         public ListIterator<T> listIterator(final int index) {
             return new ListIterator<T>() {
 
-                ListIterator<T> i = list.listIterator(index);
+                final ListIterator<T> i = list.listIterator(index);
 
                 @Override
                 public boolean hasNext() {
@@ -1778,7 +1862,7 @@ public class ObservableCollections {
         @Override
         @SuppressWarnings("unchecked")
         public boolean setAll(Collection<? extends T> col) {
-            T[] a = null;
+            T[] a;
             try {
                 a = col.toArray((T[]) Array.newInstance(type, 0));
             } catch (ArrayStoreException e) {
@@ -1856,7 +1940,7 @@ public class ObservableCollections {
 
         @Override
         public Iterator<E> iterator() {
-            return new Iterator() {
+            return new Iterator<E>() {
 
                 @Override
                 public boolean hasNext() {
@@ -1864,7 +1948,7 @@ public class ObservableCollections {
                 }
 
                 @Override
-                public Object next() {
+                public E next() {
                     throw new NoSuchElementException();
                 }
 
@@ -1873,6 +1957,66 @@ public class ObservableCollections {
                     throw new UnsupportedOperationException();
                 }
             };
+        }
+
+    }
+
+    private static class SingletonObservableSet<E> extends AbstractSet<E> implements ObservableSet<E> {
+
+        private final E element;
+
+        public SingletonObservableSet(E element) {
+            this.element = element;
+        }
+
+        @Override
+        public int size() {
+            return 1;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return false;
+        }
+
+        @Override
+        public boolean contains(Object o) {
+            return eq(element, o);
+        }
+
+        @Override
+        public void addListener(InvalidationListener listener) {
+
+        }
+
+        @Override
+        public void removeListener(InvalidationListener listener) {
+
+        }
+
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return false;
+        }
+
+        @Override
+        public void addListener(SetChangeListener<? super E> listener) {
+
+        }
+
+        @Override
+        public void removeListener(SetChangeListener<? super E> listener) {
+
+        }
+
+        @Override
+        public boolean isSetChangeListenerAlreadyAdded(SetChangeListener<? super E> listener) {
+            return false;
+        }
+
+        @Override
+        public Iterator<E> iterator() {
+            return singletonIterator(element);
         }
 
     }
@@ -2443,6 +2587,75 @@ public class ObservableCollections {
 
     }
 
+    private static class SingletonObservableMap<K, V> extends AbstractMap<K, V> implements ObservableMap<K, V> {
+
+        private final K k;
+
+        private final V v;
+
+        public SingletonObservableMap(K k, V v) {
+            this.k = k;
+            this.v = v;
+        }
+
+        @Override
+        public void addListener(InvalidationListener listener) {
+        }
+
+        @Override
+        public void removeListener(InvalidationListener listener) {
+        }
+
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return false;
+        }
+
+        @Override
+        public void addListener(MapChangeListener<? super K, ? super V> listener) {
+        }
+
+        @Override
+        public void removeListener(MapChangeListener<? super K, ? super V> listener) {
+        }
+
+        @Override
+        public boolean isMapChangeListenerAlreadyAdded(MapChangeListener<? super K, ? super V> listener) {
+            return false;
+        }
+
+        @Override
+        public int size() {
+            return 1;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return false;
+        }
+
+        @Override
+        public boolean containsKey(Object key) {
+            return eq(k, key);
+        }
+
+        @Override
+        public boolean containsValue(Object value) {
+            return eq(v, value);
+        }
+
+        @Override
+        public V get(Object key) {
+            return eq(k, key) ? v : null;
+        }
+
+        @Override
+        public Set<Entry<K, V>> entrySet() {
+            return singletonObservable(new SimpleImmutableEntry<>(k, v));
+        }
+
+    }
+
     private static class CheckedObservableMap<K, V> extends AbstractMap<K, V> implements ObservableMap<K, V> {
 
         private final ObservableMap<K, V> backingMap;
@@ -2451,7 +2664,7 @@ public class ObservableCollections {
 
         private final Class<V> valueType;
 
-        private MapListenerHelper listenerHelper;
+        private MapListenerHelper<K, V> listenerHelper;
 
         private final MapChangeListener<K, V> listener;
 
@@ -2459,10 +2672,8 @@ public class ObservableCollections {
             backingMap = map;
             this.keyType = keyType;
             this.valueType = valueType;
-            listener = c -> {
-                callObservers(new MapAdapterChange<K, V>(CheckedObservableMap.this, c));
-            };
-            backingMap.addListener(new WeakMapChangeListener<K, V>(listener));
+            listener = c -> callObservers(new MapAdapterChange<>(CheckedObservableMap.this, c));
+            backingMap.addListener(new WeakMapChangeListener<>(listener));
         }
 
         private void callObservers(MapChangeListener.Change<? extends K, ? extends V> c) {
@@ -2471,50 +2682,54 @@ public class ObservableCollections {
 
         void typeCheck(Object key, Object value) {
             if (key != null && !keyType.isInstance(key)) {
-                throw new ClassCastException("Attempt to insert "
-                        + key.getClass() + " key into map with key type "
-                        + keyType);
+                throw new ClassCastException(
+                        "Attempt to insert " + key.getClass() + " key into map with key type " + keyType);
             }
 
             if (value != null && !valueType.isInstance(value)) {
-                throw new ClassCastException("Attempt to insert "
-                        + value.getClass() + " value into map with value type "
-                        + valueType);
+                throw new ClassCastException(
+                        "Attempt to insert " + value.getClass() + " value into map with value type " + valueType);
             }
         }
 
         @Override
         public void addListener(InvalidationListener listener) {
-            if (listenerHelper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+            if (!isInvalidationListenerAlreadyAdded(listener)) {
                 listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
             }
         }
 
         @Override
         public void removeListener(InvalidationListener listener) {
-            listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
+            if (isInvalidationListenerAlreadyAdded(listener)) {
+                listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
+            }
         }
 
         @Override
         public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-            return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
+            return listenerHelper != null &&
+                    ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
         }
 
         @Override
         public void addListener(MapChangeListener<? super K, ? super V> listener) {
-            if (listenerHelper == null || !isMapChangeListenerAlreadyAdded(listener)) {
+            if (!isMapChangeListenerAlreadyAdded(listener)) {
                 listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
             }
         }
 
         @Override
         public void removeListener(MapChangeListener<? super K, ? super V> listener) {
-            listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
+            if (isMapChangeListenerAlreadyAdded(listener)) {
+                listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
+            }
         }
 
         @Override
         public boolean isMapChangeListenerAlreadyAdded(MapChangeListener<? super K, ? super V> listener) {
-            return false;
+            return listenerHelper != null &&
+                    ArrayUtils.getInstance().contains(listenerHelper.getMapChangeListeners(), listener);
         }
 
         @Override
@@ -2562,15 +2777,13 @@ public class ObservableCollections {
             // - protection from malicious t
             // - correct behavior if t is a concurrent map
             Object[] entries = t.entrySet().toArray();
-            List<Map.Entry<K, V>> checked =
-                    new ArrayList<Map.Entry<K, V>>(entries.length);
+            List<Map.Entry<K, V>> checked = new ArrayList<>(entries.length);
             for (Object o : entries) {
                 Map.Entry<?, ?> e = (Map.Entry<?, ?>) o;
                 Object k = e.getKey();
                 Object v = e.getValue();
                 typeCheck(k, v);
-                checked.add(
-                        new AbstractMap.SimpleImmutableEntry<K, V>((K) k, (V) v));
+                checked.add(new AbstractMap.SimpleImmutableEntry<>((K) k, (V) v));
             }
             for (Map.Entry<K, V> e : checked) {
                 backingMap.put(e.getKey(), e.getValue());
@@ -2595,10 +2808,9 @@ public class ObservableCollections {
         private transient Set<Map.Entry<K, V>> entrySet = null;
 
         @Override
-        public Set entrySet() {
+        public Set<Entry<K, V>> entrySet() {
             if (entrySet == null) {
-                entrySet = new CheckedObservableMap.CheckedEntrySet<K, V>(backingMap.entrySet(),
-                        valueType);
+                entrySet = new CheckedEntrySet<>(backingMap.entrySet(), valueType);
             }
             return entrySet;
         }
@@ -2680,17 +2892,18 @@ public class ObservableCollections {
                     public Map.Entry<K, V> next() {
                         return checkedEntry(i.next(), valueType);
                     }
+
                 };
             }
 
             @Override
-            @SuppressWarnings("unchecked")
+            @SuppressWarnings({"unchecked", "ConstantConditions"})
             public Object[] toArray() {
                 Object[] source = s.toArray();
 
                 /*
-                 * Ensure that we don't get an ArrayStoreException even if
-                 * s.toArray returns an array of something other than Object
+                 * Ensure that we don't get an ArrayStoreException even if s.toArray returns an array of something other
+                 *  than Object
                  */
                 Object[] dest = (CheckedEntry.class.isInstance(source.getClass().getComponentType()) ? source :
                         new Object[source.length]);
@@ -2705,9 +2918,8 @@ public class ObservableCollections {
             @Override
             @SuppressWarnings("unchecked")
             public <T> T[] toArray(T[] a) {
-                // We don't pass a to s.toArray, to avoid window of
-                // vulnerability wherein an unscrupulous multithreaded client
-                // could get his hands on raw (unwrapped) Entries from s.
+                // We don't pass a to s.toArray, to avoid window of vulnerability wherein an unscrupulous multithreaded
+                // client could get his hands on raw (unwrapped) Entries from s.
                 T[] arr = s.toArray(a.length == 0 ? a : Arrays.copyOf(a, 0));
 
                 for (int i = 0; i < arr.length; i++) {
@@ -2735,9 +2947,8 @@ public class ObservableCollections {
                     return false;
                 }
                 Map.Entry<?, ?> e = (Map.Entry<?, ?>) o;
-                return s.contains(
-                        (e instanceof CheckedObservableMap.CheckedEntrySet.CheckedEntry) ? e :
-                                checkedEntry(e, valueType));
+                return s.contains((e instanceof CheckedObservableMap.CheckedEntrySet.CheckedEntry) ? e :
+                        checkedEntry(e, valueType));
             }
 
             /**
@@ -2747,8 +2958,7 @@ public class ObservableCollections {
             @Override
             public boolean containsAll(Collection<?> c) {
                 for (Object o : c) {
-                    if (!contains(o)) // Invokes safe contains() above
-                    {
+                    if (!contains(o)) { // Invokes safe contains() above
                         return false;
                     }
                 }
@@ -2760,8 +2970,7 @@ public class ObservableCollections {
                 if (!(o instanceof Map.Entry)) {
                     return false;
                 }
-                return s.remove(new AbstractMap.SimpleImmutableEntry
-                        <Object, Object>((Map.Entry<?, ?>) o));
+                return s.remove(new AbstractMap.SimpleImmutableEntry<Object, Object>((Map.Entry<?, ?>) o));
             }
 
             @Override
@@ -2795,15 +3004,11 @@ public class ObservableCollections {
                     return false;
                 }
                 Set<?> that = (Set<?>) o;
-                return that.size() == s.size()
-                        && containsAll(that); // Invokes safe containsAll() above
+                return that.size() == s.size() && containsAll(that); // Invokes safe containsAll() above
             }
 
-            static <K, V, T> CheckedObservableMap.CheckedEntrySet.CheckedEntry<K, V, T> checkedEntry(
-                    Map.Entry<K, V> e,
-                    Class<T> valueType) {
-                return new CheckedObservableMap.CheckedEntrySet.CheckedEntry<K, V, T>(e,
-                        valueType);
+            static <K, V, T> CheckedEntry<K, V, T> checkedEntry(Map.Entry<K, V> e, Class<T> valueType) {
+                return new CheckedEntry<>(e, valueType);
             }
 
             /**
@@ -2851,8 +3056,7 @@ public class ObservableCollections {
                 }
 
                 private String badValueMsg(Object value) {
-                    return "Attempt to insert " + value.getClass() +
-                            " value into map with value type " + valueType;
+                    return "Attempt to insert " + value.getClass() + " value into map with value type " + valueType;
                 }
 
                 @Override
@@ -2863,8 +3067,7 @@ public class ObservableCollections {
                     if (!(o instanceof Map.Entry)) {
                         return false;
                     }
-                    return e.equals(new AbstractMap.SimpleImmutableEntry
-                            <Object, Object>((Map.Entry<?, ?>) o));
+                    return e.equals(new AbstractMap.SimpleImmutableEntry<Object, Object>((Map.Entry<?, ?>) o));
                 }
 
             }
@@ -2953,15 +3156,15 @@ public class ObservableCollections {
 
         private transient Set<K> keySet = null;
 
-        private transient Set<Map.Entry<K, V>> entrySet = null;
-
         private transient Collection<V> values = null;
+
+        private transient Set<Map.Entry<K, V>> entrySet = null;
 
         @Override
         public Set<K> keySet() {
             synchronized (mutex) {
                 if (keySet == null) {
-                    keySet = new SynchronizedSet<K>(backingMap.keySet(), mutex);
+                    keySet = new SynchronizedSet<>(backingMap.keySet(), mutex);
                 }
                 return keySet;
             }
@@ -2971,7 +3174,7 @@ public class ObservableCollections {
         public Collection<V> values() {
             synchronized (mutex) {
                 if (values == null) {
-                    values = new SynchronizedCollection<V>(backingMap.values(), mutex);
+                    values = new SynchronizedCollection<>(backingMap.values(), mutex);
                 }
                 return values;
             }
@@ -2981,7 +3184,7 @@ public class ObservableCollections {
         public Set<Entry<K, V>> entrySet() {
             synchronized (mutex) {
                 if (entrySet == null) {
-                    entrySet = new SynchronizedSet<Entry<K, V>>(backingMap.entrySet(), mutex);
+                    entrySet = new SynchronizedSet<>(backingMap.entrySet(), mutex);
                 }
                 return entrySet;
             }
@@ -3002,6 +3205,76 @@ public class ObservableCollections {
             synchronized (mutex) {
                 return backingMap.hashCode();
             }
+        }
+
+    }
+
+    private static class SynchronizedObservableMap<K, V> extends SynchronizedMap<K, V> implements ObservableMap<K, V> {
+
+        private final ObservableMap<K, V> backingMap;
+
+        private MapListenerHelper<K, V> listenerHelper;
+
+        private final MapChangeListener<K, V> listener;
+
+        SynchronizedObservableMap(ObservableMap<K, V> map, Object mutex) {
+            super(map, mutex);
+            backingMap = map;
+            listener = c -> MapListenerHelper.fireValueChangedEvent(listenerHelper,
+                    new MapAdapterChange<>(SynchronizedObservableMap.this, c));
+            backingMap.addListener(new WeakMapChangeListener<>(listener));
+        }
+
+        SynchronizedObservableMap(ObservableMap<K, V> map) {
+            this(map, new Object());
+        }
+
+        @Override
+        public void addListener(InvalidationListener listener) {
+            synchronized (mutex) {
+                if (!isInvalidationListenerAlreadyAdded(listener)) {
+                    listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
+                }
+            }
+        }
+
+        @Override
+        public void removeListener(InvalidationListener listener) {
+            synchronized (mutex) {
+                if (isInvalidationListenerAlreadyAdded(listener)) {
+                    listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
+                }
+            }
+        }
+
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            return listenerHelper != null &&
+                    ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
+        }
+
+        @Override
+        public void addListener(MapChangeListener<? super K, ? super V> listener) {
+            synchronized (mutex) {
+                if (!isMapChangeListenerAlreadyAdded(listener)) {
+                    listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
+                }
+            }
+        }
+
+        @Override
+        public void removeListener(MapChangeListener<? super K, ? super V> listener) {
+            synchronized (mutex) {
+                if (isMapChangeListenerAlreadyAdded(listener)) {
+                    listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
+                }
+            }
+        }
+
+        @Override
+        public boolean isMapChangeListenerAlreadyAdded(MapChangeListener<? super K, ? super V> listener) {
+            return listenerHelper != null &&
+                    ArrayUtils.getInstance().contains(listenerHelper.getMapChangeListeners(), listener);
         }
 
     }
@@ -3108,72 +3381,6 @@ public class ObservableCollections {
             synchronized (mutex) {
                 backingCollection.clear();
             }
-        }
-
-    }
-
-    private static class SynchronizedObservableMap<K, V> extends SynchronizedMap<K, V> implements ObservableMap<K, V> {
-
-        private final ObservableMap<K, V> backingMap;
-
-        private MapListenerHelper listenerHelper;
-
-        private final MapChangeListener<K, V> listener;
-
-        SynchronizedObservableMap(ObservableMap<K, V> map, Object mutex) {
-            super(map, mutex);
-            backingMap = map;
-            listener = c -> {
-                MapListenerHelper.fireValueChangedEvent(listenerHelper, new MapAdapterChange<K, V>(
-                        SynchronizedObservableMap.this, c));
-            };
-            backingMap.addListener(new WeakMapChangeListener<K, V>(listener));
-        }
-
-        SynchronizedObservableMap(ObservableMap<K, V> map) {
-            this(map, new Object());
-        }
-
-        @Override
-        public void addListener(InvalidationListener listener) {
-            synchronized (mutex) {
-                if (listenerHelper == null || !isInvalidationListenerAlreadyAdded(listener)) {
-                    listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
-                }
-            }
-        }
-
-        @Override
-        public void removeListener(InvalidationListener listener) {
-            synchronized (mutex) {
-                listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
-            }
-        }
-
-        @Override
-        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-            return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
-        }
-
-        @Override
-        public void addListener(MapChangeListener<? super K, ? super V> listener) {
-            synchronized (mutex) {
-                if (listenerHelper == null || !isMapChangeListenerAlreadyAdded(listener)) {
-                    listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
-                }
-            }
-        }
-
-        @Override
-        public void removeListener(MapChangeListener<? super K, ? super V> listener) {
-            synchronized (mutex) {
-                listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
-            }
-        }
-
-        @Override
-        public boolean isMapChangeListenerAlreadyAdded(MapChangeListener<? super K, ? super V> listener) {
-            return ArrayUtils.getInstance().contains(listenerHelper.getMapChangeListeners(), listener);
         }
 
     }

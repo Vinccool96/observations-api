@@ -16,26 +16,25 @@ import java.util.Set;
 /**
  * ObservableMap wrapper that does not allow changes to the underlying container.
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class UnmodifiableObservableMap<K, V> extends AbstractMap<K, V> implements ObservableMap<K, V> {
-
-    private MapListenerHelper<K, V> listenerHelper;
 
     private final ObservableMap<K, V> backingMap;
 
+    private MapListenerHelper<K, V> listenerHelper;
+
     private final MapChangeListener<K, V> listener;
 
-    private Set<K> keyset;
+    private Set<K> keySet;
 
     private Collection<V> values;
 
-    private Set<Entry<K, V>> entryset;
+    private Set<Entry<K, V>> entrySet;
 
     public UnmodifiableObservableMap(ObservableMap<K, V> map) {
         this.backingMap = map;
-        listener = c -> {
-            callObservers(new MapAdapterChange<K, V>(UnmodifiableObservableMap.this, c));
-        };
-        this.backingMap.addListener(new WeakMapChangeListener<K, V>(listener));
+        listener = c -> callObservers(new MapAdapterChange<>(UnmodifiableObservableMap.this, c));
+        this.backingMap.addListener(new WeakMapChangeListener<>(listener));
     }
 
     private void callObservers(Change<? extends K, ? extends V> c) {
@@ -44,36 +43,42 @@ public class UnmodifiableObservableMap<K, V> extends AbstractMap<K, V> implement
 
     @Override
     public void addListener(InvalidationListener listener) {
-        if (listenerHelper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+        if (!isInvalidationListenerAlreadyAdded(listener)) {
             listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
         }
     }
 
     @Override
     public void removeListener(InvalidationListener listener) {
-        listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
+        if (isInvalidationListenerAlreadyAdded(listener)) {
+            listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
+        }
     }
 
     @Override
     public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-        return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
+        return listenerHelper != null &&
+                ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
     }
 
     @Override
     public void addListener(MapChangeListener<? super K, ? super V> observer) {
-        if (listenerHelper == null || !isMapChangeListenerAlreadyAdded(observer)) {
+        if (!isMapChangeListenerAlreadyAdded(observer)) {
             listenerHelper = MapListenerHelper.addListener(listenerHelper, observer);
         }
     }
 
     @Override
     public void removeListener(MapChangeListener<? super K, ? super V> observer) {
-        listenerHelper = MapListenerHelper.removeListener(listenerHelper, observer);
+        if (isMapChangeListenerAlreadyAdded(listener)) {
+            listenerHelper = MapListenerHelper.removeListener(listenerHelper, observer);
+        }
     }
 
     @Override
     public boolean isMapChangeListenerAlreadyAdded(MapChangeListener<? super K, ? super V> listener) {
-        return ArrayUtils.getInstance().contains(listenerHelper.getMapChangeListeners(), listener);
+        return listenerHelper != null &&
+                ArrayUtils.getInstance().contains(listenerHelper.getMapChangeListeners(), listener);
     }
 
     @Override
@@ -101,15 +106,17 @@ public class UnmodifiableObservableMap<K, V> extends AbstractMap<K, V> implement
         return backingMap.get(key);
     }
 
-    @Override @ReturnsUnmodifiableCollection
+    @Override
+    @ReturnsUnmodifiableCollection
     public Set<K> keySet() {
-        if (keyset == null) {
-            keyset = Collections.unmodifiableSet(backingMap.keySet());
+        if (keySet == null) {
+            keySet = Collections.unmodifiableSet(backingMap.keySet());
         }
-        return keyset;
+        return keySet;
     }
 
-    @Override @ReturnsUnmodifiableCollection
+    @Override
+    @ReturnsUnmodifiableCollection
     public Collection<V> values() {
         if (values == null) {
             values = Collections.unmodifiableCollection(backingMap.values());
@@ -117,12 +124,13 @@ public class UnmodifiableObservableMap<K, V> extends AbstractMap<K, V> implement
         return values;
     }
 
-    @Override @ReturnsUnmodifiableCollection
+    @Override
+    @ReturnsUnmodifiableCollection
     public Set<Entry<K, V>> entrySet() {
-        if (entryset == null) {
-            entryset = Collections.unmodifiableMap(backingMap).entrySet();
+        if (entrySet == null) {
+            entrySet = Collections.unmodifiableMap(backingMap).entrySet();
         }
-        return entryset;
+        return entrySet;
     }
 
 }

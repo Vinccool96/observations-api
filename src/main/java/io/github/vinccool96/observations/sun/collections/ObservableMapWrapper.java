@@ -2,6 +2,7 @@ package io.github.vinccool96.observations.sun.collections;
 
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.collections.MapChangeListener;
+import io.github.vinccool96.observations.collections.MapChangeListener.Change;
 import io.github.vinccool96.observations.collections.ObservableMap;
 import io.github.vinccool96.observations.util.ArrayUtils;
 
@@ -13,6 +14,8 @@ import java.util.Set;
 /**
  * A Map wrapper class that implements observability.
  */
+@SuppressWarnings({"EqualsWhichDoesntCheckParameterClass", "SuspiciousMethodCalls", "RedundantCollectionOperation",
+        "SuspiciousToArrayCall", "FieldMayBeFinal", "rawtypes", "EqualsReplaceableByObjectsCall"})
 public class ObservableMapWrapper<K, V> implements ObservableMap<K, V> {
 
     private ObservableEntrySet entrySet;
@@ -29,7 +32,7 @@ public class ObservableMapWrapper<K, V> implements ObservableMap<K, V> {
         this.backingMap = map;
     }
 
-    private class SimpleChange extends MapChangeListener.Change<K, V> {
+    private class SimpleChange extends Change<K, V> {
 
         private final K key;
 
@@ -81,7 +84,7 @@ public class ObservableMapWrapper<K, V> implements ObservableMap<K, V> {
             StringBuilder builder = new StringBuilder();
             if (wasAdded) {
                 if (wasRemoved) {
-                    builder.append("replaced ").append(old).append("by ").append(added);
+                    builder.append("replaced ").append(old).append(" by ").append(added);
                 } else {
                     builder.append("added ").append(added);
                 }
@@ -94,40 +97,48 @@ public class ObservableMapWrapper<K, V> implements ObservableMap<K, V> {
 
     }
 
-    protected void callObservers(MapChangeListener.Change<K, V> change) {
+    protected void callObservers(Change<K, V> change) {
         MapListenerHelper.fireValueChangedEvent(listenerHelper, change);
     }
 
     @Override
     public void addListener(InvalidationListener listener) {
-        listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
+        if (!isInvalidationListenerAlreadyAdded(listener)) {
+            listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
+        }
     }
 
     @Override
     public void removeListener(InvalidationListener listener) {
-        listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
+        if (isInvalidationListenerAlreadyAdded(listener)) {
+            listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
+        }
     }
 
     @Override
     public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-        return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
+        return listenerHelper != null &&
+                ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
     }
 
     @Override
     public void addListener(MapChangeListener<? super K, ? super V> observer) {
-        if (listenerHelper == null || !isMapChangeListenerAlreadyAdded(observer)) {
+        if (!isMapChangeListenerAlreadyAdded(observer)) {
             listenerHelper = MapListenerHelper.addListener(listenerHelper, observer);
         }
     }
 
     @Override
     public void removeListener(MapChangeListener<? super K, ? super V> observer) {
-        listenerHelper = MapListenerHelper.removeListener(listenerHelper, observer);
+        if (isMapChangeListenerAlreadyAdded(observer)) {
+            listenerHelper = MapListenerHelper.removeListener(listenerHelper, observer);
+        }
     }
 
     @Override
     public boolean isMapChangeListenerAlreadyAdded(MapChangeListener<? super K, ? super V> listener) {
-        return ArrayUtils.getInstance().contains(listenerHelper.getMapChangeListeners(), listener);
+        return listenerHelper != null &&
+                ArrayUtils.getInstance().contains(listenerHelper.getMapChangeListeners(), listener);
     }
 
     @Override
@@ -170,8 +181,8 @@ public class ObservableMapWrapper<K, V> implements ObservableMap<K, V> {
         return ret;
     }
 
-    @Override
     @SuppressWarnings("unchecked")
+    @Override
     public V remove(Object key) {
         if (!backingMap.containsKey(key)) {
             return null;
@@ -304,7 +315,11 @@ public class ObservableMapWrapper<K, V> implements ObservableMap<K, V> {
 
         @Override
         public boolean remove(Object o) {
-            return ObservableMapWrapper.this.remove(o) != null;
+            boolean res = ObservableMapWrapper.this.containsKey(o);
+            if (res) {
+                ObservableMapWrapper.this.remove(o);
+            }
+            return res;
         }
 
         @Override
@@ -532,17 +547,14 @@ public class ObservableMapWrapper<K, V> implements ObservableMap<K, V> {
             if (k1 == k2 || (k1 != null && k1.equals(k2))) {
                 Object v1 = getValue();
                 Object v2 = e.getValue();
-                if (v1 == v2 || (v1 != null && v1.equals(v2))) {
-                    return true;
-                }
+                return v1 == v2 || (v1 != null && v1.equals(v2));
             }
             return false;
         }
 
         @Override
         public final int hashCode() {
-            return (getKey() == null ? 0 : getKey().hashCode())
-                    ^ (getValue() == null ? 0 : getValue().hashCode());
+            return (getKey() == null ? 0 : getKey().hashCode()) ^ (getValue() == null ? 0 : getValue().hashCode());
         }
 
         @Override
