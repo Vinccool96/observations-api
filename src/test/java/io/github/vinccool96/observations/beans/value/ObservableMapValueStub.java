@@ -8,6 +8,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
 
 import java.util.*;
 
+@SuppressWarnings("unused")
 public class ObservableMapValueStub<K, V> implements ObservableMapValue<K, V> {
 
     private final ObservableMap<K, V> EMPTY_MAP = new EmptyObservableMap<>();

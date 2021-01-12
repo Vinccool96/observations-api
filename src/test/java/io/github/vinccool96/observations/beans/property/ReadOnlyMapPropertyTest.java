@@ -6,18 +6,14 @@ import io.github.vinccool96.observations.collections.MapChangeListener;
 import io.github.vinccool96.observations.collections.ObservableCollections;
 import io.github.vinccool96.observations.collections.ObservableMap;
 import io.github.vinccool96.observations.util.Pair;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class ReadOnlyMapPropertyTest {
 
     private static final Object DEFAULT = null;
-
-    @Before
-    public void setUp() throws Exception {
-    }
 
     @Test
     public void testBidirectionalContentBinding() {
@@ -28,6 +24,7 @@ public class ReadOnlyMapPropertyTest {
                 new Pair<>("C", "c"));
         ReadOnlyMapProperty<String, String> map1 = new SimpleMapProperty<>(model);
         assertNotEquals(map1, map2);
+
         map1.bindContentBidirectional(map2);
         assertEquals(map1, map2);
         map2.put("D", "d");
@@ -53,6 +50,7 @@ public class ReadOnlyMapPropertyTest {
                 new Pair<>("C", "c"));
         ReadOnlyMapProperty<String, String> map1 = new SimpleMapProperty<>(model);
         assertNotEquals(map1, map2);
+
         map1.bindContent(map2);
         assertEquals(map1, map2);
         map2.put("D", "d");
@@ -101,15 +99,18 @@ public class ReadOnlyMapPropertyTest {
             this.name = name;
         }
 
-        @Override public Object getBean() {
+        @Override
+        public Object getBean() {
             return bean;
         }
 
-        @Override public String getName() {
+        @Override
+        public String getName() {
             return name;
         }
 
-        @Override public ObservableMap<Object, Object> get() {
+        @Override
+        public ObservableMap<Object, Object> get() {
             return null;
         }
 

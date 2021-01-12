@@ -12,11 +12,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings("SimplifiableAssertion")
 public class MapExpressionTest {
 
     private static final Number key1_0 = 4711;
@@ -33,8 +32,6 @@ public class MapExpressionTest {
 
     private static final Integer data2_1 = -3;
 
-    private static final Integer datax = Integer.MAX_VALUE;
-
     private MapProperty<Number, Integer> opNull;
 
     private MapProperty<Number, Integer> opEmpty;
@@ -45,15 +42,12 @@ public class MapExpressionTest {
 
     @Before
     public void setUp() {
-        opNull = new SimpleMapProperty<Number, Integer>();
-        opEmpty = new SimpleMapProperty<Number, Integer>(
-                ObservableCollections.observableMap(Collections.<Number, Integer>emptyMap()));
-        op1 = new SimpleMapProperty<Number, Integer>(
-                ObservableCollections.observableMap(Collections.singletonMap(key1_0, data1_0)));
-        final Map<Number, Integer> map = new HashMap<Number, Integer>();
-        map.put(key2_0, data2_0);
-        map.put(key2_1, data2_1);
-        op2 = new SimpleMapProperty<Number, Integer>(ObservableCollections.observableMap(map));
+        opNull = new SimpleMapProperty<>();
+        opEmpty = new SimpleMapProperty<>(
+                ObservableCollections.observableMap(Collections.emptyMap()));
+        op1 = new SimpleMapProperty<>(ObservableCollections.singletonObservableMap(key1_0, data1_0));
+        op2 = new SimpleMapProperty<>(ObservableCollections.observableHashMap(new Pair<>(key2_0, data2_0),
+                new Pair<>(key2_1, data2_1)));
     }
 
     @Test
@@ -82,7 +76,6 @@ public class MapExpressionTest {
         final IntegerProperty index = new SimpleIntegerProperty(keyx.intValue());
 
         assertNull(opNull.valueAt(index).get());
-        assertNull(opNull.valueAt(index).get());
         assertNull(opEmpty.valueAt(index).get());
         assertNull(op1.valueAt(index).get());
         assertNull(op2.valueAt(index).get());
@@ -102,14 +95,10 @@ public class MapExpressionTest {
 
     @Test
     public void testIsEqualTo() {
-        final ObservableMap<Number, Integer> emptyMap =
-                ObservableCollections.observableMap(Collections.<Number, Integer>emptyMap());
-        final ObservableMap<Number, Integer> map1 =
-                ObservableCollections.observableMap(Collections.singletonMap(key1_0, data1_0));
-        final Map<Number, Integer> map = new HashMap<Number, Integer>();
-        map.put(key2_0, data2_0);
-        map.put(key2_1, data2_1);
-        final ObservableMap<Number, Integer> map2 = ObservableCollections.observableMap(map);
+        final ObservableMap<Number, Integer> emptyMap = ObservableCollections.observableMap(Collections.emptyMap());
+        final ObservableMap<Number, Integer> map1 = ObservableCollections.singletonObservableMap(key1_0, data1_0);
+        final ObservableMap<Number, Integer> map2 = ObservableCollections.observableHashMap(new Pair<>(key2_0, data2_0),
+                new Pair<>(key2_1, data2_1));
 
         BooleanBinding binding = opNull.isEqualTo(emptyMap);
         assertEquals(false, binding.get());
@@ -142,41 +131,37 @@ public class MapExpressionTest {
 
     @Test
     public void testIsNotEqualTo() {
-        final ObservableMap<Number, Integer> emptyMap =
-                ObservableCollections.observableMap(Collections.<Number, Integer>emptyMap());
-        final ObservableMap<Number, Integer> list1 =
-                ObservableCollections.observableMap(Collections.singletonMap(key1_0, data1_0));
-        final Map<Number, Integer> map = new HashMap<Number, Integer>();
-        map.put(key2_0, data2_0);
-        map.put(key2_1, data2_1);
-        final ObservableMap<Number, Integer> list2 = ObservableCollections.observableMap(map);
+        final ObservableMap<Number, Integer> emptyMap = ObservableCollections.observableMap(Collections.emptyMap());
+        final ObservableMap<Number, Integer> map1 = ObservableCollections.singletonObservableMap(key1_0, data1_0);
+        final ObservableMap<Number, Integer> map2 = ObservableCollections.observableHashMap(new Pair<>(key2_0, data2_0),
+                new Pair<>(key2_1, data2_1));
 
         BooleanBinding binding = opNull.isNotEqualTo(emptyMap);
         assertEquals(true, binding.get());
-        binding = opNull.isNotEqualTo(list1);
+        binding = opNull.isNotEqualTo(map1);
         assertEquals(true, binding.get());
-        binding = opNull.isNotEqualTo(list2);
+        binding = opNull.isNotEqualTo(map2);
         assertEquals(true, binding.get());
 
         binding = opEmpty.isNotEqualTo(emptyMap);
         assertEquals(false, binding.get());
-        binding = opEmpty.isNotEqualTo(list1);
+        binding = opEmpty.isNotEqualTo(map1);
         assertEquals(true, binding.get());
-        binding = opEmpty.isNotEqualTo(list2);
+        binding = opEmpty.isNotEqualTo(map2);
         assertEquals(true, binding.get());
 
         binding = op1.isNotEqualTo(emptyMap);
         assertEquals(true, binding.get());
-        binding = op1.isNotEqualTo(list1);
+        binding = op1.isNotEqualTo(map1);
         assertEquals(false, binding.get());
-        binding = op1.isNotEqualTo(list2);
+        binding = op1.isNotEqualTo(map2);
         assertEquals(true, binding.get());
 
         binding = op2.isNotEqualTo(emptyMap);
         assertEquals(true, binding.get());
-        binding = op2.isNotEqualTo(list1);
+        binding = op2.isNotEqualTo(map1);
         assertEquals(true, binding.get());
-        binding = op2.isNotEqualTo(list2);
+        binding = op2.isNotEqualTo(map2);
         assertEquals(false, binding.get());
     }
 
@@ -257,7 +242,7 @@ public class MapExpressionTest {
 
     @Test
     public void testObservableMapValueToExpression() {
-        final ObservableMapValueStub<Number, Integer> valueModel = new ObservableMapValueStub<Number, Integer>();
+        final ObservableMapValueStub<Number, Integer> valueModel = new ObservableMapValueStub<>();
         final MapExpression<Number, Integer> exp = MapExpression.mapExpression(valueModel);
         final Number k1 = 1.0;
         final Number k2 = 2.0f;
@@ -271,15 +256,13 @@ public class MapExpressionTest {
                 ((MapBinding<Number, Integer>) exp).getDependencies());
 
         assertEquals(null, exp.get());
-        valueModel.set(ObservableCollections.observableHashMap(new Pair<Number, Integer>(k1, v1)));
+        valueModel.set(ObservableCollections.observableHashMap(new Pair<>(k1, v1)));
         assertEquals(ObservableCollections.singletonObservableMap(k1, v1), exp.get());
         valueModel.get().put(k2, v2);
-        assertEquals(ObservableCollections
-                .observableHashMap(new Pair<Number, Integer>(k1, v1), new Pair<Number, Integer>(k2, v2)), exp.get());
+        assertEquals(ObservableCollections.observableHashMap(new Pair<>(k1, v1), new Pair<>(k2, v2)), exp.get());
         exp.put(k3, v3);
-        assertEquals(ObservableCollections
-                .observableHashMap(new Pair<Number, Integer>(k1, v1), new Pair<Number, Integer>(k2, v2),
-                        new Pair<Number, Integer>(k3, v3)), valueModel.get());
+        assertEquals(ObservableCollections.observableHashMap(new Pair<>(k1, v1), new Pair<>(k2, v2),
+                new Pair<>(k3, v3)), valueModel.get());
 
         // make sure we do not create unnecessary bindings
         assertSame(op1, MapExpression.mapExpression(op1));

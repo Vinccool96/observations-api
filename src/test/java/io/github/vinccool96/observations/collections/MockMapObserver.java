@@ -7,13 +7,14 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@SuppressWarnings("unused")
 public class MockMapObserver<K, V> implements MapChangeListener<K, V> {
 
-    private List<Call> calls = new ArrayList<Call>();
+    private final List<Call<K, V>> calls = new ArrayList<>();
 
     @Override
     public void onChanged(Change<? extends K, ? extends V> c) {
-        calls.add(new Call<K, V>(c.getKey(), c.getValueRemoved(), c.getValueAdded()));
+        calls.add(new Call<>(c.getKey(), c.getValueRemoved(), c.getValueAdded()));
     }
 
     public int getCallsNumber() {
@@ -38,17 +39,19 @@ public class MockMapObserver<K, V> implements MapChangeListener<K, V> {
         assertEquals(calls.get(call).added, tuple.val);
     }
 
-    public void assertMultipleCalls(Call<K, V>... calls) {
+    @SafeVarargs
+    public final void assertMultipleCalls(Call<K, V>... calls) {
         assertEquals(this.calls.size(), calls.length);
         for (Call<K, V> c : calls) {
             assertTrue(Arrays.toString(calls) + " doesn't contain " + c, this.calls.contains(c));
         }
     }
 
-    public void assertMultipleRemove(Tuple<K, V>... tuples) {
+    @SafeVarargs
+    public final void assertMultipleRemove(Tuple<K, V>... tuples) {
         assertEquals(this.calls.size(), tuples.length);
         for (Tuple<K, V> t : tuples) {
-            assertTrue(calls + " doesn't contain " + t, this.calls.contains(new Call<K, V>(t.key, t.val, null)));
+            assertTrue(calls + " doesn't contain " + t, this.calls.contains(new Call<>(t.key, t.val, null)));
         }
     }
 
@@ -62,10 +65,11 @@ public class MockMapObserver<K, V> implements MapChangeListener<K, V> {
         assertEquals(calls.get(call).removed, tuple.val);
     }
 
-    public void assertMultipleRemoved(Tuple<K, V>... tuples) {
+    @SafeVarargs
+    public final void assertMultipleRemoved(Tuple<K, V>... tuples) {
         for (Tuple<K, V> t : tuples) {
             boolean found = false;
-            for (Call c : calls) {
+            for (Call<K, V> c : calls) {
                 if (c.key.equals(t.key)) {
                     assertEquals(c.removed, t.val);
                     found = true;
@@ -78,11 +82,11 @@ public class MockMapObserver<K, V> implements MapChangeListener<K, V> {
 
     public static class Call<K, V> {
 
-        private K key;
+        private final K key;
 
-        private V removed;
+        private final V removed;
 
-        private V added;
+        private final V added;
 
         public Call(K key, V removed, V added) {
             this.key = key;
@@ -91,11 +95,11 @@ public class MockMapObserver<K, V> implements MapChangeListener<K, V> {
         }
 
         public static <K, V> Call<K, V> call(K k, V o, V n) {
-            return new Call<K, V>(k, o, n);
+            return new Call<>(k, o, n);
         }
 
         @Override
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({"unchecked", "EqualsReplaceableByObjectsCall", "RedundantIfStatement"})
         public boolean equals(Object obj) {
             if (obj == null) {
                 return false;
@@ -144,7 +148,7 @@ public class MockMapObserver<K, V> implements MapChangeListener<K, V> {
         }
 
         public static <K, V> Tuple<K, V> tup(K k, V v) {
-            return new Tuple<K, V>(k, v);
+            return new Tuple<>(k, v);
         }
 
     }
