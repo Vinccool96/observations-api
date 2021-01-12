@@ -4,17 +4,20 @@ import io.github.vinccool96.observations.beans.InvalidationListenerMock;
 import io.github.vinccool96.observations.beans.value.ChangeListenerMock;
 import io.github.vinccool96.observations.beans.value.ObservableObjectValueStub;
 import io.github.vinccool96.observations.collections.MockMapObserver;
+import io.github.vinccool96.observations.collections.MockMapObserver.Call;
+import io.github.vinccool96.observations.collections.MockMapObserver.Tuple;
 import io.github.vinccool96.observations.collections.ObservableCollections;
 import io.github.vinccool96.observations.collections.ObservableMap;
+import io.github.vinccool96.observations.util.Pair;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Collections;
 import java.util.HashMap;
 
-import static io.github.vinccool96.observations.collections.MockMapObserver.Call;
 import static org.junit.Assert.*;
 
+@SuppressWarnings({"SimplifiableAssertion", "MismatchedQueryAndUpdateOfCollection", "ConstantConditions"})
 public class MapPropertyBaseTest {
 
     private static final Object NO_BEAN = null;
@@ -57,21 +60,11 @@ public class MapPropertyBaseTest {
             ObservableCollections.observableMap(Collections.singletonMap(KEY_1b, DATA_1b));
 
     private static final ObservableMap<Object, Object> VALUE_2a =
-            ObservableCollections.observableMap(new HashMap<Object, Object>());
-
-    static {
-        VALUE_2a.put(KEY_2a_0, DATA_2a_0);
-        VALUE_2a.put(KEY_2a_1, DATA_2a_1);
-    }
+            ObservableCollections.observableHashMap(new Pair<>(KEY_2a_0, DATA_2a_0), new Pair<>(KEY_2a_1, DATA_2a_1));
 
     private static final ObservableMap<Object, Object> VALUE_2b =
-            ObservableCollections.observableMap(new HashMap<Object, Object>());
-
-    static {
-        VALUE_2b.put(KEY_2b_0, DATA_2b_0);
-        VALUE_2b.put(KEY_2b_1, DATA_2b_1);
-        VALUE_2b.put(KEY_2b_2, DATA_2b_2);
-    }
+            ObservableCollections.observableHashMap(new Pair<>(KEY_2b_0, DATA_2b_0), new Pair<>(KEY_2b_1, DATA_2b_1),
+                    new Pair<>(KEY_2b_2, DATA_2b_2));
 
     private MapPropertyMock property;
 
@@ -82,11 +75,11 @@ public class MapPropertyBaseTest {
     private MockMapObserver<Object, Object> mapChangeListener;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         property = new MapPropertyMock();
         invalidationListener = new InvalidationListenerMock();
-        changeListener = new ChangeListenerMock<ObservableMap<Object, Object>>(UNDEFINED);
-        mapChangeListener = new MockMapObserver<Object, Object>();
+        changeListener = new ChangeListenerMock<>(UNDEFINED);
+        mapChangeListener = new MockMapObserver<>();
     }
 
     private void attachInvalidationListener() {
@@ -109,12 +102,12 @@ public class MapPropertyBaseTest {
 
     @Test
     public void testConstructor() {
-        final MapProperty<Object, Object> p1 = new SimpleMapProperty<Object, Object>();
+        final MapProperty<Object, Object> p1 = new SimpleMapProperty<>();
         assertEquals(null, p1.get());
         assertEquals(null, p1.getValue());
         assertFalse(property.isBound());
 
-        final MapProperty<Object, Object> p2 = new SimpleMapProperty<Object, Object>(VALUE_1b);
+        final MapProperty<Object, Object> p2 = new SimpleMapProperty<>(VALUE_1b);
         assertEquals(VALUE_1b, p2.get());
         assertEquals(VALUE_1b, p2.getValue());
         assertFalse(property.isBound());
@@ -123,7 +116,7 @@ public class MapPropertyBaseTest {
     @Test
     public void testEmptyProperty() {
         assertEquals("empty", property.emptyProperty().getName());
-        assertEquals(property, property.emptyProperty().getBean());
+        assertSame(property, property.emptyProperty().getBean());
         assertTrue(property.emptyProperty().get());
 
         property.set(VALUE_2a);
@@ -135,7 +128,7 @@ public class MapPropertyBaseTest {
     @Test
     public void testSizeProperty() {
         assertEquals("size", property.sizeProperty().getName());
-        assertEquals(property, property.sizeProperty().getBean());
+        assertSame(property, property.sizeProperty().getBean());
         assertEquals(0, property.sizeProperty().get());
 
         property.set(VALUE_2a);
@@ -170,8 +163,8 @@ public class MapPropertyBaseTest {
     public void testMapChangeListener() {
         attachMapChangeListener();
         property.set(VALUE_2a);
-        mapChangeListener.assertMultipleCalls(
-                new Call[]{new Call(KEY_2a_0, null, DATA_2a_0), new Call(KEY_2a_1, null, DATA_2a_1)});
+        mapChangeListener.assertMultipleCalls(new Call<>(KEY_2a_0, null, DATA_2a_0),
+                new Call<>(KEY_2a_1, null, DATA_2a_1));
         property.removeListener(mapChangeListener);
         mapChangeListener.clear();
         property.set(VALUE_1a);
@@ -180,10 +173,8 @@ public class MapPropertyBaseTest {
 
     @Test
     public void testSourceMap_Invalidation() {
-        final ObservableMap<Object, Object> source1 =
-                ObservableCollections.observableMap(new HashMap<Object, Object>());
-        final ObservableMap<Object, Object> source2 =
-                ObservableCollections.observableMap(new HashMap<Object, Object>());
+        final ObservableMap<Object, Object> source1 = ObservableCollections.observableMap(new HashMap<>());
+        final ObservableMap<Object, Object> source2 = ObservableCollections.observableMap(new HashMap<>());
         final Object key = new Object();
         final Object value1 = new Object();
         final Object value2 = new Object();
@@ -238,10 +229,8 @@ public class MapPropertyBaseTest {
 
     @Test
     public void testSourceMap_Change() {
-        final ObservableMap<Object, Object> source1 =
-                ObservableCollections.observableMap(new HashMap<Object, Object>());
-        final ObservableMap<Object, Object> source2 =
-                ObservableCollections.observableMap(new HashMap<Object, Object>());
+        final ObservableMap<Object, Object> source1 = ObservableCollections.observableMap(new HashMap<>());
+        final ObservableMap<Object, Object> source2 = ObservableCollections.observableMap(new HashMap<>());
         final Object key = new Object();
         final Object value1 = new Object();
         final Object value2 = new Object();
@@ -296,10 +285,8 @@ public class MapPropertyBaseTest {
 
     @Test
     public void testSourceMap_MapChange() {
-        final ObservableMap<Object, Object> source1 =
-                ObservableCollections.observableMap(new HashMap<Object, Object>());
-        final ObservableMap<Object, Object> source2 =
-                ObservableCollections.observableMap(new HashMap<Object, Object>());
+        final ObservableMap<Object, Object> source1 = ObservableCollections.observableMap(new HashMap<>());
+        final ObservableMap<Object, Object> source2 = ObservableCollections.observableMap(new HashMap<>());
         final Object key = new Object();
         final Object value1 = new Object();
         final Object value2 = new Object();
@@ -313,21 +300,21 @@ public class MapPropertyBaseTest {
         source1.put(key, value1);
         assertEquals(value1, property.get(key));
         property.check(1);
-        mapChangeListener.assertAdded(MockMapObserver.Tuple.tup(key, value1));
+        mapChangeListener.assertAdded(Tuple.tup(key, value1));
         mapChangeListener.clear();
 
         // replace element
         source1.put(key, value2);
         assertEquals(value2, property.get(key));
         property.check(1);
-        mapChangeListener.assertMultipleCalls(new Call<Object, Object>(key, value1, value2));
+        mapChangeListener.assertMultipleCalls(new Call<>(key, value1, value2));
         mapChangeListener.clear();
 
         // remove element
         source1.remove(key);
         assertNull(property.get(key));
         property.check(1);
-        mapChangeListener.assertRemoved(MockMapObserver.Tuple.tup(key, value2));
+        mapChangeListener.assertRemoved(Tuple.tup(key, value2));
         mapChangeListener.clear();
 
         // set
@@ -340,21 +327,21 @@ public class MapPropertyBaseTest {
         source2.put(key, value1);
         assertEquals(value1, property.get(key));
         property.check(1);
-        mapChangeListener.assertAdded(MockMapObserver.Tuple.tup(key, value1));
+        mapChangeListener.assertAdded(Tuple.tup(key, value1));
         mapChangeListener.clear();
 
         // replace element
         source2.put(key, value2);
         assertEquals(value2, property.get(key));
         property.check(1);
-        mapChangeListener.assertMultipleCalls(new Call<Object, Object>(key, value1, value2));
+        mapChangeListener.assertMultipleCalls(new Call<>(key, value1, value2));
         mapChangeListener.clear();
 
         // remove element
         source2.remove(key);
         assertNull(property.get(key));
         property.check(1);
-        mapChangeListener.assertRemoved(MockMapObserver.Tuple.tup(key, value2));
+        mapChangeListener.assertRemoved(Tuple.tup(key, value2));
         mapChangeListener.clear();
     }
 
@@ -414,8 +401,8 @@ public class MapPropertyBaseTest {
         property.set(VALUE_2a);
         assertEquals(VALUE_2a, property.get());
         property.check(1);
-        mapChangeListener.assertMultipleCalls(
-                new Call[]{new Call(KEY_2a_0, null, DATA_2a_0), new Call(KEY_2a_1, null, DATA_2a_1)});
+        mapChangeListener.assertMultipleCalls(new Call<>(KEY_2a_0, null, DATA_2a_0),
+                new Call<>(KEY_2a_1, null, DATA_2a_1));
 
         // set same value again
         mapChangeListener.clear();
@@ -430,7 +417,7 @@ public class MapPropertyBaseTest {
         property.set(VALUE_1b);
         assertEquals(VALUE_1b, property.get());
         property.check(2);
-        mapChangeListener.assertAdded(MockMapObserver.Tuple.tup(KEY_1b, DATA_1b));
+        mapChangeListener.assertAdded(Tuple.tup(KEY_1b, DATA_1b));
     }
 
     @Test
@@ -489,8 +476,8 @@ public class MapPropertyBaseTest {
         property.setValue(VALUE_2a);
         assertEquals(VALUE_2a, property.get());
         property.check(1);
-        mapChangeListener.assertMultipleCalls(
-                new Call[]{new Call(KEY_2a_0, null, DATA_2a_0), new Call(KEY_2a_1, null, DATA_2a_1)});
+        mapChangeListener.assertMultipleCalls(new Call<>(KEY_2a_0, null, DATA_2a_0),
+                new Call<>(KEY_2a_1, null, DATA_2a_1));
 
         // set same value again
         mapChangeListener.clear();
@@ -505,12 +492,12 @@ public class MapPropertyBaseTest {
         property.setValue(VALUE_1b);
         assertEquals(VALUE_1b, property.get());
         property.check(2);
-        mapChangeListener.assertAdded(MockMapObserver.Tuple.tup(KEY_1b, DATA_1b));
+        mapChangeListener.assertAdded(Tuple.tup(KEY_1b, DATA_1b));
     }
 
     @Test(expected = RuntimeException.class)
     public void testMapBoundValue() {
-        final MapProperty<Object, Object> v = new SimpleMapProperty<Object, Object>(VALUE_1a);
+        final MapProperty<Object, Object> v = new SimpleMapProperty<>(VALUE_1a);
         property.bind(v);
         property.set(VALUE_1a);
     }
@@ -519,8 +506,7 @@ public class MapPropertyBaseTest {
     public void testBind_Invalidation() {
         attachInvalidationListener();
         final ObservableObjectValueStub<ObservableMap<Object, Object>> v =
-                new ObservableObjectValueStub<ObservableMap<Object, Object>>(
-                        ObservableCollections.observableMap(VALUE_1a));
+                new ObservableObjectValueStub<>(ObservableCollections.observableMap(VALUE_1a));
 
         property.bind(v);
         assertEquals(VALUE_1a, property.get());
@@ -553,8 +539,7 @@ public class MapPropertyBaseTest {
     public void testBind_Change() {
         attachChangeListener();
         final ObservableObjectValueStub<ObservableMap<Object, Object>> v =
-                new ObservableObjectValueStub<ObservableMap<Object, Object>>(
-                        ObservableCollections.observableMap(VALUE_1a));
+                new ObservableObjectValueStub<>(ObservableCollections.observableMap(VALUE_1a));
 
         property.bind(v);
         assertEquals(VALUE_1a, property.get());
@@ -587,8 +572,7 @@ public class MapPropertyBaseTest {
     public void testBind_MapChange() {
         attachMapChangeListener();
         final ObservableObjectValueStub<ObservableMap<Object, Object>> v =
-                new ObservableObjectValueStub<ObservableMap<Object, Object>>(
-                        ObservableCollections.observableMap(VALUE_1a));
+                new ObservableObjectValueStub<>(ObservableCollections.observableMap(VALUE_1a));
 
         property.bind(v);
         assertEquals(VALUE_1a, property.get());
@@ -601,8 +585,8 @@ public class MapPropertyBaseTest {
         v.set(VALUE_2a);
         assertEquals(VALUE_2a, property.get());
         property.check(1);
-        mapChangeListener.assertMultipleCalls(
-                new Call[]{new Call(KEY_2a_0, null, DATA_2a_0), new Call(KEY_2a_1, null, DATA_2a_1)});
+        mapChangeListener.assertMultipleCalls(new Call<>(KEY_2a_0, null, DATA_2a_0),
+                new Call<>(KEY_2a_1, null, DATA_2a_1));
 
         // change binding twice without reading
         v.set(VALUE_1a);
@@ -610,7 +594,7 @@ public class MapPropertyBaseTest {
         v.set(VALUE_1b);
         assertEquals(VALUE_1b, property.get());
         property.check(2);
-        mapChangeListener.assertAdded(MockMapObserver.Tuple.tup(KEY_1b, DATA_1b));
+        mapChangeListener.assertAdded(Tuple.tup(KEY_1b, DATA_1b));
 
         // change binding twice to same value
         v.set(VALUE_1a);
@@ -629,8 +613,8 @@ public class MapPropertyBaseTest {
     @Test
     public void testRebind() {
         attachInvalidationListener();
-        final MapProperty<Object, Object> v1 = new SimpleMapProperty<Object, Object>(VALUE_1a);
-        final MapProperty<Object, Object> v2 = new SimpleMapProperty<Object, Object>(VALUE_2a);
+        final MapProperty<Object, Object> v1 = new SimpleMapProperty<>(VALUE_1a);
+        final MapProperty<Object, Object> v2 = new SimpleMapProperty<>(VALUE_2a);
         property.bind(v1);
         property.get();
         property.reset();
@@ -640,36 +624,33 @@ public class MapPropertyBaseTest {
         property.bind(v2);
         assertEquals(VALUE_2a, property.get());
         assertTrue(property.isBound());
-        assertEquals(1, property.counter);
+        property.check(1);
         invalidationListener.check(property, 1);
-        property.reset();
 
         // change old binding
         v1.set(VALUE_1b);
         assertEquals(VALUE_2a, property.get());
-        assertEquals(0, property.counter);
+        property.check(0);
         invalidationListener.check(null, 0);
-        property.reset();
 
         // change new binding
         v2.set(VALUE_2b);
         assertEquals(VALUE_2b, property.get());
-        assertEquals(1, property.counter);
+        property.check(1);
         invalidationListener.check(property, 1);
-        property.reset();
 
         // rebind to same observable should have no effect
         property.bind(v2);
         assertEquals(VALUE_2b, property.get());
         assertTrue(property.isBound());
-        assertEquals(0, property.counter);
+        property.check(0);
         invalidationListener.check(null, 0);
     }
 
     @Test
     public void testUnbind() {
         attachInvalidationListener();
-        final MapProperty<Object, Object> v = new SimpleMapProperty<Object, Object>(VALUE_1a);
+        final MapProperty<Object, Object> v = new SimpleMapProperty<>(VALUE_1a);
         property.bind(v);
         property.unbind();
         assertEquals(VALUE_1a, property.get());
@@ -680,20 +661,19 @@ public class MapPropertyBaseTest {
         // change binding
         v.set(VALUE_2a);
         assertEquals(VALUE_1a, property.get());
-        assertEquals(0, property.counter);
+        property.check(0);
         invalidationListener.check(null, 0);
-        property.reset();
 
         // set value
         property.set(VALUE_1b);
         assertEquals(VALUE_1b, property.get());
-        assertEquals(1, property.counter);
+        property.check(1);
         invalidationListener.check(property, 1);
     }
 
     @Test
     public void testAddingListenerWillAlwaysReceiveInvalidationEvent() {
-        final MapProperty<Object, Object> v = new SimpleMapProperty<Object, Object>(VALUE_1a);
+        final MapProperty<Object, Object> v = new SimpleMapProperty<>(VALUE_1a);
         final InvalidationListenerMock listener2 = new InvalidationListenerMock();
         final InvalidationListenerMock listener3 = new InvalidationListenerMock();
 
@@ -717,11 +697,11 @@ public class MapPropertyBaseTest {
     @Test
     public void testToString() {
         final ObservableMap<Object, Object> value0 = null;
-        final ObservableMap<Object, Object> value1 = ObservableCollections.observableMap(new HashMap<Object, Object>());
+        final ObservableMap<Object, Object> value1 = ObservableCollections.observableMap(new HashMap<>());
         value1.put(new Object(), new Object());
         value1.put(new Object(), new Object());
-        final ObservableMap<Object, Object> value2 = ObservableCollections.observableMap(new HashMap<Object, Object>());
-        final MapProperty<Object, Object> v = new SimpleMapProperty<Object, Object>(value2);
+        final ObservableMap<Object, Object> value2 = ObservableCollections.observableMap(new HashMap<>());
+        final MapProperty<Object, Object> v = new SimpleMapProperty<>(value2);
 
         property.set(value1);
         assertEquals("MapProperty [value: " + value1 + "]", property.toString());

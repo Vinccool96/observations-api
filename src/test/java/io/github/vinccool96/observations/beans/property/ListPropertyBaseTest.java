@@ -315,7 +315,7 @@ public class ListPropertyBaseTest {
     }
 
     @Test
-    public void testSet_Invalidation() {
+    public void testList_Invalidation() {
         attachInvalidationListener();
 
         // set value once
@@ -339,7 +339,7 @@ public class ListPropertyBaseTest {
     }
 
     @Test
-    public void testSet_Change() {
+    public void testList_Change() {
         attachChangeListener();
 
         // set value once
@@ -363,7 +363,7 @@ public class ListPropertyBaseTest {
     }
 
     @Test
-    public void testSet_ListChange() {
+    public void testList_ListChange() {
         attachListChangeListener();
 
         // set value once
@@ -389,7 +389,7 @@ public class ListPropertyBaseTest {
     }
 
     @Test
-    public void testSetValue_Invalidation() {
+    public void testListValue_Invalidation() {
         attachInvalidationListener();
 
         // set value once
@@ -413,7 +413,7 @@ public class ListPropertyBaseTest {
     }
 
     @Test
-    public void testSetValue_Change() {
+    public void testListValue_Change() {
         attachChangeListener();
 
         // set value once
@@ -437,7 +437,7 @@ public class ListPropertyBaseTest {
     }
 
     @Test
-    public void testSetValue_ListChange() {
+    public void testListValue_ListChange() {
         attachListChangeListener();
 
         // set value once
@@ -463,7 +463,7 @@ public class ListPropertyBaseTest {
     }
 
     @Test(expected = RuntimeException.class)
-    public void testSetBoundValue() {
+    public void testListBoundValue() {
         final ListProperty<Object> v = new SimpleListProperty<>(VALUE_2b);
         property.bind(v);
         property.set(VALUE_1a);

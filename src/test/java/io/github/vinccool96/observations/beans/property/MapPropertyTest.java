@@ -13,6 +13,7 @@ import java.util.Collections;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class MapPropertyTest {
 
     private static final Object NO_BEAN = null;
@@ -31,8 +32,8 @@ public class MapPropertyTest {
 
     @Test
     public void testBindBidirectional() {
-        final MapProperty<Object, Object> p1 = new SimpleMapProperty<Object, Object>(VALUE_2);
-        final MapProperty<Object, Object> p2 = new SimpleMapProperty<Object, Object>(VALUE_1);
+        final MapProperty<Object, Object> p1 = new SimpleMapProperty<>(VALUE_2);
+        final MapProperty<Object, Object> p2 = new SimpleMapProperty<>(VALUE_1);
 
         p1.bindBidirectional(p2);
         assertEquals(VALUE_1, p1.get());
@@ -90,7 +91,7 @@ public class MapPropertyTest {
         assertEquals("MapProperty [name: My name, value: " + VALUE_1 + "]", v5.toString());
     }
 
-    private class MapPropertyStub extends MapProperty<Object, Object> {
+    private static class MapPropertyStub extends MapProperty<Object, Object> {
 
         private final Object bean;
 
@@ -140,6 +141,22 @@ public class MapPropertyTest {
         }
 
         @Override
+        public void addListener(InvalidationListener listener) {
+            fail("Not in use");
+        }
+
+        @Override
+        public void removeListener(InvalidationListener listener) {
+            fail("Not in use");
+        }
+
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+            fail("Not in use");
+            return false;
+        }
+
+        @Override
         public void addListener(ChangeListener<? super ObservableMap<Object, Object>> listener) {
             fail("Not in use");
         }
@@ -153,16 +170,6 @@ public class MapPropertyTest {
         public boolean isChangeListenerAlreadyAdded(ChangeListener<? super ObservableMap<Object, Object>> listener) {
             fail("Not in use");
             return false;
-        }
-
-        @Override
-        public void addListener(InvalidationListener listener) {
-            fail("Not in use");
-        }
-
-        @Override
-        public void removeListener(InvalidationListener listener) {
-            fail("Not in use");
         }
 
         @Override
@@ -191,12 +198,6 @@ public class MapPropertyTest {
         public ReadOnlyBooleanProperty emptyProperty() {
             fail("Not in use");
             return null;
-        }
-
-        @Override
-        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-            fail("Not in use");
-            return false;
         }
 
     }

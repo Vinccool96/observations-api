@@ -24,6 +24,7 @@ import static org.junit.Assert.*;
 /**
  *
  */
+@SuppressWarnings({"FieldCanBeLocal", "SimplifiableAssertion"})
 public class MapBindingTest {
 
     private final static Object KEY_1 = new Object();
@@ -50,9 +51,9 @@ public class MapBindingTest {
 
     private ObservableMap<Object, Object> emptyMap;
 
-    private ObservableMap<Object, Object> set1;
+    private ObservableMap<Object, Object> map1;
 
-    private ObservableMap<Object, Object> set2;
+    private ObservableMap<Object, Object> map2;
 
     private MockMapObserver<Object, Object> listener;
 
@@ -64,22 +65,22 @@ public class MapBindingTest {
         binding1 = new MapBindingImpl(dependency1);
         binding2 = new MapBindingImpl(dependency1, dependency2);
         emptyMap = ObservableCollections.observableMap(Collections.emptyMap());
-        set1 = ObservableCollections.observableMap(Collections.singletonMap(KEY_1, DATA_1));
-        final Map<Object, Object> map = new HashMap<Object, Object>();
+        map1 = ObservableCollections.observableMap(Collections.singletonMap(KEY_1, DATA_1));
+        final Map<Object, Object> map = new HashMap<>();
         map.put(KEY_2_0, DATA_2_0);
         map.put(KEY_2_1, DATA_2_1);
-        set2 = ObservableCollections.observableMap(map);
-        listener = new MockMapObserver<Object, Object>();
-        binding0.setValue(set2);
-        binding1.setValue(set2);
-        binding2.setValue(set2);
+        map2 = ObservableCollections.observableMap(map);
+        listener = new MockMapObserver<>();
+        binding0.setValue(map2);
+        binding1.setValue(map2);
+        binding2.setValue(map2);
     }
 
     @Test
     public void testSizeProperty() {
-        assertEquals(binding0, binding0.sizeProperty().getBean());
-        assertEquals(binding1, binding1.sizeProperty().getBean());
-        assertEquals(binding2, binding2.sizeProperty().getBean());
+        assertSame(binding0, binding0.sizeProperty().getBean());
+        assertSame(binding1, binding1.sizeProperty().getBean());
+        assertSame(binding2, binding2.sizeProperty().getBean());
 
         final ReadOnlyIntegerProperty size = binding1.sizeProperty();
         assertEquals("size", size.getName());
@@ -88,19 +89,19 @@ public class MapBindingTest {
         binding1.setValue(emptyMap);
         dependency1.fireValueChangedEvent();
         assertEquals(0, size.get());
+        binding1.setValue(map1);
+        dependency1.fireValueChangedEvent();
+        assertEquals(1, size.get());
         binding1.setValue(null);
         dependency1.fireValueChangedEvent();
         assertEquals(0, size.get());
-        binding1.setValue(set1);
-        dependency1.fireValueChangedEvent();
-        assertEquals(1, size.get());
     }
 
     @Test
     public void testEmptyProperty() {
-        assertEquals(binding0, binding0.emptyProperty().getBean());
-        assertEquals(binding1, binding1.emptyProperty().getBean());
-        assertEquals(binding2, binding2.emptyProperty().getBean());
+        assertSame(binding0, binding0.emptyProperty().getBean());
+        assertSame(binding1, binding1.emptyProperty().getBean());
+        assertSame(binding2, binding2.emptyProperty().getBean());
 
         final ReadOnlyBooleanProperty empty = binding1.emptyProperty();
         assertEquals("empty", empty.getName());
@@ -109,12 +110,12 @@ public class MapBindingTest {
         binding1.setValue(emptyMap);
         dependency1.fireValueChangedEvent();
         assertTrue(empty.get());
+        binding1.setValue(map1);
+        dependency1.fireValueChangedEvent();
+        assertFalse(empty.get());
         binding1.setValue(null);
         dependency1.fireValueChangedEvent();
         assertTrue(empty.get());
-        binding1.setValue(set1);
-        dependency1.fireValueChangedEvent();
-        assertFalse(empty.get());
     }
 
     @Test
@@ -142,11 +143,11 @@ public class MapBindingTest {
         // fire single change event
         binding1.reset();
         listener.clear();
-        binding1.setValue(set1);
+        binding1.setValue(map1);
         dependency1.fireValueChangedEvent();
         assertEquals(1, binding1.getComputeValueCounter());
-        listener.assertMultipleCalls(new Call[]{new Call<Object, Object>(KEY_2_0, DATA_2_0, null),
-                new Call<Object, Object>(KEY_2_1, DATA_2_1, null), new Call<Object, Object>(KEY_1, null, DATA_1)});
+        listener.assertMultipleCalls(new Call<>(KEY_2_0, DATA_2_0, null), new Call<>(KEY_2_1, DATA_2_1, null),
+                new Call<>(KEY_1, null, DATA_1));
         assertEquals(true, binding1.isValid());
         listener.clear();
 
@@ -157,7 +158,7 @@ public class MapBindingTest {
         listener.clear();
 
         // fire single change event with same value
-        binding1.setValue(set1);
+        binding1.setValue(map1);
         dependency1.fireValueChangedEvent();
         assertEquals(1, binding1.getComputeValueCounter());
         assertEquals(0, listener.getCallsNumber());
@@ -171,14 +172,14 @@ public class MapBindingTest {
         listener.clear();
 
         // fire two change events
-        binding1.setValue(set2);
+        binding1.setValue(map2);
         dependency1.fireValueChangedEvent();
         listener.clear();
-        binding1.setValue(set1);
+        binding1.setValue(map1);
         dependency1.fireValueChangedEvent();
         assertEquals(2, binding1.getComputeValueCounter());
-        listener.assertMultipleCalls(new Call[]{new Call<Object, Object>(KEY_2_0, DATA_2_0, null),
-                new Call<Object, Object>(KEY_2_1, DATA_2_1, null), new Call<Object, Object>(KEY_1, null, DATA_1)});
+        listener.assertMultipleCalls(new Call<>(KEY_2_0, DATA_2_0, null), new Call<>(KEY_2_1, DATA_2_1, null),
+                new Call<>(KEY_1, null, DATA_1));
         assertEquals(true, binding1.isValid());
         listener.clear();
 
@@ -189,13 +190,13 @@ public class MapBindingTest {
         listener.clear();
 
         // fire two change events with same value
-        binding1.setValue(set2);
+        binding1.setValue(map2);
         dependency1.fireValueChangedEvent();
-        binding1.setValue(set2);
+        binding1.setValue(map2);
         dependency1.fireValueChangedEvent();
         assertEquals(2, binding1.getComputeValueCounter());
-        listener.assertMultipleCalls(new Call[]{new Call<Object, Object>(KEY_1, DATA_1, null),
-                new Call<Object, Object>(KEY_2_0, null, DATA_2_0), new Call<Object, Object>(KEY_2_1, null, DATA_2_1)});
+        listener.assertMultipleCalls(new Call<>(KEY_1, DATA_1, null), new Call<>(KEY_2_0, null, DATA_2_0),
+                new Call<>(KEY_2_1, null, DATA_2_1));
         assertEquals(true, binding1.isValid());
         listener.clear();
 
@@ -214,7 +215,7 @@ public class MapBindingTest {
 
         binding1.reset();
         listenerMock.reset();
-        set2.put(new Object(), new Object());
+        map2.put(new Object(), new Object());
         assertEquals(0, binding1.getComputeValueCounter());
         listenerMock.check(binding1, 1);
         assertTrue(binding1.isValid());
@@ -222,16 +223,16 @@ public class MapBindingTest {
 
     @Test
     public void testChangeContent_ChangeListener() {
-        final ChangeListenerMock listenerMock = new ChangeListenerMock(null);
+        final ChangeListenerMock<ObservableMap<Object, Object>> listenerMock = new ChangeListenerMock<>(null);
         binding1.get();
         binding1.addListener(listenerMock);
         assertTrue(binding1.isValid());
 
         binding1.reset();
         listenerMock.reset();
-        set2.put(new Object(), new Object());
+        map2.put(new Object(), new Object());
         assertEquals(0, binding1.getComputeValueCounter());
-        listenerMock.check(binding1, set2, set2, 1);
+        listenerMock.check(binding1, map2, map2, 1);
         assertTrue(binding1.isValid());
     }
 
@@ -245,7 +246,7 @@ public class MapBindingTest {
         final Object newData = new Object();
         binding1.reset();
         listener.clear();
-        set2.put(newKey, newData);
+        map2.put(newKey, newData);
         assertEquals(0, binding1.getComputeValueCounter());
         listener.assertAdded(MockMapObserver.Tuple.tup(newKey, newData));
         assertTrue(binding1.isValid());
@@ -253,7 +254,8 @@ public class MapBindingTest {
 
     public static class ObservableStub extends ObservableValueBase<Object> {
 
-        @Override public void fireValueChangedEvent() {
+        @Override
+        public void fireValueChangedEvent() {
             super.fireValueChangedEvent();
         }
 
@@ -294,7 +296,8 @@ public class MapBindingTest {
             return value;
         }
 
-        @Override @ReturnsUnmodifiableCollection
+        @Override
+        @ReturnsUnmodifiableCollection
         public ObservableList<?> getDependencies() {
             fail("Should not reach here");
             return null;
@@ -302,46 +305,4 @@ public class MapBindingTest {
 
     }
 
-//    private class MapChangeListenerMock implements MapChangeListener<Object, Object> {
-//
-//        private Change<? extends Object> change;
-//        private int counter;
-//
-//        @Override
-//        public void onChanged(Change<? extends Object> change) {
-//            this.change = change;
-//            counter++;
-//        }
-//
-//        private void reset() {
-//            change = null;
-//            counter = 0;
-//        }
-//
-//        private void checkNotCalled() {
-//            assertEquals(null, change);
-//            assertEquals(0, counter);
-//            reset();
-//        }
-//
-//        private void check(ObservableMap<Object, Object> oldMap, ObservableMap<Object, Object> newMap, int counter) {
-//            assertTrue(change.next());
-//            assertTrue(change.wasReplaced());
-//            assertEquals(oldMap, change.getRemoved());
-//            assertEquals(newMap, change.getMap());
-//            assertFalse(change.next());
-//            assertEquals(counter, this.counter);
-//            reset();
-//        }
-//
-//        private void check(int pos, Object newObject, int counter) {
-//            assertTrue(change.next());
-//            assertTrue(change.wasAdded());
-//            assertEquals(pos, change.getFrom());
-//            assertEquals(Collections.singletonMap(newObject), change.getAddedSubMap());
-//            assertFalse(change.next());
-//            assertEquals(counter, this.counter);
-//            reset();
-//        }
-//    }
 }

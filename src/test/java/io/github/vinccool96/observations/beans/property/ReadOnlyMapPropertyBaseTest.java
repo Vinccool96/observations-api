@@ -30,10 +30,10 @@ public class ReadOnlyMapPropertyBaseTest {
     private ChangeListenerMock<Object> changeListener;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         property = new ReadOnlyPropertyMock();
         invalidationListener = new InvalidationListenerMock();
-        changeListener = new ChangeListenerMock<Object>(UNDEFINED);
+        changeListener = new ChangeListenerMock<>(UNDEFINED);
     }
 
     @Test
