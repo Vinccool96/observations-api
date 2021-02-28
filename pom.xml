@@ -7,17 +7,20 @@
     <artifactId>observable-api</artifactId>
     <version>1.4-SNAPSHOT</version>
     <name>Observations Api</name>
-    <description>API for observations. It is the observations' part of the JavaFX library.</description>
+    <description>API for observations. It is the observations part of the JavaFX library.</description>
     <url>https://github.com/Vinccool96/observations-api</url>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
+
     <build>
         <plugins>
             <plugin>
@@ -60,10 +63,14 @@
                 <version>3.2.0</version>
                 <configuration>
                     <show>protected</show>
+                    <excludePackageNames>
+                        io.github.vinccool96.observations.sun.*:io.github.vinccool96.observations.util
+                    </excludePackageNames>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
@@ -74,7 +81,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -83,12 +90,14 @@
             <version>1.8.0.1</version>
         </dependency>
     </dependencies>
+
     <scm>
         <connection>scm:git:https://github.com/Vinccool96/observations-api.git</connection>
         <developerConnection>scm:git:https://github.com/Vinccool96/observations-api.git</developerConnection>
         <url>https://github.com/Vinccool96/observations-api</url>
         <tag>observable</tag>
     </scm>
+
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -97,6 +106,7 @@
             <comments>A business-friendly OSS license</comments>
         </license>
     </licenses>
+
     <developers>
         <developer>
             <id>Vinccool96</id>
