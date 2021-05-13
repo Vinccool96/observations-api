@@ -1,5 +1,6 @@
 package io.github.vinccool96.observations.collections;
 
+import io.github.vinccool96.observations.collections.TestedObservableSets.CallableTreeSetImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +13,7 @@ import static io.github.vinccool96.observations.collections.MockSetObserver.Tupl
 import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
+@SuppressWarnings({"SimplifiableAssertion", "ConstantConditions"})
 public class ObservableSetTest {
 
     final Callable<ObservableSet<String>> setFactory;
@@ -25,8 +27,9 @@ public class ObservableSetTest {
     }
 
     @Parameterized.Parameters
-    public static Collection createParameters() {
-        Object[][] data = new Object[][]{
+    @SuppressWarnings("unchecked")
+    public static Collection<?> createParameters() {
+        Callable<ObservableSet<String>>[][] data = new Callable[][]{
                 {TestedObservableSets.HASH_SET},
                 {TestedObservableSets.TREE_SET},
                 {TestedObservableSets.LINKED_HASH_SET},
@@ -40,7 +43,7 @@ public class ObservableSetTest {
     @Before
     public void setUp() throws Exception {
         observableSet = setFactory.call();
-        observer = new MockSetObserver<String>();
+        observer = new MockSetObserver<>();
         observableSet.addListener(observer);
 
         useSetData("one", "two", "foo");
@@ -76,13 +79,13 @@ public class ObservableSetTest {
         observer.assertRemoved(1, tup("observedFoo"));
         observer.assertRemoved(2, tup("foo"));
 
-        assertEquals(observer.getCallsNumber(), 3);
+        assertEquals(3, observer.getCallsNumber());
     }
 
     @Test
     @SuppressWarnings("unchecked")
     public void testAddAll() {
-        Set<String> set = new HashSet<String>();
+        Set<String> set = new HashSet<>();
         set.add("oFoo");
         set.add("pFoo");
         set.add("foo");
@@ -99,7 +102,7 @@ public class ObservableSetTest {
         observableSet.removeAll(Arrays.asList("one", "two", "three"));
 
         observer.assertMultipleRemoved(tup("one"), tup("two"));
-        assertTrue(observableSet.size() == 1);
+        assertEquals(1, observableSet.size());
     }
 
     @Test
@@ -117,7 +120,7 @@ public class ObservableSetTest {
         observableSet.retainAll(Arrays.asList("one", "two", "three"));
 
         observer.assertRemoved(tup("foo"));
-        assertTrue(observableSet.size() == 2);
+        assertEquals(2, observableSet.size());
     }
 
     @Test
@@ -128,7 +131,7 @@ public class ObservableSetTest {
         String toBeRemoved = iterator.next();
         iterator.remove();
 
-        assertTrue(observableSet.size() == 2);
+        assertEquals(2, observableSet.size());
         observer.assertRemoved(tup(toBeRemoved));
     }
 
@@ -143,37 +146,41 @@ public class ObservableSetTest {
 
     @Test
     public void testNull() {
-        if (setFactory instanceof TestedObservableSets.CallableTreeSetImpl) {
+        if (setFactory instanceof CallableTreeSetImpl) {
             return; // TreeSet doesn't accept nulls
         }
         observableSet.add(null);
         assertEquals(4, observableSet.size());
-
-        observer.assertAdded(tup((String) null));
+        observer.assertAdded(tup(null));
 
         observableSet.remove(null);
         assertEquals(3, observableSet.size());
-        observer.assertRemoved(tup((String) null));
+        observer.assertRemoved(tup(null));
     }
 
     @Test
     public void testObserverCanRemoveObservers() {
-        final SetChangeListener<String> listObserver = change -> {
-            change.getSet().removeListener(observer);
-        };
-        observableSet.addListener(listObserver);
+        final SetChangeListener<String> setObserver = change -> change.getSet().removeListener(observer);
+        observableSet.addListener(setObserver);
         observableSet.add("x");
         observer.clear();
         observableSet.add("y");
         observer.check0();
-        observableSet.removeListener(listObserver);
+        observableSet.removeListener(setObserver);
 
         final StringSetChangeListener listener = new StringSetChangeListener();
         observableSet.addListener(listener);
         observableSet.add("z");
-        assertEquals(listener.counter, 1);
+        assertEquals(1, listener.counter);
         observableSet.add("zz");
-        assertEquals(listener.counter, 1);
+        assertEquals(1, listener.counter);
+    }
+
+    @Test
+    public void testEqualsAndHashCode() {
+        final Set<String> other = new HashSet<>(Arrays.asList("one", "two", "foo"));
+        assertTrue(observableSet.equals(other));
+        assertEquals(other.hashCode(), observableSet.hashCode());
     }
 
     private static class StringSetChangeListener implements SetChangeListener<String> {
@@ -186,13 +193,6 @@ public class ObservableSetTest {
             ++counter;
         }
 
-    }
-
-    @Test
-    public void testEqualsAndHashCode() {
-        final Set<String> other = new HashSet<>(Arrays.asList("one", "two", "foo"));
-        assertTrue(observableSet.equals(other));
-        assertEquals(observableSet.hashCode(), other.hashCode());
     }
 
 }

@@ -3,6 +3,7 @@ package io.github.vinccool96.observations.sun.collections;
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.collections.ObservableSet;
 import io.github.vinccool96.observations.collections.SetChangeListener;
+import io.github.vinccool96.observations.collections.SetChangeListener.Change;
 import io.github.vinccool96.observations.util.ArrayUtils;
 
 import java.util.Collection;
@@ -12,6 +13,7 @@ import java.util.Set;
 /**
  * A Set wrapper class that implements observability.
  */
+@SuppressWarnings({"SuspiciousToArrayCall", "unchecked", "EqualsWhichDoesntCheckParameterClass"})
 public class ObservableSetWrapper<E> implements ObservableSet<E> {
 
     private final Set<E> backingSet;
@@ -28,7 +30,7 @@ public class ObservableSetWrapper<E> implements ObservableSet<E> {
         this.backingSet = set;
     }
 
-    private class SimpleAddChange extends SetChangeListener.Change<E> {
+    private class SimpleAddChange extends Change<E> {
 
         private final E added;
 
@@ -64,7 +66,7 @@ public class ObservableSetWrapper<E> implements ObservableSet<E> {
 
     }
 
-    private class SimpleRemoveChange extends SetChangeListener.Change<E> {
+    private class SimpleRemoveChange extends Change<E> {
 
         private final E removed;
 
@@ -100,7 +102,7 @@ public class ObservableSetWrapper<E> implements ObservableSet<E> {
 
     }
 
-    private void callObservers(SetChangeListener.Change<E> change) {
+    private void callObservers(Change<E> change) {
         SetListenerHelper.fireValueChangedEvent(listenerHelper, change);
     }
 
@@ -109,29 +111,8 @@ public class ObservableSetWrapper<E> implements ObservableSet<E> {
      */
     @Override
     public void addListener(InvalidationListener listener) {
-        listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void removeListener(InvalidationListener listener) {
-        listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
-    }
-
-    @Override
-    public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-        return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addListener(SetChangeListener<? super E> observer) {
-        if (listenerHelper == null || !isSetChangeListenerAlreadyAdded(observer)) {
-            listenerHelper = SetListenerHelper.addListener(listenerHelper, observer);
+        if (!isInvalidationListenerAlreadyAdded(listener)) {
+            listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
         }
     }
 
@@ -139,13 +120,42 @@ public class ObservableSetWrapper<E> implements ObservableSet<E> {
      * {@inheritDoc}
      */
     @Override
-    public void removeListener(SetChangeListener<? super E> observer) {
-        listenerHelper = SetListenerHelper.removeListener(listenerHelper, observer);
+    public void removeListener(InvalidationListener listener) {
+        if (isInvalidationListenerAlreadyAdded(listener)) {
+            listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
+        }
+    }
+
+    @Override
+    public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        return listenerHelper != null &&
+                ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addListener(SetChangeListener<? super E> listener) {
+        if (!isSetChangeListenerAlreadyAdded(listener)) {
+            listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeListener(SetChangeListener<? super E> listener) {
+        if (isSetChangeListenerAlreadyAdded(listener)) {
+            listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
+        }
     }
 
     @Override
     public boolean isSetChangeListenerAlreadyAdded(SetChangeListener<? super E> listener) {
-        return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
+        return listenerHelper != null &&
+                ArrayUtils.getInstance().contains(listenerHelper.getSetChangeListeners(), listener);
     }
 
     /**
@@ -188,7 +198,7 @@ public class ObservableSetWrapper<E> implements ObservableSet<E> {
     }
 
     /**
-     * Returns an iterator over the elements in this set. If the iterator's <code>remove()</code> method is called then
+     * Returns an iterator over the elements in this set. If the {@code remove()} of the iterator method is called then
      * the registered observers are called as well.
      *
      * @return an iterator over the elements in this set
@@ -196,7 +206,7 @@ public class ObservableSetWrapper<E> implements ObservableSet<E> {
      * @see Set in JDK API documentation
      */
     @Override
-    public Iterator iterator() {
+    public Iterator<E> iterator() {
         return new Iterator<E>() {
 
             private final Iterator<E> backingIt = backingSet.iterator();

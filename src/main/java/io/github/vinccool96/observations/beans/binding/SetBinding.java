@@ -38,16 +38,6 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  */
 public abstract class SetBinding<E> extends SetExpression<E> implements Binding<ObservableSet<E>> {
 
-    private final SetChangeListener<E> setChangeListener = new SetChangeListener<E>() {
-
-        @Override
-        public void onChanged(Change<? extends E> change) {
-            invalidateProperties();
-            onInvalidating();
-            SetExpressionHelper.fireValueChangedEvent(helper, change);
-        }
-    };
-
     private ObservableSet<E> value;
 
     private boolean valid = false;
@@ -55,6 +45,12 @@ public abstract class SetBinding<E> extends SetExpression<E> implements Binding<
     private BindingHelperObserver observer;
 
     private SetExpressionHelper<E> helper = null;
+
+    private final SetChangeListener<E> setChangeListener = change -> {
+        invalidateProperties();
+        onInvalidating();
+        SetExpressionHelper.fireValueChangedEvent(helper, change);
+    };
 
     private SizeProperty size0;
 
@@ -124,17 +120,21 @@ public abstract class SetBinding<E> extends SetExpression<E> implements Binding<
 
     @Override
     public void addListener(InvalidationListener listener) {
-        helper = SetExpressionHelper.addListener(helper, this, listener);
+        if (!isInvalidationListenerAlreadyAdded(listener)) {
+            helper = SetExpressionHelper.addListener(helper, this, listener);
+        }
     }
 
     @Override
     public void removeListener(InvalidationListener listener) {
-        helper = SetExpressionHelper.removeListener(helper, listener);
+        if (isInvalidationListenerAlreadyAdded(listener)) {
+            helper = SetExpressionHelper.removeListener(helper, listener);
+        }
     }
 
     @Override
     public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
+        return helper != null && ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     @Override
@@ -161,19 +161,21 @@ public abstract class SetBinding<E> extends SetExpression<E> implements Binding<
 
     @Override
     public void addListener(SetChangeListener<? super E> listener) {
-        if (helper == null || !isSetChangeListenerAlreadyAdded(listener)) {
+        if (!isSetChangeListenerAlreadyAdded(listener)) {
             helper = SetExpressionHelper.addListener(helper, this, listener);
         }
     }
 
     @Override
     public void removeListener(SetChangeListener<? super E> listener) {
-        helper = SetExpressionHelper.removeListener(helper, listener);
+        if (isSetChangeListenerAlreadyAdded(listener)) {
+            helper = SetExpressionHelper.removeListener(helper, listener);
+        }
     }
 
     @Override
     public boolean isSetChangeListenerAlreadyAdded(SetChangeListener<? super E> listener) {
-        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
+        return helper != null && ArrayUtils.getInstance().contains(helper.getSetChangeListeners(), listener);
     }
 
     /**
@@ -184,7 +186,7 @@ public abstract class SetBinding<E> extends SetExpression<E> implements Binding<
      *         the dependencies to observe
      */
     protected final void bind(Observable... dependencies) {
-        if ((dependencies != null) && (dependencies.length > 0)) {
+        if (dependencies != null && dependencies.length > 0) {
             if (observer == null) {
                 observer = new BindingHelperObserver(this);
             }

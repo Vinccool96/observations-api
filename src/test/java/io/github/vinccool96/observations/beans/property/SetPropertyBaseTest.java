@@ -13,6 +13,7 @@ import org.junit.Test;
 import static io.github.vinccool96.observations.collections.MockSetObserver.Call;
 import static org.junit.Assert.*;
 
+@SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "SimplifiableAssertion", "ConstantConditions"})
 public class SetPropertyBaseTest {
 
     private static final Object NO_BEAN = null;
@@ -56,8 +57,8 @@ public class SetPropertyBaseTest {
     public void setUp() throws Exception {
         property = new SetPropertyMock();
         invalidationListener = new InvalidationListenerMock();
-        changeListener = new ChangeListenerMock<ObservableSet<Object>>(UNDEFINED);
-        setChangeListener = new MockSetObserver<Object>();
+        changeListener = new ChangeListenerMock<>(UNDEFINED);
+        setChangeListener = new MockSetObserver<>();
     }
 
     private void attachInvalidationListener() {
@@ -80,21 +81,21 @@ public class SetPropertyBaseTest {
 
     @Test
     public void testConstructor() {
-        final SetProperty<Object> p1 = new SimpleSetProperty<Object>();
+        final SetProperty<Object> p1 = new SimpleSetProperty<>();
         assertEquals(null, p1.get());
         assertEquals(null, p1.getValue());
-        assertFalse(property.isBound());
+        assertFalse(p1.isBound());
 
-        final SetProperty<Object> p2 = new SimpleSetProperty<Object>(VALUE_1b);
+        final SetProperty<Object> p2 = new SimpleSetProperty<>(VALUE_1b);
         assertEquals(VALUE_1b, p2.get());
         assertEquals(VALUE_1b, p2.getValue());
-        assertFalse(property.isBound());
+        assertFalse(p2.isBound());
     }
 
     @Test
     public void testEmptyProperty() {
         assertEquals("empty", property.emptyProperty().getName());
-        assertEquals(property, property.emptyProperty().getBean());
+        assertSame(property, property.emptyProperty().getBean());
         assertTrue(property.emptyProperty().get());
 
         property.set(VALUE_2a);
@@ -106,7 +107,7 @@ public class SetPropertyBaseTest {
     @Test
     public void testSizeProperty() {
         assertEquals("size", property.sizeProperty().getName());
-        assertEquals(property, property.sizeProperty().getBean());
+        assertSame(property, property.sizeProperty().getBean());
         assertEquals(0, property.sizeProperty().get());
 
         property.set(VALUE_2a);
@@ -138,10 +139,11 @@ public class SetPropertyBaseTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testSetChangeListener() {
         attachSetChangeListener();
         property.set(VALUE_2a);
-        setChangeListener.assertMultipleCalls(new Call[]{new Call(null, OBJECT_2a_0), new Call(null, OBJECT_2a_1)});
+        setChangeListener.assertMultipleCalls(new Call<>(null, OBJECT_2a_0), new Call<>(null, OBJECT_2a_1));
         property.removeListener(setChangeListener);
         setChangeListener.clear();
         property.set(VALUE_1a);
@@ -327,6 +329,7 @@ public class SetPropertyBaseTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testSet_SetChange() {
         attachSetChangeListener();
 
@@ -334,7 +337,7 @@ public class SetPropertyBaseTest {
         property.set(VALUE_2a);
         assertEquals(VALUE_2a, property.get());
         property.check(1);
-        setChangeListener.assertMultipleCalls(new Call[]{new Call(null, OBJECT_2a_0), new Call(null, OBJECT_2a_1)});
+        setChangeListener.assertMultipleCalls(new Call<>(null, OBJECT_2a_0), new Call<>(null, OBJECT_2a_1));
 
         // set same value again
         setChangeListener.clear();
@@ -349,7 +352,7 @@ public class SetPropertyBaseTest {
         property.set(VALUE_1b);
         assertEquals(VALUE_1b, property.get());
         property.check(2);
-        setChangeListener.assertAdded(MockSetObserver.Tuple.tup(OBJECT_1b));
+        setChangeListener.assertAdded(Tuple.tup(OBJECT_1b));
     }
 
     @Test
@@ -401,6 +404,7 @@ public class SetPropertyBaseTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testSetValue_SetChange() {
         attachSetChangeListener();
 
@@ -408,7 +412,7 @@ public class SetPropertyBaseTest {
         property.setValue(VALUE_2a);
         assertEquals(VALUE_2a, property.get());
         property.check(1);
-        setChangeListener.assertMultipleCalls(new Call[]{new Call(null, OBJECT_2a_0), new Call(null, OBJECT_2a_1)});
+        setChangeListener.assertMultipleCalls(new Call<>(null, OBJECT_2a_0), new Call<>(null, OBJECT_2a_1));
 
         // set same value again
         setChangeListener.clear();
@@ -423,12 +427,12 @@ public class SetPropertyBaseTest {
         property.setValue(VALUE_1b);
         assertEquals(VALUE_1b, property.get());
         property.check(2);
-        setChangeListener.assertAdded(MockSetObserver.Tuple.tup(OBJECT_1b));
+        setChangeListener.assertAdded(Tuple.tup(OBJECT_1b));
     }
 
     @Test(expected = RuntimeException.class)
     public void testSetBoundValue() {
-        final SetProperty<Object> v = new SimpleSetProperty<Object>(VALUE_1a);
+        final SetProperty<Object> v = new SimpleSetProperty<>(VALUE_1a);
         property.bind(v);
         property.set(VALUE_1a);
     }
@@ -437,7 +441,7 @@ public class SetPropertyBaseTest {
     public void testBind_Invalidation() {
         attachInvalidationListener();
         final ObservableObjectValueStub<ObservableSet<Object>> v =
-                new ObservableObjectValueStub<ObservableSet<Object>>(ObservableCollections.observableSet(VALUE_1a));
+                new ObservableObjectValueStub<>(ObservableCollections.observableSet(VALUE_1a));
 
         property.bind(v);
         assertEquals(VALUE_1a, property.get());
@@ -470,7 +474,7 @@ public class SetPropertyBaseTest {
     public void testBind_Change() {
         attachChangeListener();
         final ObservableObjectValueStub<ObservableSet<Object>> v =
-                new ObservableObjectValueStub<ObservableSet<Object>>(ObservableCollections.observableSet(VALUE_1a));
+                new ObservableObjectValueStub<>(ObservableCollections.observableSet(VALUE_1a));
 
         property.bind(v);
         assertEquals(VALUE_1a, property.get());
@@ -500,10 +504,11 @@ public class SetPropertyBaseTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testBind_SetChange() {
         attachSetChangeListener();
         final ObservableObjectValueStub<ObservableSet<Object>> v =
-                new ObservableObjectValueStub<ObservableSet<Object>>(ObservableCollections.observableSet(VALUE_1a));
+                new ObservableObjectValueStub<>(ObservableCollections.observableSet(VALUE_1a));
 
         property.bind(v);
         assertEquals(VALUE_1a, property.get());
@@ -516,7 +521,7 @@ public class SetPropertyBaseTest {
         v.set(VALUE_2a);
         assertEquals(VALUE_2a, property.get());
         property.check(1);
-        setChangeListener.assertMultipleCalls(new Call[]{new Call(null, OBJECT_2a_0), new Call(null, OBJECT_2a_1)});
+        setChangeListener.assertMultipleCalls(new Call<>(null, OBJECT_2a_0), new Call<>(null, OBJECT_2a_1));
 
         // change binding twice without reading
         v.set(VALUE_1a);
@@ -524,7 +529,7 @@ public class SetPropertyBaseTest {
         v.set(VALUE_1b);
         assertEquals(VALUE_1b, property.get());
         property.check(2);
-        setChangeListener.assertAdded(MockSetObserver.Tuple.tup(OBJECT_1b));
+        setChangeListener.assertAdded(Tuple.tup(OBJECT_1b));
 
         // change binding twice to same value
         v.set(VALUE_1a);
@@ -543,8 +548,8 @@ public class SetPropertyBaseTest {
     @Test
     public void testRebind() {
         attachInvalidationListener();
-        final SetProperty<Object> v1 = new SimpleSetProperty<Object>(VALUE_1a);
-        final SetProperty<Object> v2 = new SimpleSetProperty<Object>(VALUE_2a);
+        final SetProperty<Object> v1 = new SimpleSetProperty<>(VALUE_1a);
+        final SetProperty<Object> v2 = new SimpleSetProperty<>(VALUE_2a);
         property.bind(v1);
         property.get();
         property.reset();
@@ -554,36 +559,33 @@ public class SetPropertyBaseTest {
         property.bind(v2);
         assertEquals(VALUE_2a, property.get());
         assertTrue(property.isBound());
-        assertEquals(1, property.counter);
+        property.check(1);
         invalidationListener.check(property, 1);
-        property.reset();
 
         // change old binding
         v1.set(VALUE_1b);
         assertEquals(VALUE_2a, property.get());
-        assertEquals(0, property.counter);
+        property.check(0);
         invalidationListener.check(null, 0);
-        property.reset();
 
         // change new binding
         v2.set(VALUE_2b);
         assertEquals(VALUE_2b, property.get());
-        assertEquals(1, property.counter);
+        property.check(1);
         invalidationListener.check(property, 1);
-        property.reset();
 
         // rebind to same observable should have no effect
         property.bind(v2);
         assertEquals(VALUE_2b, property.get());
         assertTrue(property.isBound());
-        assertEquals(0, property.counter);
+        property.check(0);
         invalidationListener.check(null, 0);
     }
 
     @Test
     public void testUnbind() {
         attachInvalidationListener();
-        final SetProperty<Object> v = new SimpleSetProperty<Object>(VALUE_1a);
+        final SetProperty<Object> v = new SimpleSetProperty<>(VALUE_1a);
         property.bind(v);
         property.unbind();
         assertEquals(VALUE_1a, property.get());
@@ -594,20 +596,19 @@ public class SetPropertyBaseTest {
         // change binding
         v.set(VALUE_2a);
         assertEquals(VALUE_1a, property.get());
-        assertEquals(0, property.counter);
+        property.check(0);
         invalidationListener.check(null, 0);
-        property.reset();
 
         // set value
         property.set(VALUE_1b);
         assertEquals(VALUE_1b, property.get());
-        assertEquals(1, property.counter);
+        property.check(1);
         invalidationListener.check(property, 1);
     }
 
     @Test
     public void testAddingListenerWillAlwaysReceiveInvalidationEvent() {
-        final SetProperty<Object> v = new SimpleSetProperty<Object>(VALUE_1a);
+        final SetProperty<Object> v = new SimpleSetProperty<>(VALUE_1a);
         final InvalidationListenerMock listener2 = new InvalidationListenerMock();
         final InvalidationListenerMock listener3 = new InvalidationListenerMock();
 
@@ -633,7 +634,7 @@ public class SetPropertyBaseTest {
         final ObservableSet<Object> value0 = null;
         final ObservableSet<Object> value1 = ObservableCollections.observableSet(new Object(), new Object());
         final ObservableSet<Object> value2 = ObservableCollections.observableSet();
-        final SetProperty<Object> v = new SimpleSetProperty<Object>(value2);
+        final SetProperty<Object> v = new SimpleSetProperty<>(value2);
 
         property.set(value1);
         assertEquals("SetProperty [value: " + value1 + "]", property.toString());

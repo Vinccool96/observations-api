@@ -13,11 +13,6 @@ public class SetAdapterChange<E> extends Change<E> {
     }
 
     @Override
-    public String toString() {
-        return change.toString();
-    }
-
-    @Override
     public boolean wasAdded() {
         return change.wasAdded();
     }
@@ -35,6 +30,11 @@ public class SetAdapterChange<E> extends Change<E> {
     @Override
     public E getElementRemoved() {
         return change.getElementRemoved();
+    }
+
+    @Override
+    public String toString() {
+        return change.toString();
     }
 
 }

@@ -37,7 +37,7 @@ public final class WeakSetChangeListener<E> implements SetChangeListener<E>, Wea
         if (listener == null) {
             throw new NullPointerException("Listener must be specified.");
         }
-        this.ref = new WeakReference<SetChangeListener<E>>(listener);
+        this.ref = new WeakReference<>(listener);
     }
 
     /**
@@ -45,7 +45,7 @@ public final class WeakSetChangeListener<E> implements SetChangeListener<E>, Wea
      */
     @Override
     public boolean wasGarbageCollected() {
-        return (ref.get() == null);
+        return ref.get() == null;
     }
 
     /**
@@ -57,9 +57,8 @@ public final class WeakSetChangeListener<E> implements SetChangeListener<E>, Wea
         if (listener != null) {
             listener.onChanged(change);
         } else {
-            // The weakly reference listener has been garbage collected,
-            // so this WeakListener will now unhook itself from the
-            // source bean
+            // The weakly reference listener has been garbage collected, so this WeakListener will now unhook itself
+            // from the source bean
             change.getSet().removeListener(this);
         }
     }

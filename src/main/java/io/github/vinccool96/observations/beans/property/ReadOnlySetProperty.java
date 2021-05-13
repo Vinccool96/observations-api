@@ -17,6 +17,7 @@ import java.util.Set;
  * @see SetExpression
  * @see ReadOnlyProperty
  */
+@SuppressWarnings("unchecked")
 public abstract class ReadOnlySetProperty<E> extends SetExpression<E> implements ReadOnlyProperty<ObservableSet<E>> {
 
     /**
@@ -64,7 +65,7 @@ public abstract class ReadOnlySetProperty<E> extends SetExpression<E> implements
      * Creates a content binding between the {@link ObservableSet}, that is wrapped in this {@code ReadOnlySetProperty},
      * and another {@code ObservableSet}.
      * <p>
-     * A content binding ensures that the content of the wrapped {@code ObservableSets} is the same as that of the other
+     * A content binding ensures that the content of the wrapped {@code ObservableSet} is the same as that of the other
      * set. If the content of the other set changes, the wrapped set will be updated automatically. Once the wrapped set
      * is bound to another set, you must not change it directly.
      *
@@ -105,15 +106,13 @@ public abstract class ReadOnlySetProperty<E> extends SetExpression<E> implements
         if (!(obj instanceof Set)) {
             return false;
         }
-        Set c = (Set) obj;
+        Set<E> c = (Set<E>) obj;
         if (c.size() != size()) {
             return false;
         }
         try {
             return containsAll(c);
-        } catch (ClassCastException unused) {
-            return false;
-        } catch (NullPointerException unused) {
+        } catch (ClassCastException | NullPointerException unused) {
             return false;
         }
     }
@@ -143,8 +142,7 @@ public abstract class ReadOnlySetProperty<E> extends SetExpression<E> implements
     public String toString() {
         final Object bean = getBean();
         final String name = getName();
-        final StringBuilder result = new StringBuilder(
-                "ReadOnlySetProperty [");
+        final StringBuilder result = new StringBuilder("ReadOnlySetProperty [");
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }

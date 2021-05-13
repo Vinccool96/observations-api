@@ -5,6 +5,7 @@ import io.github.vinccool96.observations.beans.value.ChangeListener;
 import io.github.vinccool96.observations.beans.value.ObservableSetValue;
 import io.github.vinccool96.observations.collections.ObservableSet;
 import io.github.vinccool96.observations.collections.SetChangeListener;
+import io.github.vinccool96.observations.collections.SetChangeListener.Change;
 import io.github.vinccool96.observations.util.ArrayUtils;
 
 import java.util.Arrays;
@@ -12,6 +13,7 @@ import java.util.Arrays;
 /**
  *
  */
+@SuppressWarnings("unchecked")
 public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -23,7 +25,7 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
             throw new NullPointerException();
         }
         observable.getValue(); // validate observable
-        return (helper == null) ? new SingleInvalidation<E>(observable, listener) : helper.addListener(listener);
+        return (helper == null) ? new SingleInvalidation<>(observable, listener) : helper.addListener(listener);
     }
 
     public static <E> SetExpressionHelper<E> removeListener(SetExpressionHelper<E> helper,
@@ -39,7 +41,7 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
         if ((observable == null) || (listener == null)) {
             throw new NullPointerException();
         }
-        return (helper == null) ? new SingleChange<E>(observable, listener) : helper.addListener(listener);
+        return (helper == null) ? new SingleChange<>(observable, listener) : helper.addListener(listener);
     }
 
     public static <E> SetExpressionHelper<E> removeListener(SetExpressionHelper<E> helper,
@@ -55,7 +57,7 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
         if ((observable == null) || (listener == null)) {
             throw new NullPointerException();
         }
-        return (helper == null) ? new SingleSetChange<E>(observable, listener) : helper.addListener(listener);
+        return (helper == null) ? new SingleSetChange<>(observable, listener) : helper.addListener(listener);
     }
 
     public static <E> SetExpressionHelper<E> removeListener(SetExpressionHelper<E> helper,
@@ -72,8 +74,7 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
         }
     }
 
-    public static <E> void fireValueChangedEvent(SetExpressionHelper<E> helper,
-            SetChangeListener.Change<? extends E> change) {
+    public static <E> void fireValueChangedEvent(SetExpressionHelper<E> helper, Change<? extends E> change) {
         if (helper != null) {
             helper.fireValueChangedEvent(change);
         }
@@ -102,13 +103,13 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
 
     protected abstract void fireValueChangedEvent();
 
-    protected abstract void fireValueChangedEvent(SetChangeListener.Change<? extends E> change);
+    protected abstract void fireValueChangedEvent(Change<? extends E> change);
 
     public abstract InvalidationListener[] getInvalidationListeners();
 
-    public abstract ChangeListener[] getChangeListeners();
+    public abstract ChangeListener<? super ObservableSet<E>>[] getChangeListeners();
 
-    public abstract SetChangeListener[] getSetChangeListeners();
+    public abstract SetChangeListener<? super E>[] getSetChangeListeners();
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Implementations
@@ -124,7 +125,7 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected SetExpressionHelper<E> addListener(InvalidationListener listener) {
-            return new SetExpressionHelper.Generic<E>(observable, this.listener, listener);
+            return new Generic<>(observable, this.listener, listener);
         }
 
         @Override
@@ -134,7 +135,7 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected SetExpressionHelper<E> addListener(ChangeListener<? super ObservableSet<E>> listener) {
-            return new SetExpressionHelper.Generic<E>(observable, this.listener, listener);
+            return new Generic<>(observable, this.listener, listener);
         }
 
         @Override
@@ -144,7 +145,7 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected SetExpressionHelper<E> addListener(SetChangeListener<? super E> listener) {
-            return new SetExpressionHelper.Generic<E>(observable, this.listener, listener);
+            return new Generic<>(observable, this.listener, listener);
         }
 
         @Override
@@ -158,7 +159,7 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
         }
 
         @Override
-        protected void fireValueChangedEvent(SetChangeListener.Change<? extends E> change) {
+        protected void fireValueChangedEvent(Change<? extends E> change) {
             listener.invalidated(observable);
         }
 
@@ -168,12 +169,12 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
         }
 
         @Override
-        public ChangeListener[] getChangeListeners() {
-            return new ChangeListener[0];
+        public ChangeListener<? super ObservableSet<E>>[] getChangeListeners() {
+            return new ChangeListener[]{};
         }
 
         @Override
-        public SetChangeListener[] getSetChangeListeners() {
+        public SetChangeListener<? super E>[] getSetChangeListeners() {
             return new SetChangeListener[0];
         }
 
@@ -193,7 +194,7 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected SetExpressionHelper<E> addListener(InvalidationListener listener) {
-            return new SetExpressionHelper.Generic<E>(observable, listener, this.listener);
+            return new Generic<>(observable, listener, this.listener);
         }
 
         @Override
@@ -203,7 +204,7 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected SetExpressionHelper<E> addListener(ChangeListener<? super ObservableSet<E>> listener) {
-            return new SetExpressionHelper.Generic<E>(observable, this.listener, listener);
+            return new Generic<>(observable, this.listener, listener);
         }
 
         @Override
@@ -213,7 +214,7 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected SetExpressionHelper<E> addListener(SetChangeListener<? super E> listener) {
-            return new SetExpressionHelper.Generic<E>(observable, this.listener, listener);
+            return new Generic<>(observable, this.listener, listener);
         }
 
         @Override
@@ -231,7 +232,7 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
         }
 
         @Override
-        protected void fireValueChangedEvent(SetChangeListener.Change<? extends E> change) {
+        protected void fireValueChangedEvent(Change<? extends E> change) {
             listener.changed(observable, currentValue, currentValue);
         }
 
@@ -241,12 +242,12 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
         }
 
         @Override
-        public ChangeListener[] getChangeListeners() {
+        public ChangeListener<? super ObservableSet<E>>[] getChangeListeners() {
             return new ChangeListener[]{this.listener};
         }
 
         @Override
-        public SetChangeListener[] getSetChangeListeners() {
+        public SetChangeListener<? super E>[] getSetChangeListeners() {
             return new SetChangeListener[0];
         }
 
@@ -266,7 +267,7 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected SetExpressionHelper<E> addListener(InvalidationListener listener) {
-            return new SetExpressionHelper.Generic<E>(observable, listener, this.listener);
+            return new Generic<>(observable, listener, this.listener);
         }
 
         @Override
@@ -276,7 +277,7 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected SetExpressionHelper<E> addListener(ChangeListener<? super ObservableSet<E>> listener) {
-            return new SetExpressionHelper.Generic<E>(observable, listener, this.listener);
+            return new Generic<>(observable, listener, this.listener);
         }
 
         @Override
@@ -286,7 +287,7 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected SetExpressionHelper<E> addListener(SetChangeListener<? super E> listener) {
-            return new SetExpressionHelper.Generic<E>(observable, this.listener, listener);
+            return new Generic<>(observable, this.listener, listener);
         }
 
         @Override
@@ -299,8 +300,7 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
             final ObservableSet<E> oldValue = currentValue;
             currentValue = observable.getValue();
             if (currentValue != oldValue) {
-                final SetExpressionHelper.SimpleChange<E>
-                        change = new SetExpressionHelper.SimpleChange<E>(observable);
+                final SimpleChange<E> change = new SimpleChange<>(observable);
                 if (currentValue == null) {
                     for (final E element : oldValue) {
                         listener.onChanged(change.setRemoved(element));
@@ -325,8 +325,8 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
         }
 
         @Override
-        protected void fireValueChangedEvent(final SetChangeListener.Change<? extends E> change) {
-            listener.onChanged(new SetExpressionHelper.SimpleChange<E>(observable, change));
+        protected void fireValueChangedEvent(final Change<? extends E> change) {
+            listener.onChanged(new SimpleChange<>(observable, change));
         }
 
         @Override
@@ -335,12 +335,12 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
         }
 
         @Override
-        public ChangeListener[] getChangeListeners() {
+        public ChangeListener<? super ObservableSet<E>>[] getChangeListeners() {
             return new ChangeListener[0];
         }
 
         @Override
-        public SetChangeListener[] getSetChangeListeners() {
+        public SetChangeListener<? super E>[] getSetChangeListeners() {
             return new SetChangeListener[]{this.listener};
         }
 
@@ -371,22 +371,6 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
             this.invalidationSize = 2;
         }
 
-        private Generic(ObservableSetValue<E> observable, ChangeListener<? super ObservableSet<E>> listener0,
-                ChangeListener<? super ObservableSet<E>> listener1) {
-            super(observable);
-            this.changeListeners = new ChangeListener[]{listener0, listener1};
-            this.changeSize = 2;
-            this.currentValue = observable.getValue();
-        }
-
-        private Generic(ObservableSetValue<E> observable, SetChangeListener<? super E> listener0,
-                SetChangeListener<? super E> listener1) {
-            super(observable);
-            this.setChangeListeners = new SetChangeListener[]{listener0, listener1};
-            this.setChangeSize = 2;
-            this.currentValue = observable.getValue();
-        }
-
         private Generic(ObservableSetValue<E> observable, InvalidationListener invalidationListener,
                 ChangeListener<? super ObservableSet<E>> changeListener) {
             super(observable);
@@ -407,6 +391,14 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
             this.currentValue = observable.getValue();
         }
 
+        private Generic(ObservableSetValue<E> observable, ChangeListener<? super ObservableSet<E>> listener0,
+                ChangeListener<? super ObservableSet<E>> listener1) {
+            super(observable);
+            this.changeListeners = new ChangeListener[]{listener0, listener1};
+            this.changeSize = 2;
+            this.currentValue = observable.getValue();
+        }
+
         private Generic(ObservableSetValue<E> observable, ChangeListener<? super ObservableSet<E>> changeListener,
                 SetChangeListener<? super E> listChangeListener) {
             super(observable);
@@ -414,6 +406,14 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
             this.changeSize = 1;
             this.setChangeListeners = new SetChangeListener[]{listChangeListener};
             this.setChangeSize = 1;
+            this.currentValue = observable.getValue();
+        }
+
+        private Generic(ObservableSetValue<E> observable, SetChangeListener<? super E> listener0,
+                SetChangeListener<? super E> listener1) {
+            super(observable);
+            this.setChangeListeners = new SetChangeListener[]{listener0, listener1};
+            this.setChangeSize = 2;
             this.currentValue = observable.getValue();
         }
 
@@ -446,9 +446,9 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
                     if (listener.equals(invalidationListeners[index])) {
                         if (invalidationSize == 1) {
                             if ((changeSize == 1) && (setChangeSize == 0)) {
-                                return new SetExpressionHelper.SingleChange<E>(observable, changeListeners[0]);
+                                return new SingleChange<>(observable, changeListeners[0]);
                             } else if ((changeSize == 0) && (setChangeSize == 1)) {
-                                return new SetExpressionHelper.SingleSetChange<E>(observable, setChangeListeners[0]);
+                                return new SingleSetChange<>(observable, setChangeListeners[0]);
                             }
                             invalidationListeners = null;
                             invalidationSize = 0;
@@ -506,10 +506,9 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
                     if (listener.equals(changeListeners[index])) {
                         if (changeSize == 1) {
                             if ((invalidationSize == 1) && (setChangeSize == 0)) {
-                                return new SetExpressionHelper.SingleInvalidation<E>(observable,
-                                        invalidationListeners[0]);
+                                return new SingleInvalidation<>(observable, invalidationListeners[0]);
                             } else if ((invalidationSize == 0) && (setChangeSize == 1)) {
-                                return new SetExpressionHelper.SingleSetChange<E>(observable, setChangeListeners[0]);
+                                return new SingleSetChange<>(observable, setChangeListeners[0]);
                             }
                             changeListeners = null;
                             changeSize = 0;
@@ -567,10 +566,9 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
                     if (listener.equals(setChangeListeners[index])) {
                         if (setChangeSize == 1) {
                             if ((invalidationSize == 1) && (changeSize == 0)) {
-                                return new SetExpressionHelper.SingleInvalidation<E>(observable,
-                                        invalidationListeners[0]);
+                                return new SingleInvalidation<>(observable, invalidationListeners[0]);
                             } else if ((invalidationSize == 0) && (changeSize == 1)) {
-                                return new SetExpressionHelper.SingleChange<E>(observable, changeListeners[0]);
+                                return new SingleChange<>(observable, changeListeners[0]);
                             }
                             setChangeListeners = null;
                             setChangeSize = 0;
@@ -598,7 +596,7 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected void fireValueChangedEvent() {
-            if ((changeSize == 0) && (setChangeSize == 0)) {
+            if (changeSize == 0 && setChangeSize == 0) {
                 notifyListeners(currentValue, null);
             } else {
                 final ObservableSet<E> oldValue = currentValue;
@@ -608,10 +606,8 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
         }
 
         @Override
-        protected void fireValueChangedEvent(final SetChangeListener.Change<? extends E> change) {
-            final SetExpressionHelper.SimpleChange<E>
-                    mappedChange =
-                    (setChangeSize == 0) ? null : new SetExpressionHelper.SimpleChange<E>(observable, change);
+        protected void fireValueChangedEvent(final Change<? extends E> change) {
+            final SimpleChange<E> mappedChange = (setChangeSize == 0) ? null : new SimpleChange<>(observable, change);
             notifyListeners(currentValue, mappedChange);
         }
 
@@ -621,66 +617,66 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
         }
 
         @Override
-        public ChangeListener[] getChangeListeners() {
+        public ChangeListener<? super ObservableSet<E>>[] getChangeListeners() {
             return ArrayUtils.getInstance().clone(this.changeListeners, ChangeListener.class);
         }
 
         @Override
-        public SetChangeListener[] getSetChangeListeners() {
+        public SetChangeListener<? super E>[] getSetChangeListeners() {
             return ArrayUtils.getInstance().clone(this.setChangeListeners, SetChangeListener.class);
         }
 
-        private void notifyListeners(ObservableSet<E> oldValue, SetExpressionHelper.SimpleChange<E> change) {
+        private void notifyListeners(ObservableSet<E> oldValue, SimpleChange<E> change) {
             final InvalidationListener[] curInvalidationList = invalidationListeners;
             final int curInvalidationSize = invalidationSize;
             final ChangeListener<? super ObservableSet<E>>[] curChangeList = changeListeners;
             final int curChangeSize = changeSize;
-            final SetChangeListener<? super E>[] curListChangeList = setChangeListeners;
-            final int curListChangeSize = setChangeSize;
+            final SetChangeListener<? super E>[] curSetChangeList = setChangeListeners;
+            final int curSetChangeSize = setChangeSize;
             try {
                 locked = true;
                 for (int i = 0; i < curInvalidationSize; i++) {
                     curInvalidationList[i].invalidated(observable);
                 }
-                if ((currentValue != oldValue) || (change != null)) {
+                if (currentValue != oldValue || change != null) {
                     for (int i = 0; i < curChangeSize; i++) {
                         curChangeList[i].changed(observable, oldValue, currentValue);
                     }
-                    if (curListChangeSize > 0) {
+                    if (curSetChangeSize > 0) {
                         if (change != null) {
-                            for (int i = 0; i < curListChangeSize; i++) {
-                                curListChangeList[i].onChanged(change);
+                            for (int i = 0; i < curSetChangeSize; i++) {
+                                curSetChangeList[i].onChanged(change);
                             }
                         } else {
-                            change = new SetExpressionHelper.SimpleChange<E>(observable);
+                            change = new SimpleChange<>(observable);
                             if (currentValue == null) {
                                 for (final E element : oldValue) {
                                     change.setRemoved(element);
-                                    for (int i = 0; i < curListChangeSize; i++) {
-                                        curListChangeList[i].onChanged(change);
+                                    for (int i = 0; i < curSetChangeSize; i++) {
+                                        curSetChangeList[i].onChanged(change);
                                     }
                                 }
                             } else if (oldValue == null) {
                                 for (final E element : currentValue) {
                                     change.setAdded(element);
-                                    for (int i = 0; i < curListChangeSize; i++) {
-                                        curListChangeList[i].onChanged(change);
+                                    for (int i = 0; i < curSetChangeSize; i++) {
+                                        curSetChangeList[i].onChanged(change);
                                     }
                                 }
                             } else {
                                 for (final E element : oldValue) {
                                     if (!currentValue.contains(element)) {
                                         change.setRemoved(element);
-                                        for (int i = 0; i < curListChangeSize; i++) {
-                                            curListChangeList[i].onChanged(change);
+                                        for (int i = 0; i < curSetChangeSize; i++) {
+                                            curSetChangeList[i].onChanged(change);
                                         }
                                     }
                                 }
                                 for (final E element : currentValue) {
                                     if (!oldValue.contains(element)) {
                                         change.setAdded(element);
-                                        for (int i = 0; i < curListChangeSize; i++) {
-                                            curListChangeList[i].onChanged(change);
+                                        for (int i = 0; i < curSetChangeSize; i++) {
+                                            curSetChangeList[i].onChanged(change);
                                         }
                                     }
                                 }
@@ -696,7 +692,7 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
 
     }
 
-    public static class SimpleChange<E> extends SetChangeListener.Change<E> {
+    public static class SimpleChange<E> extends Change<E> {
 
         private E old;
 
@@ -708,7 +704,7 @@ public abstract class SetExpressionHelper<E> extends ExpressionHelperBase {
             super(set);
         }
 
-        public SimpleChange(ObservableSet<E> set, SetChangeListener.Change<? extends E> source) {
+        public SimpleChange(ObservableSet<E> set, Change<? extends E> source) {
             super(set);
             old = source.getElementRemoved();
             added = source.getElementAdded();

@@ -39,6 +39,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  *     protected double computeValue() {
  *         return Math.sqrt(moo.getValue());
  *     }
+ *
  * };
  * </code>
  * </pre>
@@ -70,6 +71,7 @@ import io.github.vinccool96.observations.util.ArrayUtils;
  *     public void dispose() {
  *         super.unbind(moo);
  *     }
+ *
  * };
  * </code>
  * </pre>

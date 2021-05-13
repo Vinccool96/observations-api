@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings("OverwrittenKey")
 public class BindingsSetTest {
 
     private static final Object data1 = new Object();
@@ -23,7 +24,7 @@ public class BindingsSetTest {
 
     @Before
     public void setUp() {
-        property = new SimpleSetProperty<Object>();
+        property = new SimpleSetProperty<>();
         set1 = ObservableCollections.observableSet(data1, data2);
         set2 = ObservableCollections.observableSet();
     }

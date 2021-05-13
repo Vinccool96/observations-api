@@ -2,6 +2,7 @@ package io.github.vinccool96.observations.sun.collections;
 
 import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.collections.SetChangeListener;
+import io.github.vinccool96.observations.collections.SetChangeListener.Change;
 import io.github.vinccool96.observations.sun.binding.ExpressionHelperBase;
 import io.github.vinccool96.observations.util.ArrayUtils;
 
@@ -10,6 +11,7 @@ import java.util.Arrays;
 /**
  *
  */
+@SuppressWarnings("unchecked")
 public abstract class SetListenerHelper<E> extends ExpressionHelperBase {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -19,7 +21,7 @@ public abstract class SetListenerHelper<E> extends ExpressionHelperBase {
         if (listener == null) {
             throw new NullPointerException();
         }
-        return (helper == null) ? new SingleInvalidation<E>(listener) : helper.addListener(listener);
+        return (helper == null) ? new SingleInvalidation<>(listener) : helper.addListener(listener);
     }
 
     public static <E> SetListenerHelper<E> removeListener(SetListenerHelper<E> helper, InvalidationListener listener) {
@@ -34,7 +36,7 @@ public abstract class SetListenerHelper<E> extends ExpressionHelperBase {
         if (listener == null) {
             throw new NullPointerException();
         }
-        return (helper == null) ? new SingleChange<E>(listener) : helper.addListener(listener);
+        return (helper == null) ? new SingleChange<>(listener) : helper.addListener(listener);
     }
 
     public static <E> SetListenerHelper<E> removeListener(SetListenerHelper<E> helper,
@@ -45,8 +47,7 @@ public abstract class SetListenerHelper<E> extends ExpressionHelperBase {
         return (helper == null) ? null : helper.removeListener(listener);
     }
 
-    public static <E> void fireValueChangedEvent(SetListenerHelper<E> helper,
-            SetChangeListener.Change<? extends E> change) {
+    public static <E> void fireValueChangedEvent(SetListenerHelper<E> helper, Change<? extends E> change) {
         if (helper != null) {
             helper.fireValueChangedEvent(change);
         }
@@ -67,11 +68,11 @@ public abstract class SetListenerHelper<E> extends ExpressionHelperBase {
 
     protected abstract SetListenerHelper<E> removeListener(SetChangeListener<? super E> listener);
 
-    protected abstract void fireValueChangedEvent(SetChangeListener.Change<? extends E> change);
+    protected abstract void fireValueChangedEvent(Change<? extends E> change);
 
     public abstract InvalidationListener[] getInvalidationListeners();
 
-    public abstract SetChangeListener[] getMapChangeListeners();
+    public abstract SetChangeListener<? super E>[] getSetChangeListeners();
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Implementations
@@ -86,7 +87,7 @@ public abstract class SetListenerHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected SetListenerHelper<E> addListener(InvalidationListener listener) {
-            return new SetListenerHelper.Generic<E>(this.listener, listener);
+            return new Generic<>(this.listener, listener);
         }
 
         @Override
@@ -96,7 +97,7 @@ public abstract class SetListenerHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected SetListenerHelper<E> addListener(SetChangeListener<? super E> listener) {
-            return new SetListenerHelper.Generic<E>(this.listener, listener);
+            return new Generic<>(this.listener, listener);
         }
 
         @Override
@@ -105,7 +106,7 @@ public abstract class SetListenerHelper<E> extends ExpressionHelperBase {
         }
 
         @Override
-        protected void fireValueChangedEvent(SetChangeListener.Change<? extends E> change) {
+        protected void fireValueChangedEvent(Change<? extends E> change) {
             try {
                 listener.invalidated(change.getSet());
             } catch (Exception e) {
@@ -119,7 +120,7 @@ public abstract class SetListenerHelper<E> extends ExpressionHelperBase {
         }
 
         @Override
-        public SetChangeListener[] getMapChangeListeners() {
+        public SetChangeListener<? super E>[] getSetChangeListeners() {
             return new SetChangeListener[0];
         }
 
@@ -135,7 +136,7 @@ public abstract class SetListenerHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected SetListenerHelper<E> addListener(InvalidationListener listener) {
-            return new SetListenerHelper.Generic<E>(listener, this.listener);
+            return new Generic<>(listener, this.listener);
         }
 
         @Override
@@ -145,7 +146,7 @@ public abstract class SetListenerHelper<E> extends ExpressionHelperBase {
 
         @Override
         protected SetListenerHelper<E> addListener(SetChangeListener<? super E> listener) {
-            return new SetListenerHelper.Generic<E>(this.listener, listener);
+            return new Generic<>(this.listener, listener);
         }
 
         @Override
@@ -154,7 +155,7 @@ public abstract class SetListenerHelper<E> extends ExpressionHelperBase {
         }
 
         @Override
-        protected void fireValueChangedEvent(SetChangeListener.Change<? extends E> change) {
+        protected void fireValueChangedEvent(Change<? extends E> change) {
             try {
                 listener.onChanged(change);
             } catch (Exception e) {
@@ -168,7 +169,7 @@ public abstract class SetListenerHelper<E> extends ExpressionHelperBase {
         }
 
         @Override
-        public SetChangeListener[] getMapChangeListeners() {
+        public SetChangeListener<? super E>[] getSetChangeListeners() {
             return new SetChangeListener[]{this.listener};
         }
 
@@ -232,12 +233,12 @@ public abstract class SetListenerHelper<E> extends ExpressionHelperBase {
                     if (listener.equals(invalidationListeners[index])) {
                         if (invalidationSize == 1) {
                             if (changeSize == 1) {
-                                return new SetListenerHelper.SingleChange<E>(changeListeners[0]);
+                                return new SingleChange<>(changeListeners[0]);
                             }
                             invalidationListeners = null;
                             invalidationSize = 0;
                         } else if ((invalidationSize == 2) && (changeSize == 0)) {
-                            return new SetListenerHelper.SingleInvalidation<E>(invalidationListeners[1 - index]);
+                            return new SingleInvalidation<>(invalidationListeners[1 - index]);
                         } else {
                             final int numMoved = invalidationSize - index - 1;
                             final InvalidationListener[] oldListeners = invalidationListeners;
@@ -289,12 +290,12 @@ public abstract class SetListenerHelper<E> extends ExpressionHelperBase {
                     if (listener.equals(changeListeners[index])) {
                         if (changeSize == 1) {
                             if (invalidationSize == 1) {
-                                return new SetListenerHelper.SingleInvalidation<E>(invalidationListeners[0]);
+                                return new SingleInvalidation<>(invalidationListeners[0]);
                             }
                             changeListeners = null;
                             changeSize = 0;
                         } else if ((changeSize == 2) && (invalidationSize == 0)) {
-                            return new SetListenerHelper.SingleChange<E>(changeListeners[1 - index]);
+                            return new SingleChange<>(changeListeners[1 - index]);
                         } else {
                             final int numMoved = changeSize - index - 1;
                             final SetChangeListener<? super E>[] oldListeners = changeListeners;
@@ -318,7 +319,7 @@ public abstract class SetListenerHelper<E> extends ExpressionHelperBase {
         }
 
         @Override
-        protected void fireValueChangedEvent(SetChangeListener.Change<? extends E> change) {
+        protected void fireValueChangedEvent(Change<? extends E> change) {
             final InvalidationListener[] curInvalidationList = invalidationListeners;
             final int curInvalidationSize = invalidationSize;
             final SetChangeListener<? super E>[] curChangeList = changeListeners;
@@ -353,7 +354,7 @@ public abstract class SetListenerHelper<E> extends ExpressionHelperBase {
         }
 
         @Override
-        public SetChangeListener[] getMapChangeListeners() {
+        public SetChangeListener<? super E>[] getSetChangeListeners() {
             return ArrayUtils.getInstance().clone(this.changeListeners, SetChangeListener.class);
         }
 

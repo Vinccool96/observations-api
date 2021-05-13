@@ -66,14 +66,14 @@ public class ReadOnlyListPropertyTest {
         final Object bean = new Object();
         final String name = "My name";
         final ReadOnlyListProperty<Object> v3 = new ReadOnlyListPropertyStub(bean, name);
-        assertEquals("ReadOnlyListProperty [bean: " + bean.toString() + ", name: My name, value: " + DEFAULT + "]",
+        assertEquals("ReadOnlyListProperty [bean: " + bean + ", name: My name, value: " + DEFAULT + "]",
                 v3.toString());
 
         final ReadOnlyListProperty<Object> v4 = new ReadOnlyListPropertyStub(bean, "");
-        assertEquals("ReadOnlyListProperty [bean: " + bean.toString() + ", value: " + DEFAULT + "]", v4.toString());
+        assertEquals("ReadOnlyListProperty [bean: " + bean + ", value: " + DEFAULT + "]", v4.toString());
 
         final ReadOnlyListProperty<Object> v5 = new ReadOnlyListPropertyStub(bean, null);
-        assertEquals("ReadOnlyListProperty [bean: " + bean.toString() + ", value: " + DEFAULT + "]", v5.toString());
+        assertEquals("ReadOnlyListProperty [bean: " + bean + ", value: " + DEFAULT + "]", v5.toString());
 
         final ReadOnlyListProperty<Object> v6 = new ReadOnlyListPropertyStub(null, name);
         assertEquals("ReadOnlyListProperty [name: My name, value: " + DEFAULT + "]", v6.toString());

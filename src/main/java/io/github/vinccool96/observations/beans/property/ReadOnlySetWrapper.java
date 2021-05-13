@@ -15,18 +15,16 @@ public class ReadOnlySetWrapper<E> extends SimpleSetProperty<E> {
 
     /**
      * The constructor of {@code ReadOnlySetWrapper}
-     */
-    public ReadOnlySetWrapper() {
-    }
-
-    /**
-     * The constructor of {@code ReadOnlySetWrapper}
      *
+     * @param bean
+     *         the bean of this {@code ReadOnlySetWrapper}
+     * @param name
+     *         the name of this {@code ReadOnlySetWrapper}
      * @param initialValue
      *         the initial value of the wrapped value
      */
-    public ReadOnlySetWrapper(ObservableSet<E> initialValue) {
-        super(initialValue);
+    public ReadOnlySetWrapper(Object bean, String name, ObservableSet<E> initialValue) {
+        super(bean, name, initialValue);
     }
 
     /**
@@ -44,16 +42,17 @@ public class ReadOnlySetWrapper<E> extends SimpleSetProperty<E> {
     /**
      * The constructor of {@code ReadOnlySetWrapper}
      *
-     * @param bean
-     *         the bean of this {@code ReadOnlySetWrapper}
-     * @param name
-     *         the name of this {@code ReadOnlySetWrapper}
      * @param initialValue
      *         the initial value of the wrapped value
      */
-    public ReadOnlySetWrapper(Object bean, String name,
-            ObservableSet<E> initialValue) {
-        super(bean, name, initialValue);
+    public ReadOnlySetWrapper(ObservableSet<E> initialValue) {
+        super(initialValue);
+    }
+
+    /**
+     * The constructor of {@code ReadOnlySetWrapper}
+     */
+    public ReadOnlySetWrapper() {
     }
 
     /**

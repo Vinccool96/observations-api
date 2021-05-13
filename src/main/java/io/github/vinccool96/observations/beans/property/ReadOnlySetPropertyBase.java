@@ -4,6 +4,7 @@ import io.github.vinccool96.observations.beans.InvalidationListener;
 import io.github.vinccool96.observations.beans.value.ChangeListener;
 import io.github.vinccool96.observations.collections.ObservableSet;
 import io.github.vinccool96.observations.collections.SetChangeListener;
+import io.github.vinccool96.observations.collections.SetChangeListener.Change;
 import io.github.vinccool96.observations.sun.binding.SetExpressionHelper;
 import io.github.vinccool96.observations.util.ArrayUtils;
 
@@ -22,19 +23,21 @@ public abstract class ReadOnlySetPropertyBase<E> extends ReadOnlySetProperty<E> 
 
     @Override
     public void addListener(InvalidationListener listener) {
-        if (helper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+        if (!isInvalidationListenerAlreadyAdded(listener)) {
             helper = SetExpressionHelper.addListener(helper, this, listener);
         }
     }
 
     @Override
     public void removeListener(InvalidationListener listener) {
-        helper = SetExpressionHelper.removeListener(helper, listener);
+        if (isInvalidationListenerAlreadyAdded(listener)) {
+            helper = SetExpressionHelper.removeListener(helper, listener);
+        }
     }
 
     @Override
     public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
+        return helper != null && ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     @Override
@@ -61,26 +64,28 @@ public abstract class ReadOnlySetPropertyBase<E> extends ReadOnlySetProperty<E> 
 
     @Override
     public void addListener(SetChangeListener<? super E> listener) {
-        if (helper == null || !isSetChangeListenerAlreadyAdded(listener)) {
+        if (!isSetChangeListenerAlreadyAdded(listener)) {
             helper = SetExpressionHelper.addListener(helper, this, listener);
         }
     }
 
     @Override
     public void removeListener(SetChangeListener<? super E> listener) {
-        helper = SetExpressionHelper.removeListener(helper, listener);
+        if (isSetChangeListenerAlreadyAdded(listener)) {
+            helper = SetExpressionHelper.removeListener(helper, listener);
+        }
     }
 
     @Override
     public boolean isSetChangeListenerAlreadyAdded(SetChangeListener<? super E> listener) {
-        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
+        return helper != null && ArrayUtils.getInstance().contains(helper.getSetChangeListeners(), listener);
     }
 
     /**
      * This method needs to be called if the reference to the {@link ObservableSet} changes.
      * <p>
      * It sends notifications to all attached {@link InvalidationListener InvalidationListeners}, {@link ChangeListener
-     * ChangeListeners}, and {@link SetChangeListener}.
+     * ChangeListeners}, and {@link SetChangeListener SetChangeListeners}.
      * <p>
      * This method needs to be called, if the value of this property changes.
      */
@@ -92,14 +97,14 @@ public abstract class ReadOnlySetPropertyBase<E> extends ReadOnlySetProperty<E> 
      * This method needs to be called if the content of the referenced {@link ObservableSet} changes.
      * <p>
      * Sends notifications to all attached {@link InvalidationListener InvalidationListeners}, {@link ChangeListener
-     * ChangeListeners}, and {@link SetChangeListener}.
+     * ChangeListeners}, and {@link SetChangeListener SetChangeListeners}.
      * <p>
-     * This method is called when the content of the list changes.
+     * This method is called when the content of the set changes.
      *
      * @param change
      *         the change that needs to be propagated
      */
-    protected void fireValueChangedEvent(SetChangeListener.Change<? extends E> change) {
+    protected void fireValueChangedEvent(Change<? extends E> change) {
         SetExpressionHelper.fireValueChangedEvent(helper, change);
     }
 

@@ -78,11 +78,10 @@ public abstract class ReadOnlyMapPropertyBase<K, V> extends ReadOnlyMapProperty<
     }
 
     /**
-     * This method needs to be called if the reference to the {@link io.github.vinccool96.observations.collections.ObservableList}
-     * changes.
+     * This method needs to be called if the reference to the {@link ObservableMap} changes.
      * <p>
      * It sends notifications to all attached {@link InvalidationListener InvalidationListeners}, {@link ChangeListener
-     * ChangeListeners}, and {@link io.github.vinccool96.observations.collections.ListChangeListener}.
+     * ChangeListeners}, and {@link MapChangeListener MapChangeListeners}.
      * <p>
      * This method needs to be called, if the value of this property changes.
      */
@@ -91,13 +90,12 @@ public abstract class ReadOnlyMapPropertyBase<K, V> extends ReadOnlyMapProperty<
     }
 
     /**
-     * This method needs to be called if the content of the referenced {@link io.github.vinccool96.observations.collections.ObservableList}
-     * changes.
+     * This method needs to be called if the content of the referenced {@link ObservableMap} changes.
      * <p>
      * Sends notifications to all attached {@link InvalidationListener InvalidationListeners}, {@link ChangeListener
-     * ChangeListeners}, and {@link io.github.vinccool96.observations.collections.ListChangeListener}.
+     * ChangeListeners}, and {@link MapChangeListener MapChangeListeners}.
      * <p>
-     * This method is called when the content of the list changes.
+     * This method is called when the content of the map changes.
      *
      * @param change
      *         the change that needs to be propagated

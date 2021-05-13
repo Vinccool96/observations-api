@@ -18,7 +18,7 @@ public interface SetChangeListener<E> {
      */
     abstract class Change<E> {
 
-        private ObservableSet<E> set;
+        private final ObservableSet<E> set;
 
         /**
          * Constructs a change associated with a set.

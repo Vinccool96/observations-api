@@ -11,6 +11,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class SetPropertyTest {
 
     private static final Object NO_BEAN = null;
@@ -19,16 +20,16 @@ public class SetPropertyTest {
 
     private static final String NO_NAME_2 = "";
 
-    private static final ObservableSet<Object> VALUE_1 = ObservableCollections.observableSet();
+    private static final ObservableSet<Object> VALUE_1 = ObservableCollections.emptyObservableSet();
 
-    private static final ObservableSet<Object> VALUE_2 = ObservableCollections.observableSet(new Object());
+    private static final ObservableSet<Object> VALUE_2 = ObservableCollections.singletonObservable(new Object());
 
     private static final Object DEFAULT = null;
 
     @Test
     public void testBindBidirectional() {
-        final SetProperty<Object> p1 = new SimpleSetProperty<Object>(VALUE_2);
-        final SetProperty<Object> p2 = new SimpleSetProperty<Object>(VALUE_1);
+        final SetProperty<Object> p1 = new SimpleSetProperty<>(VALUE_2);
+        final SetProperty<Object> p2 = new SimpleSetProperty<>(VALUE_1);
 
         p1.bindBidirectional(p2);
         assertEquals(VALUE_1, p1.get());
@@ -86,7 +87,7 @@ public class SetPropertyTest {
         assertEquals("SetProperty [name: My name, value: " + VALUE_1 + "]", v5.toString());
     }
 
-    private class SetPropertyStub extends SetProperty<Object> {
+    private static class SetPropertyStub extends SetProperty<Object> {
 
         private final Object bean;
 

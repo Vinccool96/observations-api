@@ -68,7 +68,7 @@ public class ObservableCollections {
 
     /**
      * Constructs an ObservableList that is backed by the specified list. Mutation operations on the ObservableList
-     * instance will be reported to observers that have registered on that instance. <br/> Note that mutation operations
+     * instance will be reported to observers that have registered on that instance. <br> Note that mutation operations
      * made directly to the underlying list are <em>not</em> reported to observers of any ObservableList that wraps it.
      *
      * @param <E>
@@ -91,9 +91,9 @@ public class ObservableCollections {
 
     /**
      * Constructs an ObservableList that is backed by the specified list. Mutation operations on the ObservableList
-     * instance will be reported to observers that have registered on that instance. <br/> Note that mutation operations
+     * instance will be reported to observers that have registered on that instance. <br> Note that mutation operations
      * made directly to the underlying list are <em>not</em> reported to observers of any ObservableList that wraps it.
-     * <br/> This list also reports mutations of the elements in it by using {@code extractor}. Observable objects
+     * <br> This list also reports mutations of the elements in it by using {@code extractor}. Observable objects
      * returned by extractor (applied to each list element) are listened for changes and transformed into "update"
      * change of ListChangeListener.
      *
@@ -656,7 +656,7 @@ public class ObservableCollections {
         if (set == null) {
             throw new NullPointerException();
         }
-        return new UnmodifiableObservableSet<E>(set);
+        return new UnmodifiableObservableSet<>(set);
     }
 
     /**
@@ -677,7 +677,7 @@ public class ObservableCollections {
         if (set == null) {
             throw new NullPointerException();
         }
-        return new CheckedObservableSet<E>(set, type);
+        return new CheckedObservableSet<>(set, type);
     }
 
     /**
@@ -692,8 +692,7 @@ public class ObservableCollections {
      *
      * @see Collections#synchronizedSet(Set)
      */
-    public static <E> ObservableSet<E> synchronizedObservableSet(
-            ObservableSet<E> set) {
+    public static <E> ObservableSet<E> synchronizedObservableSet(ObservableSet<E> set) {
         if (set == null) {
             throw new NullPointerException();
         }
@@ -725,6 +724,7 @@ public class ObservableCollections {
      *
      * @return an immutable set containing only the specified object.
      */
+    @ReturnsUnmodifiableCollection
     public static <E> ObservableSet<E> singletonObservable(E o) {
         return new SingletonObservableSet<>(o);
     }
@@ -2036,10 +2036,8 @@ public class ObservableCollections {
 
         private void initListener() {
             if (listener == null) {
-                listener = c -> {
-                    callObservers(new SetAdapterChange<E>(UnmodifiableObservableSet.this, c));
-                };
-                this.backingSet.addListener(new WeakSetChangeListener<E>(listener));
+                listener = c -> callObservers(new SetAdapterChange<>(UnmodifiableObservableSet.this, c));
+                this.backingSet.addListener(new WeakSetChangeListener<>(listener));
             }
         }
 
@@ -2067,6 +2065,7 @@ public class ObservableCollections {
                 public void remove() {
                     throw new UnsupportedOperationException();
                 }
+
             };
         }
 
@@ -2077,38 +2076,44 @@ public class ObservableCollections {
 
         @Override
         public void addListener(InvalidationListener listener) {
-            initListener();
-            if (listenerHelper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+            if (!isInvalidationListenerAlreadyAdded(listener)) {
+                initListener();
                 listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
             }
         }
 
         @Override
         public void removeListener(InvalidationListener listener) {
-            listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
+            if (isInvalidationListenerAlreadyAdded(listener)) {
+                listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
+            }
         }
 
         @Override
         public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-            return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
+            return listenerHelper != null &&
+                    ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
         }
 
         @Override
         public void addListener(SetChangeListener<? super E> listener) {
-            initListener();
-            if (listenerHelper == null || !isSetChangeListenerAlreadyAdded(listener)) {
+            if (!isSetChangeListenerAlreadyAdded(listener)) {
+                initListener();
                 listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
             }
         }
 
         @Override
         public void removeListener(SetChangeListener<? super E> listener) {
-            listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
+            if (isSetChangeListenerAlreadyAdded(listener)) {
+                listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
+            }
         }
 
         @Override
         public boolean isSetChangeListenerAlreadyAdded(SetChangeListener<? super E> listener) {
-            return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
+            return listenerHelper != null &&
+                    ArrayUtils.getInstance().contains(listenerHelper.getSetChangeListeners(), listener);
         }
 
         @Override
@@ -2270,18 +2275,16 @@ public class ObservableCollections {
 
         private final ObservableSet<E> backingSet;
 
-        private SetListenerHelper listenerHelper;
+        private SetListenerHelper<E> listenerHelper;
 
         private final SetChangeListener<E> listener;
 
         SynchronizedObservableSet(ObservableSet<E> set, Object mutex) {
             super(set, mutex);
             backingSet = set;
-            listener = c -> {
-                SetListenerHelper.fireValueChangedEvent(listenerHelper, new SetAdapterChange<E>(
-                        SynchronizedObservableSet.this, c));
-            };
-            backingSet.addListener(new WeakSetChangeListener<E>(listener));
+            listener = c -> SetListenerHelper.fireValueChangedEvent(listenerHelper, new SetAdapterChange<>(
+                    SynchronizedObservableSet.this, c));
+            backingSet.addListener(new WeakSetChangeListener<>(listener));
         }
 
         SynchronizedObservableSet(ObservableSet<E> set) {
@@ -2291,7 +2294,7 @@ public class ObservableCollections {
         @Override
         public void addListener(InvalidationListener listener) {
             synchronized (mutex) {
-                if (listenerHelper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+                if (!isInvalidationListenerAlreadyAdded(listener)) {
                     listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
                 }
             }
@@ -2300,19 +2303,22 @@ public class ObservableCollections {
         @Override
         public void removeListener(InvalidationListener listener) {
             synchronized (mutex) {
-                listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
+                if (isInvalidationListenerAlreadyAdded(listener)) {
+                    listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
+                }
             }
         }
 
         @Override
         public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-            return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
+            return listenerHelper != null &&
+                    ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
         }
 
         @Override
         public void addListener(SetChangeListener<? super E> listener) {
             synchronized (mutex) {
-                if (listenerHelper == null || !isSetChangeListenerAlreadyAdded(listener)) {
+                if (!isSetChangeListenerAlreadyAdded(listener)) {
                     listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
                 }
             }
@@ -2321,13 +2327,16 @@ public class ObservableCollections {
         @Override
         public void removeListener(SetChangeListener<? super E> listener) {
             synchronized (mutex) {
-                listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
+                if (isSetChangeListenerAlreadyAdded(listener)) {
+                    listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
+                }
             }
         }
 
         @Override
         public boolean isSetChangeListenerAlreadyAdded(SetChangeListener<? super E> listener) {
-            return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
+            return listenerHelper != null &&
+                    ArrayUtils.getInstance().contains(listenerHelper.getSetChangeListeners(), listener);
         }
 
     }
@@ -2338,7 +2347,7 @@ public class ObservableCollections {
 
         private final Class<E> type;
 
-        private SetListenerHelper listenerHelper;
+        private SetListenerHelper<E> listenerHelper;
 
         private final SetChangeListener<E> listener;
 
@@ -2348,10 +2357,8 @@ public class ObservableCollections {
             }
             backingSet = set;
             this.type = type;
-            listener = c -> {
-                callObservers(new SetAdapterChange<E>(CheckedObservableSet.this, c));
-            };
-            backingSet.addListener(new WeakSetChangeListener<E>(listener));
+            listener = c -> callObservers(new SetAdapterChange<>(CheckedObservableSet.this, c));
+            backingSet.addListener(new WeakSetChangeListener<>(listener));
         }
 
         private void callObservers(SetChangeListener.Change<? extends E> c) {
@@ -2360,44 +2367,49 @@ public class ObservableCollections {
 
         void typeCheck(Object o) {
             if (o != null && !type.isInstance(o)) {
-                throw new ClassCastException("Attempt to insert "
-                        + o.getClass() + " element into collection with element type "
-                        + type);
+                throw new ClassCastException("Attempt to insert " + o.getClass() +
+                        " element into collection with element type " + type);
             }
         }
 
         @Override
         public void addListener(InvalidationListener listener) {
-            if (listenerHelper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+            if (!isInvalidationListenerAlreadyAdded(listener)) {
                 listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
             }
         }
 
         @Override
         public void removeListener(InvalidationListener listener) {
-            listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
+            if (isInvalidationListenerAlreadyAdded(listener)) {
+                listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
+            }
         }
 
         @Override
         public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-            return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
+            return listenerHelper != null &&
+                    ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
         }
 
         @Override
         public void addListener(SetChangeListener<? super E> listener) {
-            if (listenerHelper == null || !isSetChangeListenerAlreadyAdded(listener)) {
+            if (!isSetChangeListenerAlreadyAdded(listener)) {
                 listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
             }
         }
 
         @Override
         public void removeListener(SetChangeListener<? super E> listener) {
-            listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
+            if (isSetChangeListenerAlreadyAdded(listener)) {
+                listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
+            }
         }
 
         @Override
         public boolean isSetChangeListenerAlreadyAdded(SetChangeListener<? super E> listener) {
-            return ArrayUtils.getInstance().contains(listenerHelper.getInvalidationListeners(), listener);
+            return listenerHelper != null &&
+                    ArrayUtils.getInstance().contains(listenerHelper.getSetChangeListeners(), listener);
         }
 
         @Override
@@ -2444,7 +2456,7 @@ public class ObservableCollections {
         @Override
         @SuppressWarnings("unchecked")
         public boolean addAll(Collection<? extends E> c) {
-            E[] a = null;
+            E[] a;
             try {
                 a = c.toArray((E[]) Array.newInstance(type, 0));
             } catch (ArrayStoreException e) {
@@ -2499,6 +2511,7 @@ public class ObservableCollections {
                 public void remove() {
                     it.remove();
                 }
+
             };
         }
 

@@ -59,11 +59,11 @@ public class ContentBinding {
 
     public static void unbind(Object obj1, Object obj2) {
         checkParameters(obj1, obj2);
-        if ((obj1 instanceof List) && (obj2 instanceof ObservableList)) {
+        if (obj1 instanceof List && obj2 instanceof ObservableList) {
             ((ObservableList) obj2).removeListener(new ListContentBinding((List) obj1));
-        } else if ((obj1 instanceof Set) && (obj2 instanceof ObservableSet)) {
+        } else if (obj1 instanceof Set && obj2 instanceof ObservableSet) {
             ((ObservableSet) obj2).removeListener(new SetContentBinding((Set) obj1));
-        } else if ((obj1 instanceof Map) && (obj2 instanceof ObservableMap)) {
+        } else if (obj1 instanceof Map && obj2 instanceof ObservableMap) {
             ((ObservableMap) obj2).removeListener(new MapContentBinding((Map) obj1));
         }
     }

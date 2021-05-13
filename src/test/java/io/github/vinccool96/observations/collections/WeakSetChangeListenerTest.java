@@ -1,6 +1,8 @@
 package io.github.vinccool96.observations.collections;
 
-import io.github.vinccool96.observations.sun.binding.SetExpressionHelper;
+import io.github.vinccool96.observations.collections.MockSetObserver.Tuple;
+import io.github.vinccool96.observations.collections.SetChangeListener.Change;
+import io.github.vinccool96.observations.sun.binding.SetExpressionHelper.SimpleChange;
 import io.github.vinccool96.observations.sun.collections.ObservableSetWrapper;
 import org.junit.Test;
 
@@ -8,25 +10,25 @@ import java.util.HashSet;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings("UnusedAssignment")
 public class WeakSetChangeListenerTest {
 
     @Test(expected = NullPointerException.class)
     public void testConstructWithNull() {
-        new WeakSetChangeListener<Object>(null);
+        new WeakSetChangeListener<>(null);
     }
 
     @Test
     public void testHandle() {
-        MockSetObserver<Object> listener = new MockSetObserver<Object>();
-        final WeakSetChangeListener<Object> weakListener = new WeakSetChangeListener<Object>(listener);
+        MockSetObserver<Object> listener = new MockSetObserver<>();
+        final WeakSetChangeListener<Object> weakListener = new WeakSetChangeListener<>(listener);
         final ObservableSetMock set = new ObservableSetMock();
         final Object removedElement = new Object();
-        final SetChangeListener.Change<Object> change =
-                new SetExpressionHelper.SimpleChange<Object>(set).setRemoved(removedElement);
+        final Change<Object> change = new SimpleChange<>(set).setRemoved(removedElement);
 
         // regular call
         weakListener.onChanged(change);
-        listener.assertRemoved(MockSetObserver.Tuple.tup(removedElement));
+        listener.assertRemoved(Tuple.tup(removedElement));
         assertFalse(weakListener.wasGarbageCollected());
 
         // GC-ed call
@@ -43,7 +45,7 @@ public class WeakSetChangeListenerTest {
         private int removeCounter;
 
         public ObservableSetMock() {
-            super(new HashSet<Object>());
+            super(new HashSet<>());
         }
 
         private void reset() {

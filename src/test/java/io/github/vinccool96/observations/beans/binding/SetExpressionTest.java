@@ -12,6 +12,7 @@ import java.util.Iterator;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings({"SimplifiableAssertion", "UnusedAssignment"})
 public class SetExpressionTest {
 
     private static final Integer data1_0 = 7;
@@ -32,10 +33,10 @@ public class SetExpressionTest {
 
     @Before
     public void setUp() {
-        opNull = new SimpleSetProperty<Integer>();
-        opEmpty = new SimpleSetProperty<Integer>(ObservableCollections.<Integer>observableSet());
-        op1 = new SimpleSetProperty<Integer>(ObservableCollections.observableSet(data1_0));
-        op2 = new SimpleSetProperty<Integer>(ObservableCollections.observableSet(data2_0, data2_1));
+        opNull = new SimpleSetProperty<>();
+        opEmpty = new SimpleSetProperty<>(ObservableCollections.observableSet());
+        op1 = new SimpleSetProperty<>(ObservableCollections.observableSet(data1_0));
+        op2 = new SimpleSetProperty<>(ObservableCollections.observableSet(data2_0, data2_1));
     }
 
     @Test
@@ -48,7 +49,7 @@ public class SetExpressionTest {
 
     @Test
     public void testIsEqualTo() {
-        final ObservableSet<Integer> emptySet = ObservableCollections.observableSet(Collections.<Integer>emptySet());
+        final ObservableSet<Integer> emptySet = ObservableCollections.observableSet(Collections.emptySet());
         final ObservableSet<Integer> set1 = ObservableCollections.observableSet(data1_0);
         final ObservableSet<Integer> set2 = ObservableCollections.observableSet(data2_0, data2_1);
 
@@ -83,7 +84,7 @@ public class SetExpressionTest {
 
     @Test
     public void testIsNotEqualTo() {
-        final ObservableSet<Integer> emptySet = ObservableCollections.observableSet(Collections.<Integer>emptySet());
+        final ObservableSet<Integer> emptySet = ObservableCollections.observableSet(Collections.emptySet());
         final ObservableSet<Integer> list1 = ObservableCollections.observableSet(data1_0);
         final ObservableSet<Integer> list2 = ObservableCollections.observableSet(data2_0, data2_1);
 
@@ -135,7 +136,7 @@ public class SetExpressionTest {
     @Test
     public void testAsString() {
         assertEquals("null", opNull.asString().get());
-        assertEquals(Collections.emptySet().toString(), opEmpty.asString().get());
+        assertEquals(Collections.<Integer>emptySet().toString(), opEmpty.asString().get());
         assertEquals(Collections.singleton(data1_0).toString(), op1.asString().get());
     }
 

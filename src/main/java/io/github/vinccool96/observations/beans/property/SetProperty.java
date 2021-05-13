@@ -25,8 +25,8 @@ import io.github.vinccool96.observations.collections.ObservableSet;
  * @see ReadOnlySetProperty
  * @see Property
  */
-public abstract class SetProperty<E> extends ReadOnlySetProperty<E> implements
-        Property<ObservableSet<E>>, WritableSetValue<E> {
+public abstract class SetProperty<E> extends ReadOnlySetProperty<E> implements Property<ObservableSet<E>>,
+        WritableSetValue<E> {
 
     /**
      * {@inheritDoc}
@@ -61,8 +61,7 @@ public abstract class SetProperty<E> extends ReadOnlySetProperty<E> implements
     public String toString() {
         final Object bean = getBean();
         final String name = getName();
-        final StringBuilder result = new StringBuilder(
-                "SetProperty [");
+        final StringBuilder result = new StringBuilder("SetProperty [");
         if (bean != null) {
             result.append("bean: ").append(bean).append(", ");
         }

@@ -7,13 +7,14 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@SuppressWarnings("unused")
 public class MockSetObserver<E> implements SetChangeListener<E> {
 
-    private List<Call> calls = new ArrayList<Call>();
+    private final List<Call<E>> calls = new ArrayList<>();
 
     @Override
     public void onChanged(Change<? extends E> c) {
-        calls.add(new Call<E>(c.getElementRemoved(), c.getElementAdded()));
+        calls.add(new Call<>(c.getElementRemoved(), c.getElementAdded()));
     }
 
     public int getCallsNumber() {
@@ -37,6 +38,7 @@ public class MockSetObserver<E> implements SetChangeListener<E> {
         assertEquals(calls.get(call).added, tuple.val);
     }
 
+    @SuppressWarnings("unchecked")
     public void assertMultipleCalls(Call<E>... calls) {
         assertEquals(this.calls.size(), calls.length);
         for (Call<E> c : calls) {
@@ -44,10 +46,11 @@ public class MockSetObserver<E> implements SetChangeListener<E> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void assertMultipleRemove(Tuple<E>... tuples) {
         assertEquals(this.calls.size(), tuples.length);
         for (Tuple<E> t : tuples) {
-            assertTrue(calls + " doesn't contain " + t, this.calls.contains(new Call<E>(t.val, null)));
+            assertTrue(calls + " doesn't contain " + t, this.calls.contains(new Call<>(t.val, null)));
         }
     }
 
@@ -60,10 +63,11 @@ public class MockSetObserver<E> implements SetChangeListener<E> {
         assertEquals(calls.get(call).removed, tuple.val);
     }
 
+    @SuppressWarnings("unchecked")
     public void assertMultipleRemoved(Tuple<E>... tuples) {
         for (Tuple<E> t : tuples) {
             boolean found = false;
-            for (Call c : calls) {
+            for (Call<E> c : calls) {
                 if (c.removed.equals(t.val)) {
                     found = true;
                     break;
@@ -75,9 +79,9 @@ public class MockSetObserver<E> implements SetChangeListener<E> {
 
     public static class Call<E> {
 
-        private E removed;
+        private final E removed;
 
-        private E added;
+        private final E added;
 
         public Call(E removed, E added) {
             this.removed = removed;
@@ -85,11 +89,11 @@ public class MockSetObserver<E> implements SetChangeListener<E> {
         }
 
         public static <E> Call<E> call(E o, E n) {
-            return new Call<E>(o, n);
+            return new Call<>(o, n);
         }
 
         @Override
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({"unchecked", "EqualsReplaceableByObjectsCall", "RedundantIfStatement"})
         public boolean equals(Object obj) {
             if (obj == null) {
                 return false;
@@ -131,7 +135,7 @@ public class MockSetObserver<E> implements SetChangeListener<E> {
         }
 
         public static <E> Tuple<E> tup(E v) {
-            return new Tuple<E>(v);
+            return new Tuple<>(v);
         }
 
     }

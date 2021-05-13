@@ -31,11 +31,11 @@ import java.util.NoSuchElementException;
  */
 public abstract class SetExpression<E> implements ObservableSetValue<E> {
 
-    private static final ObservableSet EMPTY_SET = new EmptyObservableSet();
+    private final ObservableSet<E> EMPTY_SET = new EmptyObservableSet<>();
 
     private static class EmptyObservableSet<E> extends AbstractSet<E> implements ObservableSet<E> {
 
-        private static final Iterator iterator = new Iterator() {
+        private final Iterator<E> iterator = new Iterator<E>() {
 
             @Override
             public boolean hasNext() {
@@ -43,15 +43,15 @@ public abstract class SetExpression<E> implements ObservableSetValue<E> {
             }
 
             @Override
-            public Object next() {
+            public E next() {
                 throw new NoSuchElementException();
             }
 
             @Override
             public void remove() {
                 throw new UnsupportedOperationException();
-
             }
+
         };
 
         @Override
@@ -74,7 +74,8 @@ public abstract class SetExpression<E> implements ObservableSetValue<E> {
             // no-op
         }
 
-        @Override public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
+        @Override
+        public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
             // no-op
             return false;
         }
@@ -260,9 +261,10 @@ public abstract class SetExpression<E> implements ObservableSetValue<E> {
     }
 
     @Override
+    @SuppressWarnings("SuspiciousToArrayCall")
     public <T> T[] toArray(T[] array) {
         final ObservableSet<E> set = get();
-        return (set == null) ? (T[]) EMPTY_SET.toArray(array) : set.toArray(array);
+        return (set == null) ? EMPTY_SET.toArray(array) : set.toArray(array);
     }
 
     @Override
@@ -278,6 +280,7 @@ public abstract class SetExpression<E> implements ObservableSetValue<E> {
     }
 
     @Override
+    @SuppressWarnings("SuspiciousMethodCalls")
     public boolean containsAll(Collection<?> objects) {
         final ObservableSet<E> set = get();
         return (set == null) ? EMPTY_SET.contains(objects) : set.containsAll(objects);

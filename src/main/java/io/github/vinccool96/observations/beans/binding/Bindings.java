@@ -7186,6 +7186,8 @@ public final class Bindings {
      *
      * @param op
      *         the {@code ObservableArray}
+     * @param <T>
+     *         actual array instance type
      *
      * @return the new {@code IntegerBinding}
      *

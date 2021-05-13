@@ -53,19 +53,19 @@ public class BidirectionalContentBinding {
 
     public static void unbind(Object obj1, Object obj2) {
         checkParameters(obj1, obj2);
-        if ((obj1 instanceof ObservableList) && (obj2 instanceof ObservableList)) {
+        if (obj1 instanceof ObservableList && obj2 instanceof ObservableList) {
             final ObservableList list1 = (ObservableList) obj1;
             final ObservableList list2 = (ObservableList) obj2;
             final ListContentBinding binding = new ListContentBinding(list1, list2);
             list1.removeListener(binding);
             list2.removeListener(binding);
-        } else if ((obj1 instanceof ObservableSet) && (obj2 instanceof ObservableSet)) {
+        } else if (obj1 instanceof ObservableSet && obj2 instanceof ObservableSet) {
             final ObservableSet set1 = (ObservableSet) obj1;
             final ObservableSet set2 = (ObservableSet) obj2;
             final SetContentBinding binding = new SetContentBinding(set1, set2);
             set1.removeListener(binding);
             set2.removeListener(binding);
-        } else if ((obj1 instanceof ObservableMap) && (obj2 instanceof ObservableMap)) {
+        } else if (obj1 instanceof ObservableMap && obj2 instanceof ObservableMap) {
             final ObservableMap map1 = (ObservableMap) obj1;
             final ObservableMap map2 = (ObservableMap) obj2;
             final MapContentBinding binding = new MapContentBinding(map1, map2);
@@ -190,7 +190,7 @@ public class BidirectionalContentBinding {
             if (!updating) {
                 final ObservableSet<E> set1 = propertyRef1.get();
                 final ObservableSet<E> set2 = propertyRef2.get();
-                if ((set1 == null) || (set2 == null)) {
+                if (set1 == null || set2 == null) {
                     if (set1 != null) {
                         set1.removeListener(this);
                     }
@@ -200,7 +200,7 @@ public class BidirectionalContentBinding {
                 } else {
                     try {
                         updating = true;
-                        final Set<E> dest = (set1 == change.getSet()) ? set2 : set1;
+                        final Set<E> dest = set1 == change.getSet() ? set2 : set1;
                         if (change.wasRemoved()) {
                             dest.remove(change.getElementRemoved());
                         } else {
@@ -235,7 +235,7 @@ public class BidirectionalContentBinding {
 
             final Object propertyA1 = propertyRef1.get();
             final Object propertyA2 = propertyRef2.get();
-            if ((propertyA1 == null) || (propertyA2 == null)) {
+            if (propertyA1 == null || propertyA2 == null) {
                 return false;
             }
 
@@ -243,14 +243,14 @@ public class BidirectionalContentBinding {
                 final SetContentBinding otherBinding = (SetContentBinding) obj;
                 final Object propertyB1 = otherBinding.propertyRef1.get();
                 final Object propertyB2 = otherBinding.propertyRef2.get();
-                if ((propertyB1 == null) || (propertyB2 == null)) {
+                if (propertyB1 == null || propertyB2 == null) {
                     return false;
                 }
 
-                if ((propertyA1 == propertyB1) && (propertyA2 == propertyB2)) {
+                if (propertyA1 == propertyB1 && propertyA2 == propertyB2) {
                     return true;
                 }
-                if ((propertyA1 == propertyB2) && (propertyA2 == propertyB1)) {
+                if (propertyA1 == propertyB2 && propertyA2 == propertyB1) {
                     return true;
                 }
             }

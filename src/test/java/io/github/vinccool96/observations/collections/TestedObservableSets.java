@@ -16,7 +16,7 @@ public interface TestedObservableSets {
             () -> ObservableCollections.observableSet(new LinkedHashSet<String>());
 
     Callable<ObservableSet<String>> CHECKED_OBSERVABLE_HASH_SET = () -> ObservableCollections
-            .checkedObservableSet(ObservableCollections.observableSet(new HashSet()), String.class);
+            .checkedObservableSet(ObservableCollections.observableSet(new HashSet<>()), String.class);
 
     Callable<ObservableSet<String>> SYNCHRONIZED_OBSERVABLE_HASH_SET = () -> ObservableCollections
             .synchronizedObservableSet(ObservableCollections.observableSet(new HashSet<String>()));
@@ -24,14 +24,14 @@ public interface TestedObservableSets {
     Callable<ObservableSet<String>> OBSERVABLE_SET_PROPERTY =
             () -> new SimpleSetProperty<>(ObservableCollections.observableSet(new HashSet<String>()));
 
-    static class CallableTreeSetImpl implements Callable<ObservableSet<String>> {
+    class CallableTreeSetImpl implements Callable<ObservableSet<String>> {
 
         public CallableTreeSetImpl() {
         }
 
         @Override
         public ObservableSet<String> call() throws Exception {
-            return ObservableCollections.observableSet(new TreeSet<String>());
+            return ObservableCollections.observableSet(new TreeSet<>());
         }
 
     }

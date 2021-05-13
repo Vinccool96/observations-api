@@ -38,19 +38,18 @@ public class SimpleSetProperty<E> extends SetPropertyBase<E> {
 
     /**
      * The constructor of {@code SimpleSetProperty}
-     */
-    public SimpleSetProperty() {
-        this(DEFAULT_BEAN, DEFAULT_NAME);
-    }
-
-    /**
-     * The constructor of {@code SimpleSetProperty}
      *
+     * @param bean
+     *         the bean of this {@code SetProperty}
+     * @param name
+     *         the name of this {@code SetProperty}
      * @param initialValue
      *         the initial value of the wrapped value
      */
-    public SimpleSetProperty(ObservableSet<E> initialValue) {
-        this(DEFAULT_BEAN, DEFAULT_NAME, initialValue);
+    public SimpleSetProperty(Object bean, String name, ObservableSet<E> initialValue) {
+        super(initialValue);
+        this.bean = bean;
+        this.name = (name == null) ? DEFAULT_NAME : name;
     }
 
     /**
@@ -69,17 +68,18 @@ public class SimpleSetProperty<E> extends SetPropertyBase<E> {
     /**
      * The constructor of {@code SimpleSetProperty}
      *
-     * @param bean
-     *         the bean of this {@code SetProperty}
-     * @param name
-     *         the name of this {@code SetProperty}
      * @param initialValue
      *         the initial value of the wrapped value
      */
-    public SimpleSetProperty(Object bean, String name, ObservableSet<E> initialValue) {
-        super(initialValue);
-        this.bean = bean;
-        this.name = (name == null) ? DEFAULT_NAME : name;
+    public SimpleSetProperty(ObservableSet<E> initialValue) {
+        this(DEFAULT_BEAN, DEFAULT_NAME, initialValue);
+    }
+
+    /**
+     * The constructor of {@code SimpleSetProperty}
+     */
+    public SimpleSetProperty() {
+        this(DEFAULT_BEAN, DEFAULT_NAME);
     }
 
 }

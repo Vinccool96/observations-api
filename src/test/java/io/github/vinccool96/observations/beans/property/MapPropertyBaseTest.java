@@ -105,12 +105,12 @@ public class MapPropertyBaseTest {
         final MapProperty<Object, Object> p1 = new SimpleMapProperty<>();
         assertEquals(null, p1.get());
         assertEquals(null, p1.getValue());
-        assertFalse(property.isBound());
+        assertFalse(p1.isBound());
 
         final MapProperty<Object, Object> p2 = new SimpleMapProperty<>(VALUE_1b);
         assertEquals(VALUE_1b, p2.get());
         assertEquals(VALUE_1b, p2.getValue());
-        assertFalse(property.isBound());
+        assertFalse(p2.isBound());
     }
 
     @Test

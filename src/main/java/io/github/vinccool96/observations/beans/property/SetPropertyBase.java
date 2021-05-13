@@ -6,6 +6,7 @@ import io.github.vinccool96.observations.beans.value.ChangeListener;
 import io.github.vinccool96.observations.beans.value.ObservableValue;
 import io.github.vinccool96.observations.collections.ObservableSet;
 import io.github.vinccool96.observations.collections.SetChangeListener;
+import io.github.vinccool96.observations.collections.SetChangeListener.Change;
 import io.github.vinccool96.observations.sun.binding.SetExpressionHelper;
 import io.github.vinccool96.observations.util.ArrayUtils;
 
@@ -25,12 +26,6 @@ import java.lang.ref.WeakReference;
  */
 public abstract class SetPropertyBase<E> extends SetProperty<E> {
 
-    private final SetChangeListener<E> setChangeListener = change -> {
-        invalidateProperties();
-        invalidated();
-        fireValueChangedEvent(change);
-    };
-
     private ObservableSet<E> value;
 
     private ObservableValue<? extends ObservableSet<E>> observable = null;
@@ -41,15 +36,15 @@ public abstract class SetPropertyBase<E> extends SetProperty<E> {
 
     private SetExpressionHelper<E> helper = null;
 
+    private final SetChangeListener<E> setChangeListener = change -> {
+        invalidateProperties();
+        invalidated();
+        fireValueChangedEvent(change);
+    };
+
     private SizeProperty size0;
 
     private EmptyProperty empty0;
-
-    /**
-     * The constructor of {@code SetPropertyBase}
-     */
-    public SetPropertyBase() {
-    }
 
     /**
      * The constructor of the {@code SetPropertyBase}.
@@ -62,6 +57,12 @@ public abstract class SetPropertyBase<E> extends SetProperty<E> {
         if (initialValue != null) {
             initialValue.addListener(setChangeListener);
         }
+    }
+
+    /**
+     * The constructor of {@code SetPropertyBase}
+     */
+    public SetPropertyBase() {
     }
 
     @Override
@@ -130,19 +131,21 @@ public abstract class SetPropertyBase<E> extends SetProperty<E> {
 
     @Override
     public void addListener(InvalidationListener listener) {
-        if (helper == null || !isInvalidationListenerAlreadyAdded(listener)) {
+        if (!isInvalidationListenerAlreadyAdded(listener)) {
             helper = SetExpressionHelper.addListener(helper, this, listener);
         }
     }
 
     @Override
     public void removeListener(InvalidationListener listener) {
-        helper = SetExpressionHelper.removeListener(helper, listener);
+        if (isInvalidationListenerAlreadyAdded(listener)) {
+            helper = SetExpressionHelper.removeListener(helper, listener);
+        }
     }
 
     @Override
     public boolean isInvalidationListenerAlreadyAdded(InvalidationListener listener) {
-        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
+        return helper != null && ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
     }
 
     @Override
@@ -169,19 +172,21 @@ public abstract class SetPropertyBase<E> extends SetProperty<E> {
 
     @Override
     public void addListener(SetChangeListener<? super E> listener) {
-        if (helper == null || !isSetChangeListenerAlreadyAdded(listener)) {
+        if (!isSetChangeListenerAlreadyAdded(listener)) {
             helper = SetExpressionHelper.addListener(helper, this, listener);
         }
     }
 
     @Override
     public void removeListener(SetChangeListener<? super E> listener) {
-        helper = SetExpressionHelper.removeListener(helper, listener);
+        if (isSetChangeListenerAlreadyAdded(listener)) {
+            helper = SetExpressionHelper.removeListener(helper, listener);
+        }
     }
 
     @Override
     public boolean isSetChangeListenerAlreadyAdded(SetChangeListener<? super E> listener) {
-        return ArrayUtils.getInstance().contains(helper.getInvalidationListeners(), listener);
+        return helper != null && ArrayUtils.getInstance().contains(helper.getSetChangeListeners(), listener);
     }
 
     /**
@@ -204,7 +209,7 @@ public abstract class SetPropertyBase<E> extends SetProperty<E> {
      * @param change
      *         the change that needs to be propagated
      */
-    protected void fireValueChangedEvent(SetChangeListener.Change<? extends E> change) {
+    protected void fireValueChangedEvent(Change<? extends E> change) {
         SetExpressionHelper.fireValueChangedEvent(helper, change);
     }
 
@@ -330,7 +335,7 @@ public abstract class SetPropertyBase<E> extends SetProperty<E> {
         private final WeakReference<SetPropertyBase<E>> wref;
 
         public Listener(SetPropertyBase<E> ref) {
-            this.wref = new WeakReference<SetPropertyBase<E>>(ref);
+            this.wref = new WeakReference<>(ref);
         }
 
         @Override

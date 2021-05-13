@@ -20,6 +20,7 @@ import static org.junit.Assert.*;
 /**
  *
  */
+@SuppressWarnings({"FieldCanBeLocal", "SimplifiableAssertion", "unchecked"})
 public class SetBindingTest {
 
     private final static Object DATA_1 = new Object();
@@ -56,7 +57,7 @@ public class SetBindingTest {
         emptySet = ObservableCollections.observableSet();
         set1 = ObservableCollections.observableSet(DATA_1);
         set2 = ObservableCollections.observableSet(DATA_2_0, DATA_2_1);
-        listener = new MockSetObserver<Object>();
+        listener = new MockSetObserver<>();
         binding0.setValue(set2);
         binding1.setValue(set2);
         binding2.setValue(set2);
@@ -64,9 +65,9 @@ public class SetBindingTest {
 
     @Test
     public void testSizeProperty() {
-        assertEquals(binding0, binding0.sizeProperty().getBean());
-        assertEquals(binding1, binding1.sizeProperty().getBean());
-        assertEquals(binding2, binding2.sizeProperty().getBean());
+        assertSame(binding0, binding0.sizeProperty().getBean());
+        assertSame(binding1, binding1.sizeProperty().getBean());
+        assertSame(binding2, binding2.sizeProperty().getBean());
 
         final ReadOnlyIntegerProperty size = binding1.sizeProperty();
         assertEquals("size", size.getName());
@@ -85,9 +86,9 @@ public class SetBindingTest {
 
     @Test
     public void testEmptyProperty() {
-        assertEquals(binding0, binding0.emptyProperty().getBean());
-        assertEquals(binding1, binding1.emptyProperty().getBean());
-        assertEquals(binding2, binding2.emptyProperty().getBean());
+        assertSame(binding0, binding0.emptyProperty().getBean());
+        assertSame(binding1, binding1.emptyProperty().getBean());
+        assertSame(binding2, binding2.emptyProperty().getBean());
 
         final ReadOnlyBooleanProperty empty = binding1.emptyProperty();
         assertEquals("empty", empty.getName());
@@ -132,8 +133,7 @@ public class SetBindingTest {
         binding1.setValue(set1);
         dependency1.fireValueChangedEvent();
         assertEquals(1, binding1.getComputeValueCounter());
-        listener.assertMultipleCalls(new Call[]{new Call<Object>(DATA_2_0, null), new Call<Object>(DATA_2_1, null),
-                new Call<Object>(null, DATA_1)});
+        listener.assertMultipleCalls(new Call<>(DATA_2_0, null), new Call<>(DATA_2_1, null), new Call<>(null, DATA_1));
         assertEquals(true, binding1.isValid());
         listener.clear();
 
@@ -164,8 +164,7 @@ public class SetBindingTest {
         binding1.setValue(set1);
         dependency1.fireValueChangedEvent();
         assertEquals(2, binding1.getComputeValueCounter());
-        listener.assertMultipleCalls(new Call[]{new Call<Object>(DATA_2_0, null), new Call<Object>(DATA_2_1, null),
-                new Call<Object>(null, DATA_1)});
+        listener.assertMultipleCalls(new Call<>(DATA_2_0, null), new Call<>(DATA_2_1, null), new Call<>(null, DATA_1));
         assertEquals(true, binding1.isValid());
         listener.clear();
 
@@ -181,8 +180,7 @@ public class SetBindingTest {
         binding1.setValue(set2);
         dependency1.fireValueChangedEvent();
         assertEquals(2, binding1.getComputeValueCounter());
-        listener.assertMultipleCalls(new Call[]{new Call<Object>(DATA_1, null), new Call<Object>(null, DATA_2_0),
-                new Call<Object>(null, DATA_2_1)});
+        listener.assertMultipleCalls(new Call<>(DATA_1, null), new Call<>(null, DATA_2_0), new Call<>(null, DATA_2_1));
         assertEquals(true, binding1.isValid());
         listener.clear();
 
@@ -209,7 +207,7 @@ public class SetBindingTest {
 
     @Test
     public void testChangeContent_ChangeListener() {
-        final ChangeListenerMock listenerMock = new ChangeListenerMock(null);
+        final ChangeListenerMock<ObservableSet<Object>> listenerMock = new ChangeListenerMock<>(null);
         binding1.get();
         binding1.addListener(listenerMock);
         assertTrue(binding1.isValid());
@@ -228,7 +226,6 @@ public class SetBindingTest {
         binding1.addListener(listener);
         assertTrue(binding1.isValid());
 
-        final int oldSize = set2.size();
         final Object newObject = new Object();
         binding1.reset();
         listener.clear();
@@ -240,7 +237,8 @@ public class SetBindingTest {
 
     public static class ObservableStub extends ObservableValueBase<Object> {
 
-        @Override public void fireValueChangedEvent() {
+        @Override
+        public void fireValueChangedEvent() {
             super.fireValueChangedEvent();
         }
 
@@ -281,7 +279,8 @@ public class SetBindingTest {
             return value;
         }
 
-        @Override @ReturnsUnmodifiableCollection
+        @Override
+        @ReturnsUnmodifiableCollection
         public ObservableList<?> getDependencies() {
             fail("Should not reach here");
             return null;
@@ -289,46 +288,4 @@ public class SetBindingTest {
 
     }
 
-//    private class SetChangeListenerMock implements SetChangeListener<Object> {
-//
-//        private Change<? extends Object> change;
-//        private int counter;
-//
-//        @Override
-//        public void onChanged(Change<? extends Object> change) {
-//            this.change = change;
-//            counter++;
-//        }
-//
-//        private void reset() {
-//            change = null;
-//            counter = 0;
-//        }
-//
-//        private void checkNotCalled() {
-//            assertEquals(null, change);
-//            assertEquals(0, counter);
-//            reset();
-//        }
-//
-//        private void check(ObservableSet<Object> oldSet, ObservableSet<Object> newSet, int counter) {
-//            assertTrue(change.next());
-//            assertTrue(change.wasReplaced());
-//            assertEquals(oldSet, change.getRemoved());
-//            assertEquals(newSet, change.getSet());
-//            assertFalse(change.next());
-//            assertEquals(counter, this.counter);
-//            reset();
-//        }
-//
-//        private void check(int pos, Object newObject, int counter) {
-//            assertTrue(change.next());
-//            assertTrue(change.wasAdded());
-//            assertEquals(pos, change.getFrom());
-//            assertEquals(Collections.singletonSet(newObject), change.getAddedSubSet());
-//            assertFalse(change.next());
-//            assertEquals(counter, this.counter);
-//            reset();
-//        }
-//    }
 }
