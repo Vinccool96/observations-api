@@ -1,5 +1,6 @@
 package io.github.vinccool96.observations.collections;
 
+import io.github.vinccool96.observations.collections.ListChangeListener.Change;
 import io.github.vinccool96.observations.sun.collections.ObservableListWrapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,11 +25,11 @@ public class ListChangeBuilderTest {
 
     @Before
     public void setUp() {
-        observer = new MockListObserver<String>();
-        list = new ArrayList<String>(Arrays.asList("a", "b", "c", "d"));
-        observableList = new ObservableListWrapper<String>(list);
+        observer = new MockListObserver<>();
+        list = new ArrayList<>(Arrays.asList("a", "b", "c", "d"));
+        observableList = new ObservableListWrapper<>(list);
         observableList.addListener(observer);
-        builder = new ListChangeBuilder<String>(observableList);
+        builder = new ListChangeBuilder<>(observableList);
     }
 
     @Test
@@ -47,7 +48,7 @@ public class ListChangeBuilderTest {
         builder.nextAdd(0, 1);
         builder.endChange();
 
-        assertEquals(list, Arrays.asList("aa", "a", "b", "ccc"));
+        assertEquals(Arrays.asList("aa", "a", "b", "ccc"), list);
 
         observer.checkAddRemove(0, observableList, Collections.emptyList(), 0, 1);
         observer.checkAddRemove(1, observableList, Arrays.asList("c", "d"), 3, 4);
@@ -67,10 +68,10 @@ public class ListChangeBuilderTest {
         builder.nextRemove(0, "a");
         builder.endChange();
 
-        assertEquals(list, Arrays.asList("b", "c", "dd", "e"));
+        assertEquals(Arrays.asList("b", "c", "dd", "e"), list);
 
-        observer.checkAddRemove(0, observableList, Arrays.asList("a"), 0, 0);
-        observer.checkAddRemove(1, observableList, Arrays.asList("d"), 2, 4);
+        observer.checkAddRemove(0, observableList, Collections.singletonList("a"), 0, 0);
+        observer.checkAddRemove(1, observableList, Collections.singletonList("d"), 2, 4);
     }
 
     @Test
@@ -80,7 +81,7 @@ public class ListChangeBuilderTest {
         builder.nextAdd(4, 5);
 
         list.set(0, "aa");
-        builder.nextReplace(0, 1, Arrays.asList("a"));
+        builder.nextReplace(0, 1, Collections.singletonList("a"));
 
         list.remove(4);
         builder.nextRemove(4, "e");
@@ -89,10 +90,9 @@ public class ListChangeBuilderTest {
         builder.nextRemove(0, "aa");
         builder.endChange();
 
-        assertEquals(list, Arrays.asList("b", "c", "d"));
+        assertEquals(Arrays.asList("b", "c", "d"), list);
 
-        observer.check1AddRemove(observableList, Arrays.asList("a"), 0, 0);
-
+        observer.check1AddRemove(observableList, Collections.singletonList("a"), 0, 0);
     }
 
     @Test
@@ -110,9 +110,9 @@ public class ListChangeBuilderTest {
 
         builder.endChange();
 
-        assertEquals(list, Arrays.asList("a", "bb", "c", "d", "e"));
+        assertEquals(Arrays.asList("a", "bb", "c", "d", "e"), list);
 
-        observer.checkAddRemove(0, observableList, Arrays.asList("b"), 1, 2);
+        observer.checkAddRemove(0, observableList, Collections.singletonList("b"), 1, 2);
         observer.checkAddRemove(1, observableList, Collections.emptyList(), 4, 5);
     }
 
@@ -130,7 +130,6 @@ public class ListChangeBuilderTest {
         builder.endChange();
 
         observer.check1AddRemove(observableList, Collections.emptyList(), 1, 2);
-
     }
 
     @Test
@@ -150,11 +149,10 @@ public class ListChangeBuilderTest {
 
         builder.endChange();
 
-        assertEquals(list, Arrays.asList("a", "aa", "aa", "aa", "aa", "b", "c", "d", "e"));
+        assertEquals(Arrays.asList("a", "aa", "aa", "aa", "aa", "b", "c", "d", "e"), list);
 
         observer.checkAddRemove(0, observableList, Collections.emptyList(), 1, 5);
         observer.checkAddRemove(1, observableList, Collections.emptyList(), 8, 9);
-
     }
 
     @Test
@@ -168,11 +166,10 @@ public class ListChangeBuilderTest {
         builder.nextRemove(0, "b");
         builder.endChange();
 
-        assertEquals(list, Arrays.asList("c"));
+        assertEquals(Collections.singletonList("c"), list);
 
         observer.checkAddRemove(0, observableList, Arrays.asList("a", "b"), 0, 0);
-        observer.checkAddRemove(1, observableList, Arrays.asList("d"), 1, 1);
-
+        observer.checkAddRemove(1, observableList, Collections.singletonList("d"), 1, 1);
     }
 
     @Test
@@ -186,11 +183,10 @@ public class ListChangeBuilderTest {
         builder.nextRemove(0, "a");
         builder.endChange();
 
-        assertEquals(list, Arrays.asList("c"));
+        assertEquals(Collections.singletonList("c"), list);
 
         observer.checkAddRemove(0, observableList, Arrays.asList("a", "b"), 0, 0);
-        observer.checkAddRemove(1, observableList, Arrays.asList("d"), 1, 1);
-
+        observer.checkAddRemove(1, observableList, Collections.singletonList("d"), 1, 1);
     }
 
     @Test
@@ -248,7 +244,7 @@ public class ListChangeBuilderTest {
         builder.nextAdd(0, 1);
         builder.endChange();
 
-        assertEquals(list, Arrays.asList("aa", "a", "b", "ccc"));
+        assertEquals(Arrays.asList("aa", "a", "b", "ccc"), list);
 
         observer.checkAddRemove(0, observableList, Collections.emptyList(), 0, 1);
         observer.checkAddRemove(1, observableList, Arrays.asList("c", "d"), 3, 4);
@@ -265,7 +261,7 @@ public class ListChangeBuilderTest {
         builder.nextAdd(1, 3);
         builder.endChange();
 
-        assertEquals(list, Arrays.asList("a", "aa", "aaa", "b", "c", "d"));
+        assertEquals(Arrays.asList("a", "aa", "aaa", "b", "c", "d"), list);
 
         observer.checkAddRemove(0, observableList, Collections.emptyList(), 1, 3);
         observer.checkUpdate(1, observableList, 0, 1);
@@ -283,9 +279,9 @@ public class ListChangeBuilderTest {
         builder.nextRemove(0, "a");
         builder.endChange();
 
-        assertEquals(list, Arrays.asList("aa", "b", "c", "d"));
+        assertEquals(Arrays.asList("aa", "b", "c", "d"), list);
 
-        observer.checkAddRemove(0, observableList, Arrays.asList("a"), 0, 1);
+        observer.checkAddRemove(0, observableList, Collections.singletonList("a"), 0, 1);
         observer.checkUpdate(1, observableList, 2, 4);
     }
 
@@ -342,7 +338,6 @@ public class ListChangeBuilderTest {
 
         observer.checkPermutation(0, observableList, 0, 6, new int[]{4, 0, 2, 3, 1, 5});
         observer.checkAddRemove(1, observableList, removed, 1, 1);
-
     }
 
     @Test
@@ -353,7 +348,7 @@ public class ListChangeBuilderTest {
         List<String> removed = Arrays.asList("c1", "c2");
         // After add: "a", "b", "c1", "c2", "d"
         builder.nextAdd(0, 1);
-        // After replace "a", "b", "c", "d"
+        // After replace: "a", "b", "c", "d"
         builder.nextReplace(2, 3, removed);
         builder.nextPermutation(1, 4, new int[]{3, 1, 2});
 
@@ -368,35 +363,34 @@ public class ListChangeBuilderTest {
         builder.beginChange();
 
         // Expect list to be "b", "c1", "c2", "d"
-        // After perm "b", "c2", "d", "c1"
+        // After perm: "b", "c2", "d", "c1"
         builder.nextPermutation(1, 4, new int[]{3, 1, 2});
         // After add: "a", "b", "c2", "d", "c1"
         builder.nextAdd(0, 1);
-        builder.nextReplace(2, 3, Arrays.asList("c2"));
-        builder.nextRemove(4, Arrays.asList("c1"));
+        builder.nextReplace(2, 3, Collections.singletonList("c2"));
+        builder.nextRemove(4, Collections.singletonList("c1"));
 
         builder.endChange();
 
         observer.checkPermutation(0, observableList, 1, 4, new int[]{3, 1, 2});
         observer.checkAddRemove(1, observableList, Collections.emptyList(), 0, 1);
-        observer.checkAddRemove(2, observableList, Arrays.asList("c2"), 2, 3);
-        observer.checkAddRemove(3, observableList, Arrays.asList("c1"), 4, 4);
+        observer.checkAddRemove(2, observableList, Collections.singletonList("c2"), 2, 3);
+        observer.checkAddRemove(3, observableList, Collections.singletonList("c1"), 4, 4);
     }
 
     @Test
     public void testPermutationAddRemoveAndPermutation() {
-
         builder.beginChange();
         // Expect list to be "b", "c1", "d"
-        List<String> removed = Arrays.asList("c1");
+        List<String> removed = Collections.singletonList("c1");
         // After perm: "c1", "b", "d"
         builder.nextPermutation(0, 2, new int[]{1, 0});
         // After add: "a", "c1", "b", "d"
         builder.nextAdd(0, 1);
-        // After remove/add "a", "b", "c", "d"
+        // After remove/add: "a", "b", "c", "d"
         builder.nextRemove(1, removed);
         builder.nextAdd(2, 3);
-        // After permutation "a", "c", "d", "b"
+        // After perm: "a", "c", "d", "b"
         builder.nextPermutation(1, 4, new int[]{3, 1, 2});
 
         builder.endChange();
@@ -438,6 +432,11 @@ public class ListChangeBuilderTest {
         builder.nextReplace(0, 1, Collections.emptyList());
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void testNextPermutationWithoutBegin() {
+        builder.nextPermutation(0, 2, new int[]{1, 0});
+    }
+
     @Test
     public void testEmpty() {
         builder.beginChange();
@@ -449,9 +448,7 @@ public class ListChangeBuilderTest {
     @Test
     public void testToString_Update() {
         observableList.removeListener(observer);
-        observableList.addListener((ListChangeListener.Change<? extends String> change) -> {
-            assertNotNull(change.toString());
-        });
+        observableList.addListener((Change<? extends String> change) -> assertNotNull(change.toString()));
         builder.beginChange();
 
         builder.nextUpdate(0);
@@ -462,9 +459,7 @@ public class ListChangeBuilderTest {
     @Test
     public void testToString_Add() {
         observableList.removeListener(observer);
-        observableList.addListener((ListChangeListener.Change<? extends String> change) -> {
-            assertNotNull(change.toString());
-        });
+        observableList.addListener((Change<? extends String> change) -> assertNotNull(change.toString()));
         builder.beginChange();
 
         builder.nextAdd(0, 1);
@@ -475,9 +470,7 @@ public class ListChangeBuilderTest {
     @Test
     public void testToString_Remove() {
         observableList.removeListener(observer);
-        observableList.addListener((ListChangeListener.Change<? extends String> change) -> {
-            assertNotNull(change.toString());
-        });
+        observableList.addListener((Change<? extends String> change) -> assertNotNull(change.toString()));
         builder.beginChange();
 
         builder.nextRemove(0, "");
@@ -486,11 +479,42 @@ public class ListChangeBuilderTest {
     }
 
     @Test
+    public void testToString_Remove2() {
+        observableList.removeListener(observer);
+        observableList.addListener((Change<? extends String> change) -> assertNotNull(change.toString()));
+        builder.beginChange();
+
+        builder.nextRemove(0, Collections.singletonList("a"));
+
+        builder.endChange();
+    }
+
+    @Test
+    public void testToString_Set() {
+        observableList.removeListener(observer);
+        observableList.addListener((Change<? extends String> change) -> assertNotNull(change.toString()));
+        builder.beginChange();
+
+        builder.nextSet(0, "aa");
+
+        builder.endChange();
+    }
+
+    @Test
+    public void testToString_Replace() {
+        observableList.removeListener(observer);
+        observableList.addListener((Change<? extends String> change) -> assertNotNull(change.toString()));
+        builder.beginChange();
+
+        builder.nextReplace(0, 2, Arrays.asList("aa", "aaa"));
+
+        builder.endChange();
+    }
+
+    @Test
     public void testToString_Composed() {
         observableList.removeListener(observer);
-        observableList.addListener((ListChangeListener.Change<? extends String> change) -> {
-            assertNotNull(change.toString());
-        });
+        observableList.addListener((Change<? extends String> change) -> assertNotNull(change.toString()));
         builder.beginChange();
 
         builder.nextUpdate(0);
@@ -503,9 +527,7 @@ public class ListChangeBuilderTest {
     @Test
     public void testToString_Permutation() {
         observableList.removeListener(observer);
-        observableList.addListener((ListChangeListener.Change<? extends String> change) -> {
-            assertNotNull(change.toString());
-        });
+        observableList.addListener((Change<? extends String> change) -> assertNotNull(change.toString()));
         builder.beginChange();
 
         builder.nextPermutation(0, 2, new int[]{1, 0});

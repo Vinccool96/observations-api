@@ -1,6 +1,5 @@
 package io.github.vinccool96.observations.collections;
 
-import io.github.vinccool96.observations.sun.collections.VetoableListDecorator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +32,6 @@ public class ObservableSubListTest {
         Object[][] data = new Object[][]{
                 {TestedObservableLists.ARRAY_LIST},
                 {TestedObservableLists.LINKED_LIST},
-                {TestedObservableLists.VETOABLE_LIST},
                 {TestedObservableLists.CHECKED_OBSERVABLE_ARRAY_LIST},
                 {TestedObservableLists.SYNCHRONIZED_OBSERVABLE_ARRAY_LIST}
         };
@@ -126,11 +124,10 @@ public class ObservableSubListTest {
 
     @Test
     public void testContainsNull() {
-        if (!(list instanceof VetoableListDecorator)) {
-            list.add(3, null);
-            sublist = list.subList(1, 5);
-            assertTrue(sublist.contains(null));
-        }
+        list.add(3, null);
+        sublist = list.subList(1, 5);
+        assertTrue(sublist.contains(null));
+
     }
 
     @Test
@@ -161,37 +158,28 @@ public class ObservableSubListTest {
 
     @Test
     public void testEqualsWithNull() {
-        if (!(list instanceof VetoableListDecorator)) {
-            sublist.add(2, null);
-            List<String> other = Arrays.asList("b", "c", null, "e");
-            assertFalse(sublist.equals(other));
-            assertTrue(other.hashCode() != sublist.hashCode());
-        }
+        sublist.add(2, null);
+        List<String> other = Arrays.asList("b", "c", null, "e");
+        assertFalse(sublist.equals(other));
+        assertTrue(other.hashCode() != sublist.hashCode());
+
     }
 
     @Test
     public void testEqualsWithNullOnLongerList() {
-        if (!(list instanceof VetoableListDecorator)) {
-            sublist.add(2, null);
-            List<String> other = Arrays.asList("b", "c", null, "d", "e");
-            assertTrue(sublist.equals(other));
-            assertEquals(other.hashCode(), sublist.hashCode());
-        } else {
-            sublist.add(2, "a");
-            List<String> other = Arrays.asList("b", "c", "a", "d", "e");
-            assertTrue(sublist.equals(other));
-            assertEquals(other.hashCode(), sublist.hashCode());
-        }
+        sublist.add(2, null);
+        List<String> other = Arrays.asList("b", "c", null, "d", "e");
+        assertTrue(sublist.equals(other));
+        assertEquals(other.hashCode(), sublist.hashCode());
     }
 
     @Test
     public void testEqualsWithNullOnShorterList() {
-        if (!(list instanceof VetoableListDecorator)) {
-            sublist.add(2, null);
-            List<String> other = Arrays.asList("b", "c", null);
-            assertFalse(sublist.equals(other));
-            assertTrue(other.hashCode() != sublist.hashCode());
-        }
+        sublist.add(2, null);
+        List<String> other = Arrays.asList("b", "c", null);
+        assertFalse(sublist.equals(other));
+        assertTrue(other.hashCode() != sublist.hashCode());
+
     }
 
     @Test
@@ -202,12 +190,11 @@ public class ObservableSubListTest {
 
     @Test
     public void testIndexOfWithNull() {
-        if (!(list instanceof VetoableListDecorator)) {
-            sublist.add(2, null);
-            assertEquals(3, sublist.indexOf("d"));
-            assertEquals(2, sublist.indexOf(null));
-            assertEquals(-1, sublist.indexOf("f"));
-        }
+        sublist.add(2, null);
+        assertEquals(3, sublist.indexOf("d"));
+        assertEquals(2, sublist.indexOf(null));
+        assertEquals(-1, sublist.indexOf("f"));
+
     }
 
     @Test
@@ -253,13 +240,12 @@ public class ObservableSubListTest {
 
     @Test
     public void testRemoveNull() {
-        if (!(list instanceof VetoableListDecorator)) {
-            sublist.add(2, null);
-            assertTrue(sublist.remove(null));
-            assertEquals(4, sublist.size());
-            assertEquals("[b, c, d, e]", sublist.toString());
-            assertEquals("[a, b, c, d, e, f]", list.toString());
-        }
+        sublist.add(2, null);
+        assertTrue(sublist.remove(null));
+        assertEquals(4, sublist.size());
+        assertEquals("[b, c, d, e]", sublist.toString());
+        assertEquals("[a, b, c, d, e, f]", list.toString());
+
     }
 
     @Test

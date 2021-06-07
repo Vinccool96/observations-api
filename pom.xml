@@ -84,11 +84,6 @@
             <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>net.java.openjfx.backport</groupId>
-            <artifactId>openjfx-78-backport-compat</artifactId>
-            <version>1.8.0.1</version>
-        </dependency>
     </dependencies>
 
     <scm>

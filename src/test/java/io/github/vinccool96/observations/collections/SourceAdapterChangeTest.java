@@ -2,7 +2,6 @@ package io.github.vinccool96.observations.collections;
 
 import io.github.vinccool96.observations.beans.Observable;
 import io.github.vinccool96.observations.collections.transformation.SortedList;
-import io.github.vinccool96.observations.sun.collections.VetoableListDecorator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,7 +9,6 @@ import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 @RunWith(Parameterized.class)
 public class SourceAdapterChangeTest {
@@ -31,21 +29,12 @@ public class SourceAdapterChangeTest {
     private static final ListFactory synchronizedObservableList =
             items -> ObservableCollections.synchronizedObservableList(items);
 
-    private static final ListFactory vetoableListDecorator =
-            items -> new VetoableListDecorator<Person>(items) {
-
-                @Override
-                protected void onProposedChange(List<Person> added, int[] removed) {
-                }
-            };
-
     @Parameterized.Parameters
     public static Collection createParameters() {
         Object[][] data = new Object[][]{
                 {unmodifiableObservableList},
                 {checkedObservableList},
                 {synchronizedObservableList},
-                {vetoableListDecorator},
         };
         return Arrays.asList(data);
     }

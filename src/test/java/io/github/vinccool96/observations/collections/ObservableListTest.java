@@ -1,10 +1,10 @@
 package io.github.vinccool96.observations.collections;
 
-import io.github.vinccool96.observations.sun.collections.VetoableListDecorator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -13,30 +13,27 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-/**
- * Tests for ObservableList.
- */
 @RunWith(Parameterized.class)
+@SuppressWarnings("SimplifiableAssertion")
 public class ObservableListTest {
 
-    static final List<String> EMPTY = Collections.emptyList();
+    private static final List<String> EMPTY = Collections.emptyList();
 
-    final Callable<ObservableList<String>> listFactory;
+    private final Callable<ObservableList<String>> listFactory;
 
-    ObservableList<String> list;
+    private ObservableList<String> list;
 
-    MockListObserver<String> mlo;
+    private MockListObserver<String> mlo;
 
     public ObservableListTest(final Callable<ObservableList<String>> listFactory) {
         this.listFactory = listFactory;
     }
 
-    @Parameterized.Parameters
-    public static Collection createParameters() {
+    @Parameters
+    public static Collection<?> createParameters() {
         Object[][] data = new Object[][]{
                 {TestedObservableLists.ARRAY_LIST},
                 {TestedObservableLists.LINKED_LIST},
-                {TestedObservableLists.VETOABLE_LIST},
                 {TestedObservableLists.CHECKED_OBSERVABLE_ARRAY_LIST},
                 {TestedObservableLists.SYNCHRONIZED_OBSERVABLE_ARRAY_LIST},
                 {TestedObservableLists.OBSERVABLE_LIST_PROPERTY}
@@ -47,7 +44,7 @@ public class ObservableListTest {
     @Before
     public void setUp() throws Exception {
         list = listFactory.call();
-        mlo = new MockListObserver<String>();
+        mlo = new MockListObserver<>();
         list.addListener(mlo);
 
         useListData("one", "two", "three");
@@ -60,7 +57,7 @@ public class ObservableListTest {
      * @param strings
      *         the strings to use for the list in the fixture
      */
-    void useListData(String... strings) {
+    private void useListData(String... strings) {
         list.clear();
         list.addAll(Arrays.asList(strings));
         mlo.clear();
@@ -70,7 +67,7 @@ public class ObservableListTest {
 
     @Test
     public void testObserverAddRemove() {
-        MockListObserver<String> mlo2 = new MockListObserver<String>();
+        MockListObserver<String> mlo2 = new MockListObserver<>();
         list.addListener(mlo2);
         list.removeListener(mlo);
         list.add("xyzzy");
@@ -142,7 +139,7 @@ public class ObservableListTest {
     @Test
     public void testRemoveByIndex() {
         String r = list.remove(1);
-        mlo.check1AddRemove(list, Arrays.asList("two"), 1, 1);
+        mlo.check1AddRemove(list, Collections.singletonList("two"), 1, 1);
         assertEquals("two", r);
     }
 
@@ -150,23 +147,16 @@ public class ObservableListTest {
     public void testRemoveObject() {
         useListData("one", "x", "two", "three");
         boolean b = list.remove("two");
-        mlo.check1AddRemove(list, Arrays.asList("two"), 2, 2);
+        mlo.check1AddRemove(list, Collections.singletonList("two"), 2, 2);
         assertTrue(b);
     }
 
     @Test
     public void testRemoveNull() {
-        if (!(list instanceof VetoableListDecorator)) {
-            useListData("one", "two", null, "three");
-            boolean b = list.remove(null);
-            mlo.check1AddRemove(list, Arrays.asList((String) null), 2, 2);
-            assertTrue(b);
-        } else {
-            useListData("one", "two", "three");
-            boolean b = list.remove("three");
-            mlo.check1AddRemove(list, Arrays.asList("three"), 2, 2);
-            assertTrue(b);
-        }
+        useListData("one", "two", null, "three");
+        boolean b = list.remove(null);
+        mlo.check1AddRemove(list, Collections.singletonList(null), 2, 2);
+        assertTrue(b);
     }
 
     @Test
@@ -175,16 +165,16 @@ public class ObservableListTest {
         list.removeAll(Arrays.asList("one", "two", "four", "six"));
         assertEquals(2, mlo.calls.size());
         mlo.checkAddRemove(0, list, Arrays.asList("one", "two"), 0, 0);
-        mlo.checkAddRemove(1, list, Arrays.asList("four"), 1, 1);
+        mlo.checkAddRemove(1, list, Collections.singletonList("four"), 1, 1);
     }
 
     @Test
     public void testRemoveAll_1() {
         useListData("a", "c", "d", "c");
-        list.removeAll(Arrays.asList("c"));
+        list.removeAll(Collections.singletonList("c"));
         assertEquals(2, mlo.calls.size());
-        mlo.checkAddRemove(0, list, Arrays.asList("c"), 1, 1);
-        mlo.checkAddRemove(1, list, Arrays.asList("c"), 2, 2);
+        mlo.checkAddRemove(0, list, Collections.singletonList("c"), 1, 1);
+        mlo.checkAddRemove(1, list, Collections.singletonList("c"), 2, 2);
     }
 
     @Test
@@ -197,17 +187,15 @@ public class ObservableListTest {
     @Test
     public void testRemoveAll_3() {
         useListData("a", "c", "d", "c");
-        list.removeAll(Arrays.asList("d"));
-        assertEquals(1, mlo.calls.size());
-        mlo.checkAddRemove(0, list, Arrays.asList("d"), 2, 2);
+        list.removeAll(Collections.singletonList("d"));
+        mlo.check1AddRemove(list, Collections.singletonList("d"), 2, 2);
     }
 
     @Test
     public void testRemoveAll_4() {
         useListData("a", "c", "d", "c");
         list.removeAll(Arrays.asList("d", "c"));
-        assertEquals(1, mlo.calls.size());
-        mlo.checkAddRemove(0, list, Arrays.asList("c", "d", "c"), 1, 1);
+        mlo.check1AddRemove(list, Arrays.asList("c", "d", "c"), 1, 1);
     }
 
     @Test
@@ -215,7 +203,7 @@ public class ObservableListTest {
         useListData("one", "two", "three", "four", "five");
         list.retainAll(Arrays.asList("two", "five", "six"));
         assertEquals(2, mlo.calls.size());
-        mlo.checkAddRemove(0, list, Arrays.asList("one"), 0, 0);
+        mlo.checkAddRemove(0, list, Collections.singletonList("one"), 0, 0);
         mlo.checkAddRemove(1, list, Arrays.asList("three", "four"), 1, 1);
     }
 
@@ -230,15 +218,13 @@ public class ObservableListTest {
     @Test
     public void testSet() {
         String r = list.set(1, "fnord");
-        mlo.check1AddRemove(list, Arrays.asList("two"), 1, 2);
+        mlo.check1AddRemove(list, Collections.singletonList("two"), 1, 2);
         assertEquals("two", r);
     }
 
     @Test
     public void testObserverCanRemoveObservers() {
-        final ListChangeListener<String> listObserver = change -> {
-            change.getList().removeListener(mlo);
-        };
+        final ListChangeListener<String> listObserver = change -> change.getList().removeListener(mlo);
         list.addListener(listObserver);
         list.add("x");
         mlo.clear();
@@ -249,16 +235,16 @@ public class ObservableListTest {
         final StringListChangeListener listener = new StringListChangeListener();
         list.addListener(listener);
         list.add("z");
-        assertEquals(listener.counter, 1);
+        assertEquals(1, listener.counter);
         list.add("zz");
-        assertEquals(listener.counter, 1);
+        assertEquals(1, listener.counter);
     }
 
     @Test
     public void testEqualsAndHashCode() {
         final List<String> other = Arrays.asList("one", "two", "three");
         assertTrue(list.equals(other));
-        assertEquals(list.hashCode(), other.hashCode());
+        assertEquals(other.hashCode(), list.hashCode());
     }
 
     private static class StringListChangeListener implements ListChangeListener<String> {
@@ -268,7 +254,7 @@ public class ObservableListTest {
         @Override
         public void onChanged(final Change<? extends String> change) {
             change.getList().removeListener(this);
-            ++counter;
+            counter++;
         }
 
     }

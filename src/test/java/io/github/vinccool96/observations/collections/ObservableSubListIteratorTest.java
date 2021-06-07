@@ -32,7 +32,6 @@ public class ObservableSubListIteratorTest extends ObservableListIteratorTest {
         Object[][] data = new Object[][]{
                 {TestedObservableLists.ARRAY_LIST},
                 {TestedObservableLists.LINKED_LIST},
-                {TestedObservableLists.VETOABLE_LIST},
                 {TestedObservableLists.CHECKED_OBSERVABLE_ARRAY_LIST},
                 {TestedObservableLists.SYNCHRONIZED_OBSERVABLE_ARRAY_LIST}
         };

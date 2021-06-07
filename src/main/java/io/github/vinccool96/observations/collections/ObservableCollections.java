@@ -249,7 +249,7 @@ public class ObservableCollections {
         if (map == null) {
             throw new NullPointerException();
         }
-        return new SynchronizedObservableMap<K, V>(map);
+        return new SynchronizedObservableMap<>(map);
     }
 
     /**
