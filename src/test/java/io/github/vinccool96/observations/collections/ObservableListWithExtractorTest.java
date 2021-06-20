@@ -14,56 +14,51 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
-public class ObservableListWithExtractor {
+public class ObservableListWithExtractorTest {
 
     private final Mode mode;
 
-    public static enum Mode {
-        OBSERVABLE_LIST_WRAPPER,
-        DECORATOR
-    }
+    private ObservableList<Person> modifiedList;
+
+    private ObservableList<Person> observedList;
+
+    private MockListObserver<Person> obs;
+
+    private Person p0;
 
     @Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{{Mode.OBSERVABLE_LIST_WRAPPER}, {Mode.DECORATOR}});
     }
 
-    private ObservableList<Person> modifiedList;
-
-    private ObservableList<Person> observedList;
-
-    private MockListObserver obs;
-
-    private Person p0;
-
-    public ObservableListWithExtractor(Mode mode) {
+    public ObservableListWithExtractorTest(Mode mode) {
         this.mode = mode;
-    }
-
-    private void updateP0() {
-        p0.name.set("bar");
     }
 
     @Before
     public void setUp() {
         p0 = new Person();
-        obs = new MockListObserver();
+        obs = new MockListObserver<>();
         Callback<Person, Observable[]> callback = param -> new Observable[]{param.name};
         if (mode == Mode.OBSERVABLE_LIST_WRAPPER) {
             observedList = modifiedList = ObservableCollections.observableArrayList(callback);
         } else {
             modifiedList = ObservableCollections.observableArrayList();
-            observedList = new ElementObservableListDecorator<Person>(modifiedList, callback);
+            observedList = new ElementObservableListDecorator<>(modifiedList, callback);
         }
 
         modifiedList.add(p0);
         observedList.addListener(obs);
     }
 
+    private void updateP0() {
+        p0.name.set("bar");
+    }
+
     @Test
     public void testUpdate_add() {
         updateP0();
-        obs.check1Update(modifiedList, 0, 1);
+        obs.check1Update(observedList, 0, 1);
     }
 
     @Test
@@ -250,7 +245,7 @@ public class ObservableListWithExtractor {
     @Test
     public void testUpdate_sublist_removeAll() {
         List<Person> sublist = modifiedList.subList(0, 1);
-        sublist.removeAll(Arrays.asList(p0));
+        sublist.removeAll(Collections.singletonList(p0));
         obs.clear();
         updateP0();
         obs.check0();
@@ -291,7 +286,6 @@ public class ObservableListWithExtractor {
 
     @Test
     public void testMultipleUpdate() {
-
         modifiedList.add(new Person());
         modifiedList.addAll(p0, p0);
 
@@ -299,31 +293,37 @@ public class ObservableListWithExtractor {
 
         updateP0();
 
-        obs.checkUpdate(0, modifiedList, 0, 1);
-        obs.checkUpdate(1, modifiedList, 2, 4);
+        obs.checkUpdate(0, observedList, 0, 1);
+        obs.checkUpdate(1, observedList, 2, 4);
         assertEquals(2, obs.calls.size());
-
     }
 
     @Test
     public void testPreFilledList() {
-        ArrayList<Person> arrayList = new ArrayList<Person>();
+        ArrayList<Person> arrayList = new ArrayList<>();
         arrayList.add(p0);
-        obs = new MockListObserver();
+        obs = new MockListObserver<>();
         Callback<Person, Observable[]> callback = param -> new Observable[]{param.name};
         if (mode == Mode.OBSERVABLE_LIST_WRAPPER) {
             observedList = modifiedList = ObservableCollections.observableList(arrayList, callback);
         } else {
             modifiedList = ObservableCollections.observableArrayList(arrayList);
-            observedList = new ElementObservableListDecorator<Person>(modifiedList, callback);
+            observedList = new ElementObservableListDecorator<>(modifiedList, callback);
         }
 
         observedList.addListener(obs);
 
         updateP0();
 
-        obs.checkUpdate(0, observedList, 0, 1);
-        assertEquals(1, obs.calls.size());
+        obs.check1Update(observedList, 0, 1);
+    }
+
+    private enum Mode {
+
+        OBSERVABLE_LIST_WRAPPER,
+
+        DECORATOR
+
     }
 
 }

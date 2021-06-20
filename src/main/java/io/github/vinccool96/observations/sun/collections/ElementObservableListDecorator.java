@@ -10,79 +10,70 @@ import io.github.vinccool96.observations.util.Callback;
 
 import java.util.*;
 
+@SuppressWarnings({"FieldCanBeLocal", "SuspiciousToArrayCall", "ForLoopReplaceableByForEach"})
 public final class ElementObservableListDecorator<E> extends ObservableListBase<E> implements ObservableList<E> {
 
     private final ObservableList<E> decoratedList;
 
     private final ListChangeListener<E> listener;
 
-    private ElementObserver<E> observer;
+    private final ElementObserver<E> observer;
 
-    public ElementObservableListDecorator(ObservableList<E> decorated,
-            Callback<E, Observable[]> extractor) {
-        this.observer = new ElementObserver<E>(extractor, new Callback<E, InvalidationListener>() {
+    public ElementObservableListDecorator(ObservableList<E> decorated, Callback<E, Observable[]> extractor) {
+        this.observer = new ElementObserver<>(extractor, new Callback<E, InvalidationListener>() {
 
             @Override
             public InvalidationListener call(final E e) {
-                return new InvalidationListener() {
-
-                    @Override
-                    public void invalidated(Observable observable) {
-                        beginChange();
-                        int i = 0;
-                        if (decoratedList instanceof RandomAccess) {
-                            final int size = size();
-                            for (; i < size; ++i) {
-                                if (get(i) == e) {
-                                    nextUpdate(i);
-                                }
-                            }
-                        } else {
-                            for (Iterator<?> it = iterator(); it.hasNext(); ) {
-                                if (it.next() == e) {
-                                    nextUpdate(i);
-                                }
-                                ++i;
+                return observable -> {
+                    beginChange();
+                    int i = 0;
+                    if (decoratedList instanceof RandomAccess) {
+                        final int size = size();
+                        for (; i < size; i++) {
+                            if (get(i) == e) {
+                                nextUpdate(i);
                             }
                         }
-                        endChange();
+                    } else {
+                        for (Iterator<?> it = iterator(); it.hasNext(); ) {
+                            if (it.next() == e) {
+                                nextUpdate(i);
+                            }
+                            i++;
+                        }
                     }
+                    endChange();
                 };
             }
         }, this);
         this.decoratedList = decorated;
-        final int sz = decoratedList.size();
-        for (int i = 0; i < sz; ++i) {
-            observer.attachListener(decoratedList.get(i));
+        for (E value : decoratedList) {
+            observer.attachListener(value);
         }
-        listener = new ListChangeListener<E>() {
-
-            @Override
-            public void onChanged(Change<? extends E> change) {
-                while (change.next()) {
-                    if (change.wasAdded() || change.wasRemoved()) {
-                        final int removedSize = change.getRemovedSize();
-                        final List<? extends E> removed = change.getRemoved();
-                        for (int i = 0; i < removedSize; ++i) {
-                            observer.detachListener(removed.get(i));
+        listener = change -> {
+            while (change.next()) {
+                if (change.wasAdded() || change.wasRemoved()) {
+                    final int removedSize = change.getRemovedSize();
+                    final List<? extends E> removed = change.getRemoved();
+                    for (int i = 0; i < removedSize; i++) {
+                        observer.detachListener(removed.get(i));
+                    }
+                    if (decoratedList instanceof RandomAccess) {
+                        final int to = change.getTo();
+                        for (int i = change.getFrom(); i < to; i++) {
+                            observer.attachListener(decoratedList.get(i));
                         }
-                        if (decoratedList instanceof RandomAccess) {
-                            final int to = change.getTo();
-                            for (int i = change.getFrom(); i < to; ++i) {
-                                observer.attachListener(decoratedList.get(i));
-                            }
-                        } else {
-                            for (E e : change.getAddedSubList()) {
-                                observer.attachListener(e);
-                            }
+                    } else {
+                        for (E e : change.getAddedSubList()) {
+                            observer.attachListener(e);
                         }
                     }
                 }
-                change.reset();
-                fireChange(change);
             }
+            change.reset();
+            fireChange(change);
         };
-        this.decoratedList.addListener(new WeakListChangeListener<E>(listener));
+        this.decoratedList.addListener(new WeakListChangeListener<>(listener));
     }
 
     @Override
@@ -206,16 +197,19 @@ public final class ElementObservableListDecorator<E> extends ObservableListBase<
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean setAll(E... elements) {
         return decoratedList.setAll(elements);
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean retainAll(E... elements) {
         return decoratedList.retainAll(elements);
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean removeAll(E... elements) {
         return decoratedList.removeAll(elements);
     }
@@ -226,6 +220,7 @@ public final class ElementObservableListDecorator<E> extends ObservableListBase<
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean addAll(E... elements) {
         return decoratedList.addAll(elements);
     }

@@ -12,7 +12,8 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 /**
- * Utility class that consists of static methods that are 1:1 copies of Collections methods.
+ * Utility class that consists of static methods that are 1:1 copies of Collections methods, as well as other utility
+ * methods.
  * <p>
  * The wrapper methods (like synchronizedObservableList or emptyObservableList) has exactly the same functionality as
  * the methods in Collections, with exception that they return ObservableList and are therefore suitable for methods
@@ -620,6 +621,24 @@ public class ObservableCollections {
     @ReturnsUnmodifiableCollection
     public static <E> ObservableList<E> emptyObservableList() {
         return new EmptyObservableList<>();
+    }
+
+    /**
+     * Utility method that wraps an {@link ObservableList} containing {@link Observable} elements in another {@code
+     * ObservableList} that receives notifications when the elements it contains are updated.
+     *
+     * @param list
+     *         the list to wrap
+     * @param extractor
+     *         a {@code Callback} to get which elements to observe
+     * @param <E>
+     *         the list element type
+     *
+     * @return A list that also listens to the modifications of its elements
+     */
+    public static <E> ObservableList<E> observableListWithExtractor(ObservableList<E> list,
+            Callback<E, Observable[]> extractor) {
+        return new ElementObservableListDecorator<>(list, extractor);
     }
 
     /**
