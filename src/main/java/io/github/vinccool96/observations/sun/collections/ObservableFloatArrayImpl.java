@@ -53,16 +53,16 @@ public final class ObservableFloatArrayImpl extends ObservableArrayBase<Observab
         return size;
     }
 
-    private void addAllInternal(ObservableFloatArray src, int srcIndex, int length) {
+    private void addAllInternal(float[] src, int srcIndex, int length) {
         growCapacity(length);
-        src.copyTo(srcIndex, array, size, length);
+        System.arraycopy(src, srcIndex, array, size, length);
         size += length;
         fireChange(length != 0, size - length, size);
     }
 
-    private void addAllInternal(float[] src, int srcIndex, int length) {
+    private void addAllInternal(ObservableFloatArray src, int srcIndex, int length) {
         growCapacity(length);
-        System.arraycopy(src, srcIndex, array, size, length);
+        src.copyTo(srcIndex, array, size, length);
         size += length;
         fireChange(length != 0, size - length, size);
     }
@@ -78,15 +78,24 @@ public final class ObservableFloatArrayImpl extends ObservableArrayBase<Observab
     }
 
     @Override
-    public void addAll(ObservableFloatArray src, int srcIndex, int length) {
+    public void addAll(float[] src, int srcIndex, int length) {
         rangeCheck(src, srcIndex, length);
         addAllInternal(src, srcIndex, length);
     }
 
     @Override
-    public void addAll(float[] src, int srcIndex, int length) {
+    public void addAll(ObservableFloatArray src, int srcIndex, int length) {
         rangeCheck(src, srcIndex, length);
         addAllInternal(src, srcIndex, length);
+    }
+
+    private void setAllInternal(float[] src, int srcIndex, int length) {
+        boolean sizeChanged = size() != length;
+        size = 0;
+        ensureCapacity(length);
+        System.arraycopy(src, srcIndex, array, 0, length);
+        size = length;
+        fireChange(sizeChanged, 0, size);
     }
 
     private void setAllInternal(ObservableFloatArray src, int srcIndex, int length) {
@@ -108,13 +117,15 @@ public final class ObservableFloatArrayImpl extends ObservableArrayBase<Observab
         }
     }
 
-    private void setAllInternal(float[] src, int srcIndex, int length) {
-        boolean sizeChanged = size() != length;
-        size = 0;
-        ensureCapacity(length);
-        System.arraycopy(src, srcIndex, array, 0, length);
-        size = length;
-        fireChange(sizeChanged, 0, size);
+    @Override
+    public void setAll(float[] src, int srcIndex, int length) {
+        rangeCheck(src, srcIndex, length);
+        setAllInternal(src, srcIndex, length);
+    }
+
+    @Override
+    public void setAll(float[] src) {
+        setAllInternal(src, 0, src.length);
     }
 
     @Override
@@ -126,17 +137,6 @@ public final class ObservableFloatArrayImpl extends ObservableArrayBase<Observab
     public void setAll(ObservableFloatArray src, int srcIndex, int length) {
         rangeCheck(src, srcIndex, length);
         setAllInternal(src, srcIndex, length);
-    }
-
-    @Override
-    public void setAll(float[] src, int srcIndex, int length) {
-        rangeCheck(src, srcIndex, length);
-        setAllInternal(src, srcIndex, length);
-    }
-
-    @Override
-    public void setAll(float[] src) {
-        setAllInternal(src, 0, src.length);
     }
 
     @Override
@@ -154,15 +154,6 @@ public final class ObservableFloatArrayImpl extends ObservableArrayBase<Observab
     }
 
     @Override
-    public float[] toArray(float[] dest) {
-        if ((dest == null) || (size() > dest.length)) {
-            dest = new float[size()];
-        }
-        System.arraycopy(array, 0, dest, 0, size());
-        return dest;
-    }
-
-    @Override
     public float get(int index) {
         rangeCheck(index + 1);
         return array[index];
@@ -173,6 +164,15 @@ public final class ObservableFloatArrayImpl extends ObservableArrayBase<Observab
         rangeCheck(index + 1);
         array[index] = value;
         fireChange(false, index, index + 1);
+    }
+
+    @Override
+    public float[] toArray(float[] dest) {
+        if ((dest == null) || (size() > dest.length)) {
+            dest = new float[size()];
+        }
+        System.arraycopy(array, 0, dest, 0, size());
+        return dest;
     }
 
     @Override
@@ -241,13 +241,10 @@ public final class ObservableFloatArrayImpl extends ObservableArrayBase<Observab
     }
 
     private static int hugeCapacity(int minCapacity) {
-        if (minCapacity < 0) // overflow
-        {
+        if (minCapacity < 0) { // overflow
             throw new OutOfMemoryError();
         }
-        return (minCapacity > MAX_ARRAY_SIZE) ?
-                Integer.MAX_VALUE :
-                MAX_ARRAY_SIZE;
+        return (minCapacity > MAX_ARRAY_SIZE) ? Integer.MAX_VALUE : MAX_ARRAY_SIZE;
     }
 
     @Override
@@ -265,24 +262,24 @@ public final class ObservableFloatArrayImpl extends ObservableArrayBase<Observab
         }
     }
 
-    private void rangeCheck(ObservableFloatArray src, int srcIndex, int length) {
-        if (src == null) {
-            throw new NullPointerException();
-        }
-        if (srcIndex < 0 || srcIndex + length > src.size()) {
-            throw new ArrayIndexOutOfBoundsException(src.size());
-        }
-        if (length < 0) {
-            throw new ArrayIndexOutOfBoundsException(-1);
-        }
-    }
-
     private void rangeCheck(float[] src, int srcIndex, int length) {
         if (src == null) {
             throw new NullPointerException();
         }
         if (srcIndex < 0 || srcIndex + length > src.length) {
             throw new ArrayIndexOutOfBoundsException(src.length);
+        }
+        if (length < 0) {
+            throw new ArrayIndexOutOfBoundsException(-1);
+        }
+    }
+
+    private void rangeCheck(ObservableFloatArray src, int srcIndex, int length) {
+        if (src == null) {
+            throw new NullPointerException();
+        }
+        if (srcIndex < 0 || srcIndex + length > src.size()) {
+            throw new ArrayIndexOutOfBoundsException(src.size());
         }
         if (length < 0) {
             throw new ArrayIndexOutOfBoundsException(-1);

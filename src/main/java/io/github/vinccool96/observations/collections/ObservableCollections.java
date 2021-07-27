@@ -290,36 +290,36 @@ public class ObservableCollections {
     }
 
     /**
-     * Creates a new empty observable integer array.
+     * Creates a new empty observable double array.
      *
-     * @return a newly created ObservableIntegerArray
+     * @return a newly created ObservableDoubleArray
      */
-    public static ObservableIntegerArray observableIntegerArray() {
-        return new ObservableIntegerArrayImpl();
+    public static ObservableDoubleArray observableDoubleArray() {
+        return new ObservableDoubleArrayImpl();
     }
 
     /**
-     * Creates a new observable integer array with {@code values} set to it.
+     * Creates a new observable double array with {@code values} set to it.
      *
      * @param values
-     *         the values that will be in the new observable integer array
+     *         the values that will be in the new observable double array
      *
-     * @return a newly created ObservableIntegerArray
+     * @return a newly created ObservableDoubleArray
      */
-    public static ObservableIntegerArray observableIntegerArray(int... values) {
-        return new ObservableIntegerArrayImpl(values);
+    public static ObservableDoubleArray observableDoubleArray(double... values) {
+        return new ObservableDoubleArrayImpl(values);
     }
 
     /**
-     * Creates a new observable integer array with copy of elements in given {@code array}.
+     * Creates a new observable double array with copy of elements in given {@code array}.
      *
      * @param array
-     *         observable integer array to copy
+     *         observable double array to copy
      *
-     * @return a newly created ObservableIntegerArray
+     * @return a newly created ObservableDoubleArray
      */
-    public static ObservableIntegerArray observableIntegerArray(ObservableIntegerArray array) {
-        return new ObservableIntegerArrayImpl(array);
+    public static ObservableDoubleArray observableDoubleArray(ObservableDoubleArray array) {
+        return new ObservableDoubleArrayImpl(array);
     }
 
     /**
@@ -356,36 +356,36 @@ public class ObservableCollections {
     }
 
     /**
-     * Creates a new empty observable double array.
+     * Creates a new empty observable integer array.
      *
-     * @return a newly created ObservableDoubleArray
+     * @return a newly created ObservableIntegerArray
      */
-    public static ObservableDoubleArray observableDoubleArray() {
-        return new ObservableDoubleArrayImpl();
+    public static ObservableIntegerArray observableIntegerArray() {
+        return new ObservableIntegerArrayImpl();
     }
 
     /**
-     * Creates a new observable double array with {@code values} set to it.
+     * Creates a new observable integer array with {@code values} set to it.
      *
      * @param values
-     *         the values that will be in the new observable double array
+     *         the values that will be in the new observable integer array
      *
-     * @return a newly created ObservableDoubleArray
+     * @return a newly created ObservableIntegerArray
      */
-    public static ObservableDoubleArray observableDoubleArray(double... values) {
-        return new ObservableDoubleArrayImpl(values);
+    public static ObservableIntegerArray observableIntegerArray(int... values) {
+        return new ObservableIntegerArrayImpl(values);
     }
 
     /**
-     * Creates a new observable double array with copy of elements in given {@code array}.
+     * Creates a new observable integer array with copy of elements in given {@code array}.
      *
      * @param array
-     *         observable double array to copy
+     *         observable integer array to copy
      *
-     * @return a newly created ObservableDoubleArray
+     * @return a newly created ObservableIntegerArray
      */
-    public static ObservableDoubleArray observableDoubleArray(ObservableDoubleArray array) {
-        return new ObservableDoubleArrayImpl(array);
+    public static ObservableIntegerArray observableIntegerArray(ObservableIntegerArray array) {
+        return new ObservableIntegerArrayImpl(array);
     }
 
     /**

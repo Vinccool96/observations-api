@@ -53,13 +53,6 @@ public class ObservableIntegerArrayImpl extends ObservableArrayBase<ObservableIn
         return size;
     }
 
-    private void addAllInternal(ObservableIntegerArray src, int srcIndex, int length) {
-        growCapacity(length);
-        src.copyTo(srcIndex, array, size, length);
-        size += length;
-        fireChange(length != 0, size - length, size);
-    }
-
     private void addAllInternal(int[] src, int srcIndex, int length) {
         growCapacity(length);
         System.arraycopy(src, srcIndex, array, size, length);
@@ -67,9 +60,11 @@ public class ObservableIntegerArrayImpl extends ObservableArrayBase<ObservableIn
         fireChange(length != 0, size - length, size);
     }
 
-    @Override
-    public void addAll(ObservableIntegerArray src) {
-        addAllInternal(src, 0, src.size());
+    private void addAllInternal(ObservableIntegerArray src, int srcIndex, int length) {
+        growCapacity(length);
+        src.copyTo(srcIndex, array, size, length);
+        size += length;
+        fireChange(length != 0, size - length, size);
     }
 
     @Override
@@ -78,15 +73,29 @@ public class ObservableIntegerArrayImpl extends ObservableArrayBase<ObservableIn
     }
 
     @Override
-    public void addAll(ObservableIntegerArray src, int srcIndex, int length) {
-        rangeCheck(src, srcIndex, length);
-        addAllInternal(src, srcIndex, length);
+    public void addAll(ObservableIntegerArray src) {
+        addAllInternal(src, 0, src.size());
     }
 
     @Override
     public void addAll(int[] src, int srcIndex, int length) {
         rangeCheck(src, srcIndex, length);
         addAllInternal(src, srcIndex, length);
+    }
+
+    @Override
+    public void addAll(ObservableIntegerArray src, int srcIndex, int length) {
+        rangeCheck(src, srcIndex, length);
+        addAllInternal(src, srcIndex, length);
+    }
+
+    private void setAllInternal(int[] src, int srcIndex, int length) {
+        boolean sizeChanged = size() != length;
+        size = 0;
+        ensureCapacity(length);
+        System.arraycopy(src, srcIndex, array, 0, length);
+        size = length;
+        fireChange(sizeChanged, 0, size);
     }
 
     private void setAllInternal(ObservableIntegerArray src, int srcIndex, int length) {
@@ -108,24 +117,14 @@ public class ObservableIntegerArrayImpl extends ObservableArrayBase<ObservableIn
         }
     }
 
-    private void setAllInternal(int[] src, int srcIndex, int length) {
-        boolean sizeChanged = size() != length;
-        size = 0;
-        ensureCapacity(length);
-        System.arraycopy(src, srcIndex, array, 0, length);
-        size = length;
-        fireChange(sizeChanged, 0, size);
+    @Override
+    public void setAll(int[] src) {
+        setAllInternal(src, 0, src.length);
     }
 
     @Override
     public void setAll(ObservableIntegerArray src) {
         setAllInternal(src, 0, src.size());
-    }
-
-    @Override
-    public void setAll(ObservableIntegerArray src, int srcIndex, int length) {
-        rangeCheck(src, srcIndex, length);
-        setAllInternal(src, srcIndex, length);
     }
 
     @Override
@@ -135,8 +134,9 @@ public class ObservableIntegerArrayImpl extends ObservableArrayBase<ObservableIn
     }
 
     @Override
-    public void setAll(int[] src) {
-        setAllInternal(src, 0, src.length);
+    public void setAll(ObservableIntegerArray src, int srcIndex, int length) {
+        rangeCheck(src, srcIndex, length);
+        setAllInternal(src, srcIndex, length);
     }
 
     @Override
@@ -154,15 +154,6 @@ public class ObservableIntegerArrayImpl extends ObservableArrayBase<ObservableIn
     }
 
     @Override
-    public int[] toArray(int[] dest) {
-        if ((dest == null) || (size() > dest.length)) {
-            dest = new int[size()];
-        }
-        System.arraycopy(array, 0, dest, 0, size());
-        return dest;
-    }
-
-    @Override
     public int get(int index) {
         rangeCheck(index + 1);
         return array[index];
@@ -173,6 +164,15 @@ public class ObservableIntegerArrayImpl extends ObservableArrayBase<ObservableIn
         rangeCheck(index + 1);
         array[index] = value;
         fireChange(false, index, index + 1);
+    }
+
+    @Override
+    public int[] toArray(int[] dest) {
+        if ((dest == null) || (size() > dest.length)) {
+            dest = new int[size()];
+        }
+        System.arraycopy(array, 0, dest, 0, size());
+        return dest;
     }
 
     @Override
@@ -241,13 +241,10 @@ public class ObservableIntegerArrayImpl extends ObservableArrayBase<ObservableIn
     }
 
     private static int hugeCapacity(int minCapacity) {
-        if (minCapacity < 0) // overflow
-        {
+        if (minCapacity < 0) { // overflow
             throw new OutOfMemoryError();
         }
-        return (minCapacity > MAX_ARRAY_SIZE) ?
-                Integer.MAX_VALUE :
-                MAX_ARRAY_SIZE;
+        return (minCapacity > MAX_ARRAY_SIZE) ? Integer.MAX_VALUE : MAX_ARRAY_SIZE;
     }
 
     @Override
@@ -265,24 +262,24 @@ public class ObservableIntegerArrayImpl extends ObservableArrayBase<ObservableIn
         }
     }
 
-    private void rangeCheck(ObservableIntegerArray src, int srcIndex, int length) {
-        if (src == null) {
-            throw new NullPointerException();
-        }
-        if (srcIndex < 0 || srcIndex + length > src.size()) {
-            throw new ArrayIndexOutOfBoundsException(src.size());
-        }
-        if (length < 0) {
-            throw new ArrayIndexOutOfBoundsException(-1);
-        }
-    }
-
     private void rangeCheck(int[] src, int srcIndex, int length) {
         if (src == null) {
             throw new NullPointerException();
         }
         if (srcIndex < 0 || srcIndex + length > src.length) {
             throw new ArrayIndexOutOfBoundsException(src.length);
+        }
+        if (length < 0) {
+            throw new ArrayIndexOutOfBoundsException(-1);
+        }
+    }
+
+    private void rangeCheck(ObservableIntegerArray src, int srcIndex, int length) {
+        if (src == null) {
+            throw new NullPointerException();
+        }
+        if (srcIndex < 0 || srcIndex + length > src.size()) {
+            throw new ArrayIndexOutOfBoundsException(src.size());
         }
         if (length < 0) {
             throw new ArrayIndexOutOfBoundsException(-1);

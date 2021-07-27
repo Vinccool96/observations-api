@@ -13,6 +13,12 @@ public final class ObservableDoubleArrayImpl extends ObservableArrayBase<Observa
 
     private static final double[] INITIAL = new double[0];
 
+    /**
+     * The maximum size of array to allocate. Some VMs reserve some header words in an array. Attempts to allocate
+     * larger arrays may result in OutOfMemoryError: Requested array size exceeds VM limit
+     */
+    private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+
     private double[] array = INITIAL;
 
     private int size = 0;
@@ -53,13 +59,6 @@ public final class ObservableDoubleArrayImpl extends ObservableArrayBase<Observa
         return size;
     }
 
-    private void addAllInternal(ObservableDoubleArray src, int srcIndex, int length) {
-        growCapacity(length);
-        src.copyTo(srcIndex, array, size, length);
-        size += length;
-        fireChange(length != 0, size - length, size);
-    }
-
     private void addAllInternal(double[] src, int srcIndex, int length) {
         growCapacity(length);
         System.arraycopy(src, srcIndex, array, size, length);
@@ -67,9 +66,11 @@ public final class ObservableDoubleArrayImpl extends ObservableArrayBase<Observa
         fireChange(length != 0, size - length, size);
     }
 
-    @Override
-    public void addAll(ObservableDoubleArray src) {
-        addAllInternal(src, 0, src.size());
+    private void addAllInternal(ObservableDoubleArray src, int srcIndex, int length) {
+        growCapacity(length);
+        src.copyTo(srcIndex, array, size, length);
+        size += length;
+        fireChange(length != 0, size - length, size);
     }
 
     @Override
@@ -78,15 +79,29 @@ public final class ObservableDoubleArrayImpl extends ObservableArrayBase<Observa
     }
 
     @Override
-    public void addAll(ObservableDoubleArray src, int srcIndex, int length) {
-        rangeCheck(src, srcIndex, length);
-        addAllInternal(src, srcIndex, length);
+    public void addAll(ObservableDoubleArray src) {
+        addAllInternal(src, 0, src.size());
     }
 
     @Override
     public void addAll(double[] src, int srcIndex, int length) {
         rangeCheck(src, srcIndex, length);
         addAllInternal(src, srcIndex, length);
+    }
+
+    @Override
+    public void addAll(ObservableDoubleArray src, int srcIndex, int length) {
+        rangeCheck(src, srcIndex, length);
+        addAllInternal(src, srcIndex, length);
+    }
+
+    private void setAllInternal(double[] src, int srcIndex, int length) {
+        boolean sizeChanged = size() != length;
+        size = 0;
+        ensureCapacity(length);
+        System.arraycopy(src, srcIndex, array, 0, length);
+        size = length;
+        fireChange(sizeChanged, 0, size);
     }
 
     private void setAllInternal(ObservableDoubleArray src, int srcIndex, int length) {
@@ -108,24 +123,14 @@ public final class ObservableDoubleArrayImpl extends ObservableArrayBase<Observa
         }
     }
 
-    private void setAllInternal(double[] src, int srcIndex, int length) {
-        boolean sizeChanged = size() != length;
-        size = 0;
-        ensureCapacity(length);
-        System.arraycopy(src, srcIndex, array, 0, length);
-        size = length;
-        fireChange(sizeChanged, 0, size);
+    @Override
+    public void setAll(double... src) {
+        setAllInternal(src, 0, src.length);
     }
 
     @Override
     public void setAll(ObservableDoubleArray src) {
         setAllInternal(src, 0, src.size());
-    }
-
-    @Override
-    public void setAll(ObservableDoubleArray src, int srcIndex, int length) {
-        rangeCheck(src, srcIndex, length);
-        setAllInternal(src, srcIndex, length);
     }
 
     @Override
@@ -135,8 +140,9 @@ public final class ObservableDoubleArrayImpl extends ObservableArrayBase<Observa
     }
 
     @Override
-    public void setAll(double[] src) {
-        setAllInternal(src, 0, src.length);
+    public void setAll(ObservableDoubleArray src, int srcIndex, int length) {
+        rangeCheck(src, srcIndex, length);
+        setAllInternal(src, srcIndex, length);
     }
 
     @Override
@@ -154,15 +160,6 @@ public final class ObservableDoubleArrayImpl extends ObservableArrayBase<Observa
     }
 
     @Override
-    public double[] toArray(double[] dest) {
-        if ((dest == null) || (size() > dest.length)) {
-            dest = new double[size()];
-        }
-        System.arraycopy(array, 0, dest, 0, size());
-        return dest;
-    }
-
-    @Override
     public double get(int index) {
         rangeCheck(index + 1);
         return array[index];
@@ -176,9 +173,18 @@ public final class ObservableDoubleArrayImpl extends ObservableArrayBase<Observa
     }
 
     @Override
+    public double[] toArray(double[] dest) {
+        if (dest == null || size() > dest.length) {
+            dest = new double[size()];
+        }
+        System.arraycopy(array, 0, dest, 0, size());
+        return dest;
+    }
+
+    @Override
     public double[] toArray(int index, double[] dest, int length) {
         rangeCheck(index + length);
-        if ((dest == null) || (length > dest.length)) {
+        if (dest == null || length > dest.length) {
             dest = new double[length];
         }
         System.arraycopy(array, index, dest, 0, length);
@@ -210,12 +216,6 @@ public final class ObservableDoubleArrayImpl extends ObservableArrayBase<Observa
         fireChange(sizeChanged, minSize, newSize);
     }
 
-    /**
-     * The maximum size of array to allocate. Some VMs reserve some header words in an array. Attempts to allocate
-     * larger arrays may result in OutOfMemoryError: Requested array size exceeds VM limit
-     */
-    private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
-
     private void growCapacity(int length) {
         int minCapacity = size + length;
         int oldCapacity = array.length;
@@ -241,13 +241,10 @@ public final class ObservableDoubleArrayImpl extends ObservableArrayBase<Observa
     }
 
     private static int hugeCapacity(int minCapacity) {
-        if (minCapacity < 0) // overflow
-        {
+        if (minCapacity < 0) { // overflow
             throw new OutOfMemoryError();
         }
-        return (minCapacity > MAX_ARRAY_SIZE) ?
-                Integer.MAX_VALUE :
-                MAX_ARRAY_SIZE;
+        return (minCapacity > MAX_ARRAY_SIZE) ? Integer.MAX_VALUE : MAX_ARRAY_SIZE;
     }
 
     @Override
@@ -265,24 +262,24 @@ public final class ObservableDoubleArrayImpl extends ObservableArrayBase<Observa
         }
     }
 
-    private void rangeCheck(ObservableDoubleArray src, int srcIndex, int length) {
-        if (src == null) {
-            throw new NullPointerException();
-        }
-        if (srcIndex < 0 || srcIndex + length > src.size()) {
-            throw new ArrayIndexOutOfBoundsException(src.size());
-        }
-        if (length < 0) {
-            throw new ArrayIndexOutOfBoundsException(-1);
-        }
-    }
-
     private void rangeCheck(double[] src, int srcIndex, int length) {
         if (src == null) {
             throw new NullPointerException();
         }
         if (srcIndex < 0 || srcIndex + length > src.length) {
             throw new ArrayIndexOutOfBoundsException(src.length);
+        }
+        if (length < 0) {
+            throw new ArrayIndexOutOfBoundsException(-1);
+        }
+    }
+
+    private void rangeCheck(ObservableDoubleArray src, int srcIndex, int length) {
+        if (src == null) {
+            throw new NullPointerException();
+        }
+        if (srcIndex < 0 || srcIndex + length > src.size()) {
+            throw new ArrayIndexOutOfBoundsException(src.size());
         }
         if (length < 0) {
             throw new ArrayIndexOutOfBoundsException(-1);

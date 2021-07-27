@@ -5,11 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -17,686 +16,29 @@ import static org.junit.Assert.*;
  * Tests for ObservableArray.
  */
 @RunWith(Parameterized.class)
-@SuppressWarnings({"rawtypes", "unchecked"})
-public class ObservableArrayTest {
+public class ObservableArrayTest<T extends ObservableArray<T>, A, P> {
 
-    public static final int INITIAL_SIZE = 6;
+    private static final int INITIAL_SIZE = 6;
 
-    /**
-     * @param <T>
-     *         ObservableArray subclass
-     * @param <A>
-     *         corresponding primitive array
-     * @param <P>
-     *         corresponding class for boxed elements
-     */
-    public static abstract class ArrayWrapper<T extends ObservableArray<T>, A, P> {
-
-        T array;
-
-        final T array() {
-            return array;
-        }
-
-        abstract T createEmptyArray();
-
-        abstract T createNotEmptyArray(A src);
-
-        abstract ArrayWrapper<T, A, P> newInstance();
-
-        abstract P getNextValue();
-
-        abstract void set(int index, P value);
-
-        abstract void setAllA(A src);
-
-        abstract void setAllT(T src);
-
-        abstract void setAllA(A src, int srcIndex, int length);
-
-        abstract void setAllT(T src, int srcIndex, int length);
-
-        abstract void addAllA(A src);
-
-        abstract void addAllT(T src);
-
-        abstract void addAllA(A src, int srcIndex, int length);
-
-        abstract void addAllT(T src, int srcIndex, int length);
-
-        abstract void setA(int destIndex, A src, int srcIndex, int length);
-
-        abstract void setT(int destIndex, T src, int srcIndex, int length);
-
-        abstract void copyToA(int srcIndex, A dest, int destIndex, int length);
-
-        abstract void copyToT(int srcIndex, T dest, int destIndex, int length);
-
-        abstract P get(int index);
-
-        abstract A toArray(A dest);
-
-        abstract A toArray(int srcIndex, A dest, int length);
-
-        A createPrimitiveArray(int size) {
-            return createPrimitiveArray(size, true);
-        }
-
-        abstract A createPrimitiveArray(int size, boolean fillWithData);
-
-        abstract A clonePrimitiveArray(A array);
-
-        abstract int arrayLength(A array);
-
-        abstract P get(A array, int index);
-
-        abstract void assertElementsEqual(A actual, int from, int to, A expected, int expFrom);
-
-        abstract String primitiveArrayToString(A array);
-
-    }
-
-    private static class IntegerArrayWrapper extends ArrayWrapper<ObservableIntegerArray, int[], Integer> {
-
-        int nextValue = 0;
-
-        @Override
-        IntegerArrayWrapper newInstance() {
-            return new IntegerArrayWrapper();
-        }
-
-        @Override
-        ObservableIntegerArray createEmptyArray() {
-            return array = ObservableCollections.observableIntegerArray();
-        }
-
-        @Override
-        ObservableIntegerArray createNotEmptyArray(int[] src) {
-            return array = ObservableCollections.observableIntegerArray(src);
-        }
-
-        @Override
-        Integer getNextValue() {
-            return nextValue++;
-        }
-
-        @Override
-        void set(int index, Integer value) {
-            array.set(index, value);
-        }
-
-        @Override
-        int[] createPrimitiveArray(int size, boolean fillWithData) {
-            int[] res = new int[size];
-            if (fillWithData) {
-                for (int i = 0; i < size; i++) {
-                    res[i] = nextValue++;
-                }
-            }
-            return res;
-        }
-
-        @Override
-        void setAllA(int[] src) {
-            array.setAll(src);
-        }
-
-        @Override
-        void setAllA(int[] src, int srcIndex, int length) {
-            array.setAll(src, srcIndex, length);
-        }
-
-        @Override
-        void setAllT(ObservableIntegerArray src) {
-            array.setAll(src);
-        }
-
-        @Override
-        void setAllT(ObservableIntegerArray src, int srcIndex, int length) {
-            array.setAll(src, srcIndex, length);
-        }
-
-        @Override
-        void addAllA(int[] src) {
-            array.addAll(src);
-        }
-
-        @Override
-        void addAllA(int[] src, int srcIndex, int length) {
-            array.addAll(src, srcIndex, length);
-        }
-
-        @Override
-        void addAllT(ObservableIntegerArray src) {
-            array.addAll(src);
-        }
-
-        @Override
-        void addAllT(ObservableIntegerArray src, int srcIndex, int length) {
-            array.addAll(src, srcIndex, length);
-        }
-
-        @Override
-        void copyToA(int srcIndex, int[] dest, int destIndex, int length) {
-            array.copyTo(srcIndex, dest, destIndex, length);
-        }
-
-        @Override
-        void copyToT(int srcIndex, ObservableIntegerArray dest, int destIndex, int length) {
-            array.copyTo(srcIndex, dest, destIndex, length);
-        }
-
-        @Override
-        Integer get(int index) {
-            return array.get(index);
-        }
-
-        @Override
-        int[] toArray(int[] src) {
-            return array.toArray(src);
-        }
-
-        @Override
-        int[] toArray(int srcIndex, int[] dest, int length) {
-            return array.toArray(srcIndex, dest, length);
-        }
-
-        @Override
-        void setA(int destIndex, int[] src, int srcIndex, int length) {
-            array.set(destIndex, src, srcIndex, length);
-        }
-
-        @Override
-        void setT(int destIndex, ObservableIntegerArray src, int srcIndex, int length) {
-            array.set(destIndex, src, srcIndex, length);
-        }
-
-        @Override
-        int arrayLength(int[] array) {
-            return array.length;
-        }
-
-        @Override
-        Integer get(int[] array, int index) {
-            return array[index];
-        }
-
-        @Override
-        void assertElementsEqual(int[] actual, int from, int to, int[] expected, int expFrom) {
-            for (int i = from, j = expFrom; i < to; i++, j++) {
-                assertEquals(actual[i], expected[j]);
-            }
-        }
-
-        @Override
-        int[] clonePrimitiveArray(int[] array) {
-            return Arrays.copyOf(array, array.length);
-        }
-
-        @Override
-        String primitiveArrayToString(int[] array) {
-            return Arrays.toString(array);
-        }
-
-    }
-
-    private static class LongArrayWrapper extends ArrayWrapper<ObservableLongArray, long[], Long> {
-
-        long nextValue = 0;
-
-        @Override
-        LongArrayWrapper newInstance() {
-            return new LongArrayWrapper();
-        }
-
-        @Override
-        ObservableLongArray createEmptyArray() {
-            return array = ObservableCollections.observableLongArray();
-        }
-
-        @Override
-        ObservableLongArray createNotEmptyArray(long[] src) {
-            return array = ObservableCollections.observableLongArray(src);
-        }
-
-        @Override
-        Long getNextValue() {
-            return nextValue++;
-        }
-
-        @Override
-        void set(int index, Long value) {
-            array.set(index, value);
-        }
-
-        @Override
-        long[] createPrimitiveArray(int size, boolean fillWithData) {
-            long[] res = new long[size];
-            if (fillWithData) {
-                for (int i = 0; i < size; i++) {
-                    res[i] = nextValue++;
-                }
-            }
-            return res;
-        }
-
-        @Override
-        void setAllA(long[] src) {
-            array.setAll(src);
-        }
-
-        @Override
-        void setAllA(long[] src, int srcIndex, int length) {
-            array.setAll(src, srcIndex, length);
-        }
-
-        @Override
-        void setAllT(ObservableLongArray src) {
-            array.setAll(src);
-        }
-
-        @Override
-        void setAllT(ObservableLongArray src, int srcIndex, int length) {
-            array.setAll(src, srcIndex, length);
-        }
-
-        @Override
-        void addAllA(long[] src) {
-            array.addAll(src);
-        }
-
-        @Override
-        void addAllA(long[] src, int srcIndex, int length) {
-            array.addAll(src, srcIndex, length);
-        }
-
-        @Override
-        void addAllT(ObservableLongArray src) {
-            array.addAll(src);
-        }
-
-        @Override
-        void addAllT(ObservableLongArray src, int srcIndex, int length) {
-            array.addAll(src, srcIndex, length);
-        }
-
-        @Override
-        void copyToA(int srcIndex, long[] dest, int destIndex, int length) {
-            array.copyTo(srcIndex, dest, destIndex, length);
-        }
-
-        @Override
-        void copyToT(int srcIndex, ObservableLongArray dest, int destIndex, int length) {
-            array.copyTo(srcIndex, dest, destIndex, length);
-        }
-
-        @Override
-        Long get(int index) {
-            return array.get(index);
-        }
-
-        @Override
-        long[] toArray(long[] src) {
-            return array.toArray(src);
-        }
-
-        @Override
-        long[] toArray(int srcIndex, long[] dest, int length) {
-            return array.toArray(srcIndex, dest, length);
-        }
-
-        @Override
-        void setA(int destIndex, long[] src, int srcIndex, int length) {
-            array.set(destIndex, src, srcIndex, length);
-        }
-
-        @Override
-        void setT(int destIndex, ObservableLongArray src, int srcIndex, int length) {
-            array.set(destIndex, src, srcIndex, length);
-        }
-
-        @Override
-        int arrayLength(long[] array) {
-            return array.length;
-        }
-
-        @Override
-        Long get(long[] array, int index) {
-            return array[index];
-        }
-
-        @Override
-        void assertElementsEqual(long[] actual, int from, int to, long[] expected, int expFrom) {
-            for (int i = from, j = expFrom; i < to; i++, j++) {
-                assertEquals(actual[i], expected[j]);
-            }
-        }
-
-        @Override
-        long[] clonePrimitiveArray(long[] array) {
-            return Arrays.copyOf(array, array.length);
-        }
-
-        @Override
-        String primitiveArrayToString(long[] array) {
-            return Arrays.toString(array);
-        }
-
-    }
-
-    private static class FloatArrayWrapper extends ArrayWrapper<ObservableFloatArray, float[], Float> {
-
-        float nextValue = 0;
-
-        @Override
-        FloatArrayWrapper newInstance() {
-            return new FloatArrayWrapper();
-        }
-
-        @Override
-        ObservableFloatArray createEmptyArray() {
-            return array = ObservableCollections.observableFloatArray();
-        }
-
-        @Override
-        ObservableFloatArray createNotEmptyArray(float[] elements) {
-            return array = ObservableCollections.observableFloatArray(elements);
-        }
-
-        @Override
-        Float getNextValue() {
-            return nextValue++;
-        }
-
-        @Override
-        void set(int index, Float value) {
-            array.set(index, value);
-        }
-
-        @Override
-        float[] createPrimitiveArray(int size, boolean fillWithData) {
-            float[] res = new float[size];
-            if (fillWithData) {
-                for (int i = 0; i < size; i++) {
-                    res[i] = nextValue++;
-                }
-            }
-            return res;
-        }
-
-        @Override
-        void setAllA(float[] src) {
-            array.setAll(src);
-        }
-
-        @Override
-        void copyToA(int srcIndex, float[] dest, int destIndex, int length) {
-            array.copyTo(srcIndex, dest, destIndex, length);
-        }
-
-        @Override
-        void copyToT(int srcIndex, ObservableFloatArray dest, int destIndex, int length) {
-            array.copyTo(srcIndex, dest, destIndex, length);
-        }
-
-        @Override
-        Float get(int index) {
-            return array.get(index);
-        }
-
-        @Override
-        float[] toArray(float[] dest) {
-            return array.toArray(dest);
-        }
-
-        @Override
-        float[] toArray(int srcIndex, float[] dest, int length) {
-            return array.toArray(srcIndex, dest, length);
-        }
-
-        @Override
-        void setA(int destIndex, float[] src, int srcIndex, int length) {
-            array.set(destIndex, src, srcIndex, length);
-        }
-
-        @Override
-        int arrayLength(float[] array) {
-            return array.length;
-        }
-
-        @Override
-        Float get(float[] array, int index) {
-            return array[index];
-        }
-
-        @Override
-        void assertElementsEqual(float[] actual, int from, int to, float[] expected, int expFrom) {
-            for (int i = from, j = expFrom; i < to; i++, j++) {
-                assertEquals("expected float = " + expected[j] + ", actual float = " + actual[i],
-                        Float.floatToRawIntBits(expected[j]),
-                        Float.floatToRawIntBits(actual[i]));
-            }
-        }
-
-        @Override
-        float[] clonePrimitiveArray(float[] array) {
-            return Arrays.copyOf(array, array.length);
-        }
-
-        @Override
-        void setAllT(ObservableFloatArray src) {
-            array.setAll(src);
-        }
-
-        @Override
-        void setAllA(float[] src, int srcIndex, int length) {
-            array.setAll(src, srcIndex, length);
-        }
-
-        @Override
-        void setAllT(ObservableFloatArray src, int srcIndex, int length) {
-            array.setAll(src, srcIndex, length);
-        }
-
-        @Override
-        void addAllA(float[] src) {
-            array.addAll(src);
-        }
-
-        @Override
-        void addAllT(ObservableFloatArray src) {
-            array.addAll(src);
-        }
-
-        @Override
-        void addAllA(float[] src, int srcIndex, int length) {
-            array.addAll(src, srcIndex, length);
-        }
-
-        @Override
-        void addAllT(ObservableFloatArray src, int srcIndex, int length) {
-            array.addAll(src, srcIndex, length);
-        }
-
-        @Override
-        void setT(int destIndex, ObservableFloatArray src, int srcIndex, int length) {
-            array.set(destIndex, src, srcIndex, length);
-        }
-
-        @Override
-        String primitiveArrayToString(float[] array) {
-            return Arrays.toString(array);
-        }
-
-    }
-
-    private static class DoubleArrayWrapper extends ArrayWrapper<ObservableDoubleArray, double[], Double> {
-
-        double nextValue = 0;
-
-        @Override
-        DoubleArrayWrapper newInstance() {
-            return new DoubleArrayWrapper();
-        }
-
-        @Override
-        ObservableDoubleArray createEmptyArray() {
-            return array = ObservableCollections.observableDoubleArray();
-        }
-
-        @Override
-        ObservableDoubleArray createNotEmptyArray(double[] elements) {
-            return array = ObservableCollections.observableDoubleArray(elements);
-        }
-
-        @Override
-        Double getNextValue() {
-            return nextValue++;
-        }
-
-        @Override
-        void set(int index, Double value) {
-            array.set(index, value);
-        }
-
-        @Override
-        double[] createPrimitiveArray(int size, boolean fillWithData) {
-            double[] res = new double[size];
-            if (fillWithData) {
-                for (int i = 0; i < size; i++) {
-                    res[i] = nextValue++;
-                }
-            }
-            return res;
-        }
-
-        @Override
-        void setAllA(double[] src) {
-            array.setAll(src);
-        }
-
-        @Override
-        void copyToA(int srcIndex, double[] dest, int destIndex, int length) {
-            array.copyTo(srcIndex, dest, destIndex, length);
-        }
-
-        @Override
-        void copyToT(int srcIndex, ObservableDoubleArray dest, int destIndex, int length) {
-            array.copyTo(srcIndex, dest, destIndex, length);
-        }
-
-        @Override
-        Double get(int index) {
-            return array.get(index);
-        }
-
-        @Override
-        double[] toArray(double[] dest) {
-            return array.toArray(dest);
-        }
-
-        @Override
-        double[] toArray(int srcIndex, double[] dest, int length) {
-            return array.toArray(srcIndex, dest, length);
-        }
-
-        @Override
-        void setA(int destIndex, double[] src, int srcIndex, int length) {
-            array.set(destIndex, src, srcIndex, length);
-        }
-
-        @Override
-        int arrayLength(double[] array) {
-            return array.length;
-        }
-
-        @Override
-        Double get(double[] array, int index) {
-            return array[index];
-        }
-
-        @Override
-        void assertElementsEqual(double[] actual, int from, int to, double[] expected, int expFrom) {
-            for (int i = from, j = expFrom; i < to; i++, j++) {
-                assertEquals("expected float = " + expected[j] + ", actual float = " + actual[i],
-                        Double.doubleToRawLongBits(expected[j]),
-                        Double.doubleToRawLongBits(actual[i]));
-            }
-        }
-
-        @Override
-        double[] clonePrimitiveArray(double[] array) {
-            return Arrays.copyOf(array, array.length);
-        }
-
-        @Override
-        void setAllT(ObservableDoubleArray src) {
-            array.setAll(src);
-        }
-
-        @Override
-        void setAllA(double[] src, int srcIndex, int length) {
-            array.setAll(src, srcIndex, length);
-        }
-
-        @Override
-        void setAllT(ObservableDoubleArray src, int srcIndex, int length) {
-            array.setAll(src, srcIndex, length);
-        }
-
-        @Override
-        void addAllA(double[] src) {
-            array.addAll(src);
-        }
-
-        @Override
-        void addAllT(ObservableDoubleArray src) {
-            array.addAll(src);
-        }
-
-        @Override
-        void addAllA(double[] src, int srcIndex, int length) {
-            array.addAll(src, srcIndex, length);
-        }
-
-        @Override
-        void addAllT(ObservableDoubleArray src, int srcIndex, int length) {
-            array.addAll(src, srcIndex, length);
-        }
-
-        @Override
-        void setT(int destIndex, ObservableDoubleArray src, int srcIndex, int length) {
-            array.set(destIndex, src, srcIndex, length);
-        }
-
-        @Override
-        String primitiveArrayToString(double[] array) {
-            return Arrays.toString(array);
-        }
-
-    }
-
-    static final List<String> EMPTY = Collections.emptyList();
-
-    final ArrayWrapper wrapper;
+    private final ArrayWrapper<T, A, P> wrapper;
 
     private int initialSize;
 
-    private Object initialElements;
+    private A initialElements;
 
-    private ObservableArray array;
+    private T array;
 
-    private MockArrayObserver mao;
+    private MockArrayObserver<T> mao;
 
-    public ObservableArrayTest(final ArrayWrapper arrayWrapper) {
+    public ObservableArrayTest(final ArrayWrapper<T, A, P> arrayWrapper) {
         this.wrapper = arrayWrapper;
     }
 
-    @Parameterized.Parameters
-    public static Collection createParameters() {
+    @Parameters
+    public static Collection<?> createParameters() {
         Object[][] data = new Object[][]{
-                {new FloatArrayWrapper()},
                 {new DoubleArrayWrapper()},
+                {new FloatArrayWrapper()},
                 {new IntegerArrayWrapper()},
                 {new LongArrayWrapper()},
         };
@@ -704,11 +46,11 @@ public class ObservableArrayTest {
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         initialSize = INITIAL_SIZE;
         initialElements = wrapper.createPrimitiveArray(initialSize);
         array = wrapper.createNotEmptyArray(initialElements);
-        mao = new MockArrayObserver();
+        mao = new MockArrayObserver<>();
         array.addListener(mao);
     }
 
@@ -722,12 +64,12 @@ public class ObservableArrayTest {
     private void assertUnchanged() {
         mao.check0();
         assertEquals(initialSize, array.size());
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         assertEquals(initialSize, wrapper.arrayLength(actual));
         wrapper.assertElementsEqual(actual, 0, array.size(), initialElements, 0);
     }
 
-    // ========== pre-condition tests ================
+    // ========================= pre-condition tests =========================
 
     @Test
     public void testSize() {
@@ -745,8 +87,8 @@ public class ObservableArrayTest {
     @Test
     public void testGet() {
         for (int i = 0; i < array.size(); i++) {
-            Object expected = wrapper.get(initialElements, i);
-            Object actual = wrapper.get(i);
+            P expected = wrapper.get(initialElements, i);
+            P actual = wrapper.get(i);
             assertEquals(expected, actual);
         }
         assertUnchanged();
@@ -754,18 +96,18 @@ public class ObservableArrayTest {
 
     @Test
     public void testToArray() {
-        Object expected = initialElements;
-        Object actual = wrapper.toArray(null);
+        A expected = initialElements;
+        A actual = wrapper.toArray(null);
         assertEquals(INITIAL_SIZE, wrapper.arrayLength(actual));
         wrapper.assertElementsEqual(actual, 0, array.size(), expected, 0);
         assertUnchanged();
     }
 
-    // ========== add/remove listener tests ==========
+    // ========================= add/remove listener tests =========================
 
     @Test
     public void testAddRemoveListener() {
-        MockArrayObserver mao2 = new MockArrayObserver();
+        MockArrayObserver<T> mao2 = new MockArrayObserver<>();
         array.addListener(mao2);
         array.removeListener(mao);
         wrapper.set(0, wrapper.getNextValue());
@@ -775,7 +117,7 @@ public class ObservableArrayTest {
 
     @Test
     public void testAddTwoListenersElementChange() {
-        MockArrayObserver mao2 = new MockArrayObserver();
+        MockArrayObserver<T> mao2 = new MockArrayObserver<>();
         array.addListener(mao2);
         wrapper.set(0, wrapper.getNextValue());
         mao.check(array, false, 0, 1);
@@ -784,7 +126,7 @@ public class ObservableArrayTest {
 
     @Test
     public void testAddTwoListenersSizeChange() {
-        MockArrayObserver mao2 = new MockArrayObserver();
+        MockArrayObserver<T> mao2 = new MockArrayObserver<>();
         array.addListener(mao2);
         array.resize(3);
         mao.checkOnlySizeChanged(array);
@@ -793,8 +135,8 @@ public class ObservableArrayTest {
 
     @Test
     public void testAddThreeListeners() {
-        MockArrayObserver mao2 = new MockArrayObserver();
-        MockArrayObserver mao3 = new MockArrayObserver();
+        MockArrayObserver<T> mao2 = new MockArrayObserver<>();
+        MockArrayObserver<T> mao3 = new MockArrayObserver<>();
         array.addListener(mao2);
         array.addListener(mao3);
         wrapper.set(0, wrapper.getNextValue());
@@ -805,8 +147,8 @@ public class ObservableArrayTest {
 
     @Test
     public void testAddThreeListenersSizeChange() {
-        MockArrayObserver mao2 = new MockArrayObserver();
-        MockArrayObserver mao3 = new MockArrayObserver();
+        MockArrayObserver<T> mao2 = new MockArrayObserver<>();
+        MockArrayObserver<T> mao3 = new MockArrayObserver<>();
         array.addListener(mao2);
         array.addListener(mao3);
         array.resize(10);
@@ -833,7 +175,7 @@ public class ObservableArrayTest {
     @Test(expected = NullPointerException.class)
     public void testAddNullArrayChangeListener() {
         try {
-            array.addListener((ArrayChangeListener) null);
+            array.addListener((ArrayChangeListener<T>) null);
         } finally {
             mao.check0();
             array.resize(1);
@@ -855,7 +197,7 @@ public class ObservableArrayTest {
     @Test(expected = NullPointerException.class)
     public void testRemoveNullArrayChangeListener() {
         try {
-            array.removeListener((ArrayChangeListener) null);
+            array.removeListener((ArrayChangeListener<T>) null);
         } finally {
             mao.check0();
             array.resize(1);
@@ -874,17 +216,17 @@ public class ObservableArrayTest {
         }
     }
 
-    // ========== resize tests ==========
+    // ========================= resize tests =========================
 
     private void testResize(boolean noChange, int newSize, int matchingElements) {
-        Object expected = wrapper.toArray(null);
+        A expected = wrapper.toArray(null);
         array.resize(newSize);
         if (noChange) {
             assertUnchanged();
         } else {
             mao.checkOnlySizeChanged(array);
         }
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         assertEquals(newSize, array.size());
         assertEquals(newSize, wrapper.arrayLength(actual));
         wrapper.assertElementsEqual(actual, 0, matchingElements, expected, 0);
@@ -933,15 +275,15 @@ public class ObservableArrayTest {
         }
     }
 
-    // ========== setAll(primitive array) tests ==========
+    // ========================= setAll(primitive array) tests =========================
 
     private void testSetAllA(boolean sizeChanged, int newSize) {
-        Object expected = wrapper.createPrimitiveArray(newSize);
+        A expected = wrapper.createPrimitiveArray(newSize);
 
         wrapper.setAllA(expected);
 
         mao.check(array, sizeChanged, 0, newSize);
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         assertEquals(wrapper.arrayLength(expected), array.size());
         assertEquals(wrapper.arrayLength(expected), wrapper.arrayLength(actual));
         wrapper.assertElementsEqual(actual, 0, wrapper.arrayLength(expected), expected, 0);
@@ -985,17 +327,17 @@ public class ObservableArrayTest {
         }
     }
 
-    // ========== setAll(ObservableArray) tests ==========
+    // ========================= setAll(ObservableArray) tests =========================
 
     private void testSetAllT(boolean sizeChanged, int newSize) {
-        ArrayWrapper wrapper2 = wrapper.newInstance();
-        Object expected = wrapper.createPrimitiveArray(newSize);
-        ObservableArray src = wrapper2.createNotEmptyArray(expected);
+        ArrayWrapper<T, A, P> wrapper2 = wrapper.newInstance();
+        A expected = wrapper.createPrimitiveArray(newSize);
+        T src = wrapper2.createNotEmptyArray(expected);
 
         wrapper.setAllT(src);
 
         mao.check(array, sizeChanged, 0, newSize);
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         assertEquals(wrapper.arrayLength(expected), array.size());
         assertEquals(wrapper.arrayLength(expected), wrapper.arrayLength(actual));
         wrapper.assertElementsEqual(actual, 0, wrapper.arrayLength(expected), expected, 0);
@@ -1041,11 +383,10 @@ public class ObservableArrayTest {
 
     @Test
     public void testSetAllTSelf() {
-
         wrapper.setAllT(array);
 
         mao.check0();
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         assertEquals(initialSize, array.size());
         assertEquals(initialSize, wrapper.arrayLength(actual));
         wrapper.assertElementsEqual(actual, 0, initialSize, initialElements, 0);
@@ -1058,20 +399,20 @@ public class ObservableArrayTest {
         wrapper.setAllT(array);
 
         mao.check0();
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         assertEquals(0, array.size());
         assertEquals(0, wrapper.arrayLength(actual));
     }
 
-    // ========== setAll(primitive array, range) tests ==========
+    // ========================= setAll(primitive array, range) tests =========================
 
     private void testSetAllARange(boolean sizeChanged, int newSize, int srcIndex, int length) {
-        Object expected = wrapper.createPrimitiveArray(newSize);
+        A expected = wrapper.createPrimitiveArray(newSize);
 
         wrapper.setAllA(expected, srcIndex, length);
 
         mao.check(array, sizeChanged, 0, length);
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         assertEquals(length, array.size());
         assertEquals(length, wrapper.arrayLength(actual));
         wrapper.assertElementsEqual(actual, 0, length, expected, srcIndex);
@@ -1175,16 +516,16 @@ public class ObservableArrayTest {
         }
     }
 
-    // ========== setAll(observable array, range) tests ==========
+    // ========================= setAll(observable array, range) tests =========================
 
     private void testSetAllTRange(boolean sizeChanged, int srcSize, int srcIndex, int length) {
-        Object expected = wrapper.createPrimitiveArray(srcSize);
-        ObservableArray src = wrapper.newInstance().createNotEmptyArray(expected);
+        A expected = wrapper.createPrimitiveArray(srcSize);
+        T src = wrapper.newInstance().createNotEmptyArray(expected);
 
         wrapper.setAllT(src, srcIndex, length);
 
         mao.check(array, sizeChanged, 0, length);
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         assertEquals(length, array.size());
         assertEquals(length, wrapper.arrayLength(actual));
         wrapper.assertElementsEqual(actual, 0, length, expected, srcIndex);
@@ -1290,8 +631,8 @@ public class ObservableArrayTest {
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void testSetAllTRangeNegativeAfterSrcEnsureCapacity() {
-        Object expected = wrapper.createPrimitiveArray(INITIAL_SIZE);
-        ObservableArray src = wrapper.newInstance().createNotEmptyArray(expected);
+        A expected = wrapper.createPrimitiveArray(INITIAL_SIZE);
+        T src = wrapper.newInstance().createNotEmptyArray(expected);
         src.ensureCapacity(INITIAL_SIZE * 2);
         try {
             wrapper.setAllT(src, INITIAL_SIZE, 1);
@@ -1302,8 +643,8 @@ public class ObservableArrayTest {
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void testSetAllTRangeNegativeAfterSrcClear() {
-        Object expected = wrapper.createPrimitiveArray(INITIAL_SIZE);
-        ObservableArray src = wrapper.newInstance().createNotEmptyArray(expected);
+        A expected = wrapper.createPrimitiveArray(INITIAL_SIZE);
+        T src = wrapper.newInstance().createNotEmptyArray(expected);
         src.clear();
         try {
             wrapper.setAllT(src, 0, 1);
@@ -1313,7 +654,6 @@ public class ObservableArrayTest {
     }
 
     private void testSetAllTRangeSelf(boolean sizeChanged, int srcIndex, int length) {
-
         wrapper.setAllT(array, srcIndex, length);
 
         if (srcIndex == 0) {
@@ -1325,7 +665,7 @@ public class ObservableArrayTest {
         } else {
             mao.check(array, sizeChanged, 0, length);
         }
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         assertEquals(length, array.size());
         assertEquals(length, wrapper.arrayLength(actual));
         wrapper.assertElementsEqual(actual, 0, length, initialElements, srcIndex);
@@ -1413,10 +753,10 @@ public class ObservableArrayTest {
         }
     }
 
-    // ========== addAll(primitive array) tests ==========
+    // ========================= addAll(primitive array) tests =========================
 
     private void testAddAllA(int srcSize) {
-        Object src = wrapper.createPrimitiveArray(srcSize);
+        A src = wrapper.createPrimitiveArray(srcSize);
         int oldSize = array.size();
 
         wrapper.addAllA(src);
@@ -1424,7 +764,7 @@ public class ObservableArrayTest {
         int newSize = oldSize + srcSize;
         boolean sizeChanged = newSize != oldSize;
         mao.check(array, sizeChanged, oldSize, newSize);
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         assertEquals(newSize, array.size());
         assertEquals(newSize, wrapper.arrayLength(actual));
         wrapper.assertElementsEqual(actual, 0, oldSize, initialElements, 0);
@@ -1498,10 +838,10 @@ public class ObservableArrayTest {
         }
     }
 
-    // ========== addAll(ObservableArray) tests ==========
+    // ========================= addAll(ObservableArray) tests =========================
 
     private void testAddAllT(int srcSize) {
-        Object src = wrapper.createPrimitiveArray(srcSize);
+        A src = wrapper.createPrimitiveArray(srcSize);
         int oldSize = array.size();
 
         wrapper.addAllT(wrapper.newInstance().createNotEmptyArray(src));
@@ -1509,7 +849,7 @@ public class ObservableArrayTest {
         int newSize = oldSize + srcSize;
         boolean sizeChanged = newSize != oldSize;
         mao.check(array, sizeChanged, oldSize, newSize);
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         assertEquals(newSize, array.size());
         assertEquals(newSize, wrapper.arrayLength(actual));
         wrapper.assertElementsEqual(actual, 0, oldSize, initialElements, 0);
@@ -1582,7 +922,7 @@ public class ObservableArrayTest {
 
         mao.check(array, true, initialSize, initialSize * 2);
         assertEquals(initialSize * 2, array.size());
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         wrapper.assertElementsEqual(actual, 0, initialSize, initialElements, 0);
         wrapper.assertElementsEqual(actual, initialSize, initialSize * 2, initialElements, 0);
     }
@@ -1594,7 +934,7 @@ public class ObservableArrayTest {
         wrapper.addAllT(array);
 
         mao.check0();
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         assertEquals(0, array.size());
         assertEquals(0, wrapper.arrayLength(actual));
     }
@@ -1606,10 +946,10 @@ public class ObservableArrayTest {
         }
     }
 
-    // ========== addAll(primitive array, range) tests ==========
+    // ========================= addAll(primitive array, range) tests =========================
 
     private void testAddAllARange(int srcSize, int srcIndex, int length) {
-        Object src = wrapper.createPrimitiveArray(srcSize);
+        A src = wrapper.createPrimitiveArray(srcSize);
         int oldSize = array.size();
 
         wrapper.addAllA(src, srcIndex, length);
@@ -1618,7 +958,7 @@ public class ObservableArrayTest {
         boolean sizeChanged = newSize != oldSize;
 
         mao.check(array, sizeChanged, oldSize, newSize);
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         assertEquals(newSize, array.size());
         assertEquals(newSize, wrapper.arrayLength(actual));
         wrapper.assertElementsEqual(actual, 0, oldSize, initialElements, 0);
@@ -1729,10 +1069,10 @@ public class ObservableArrayTest {
         }
     }
 
-    // ========== addAll(observable array, range) tests ==========
+    // ========================= addAll(observable array, range) tests =========================
 
     private void testAddAllTRange(int srcSize, int srcIndex, int length) {
-        Object src = wrapper.createPrimitiveArray(srcSize);
+        A src = wrapper.createPrimitiveArray(srcSize);
         int oldSize = array.size();
 
         wrapper.addAllT(wrapper.newInstance().createNotEmptyArray(src), srcIndex, length);
@@ -1741,7 +1081,7 @@ public class ObservableArrayTest {
         boolean sizeChanged = newSize != oldSize;
 
         mao.check(array, sizeChanged, oldSize, newSize);
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         assertEquals(newSize, array.size());
         assertEquals(newSize, wrapper.arrayLength(actual));
         wrapper.assertElementsEqual(actual, 0, oldSize, initialElements, 0);
@@ -1854,8 +1194,8 @@ public class ObservableArrayTest {
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void testAddAllTRangeNegativeAfterSrcEnsureCapacity() {
-        Object srcA = wrapper.createPrimitiveArray(INITIAL_SIZE);
-        ObservableArray src = wrapper.newInstance().createNotEmptyArray(srcA);
+        A srcA = wrapper.createPrimitiveArray(INITIAL_SIZE);
+        T src = wrapper.newInstance().createNotEmptyArray(srcA);
         src.ensureCapacity(INITIAL_SIZE * 2);
         try {
             wrapper.addAllT(src, INITIAL_SIZE, 1);
@@ -1866,8 +1206,8 @@ public class ObservableArrayTest {
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void testAddAllTRangeNegativeAfterSrcClear() {
-        Object srcA = wrapper.createPrimitiveArray(INITIAL_SIZE);
-        ObservableArray src = wrapper.newInstance().createNotEmptyArray(srcA);
+        A srcA = wrapper.createPrimitiveArray(INITIAL_SIZE);
+        T src = wrapper.newInstance().createNotEmptyArray(srcA);
         src.clear();
         try {
             wrapper.addAllT(src, 0, 1);
@@ -1881,7 +1221,7 @@ public class ObservableArrayTest {
 
         int expSize = initialSize + length;
         mao.check(array, true, initialSize, expSize);
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         assertEquals(expSize, array.size());
         assertEquals(expSize, wrapper.arrayLength(actual));
         wrapper.assertElementsEqual(actual, 0, initialSize, initialElements, 0);
@@ -1964,15 +1304,15 @@ public class ObservableArrayTest {
         }
     }
 
-    // ========== set(primitive array, range) tests ==========
+    // ========================= set(primitive array, range) tests =========================
 
     private void testSetARange(int srcLength, int destIndex, int srcIndex, int length) {
-        Object expected = wrapper.createPrimitiveArray(srcLength);
+        A expected = wrapper.createPrimitiveArray(srcLength);
 
         wrapper.setA(destIndex, expected, srcIndex, length);
 
         mao.checkOnlyElementsChanged(array, destIndex, destIndex + length);
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         assertEquals(INITIAL_SIZE, array.size());
         assertEquals(INITIAL_SIZE, wrapper.arrayLength(actual));
         wrapper.assertElementsEqual(actual, 0, destIndex, initialElements, 0);
@@ -2088,16 +1428,16 @@ public class ObservableArrayTest {
         }
     }
 
-    // ========== set(ObservableArray, range) tests ==========
+    // ========================= set(ObservableArray, range) tests =========================
 
     private void testSetTRange(int srcLength, int destIndex, int srcIndex, int length) {
-        Object expected = wrapper.createPrimitiveArray(srcLength);
-        ObservableArray src = wrapper.newInstance().createNotEmptyArray(expected);
+        A expected = wrapper.createPrimitiveArray(srcLength);
+        T src = wrapper.newInstance().createNotEmptyArray(expected);
 
         wrapper.setT(destIndex, src, srcIndex, length);
 
         mao.checkOnlyElementsChanged(array, destIndex, destIndex + length);
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         assertEquals(INITIAL_SIZE, array.size());
         assertEquals(INITIAL_SIZE, wrapper.arrayLength(actual));
         wrapper.assertElementsEqual(actual, 0, destIndex, initialElements, 0);
@@ -2215,11 +1555,10 @@ public class ObservableArrayTest {
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void testSetTRangeNegativeAfterSrcEnsureCapacity() {
+        A srcA = wrapper.createPrimitiveArray(1);
+        T src = wrapper.newInstance().createNotEmptyArray(srcA);
+        src.ensureCapacity(2);
         try {
-            Object srcA = wrapper.createPrimitiveArray(1);
-            ObservableArray src = wrapper.newInstance().createNotEmptyArray(srcA);
-            src.ensureCapacity(2);
-
             wrapper.setT(0, src, 1, 1);
         } finally {
             assertUnchanged();
@@ -2228,11 +1567,10 @@ public class ObservableArrayTest {
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void testSetTRangeNegativeAfterSrcClear() {
+        A srcA = wrapper.createPrimitiveArray(1);
+        T src = wrapper.newInstance().createNotEmptyArray(srcA);
+        src.clear();
         try {
-            Object srcA = wrapper.createPrimitiveArray(1);
-            ObservableArray src = wrapper.newInstance().createNotEmptyArray(srcA);
-            src.clear();
-
             wrapper.setT(0, src, 0, 1);
         } finally {
             assertUnchanged();
@@ -2240,11 +1578,10 @@ public class ObservableArrayTest {
     }
 
     private void testSetTRangeSelf(int destIndex, int srcIndex, int length) {
-
         wrapper.setT(destIndex, array, srcIndex, length);
 
         mao.checkOnlyElementsChanged(array, destIndex, destIndex + length);
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         assertEquals(INITIAL_SIZE, array.size());
         assertEquals(INITIAL_SIZE, wrapper.arrayLength(actual));
         wrapper.assertElementsEqual(actual, 0, destIndex, initialElements, 0);
@@ -2333,9 +1670,8 @@ public class ObservableArrayTest {
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void testSetTRangeSelfNegativeAfterEnsureCapacity() {
+        array.ensureCapacity(INITIAL_SIZE * 2);
         try {
-            array.ensureCapacity(INITIAL_SIZE * 2);
-
             wrapper.setT(0, array, INITIAL_SIZE, 1);
         } finally {
             assertUnchanged();
@@ -2352,7 +1688,7 @@ public class ObservableArrayTest {
         }
     }
 
-    // ========== negative get(index) tests ==========
+    // ========================= negative get(index) tests =========================
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void testGetNegative() {
@@ -2374,8 +1710,8 @@ public class ObservableArrayTest {
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void testGetAfterEnsureCapacity() {
+        array.ensureCapacity(INITIAL_SIZE * 2);
         try {
-            array.ensureCapacity(INITIAL_SIZE * 2);
             wrapper.get(INITIAL_SIZE);
         } finally {
             assertUnchanged();
@@ -2392,12 +1728,12 @@ public class ObservableArrayTest {
         }
     }
 
-    // ================== set(index) tests ===============
+    // ========================= set(index) tests =========================
 
     @Test
     public void testSetValue() {
         for (int i = 0; i < INITIAL_SIZE; i++) {
-            Object expected = wrapper.getNextValue();
+            P expected = wrapper.getNextValue();
 
             wrapper.set(i, expected);
 
@@ -2427,16 +1763,6 @@ public class ObservableArrayTest {
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void testSetValueNegativeAfterClear() {
-        makeEmpty();
-        try {
-            wrapper.set(0, wrapper.getNextValue());
-        } finally {
-            assertUnchanged();
-        }
-    }
-
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void testSetValueNegativeAfterEnsureCapacity() {
         array.ensureCapacity(INITIAL_SIZE * 2);
         try {
@@ -2446,11 +1772,21 @@ public class ObservableArrayTest {
         }
     }
 
-    // ================= toArray(array) tests ======================
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void testSetValueNegativeAfterClear() {
+        makeEmpty();
+        try {
+            wrapper.set(0, wrapper.getNextValue());
+        } finally {
+            assertUnchanged();
+        }
+    }
+
+    // ========================= toArray(array) tests =========================
 
     private void testToArray(int arraySize, boolean same) {
-        Object param = wrapper.createPrimitiveArray(arraySize);
-        Object actual = wrapper.toArray(param);
+        A param = wrapper.createPrimitiveArray(arraySize);
+        A actual = wrapper.toArray(param);
         assertUnchanged();
         if (same) {
             assertSame(param, actual);
@@ -2488,14 +1824,14 @@ public class ObservableArrayTest {
         testToArray(0, true);
     }
 
-    // ============ toArray range tests =========================
+    // ========================= toArray range tests =========================
 
     private void testToArrayRange(int srcIndex, int destSize, int length) {
-        Object dest = wrapper.createPrimitiveArray(destSize);
-        Object initial = wrapper.clonePrimitiveArray(dest);
-        Object actual = wrapper.toArray(srcIndex, dest, length);
+        A dest = wrapper.createPrimitiveArray(destSize);
+        A initial = wrapper.clonePrimitiveArray(dest);
+        A actual = wrapper.toArray(srcIndex, dest, length);
         assertUnchanged();
-        Object expected = wrapper.toArray(null);
+        A expected = wrapper.toArray(null);
         wrapper.assertElementsEqual(actual, 0, length, expected, srcIndex);
         wrapper.assertElementsEqual(actual, length, wrapper.arrayLength(actual), initial, length);
     }
@@ -2579,7 +1915,7 @@ public class ObservableArrayTest {
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void testToArrayRangeNegative5() {
+    public void testToArrayRangeNegative4() {
         makeEmpty();
         try {
             testToArrayRange(2, 0, 0);
@@ -2608,14 +1944,14 @@ public class ObservableArrayTest {
         }
     }
 
-    // ============ copyTo(primitive array) tests =========================
+    // ========================= copyTo(primitive array) tests =========================
 
     private void testCopyToA(int srcIndex, int destSize, int destIndex, int length) {
-        Object actual = wrapper.createPrimitiveArray(destSize);
-        Object initial = wrapper.clonePrimitiveArray(actual);
+        A actual = wrapper.createPrimitiveArray(destSize);
+        A initial = wrapper.clonePrimitiveArray(actual);
         wrapper.copyToA(srcIndex, actual, destIndex, length);
         assertUnchanged();
-        Object expected = wrapper.toArray(null);
+        A expected = wrapper.toArray(null);
         wrapper.assertElementsEqual(actual, 0, destIndex, initial, 0);
         wrapper.assertElementsEqual(actual, destIndex, destIndex + length, expected, srcIndex);
         wrapper.assertElementsEqual(actual, destIndex + length, wrapper.arrayLength(actual), initial,
@@ -2623,52 +1959,52 @@ public class ObservableArrayTest {
     }
 
     @Test
-    public void testCopyToA0() {
+    public void testCopyToA1() {
         testCopyToA(0, array.size(), 0, array.size());
     }
 
     @Test
-    public void testCopyToA1() {
+    public void testCopyToA2() {
         testCopyToA(1, array.size(), 2, 3);
     }
 
     @Test
-    public void testCopyToA2() {
+    public void testCopyToA3() {
         testCopyToA(2, array.size(), 2, 2);
     }
 
     @Test
-    public void testCopyToA3() {
+    public void testCopyToA4() {
         testCopyToA(0, array.size(), 2, 2);
     }
 
     @Test
-    public void testCopyToA4() {
+    public void testCopyToA5() {
         testCopyToA(0, 3, 1, 2);
     }
 
     @Test
-    public void testCopyToA5() {
+    public void testCopyToA6() {
         testCopyToA(0, array.size() * 3, array.size() * 2, array.size());
     }
 
     @Test
-    public void testCopyToA6() {
+    public void testCopyToA7() {
         testCopyToA(3, array.size(), 0, array.size() - 3);
     }
 
     @Test
-    public void testCopyToA7() {
+    public void testCopyToA8() {
         testCopyToA(0, 10, 7, 3);
     }
 
     @Test
-    public void testCopyToA8() {
+    public void testCopyToA9() {
         testCopyToA(1, 0, 0, 0);
     }
 
     @Test
-    public void testCopyToA9() {
+    public void testCopyToA10() {
         makeEmpty();
         testCopyToA(0, 0, 0, 0);
     }
@@ -2768,18 +2104,18 @@ public class ObservableArrayTest {
         }
     }
 
-    // ============ copyTo(ObservableArray) tests =========================
+    // ========================= copyTo(ObservableArray) tests =========================
 
     private void testCopyToT(int srcIndex, int destSize, int destIndex, int length) {
-        ArrayWrapper wrapper2 = wrapper.newInstance();
-        Object initial = wrapper2.createPrimitiveArray(destSize);
-        ObservableArray dest = wrapper2.createNotEmptyArray(initial);
+        ArrayWrapper<T, A, P> wrapper2 = wrapper.newInstance();
+        A initial = wrapper2.createPrimitiveArray(destSize);
+        T dest = wrapper2.createNotEmptyArray(initial);
 
         wrapper.copyToT(srcIndex, dest, destIndex, length);
 
         assertUnchanged();
-        Object expected = wrapper.toArray(null);
-        Object actual = wrapper2.toArray(null);
+        A expected = wrapper.toArray(null);
+        A actual = wrapper2.toArray(null);
         wrapper.assertElementsEqual(actual, 0, destIndex, initial, 0);
         wrapper.assertElementsEqual(actual, destIndex, destIndex + length, expected, srcIndex);
         wrapper.assertElementsEqual(actual, destIndex + length, wrapper.arrayLength(actual), initial,
@@ -2934,12 +2270,11 @@ public class ObservableArrayTest {
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void testCopyToTNegativeAfterDestEnsureCapacity() {
+        ArrayWrapper<T, A, P> wrapper2 = wrapper.newInstance();
+        A destA = wrapper2.createPrimitiveArray(1);
+        T dest = wrapper2.createNotEmptyArray(destA);
+        dest.ensureCapacity(2);
         try {
-            ArrayWrapper wrapper2 = wrapper.newInstance();
-            Object destA = wrapper2.createPrimitiveArray(1);
-            ObservableArray dest = wrapper2.createNotEmptyArray(destA);
-            dest.ensureCapacity(2);
-
             wrapper.copyToT(0, dest, 1, 1);
         } finally {
             assertUnchanged();
@@ -2948,12 +2283,11 @@ public class ObservableArrayTest {
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void testCopyToTNegativeAfterDestClear() {
+        ArrayWrapper<T, A, P> wrapper2 = wrapper.newInstance();
+        A destA = wrapper2.createPrimitiveArray(1);
+        T dest = wrapper2.createNotEmptyArray(destA);
+        dest.clear();
         try {
-            ArrayWrapper wrapper2 = wrapper.newInstance();
-            Object destA = wrapper2.createPrimitiveArray(1);
-            ObservableArray dest = wrapper2.createNotEmptyArray(destA);
-            dest.clear();
-
             wrapper.copyToT(0, dest, 0, 1);
         } finally {
             assertUnchanged();
@@ -2961,11 +2295,10 @@ public class ObservableArrayTest {
     }
 
     private void testCopyToTSelf(int srcIndex, int destIndex, int length) {
-
         wrapper.copyToT(srcIndex, array, destIndex, length);
 
         mao.checkOnlyElementsChanged(array, destIndex, destIndex + length);
-        Object actual = wrapper.toArray(null);
+        A actual = wrapper.toArray(null);
         wrapper.assertElementsEqual(actual, 0, destIndex, initialElements, 0);
         wrapper.assertElementsEqual(actual, destIndex, destIndex + length, initialElements, srcIndex);
         wrapper.assertElementsEqual(actual, destIndex + length, initialSize, initialElements, destIndex + length);
@@ -3079,7 +2412,7 @@ public class ObservableArrayTest {
         }
     }
 
-    // ============ ensureCapacity() and trimToSize() tests ====================
+    // ========================= ensureCapacity() and trimToSize() tests =========================
 
     @Test
     public void testTrimToSize() {
@@ -3101,7 +2434,6 @@ public class ObservableArrayTest {
         mao.reset();
 
         array.trimToSize();
-
         assertUnchanged();
     }
 
@@ -3112,7 +2444,6 @@ public class ObservableArrayTest {
         mao.reset();
 
         array.trimToSize();
-
         assertUnchanged();
     }
 
@@ -3174,7 +2505,7 @@ public class ObservableArrayTest {
         assertUnchanged();
     }
 
-    // ================= clear() tests ====================
+    // ========================= clear() tests =========================
 
     @Test
     public void testClearEmpty() {
@@ -3195,7 +2526,7 @@ public class ObservableArrayTest {
         assertEquals(0, array.size());
     }
 
-    // ================= toString() tests ===================
+    // ========================= toString() tests =========================
 
     @Test
     public void testToString() {
@@ -3223,6 +2554,656 @@ public class ObservableArrayTest {
         array.clear();
         String actual = array.toString();
         assertEquals("[]", actual);
+    }
+
+    // ========================= implementations for the tests =========================
+
+    /**
+     * @param <T>
+     *         ObservableArray subclass
+     * @param <A>
+     *         corresponding primitive array
+     * @param <P>
+     *         corresponding class for boxed elements
+     */
+    private static abstract class ArrayWrapper<T extends ObservableArray<T>, A, P> {
+
+        T array;
+
+        abstract T createEmptyArray();
+
+        abstract T createNotEmptyArray(A src);
+
+        abstract ArrayWrapper<T, A, P> newInstance();
+
+        abstract P getNextValue();
+
+        abstract void set(int index, P value);
+
+        abstract void setAllA(A src);
+
+        abstract void setAllT(T src);
+
+        abstract void setAllA(A src, int srcIndex, int length);
+
+        abstract void setAllT(T src, int srcIndex, int length);
+
+        abstract void addAllA(A src);
+
+        abstract void addAllT(T src);
+
+        abstract void addAllA(A src, int srcIndex, int length);
+
+        abstract void addAllT(T src, int srcIndex, int length);
+
+        abstract void setA(int destIndex, A src, int srcIndex, int length);
+
+        abstract void setT(int destIndex, T src, int srcIndex, int length);
+
+        abstract void copyToA(int srcIndex, A dest, int destIndex, int length);
+
+        abstract void copyToT(int srcIndex, T dest, int destIndex, int length);
+
+        abstract P get(int index);
+
+        abstract A toArray(A dest);
+
+        abstract A toArray(int srcIndex, A dest, int length);
+
+        A createPrimitiveArray(int size) {
+            return createPrimitiveArray(size, true);
+        }
+
+        abstract A createPrimitiveArray(int size, boolean fillWithData);
+
+        abstract A clonePrimitiveArray(A array);
+
+        abstract int arrayLength(A array);
+
+        abstract P get(A array, int index);
+
+        abstract void assertElementsEqual(A actual, int from, int to, A expected, int expFrom);
+
+        abstract String primitiveArrayToString(A array);
+
+    }
+
+    private static class DoubleArrayWrapper extends ArrayWrapper<ObservableDoubleArray, double[], Double> {
+
+        private double nextValue = 0;
+
+        @Override
+        ObservableDoubleArray createEmptyArray() {
+            return array = ObservableCollections.observableDoubleArray();
+        }
+
+        @Override
+        ObservableDoubleArray createNotEmptyArray(double[] elements) {
+            return array = ObservableCollections.observableDoubleArray(elements);
+        }
+
+        @Override
+        DoubleArrayWrapper newInstance() {
+            return new DoubleArrayWrapper();
+        }
+
+        @Override
+        Double getNextValue() {
+            return nextValue++;
+        }
+
+        @Override
+        void set(int index, Double value) {
+            array.set(index, value);
+        }
+
+        @Override
+        void setAllA(double[] src) {
+            array.setAll(src);
+        }
+
+        @Override
+        void setAllT(ObservableDoubleArray src) {
+            array.setAll(src);
+        }
+
+        @Override
+        void setAllA(double[] src, int srcIndex, int length) {
+            array.setAll(src, srcIndex, length);
+        }
+
+        @Override
+        void setAllT(ObservableDoubleArray src, int srcIndex, int length) {
+            array.setAll(src, srcIndex, length);
+        }
+
+        @Override
+        void addAllA(double[] src) {
+            array.addAll(src);
+        }
+
+        @Override
+        void addAllT(ObservableDoubleArray src) {
+            array.addAll(src);
+        }
+
+        @Override
+        void addAllA(double[] src, int srcIndex, int length) {
+            array.addAll(src, srcIndex, length);
+        }
+
+        @Override
+        void addAllT(ObservableDoubleArray src, int srcIndex, int length) {
+            array.addAll(src, srcIndex, length);
+        }
+
+        @Override
+        void setA(int destIndex, double[] src, int srcIndex, int length) {
+            array.set(destIndex, src, srcIndex, length);
+        }
+
+        @Override
+        void setT(int destIndex, ObservableDoubleArray src, int srcIndex, int length) {
+            array.set(destIndex, src, srcIndex, length);
+        }
+
+        @Override
+        void copyToA(int srcIndex, double[] dest, int destIndex, int length) {
+            array.copyTo(srcIndex, dest, destIndex, length);
+        }
+
+        @Override
+        void copyToT(int srcIndex, ObservableDoubleArray dest, int destIndex, int length) {
+            array.copyTo(srcIndex, dest, destIndex, length);
+        }
+
+        @Override
+        Double get(int index) {
+            return array.get(index);
+        }
+
+        @Override
+        double[] toArray(double[] dest) {
+            return array.toArray(dest);
+        }
+
+        @Override
+        double[] toArray(int srcIndex, double[] dest, int length) {
+            return array.toArray(srcIndex, dest, length);
+        }
+
+        @Override
+        double[] createPrimitiveArray(int size, boolean fillWithData) {
+            double[] res = new double[size];
+            if (fillWithData) {
+                for (int i = 0; i < size; i++) {
+                    res[i] = nextValue++;
+                }
+            }
+            return res;
+        }
+
+        @Override
+        double[] clonePrimitiveArray(double[] array) {
+            return Arrays.copyOf(array, array.length);
+        }
+
+        @Override
+        int arrayLength(double[] array) {
+            return array.length;
+        }
+
+        @Override
+        Double get(double[] array, int index) {
+            return array[index];
+        }
+
+        @Override
+        void assertElementsEqual(double[] actual, int from, int to, double[] expected, int expFrom) {
+            for (int i = from, j = expFrom; i < to; i++, j++) {
+                assertEquals("expected float = " + expected[j] + ", actual float = " + actual[i],
+                        Double.doubleToRawLongBits(expected[j]), Double.doubleToRawLongBits(actual[i]));
+            }
+        }
+
+        @Override
+        String primitiveArrayToString(double[] array) {
+            return Arrays.toString(array);
+        }
+
+    }
+
+    private static class FloatArrayWrapper extends ArrayWrapper<ObservableFloatArray, float[], Float> {
+
+        private float nextValue = 0;
+
+        @Override
+        ObservableFloatArray createEmptyArray() {
+            return array = ObservableCollections.observableFloatArray();
+        }
+
+        @Override
+        ObservableFloatArray createNotEmptyArray(float[] elements) {
+            return array = ObservableCollections.observableFloatArray(elements);
+        }
+
+        @Override
+        FloatArrayWrapper newInstance() {
+            return new FloatArrayWrapper();
+        }
+
+        @Override
+        Float getNextValue() {
+            return nextValue++;
+        }
+
+        @Override
+        void set(int index, Float value) {
+            array.set(index, value);
+        }
+
+        @Override
+        void setAllA(float[] src) {
+            array.setAll(src);
+        }
+
+        @Override
+        void setAllT(ObservableFloatArray src) {
+            array.setAll(src);
+        }
+
+        @Override
+        void setAllA(float[] src, int srcIndex, int length) {
+            array.setAll(src, srcIndex, length);
+        }
+
+        @Override
+        void setAllT(ObservableFloatArray src, int srcIndex, int length) {
+            array.setAll(src, srcIndex, length);
+        }
+
+        @Override
+        void addAllA(float[] src) {
+            array.addAll(src);
+        }
+
+        @Override
+        void addAllT(ObservableFloatArray src) {
+            array.addAll(src);
+        }
+
+        @Override
+        void addAllA(float[] src, int srcIndex, int length) {
+            array.addAll(src, srcIndex, length);
+        }
+
+        @Override
+        void addAllT(ObservableFloatArray src, int srcIndex, int length) {
+            array.addAll(src, srcIndex, length);
+        }
+
+        @Override
+        void setA(int destIndex, float[] src, int srcIndex, int length) {
+            array.set(destIndex, src, srcIndex, length);
+        }
+
+        @Override
+        void setT(int destIndex, ObservableFloatArray src, int srcIndex, int length) {
+            array.set(destIndex, src, srcIndex, length);
+        }
+
+        @Override
+        void copyToA(int srcIndex, float[] dest, int destIndex, int length) {
+            array.copyTo(srcIndex, dest, destIndex, length);
+        }
+
+        @Override
+        void copyToT(int srcIndex, ObservableFloatArray dest, int destIndex, int length) {
+            array.copyTo(srcIndex, dest, destIndex, length);
+        }
+
+        @Override
+        Float get(int index) {
+            return array.get(index);
+        }
+
+        @Override
+        float[] toArray(float[] dest) {
+            return array.toArray(dest);
+        }
+
+        @Override
+        float[] toArray(int srcIndex, float[] dest, int length) {
+            return array.toArray(srcIndex, dest, length);
+        }
+
+        @Override
+        float[] createPrimitiveArray(int size, boolean fillWithData) {
+            float[] res = new float[size];
+            if (fillWithData) {
+                for (int i = 0; i < size; i++) {
+                    res[i] = nextValue++;
+                }
+            }
+            return res;
+        }
+
+        @Override
+        float[] clonePrimitiveArray(float[] array) {
+            return Arrays.copyOf(array, array.length);
+        }
+
+        @Override
+        int arrayLength(float[] array) {
+            return array.length;
+        }
+
+        @Override
+        Float get(float[] array, int index) {
+            return array[index];
+        }
+
+        @Override
+        void assertElementsEqual(float[] actual, int from, int to, float[] expected, int expFrom) {
+            for (int i = from, j = expFrom; i < to; i++, j++) {
+                assertEquals("expected float = " + expected[j] + ", actual float = " + actual[i],
+                        Float.floatToRawIntBits(expected[j]), Float.floatToRawIntBits(actual[i]));
+            }
+        }
+
+        @Override
+        String primitiveArrayToString(float[] array) {
+            return Arrays.toString(array);
+        }
+
+    }
+
+    private static class IntegerArrayWrapper extends ArrayWrapper<ObservableIntegerArray, int[], Integer> {
+
+        private int nextValue = 0;
+
+        @Override
+        ObservableIntegerArray createEmptyArray() {
+            return array = ObservableCollections.observableIntegerArray();
+        }
+
+        @Override
+        ObservableIntegerArray createNotEmptyArray(int[] elements) {
+            return array = ObservableCollections.observableIntegerArray(elements);
+        }
+
+        @Override
+        IntegerArrayWrapper newInstance() {
+            return new IntegerArrayWrapper();
+        }
+
+        @Override
+        Integer getNextValue() {
+            return nextValue++;
+        }
+
+        @Override
+        void set(int index, Integer value) {
+            array.set(index, value);
+        }
+
+        @Override
+        void setAllA(int[] src) {
+            array.setAll(src);
+        }
+
+        @Override
+        void setAllT(ObservableIntegerArray src) {
+            array.setAll(src);
+        }
+
+        @Override
+        void setAllA(int[] src, int srcIndex, int length) {
+            array.setAll(src, srcIndex, length);
+        }
+
+        @Override
+        void setAllT(ObservableIntegerArray src, int srcIndex, int length) {
+            array.setAll(src, srcIndex, length);
+        }
+
+        @Override
+        void addAllA(int[] src) {
+            array.addAll(src);
+        }
+
+        @Override
+        void addAllT(ObservableIntegerArray src) {
+            array.addAll(src);
+        }
+
+        @Override
+        void addAllA(int[] src, int srcIndex, int length) {
+            array.addAll(src, srcIndex, length);
+        }
+
+        @Override
+        void addAllT(ObservableIntegerArray src, int srcIndex, int length) {
+            array.addAll(src, srcIndex, length);
+        }
+
+        @Override
+        void setA(int destIndex, int[] src, int srcIndex, int length) {
+            array.set(destIndex, src, srcIndex, length);
+        }
+
+        @Override
+        void setT(int destIndex, ObservableIntegerArray src, int srcIndex, int length) {
+            array.set(destIndex, src, srcIndex, length);
+        }
+
+        @Override
+        void copyToA(int srcIndex, int[] dest, int destIndex, int length) {
+            array.copyTo(srcIndex, dest, destIndex, length);
+        }
+
+        @Override
+        void copyToT(int srcIndex, ObservableIntegerArray dest, int destIndex, int length) {
+            array.copyTo(srcIndex, dest, destIndex, length);
+        }
+
+        @Override
+        Integer get(int index) {
+            return array.get(index);
+        }
+
+        @Override
+        int[] toArray(int[] dest) {
+            return array.toArray(dest);
+        }
+
+        @Override
+        int[] toArray(int srcIndex, int[] dest, int length) {
+            return array.toArray(srcIndex, dest, length);
+        }
+
+        @Override
+        int[] createPrimitiveArray(int size, boolean fillWithData) {
+            int[] res = new int[size];
+            if (fillWithData) {
+                for (int i = 0; i < size; i++) {
+                    res[i] = nextValue++;
+                }
+            }
+            return res;
+        }
+
+        @Override
+        int[] clonePrimitiveArray(int[] array) {
+            return Arrays.copyOf(array, array.length);
+        }
+
+        @Override
+        int arrayLength(int[] array) {
+            return array.length;
+        }
+
+        @Override
+        Integer get(int[] array, int index) {
+            return array[index];
+        }
+
+        @Override
+        void assertElementsEqual(int[] actual, int from, int to, int[] expected, int expFrom) {
+            for (int i = from, j = expFrom; i < to; i++, j++) {
+                assertEquals(expected[j], actual[i]);
+            }
+        }
+
+        @Override
+        String primitiveArrayToString(int[] array) {
+            return Arrays.toString(array);
+        }
+
+    }
+
+    private static class LongArrayWrapper extends ArrayWrapper<ObservableLongArray, long[], Long> {
+
+        private long nextValue = 0;
+
+        @Override
+        ObservableLongArray createEmptyArray() {
+            return array = ObservableCollections.observableLongArray();
+        }
+
+        @Override
+        ObservableLongArray createNotEmptyArray(long[] elements) {
+            return array = ObservableCollections.observableLongArray(elements);
+        }
+
+        @Override
+        LongArrayWrapper newInstance() {
+            return new LongArrayWrapper();
+        }
+
+        @Override
+        Long getNextValue() {
+            return nextValue++;
+        }
+
+        @Override
+        void set(int index, Long value) {
+            array.set(index, value);
+        }
+
+        @Override
+        void setAllA(long[] src) {
+            array.setAll(src);
+        }
+
+        @Override
+        void setAllT(ObservableLongArray src) {
+            array.setAll(src);
+        }
+
+        @Override
+        void setAllA(long[] src, int srcIndex, int length) {
+            array.setAll(src, srcIndex, length);
+        }
+
+        @Override
+        void setAllT(ObservableLongArray src, int srcIndex, int length) {
+            array.setAll(src, srcIndex, length);
+        }
+
+        @Override
+        void addAllA(long[] src) {
+            array.addAll(src);
+        }
+
+        @Override
+        void addAllT(ObservableLongArray src) {
+            array.addAll(src);
+        }
+
+        @Override
+        void addAllA(long[] src, int srcIndex, int length) {
+            array.addAll(src, srcIndex, length);
+        }
+
+        @Override
+        void addAllT(ObservableLongArray src, int srcIndex, int length) {
+            array.addAll(src, srcIndex, length);
+        }
+
+        @Override
+        void setA(int destIndex, long[] src, int srcIndex, int length) {
+            array.set(destIndex, src, srcIndex, length);
+        }
+
+        @Override
+        void setT(int destIndex, ObservableLongArray src, int srcIndex, int length) {
+            array.set(destIndex, src, srcIndex, length);
+        }
+
+        @Override
+        void copyToA(int srcIndex, long[] dest, int destIndex, int length) {
+            array.copyTo(srcIndex, dest, destIndex, length);
+        }
+
+        @Override
+        void copyToT(int srcIndex, ObservableLongArray dest, int destIndex, int length) {
+            array.copyTo(srcIndex, dest, destIndex, length);
+        }
+
+        @Override
+        Long get(int index) {
+            return array.get(index);
+        }
+
+        @Override
+        long[] toArray(long[] dest) {
+            return array.toArray(dest);
+        }
+
+        @Override
+        long[] toArray(int srcIndex, long[] dest, int length) {
+            return array.toArray(srcIndex, dest, length);
+        }
+
+        @Override
+        long[] createPrimitiveArray(int size, boolean fillWithData) {
+            long[] res = new long[size];
+            if (fillWithData) {
+                for (int i = 0; i < size; i++) {
+                    res[i] = nextValue++;
+                }
+            }
+            return res;
+        }
+
+        @Override
+        long[] clonePrimitiveArray(long[] array) {
+            return Arrays.copyOf(array, array.length);
+        }
+
+        @Override
+        int arrayLength(long[] array) {
+            return array.length;
+        }
+
+        @Override
+        Long get(long[] array, int index) {
+            return array[index];
+        }
+
+        @Override
+        void assertElementsEqual(long[] actual, int from, int to, long[] expected, int expFrom) {
+            for (int i = from, j = expFrom; i < to; i++, j++) {
+                assertEquals(expected[j], actual[i]);
+            }
+        }
+
+        @Override
+        String primitiveArrayToString(long[] array) {
+            return Arrays.toString(array);
+        }
+
     }
 
 }

@@ -91,7 +91,7 @@ public interface ObservableDoubleArray extends ObservableArray<ObservableDoubleA
      * @param src
      *         source observable array
      * @param srcIndex
-     *         starting position in source array
+     *         starting position in source observable array
      * @param length
      *         length of portion to append
      */
@@ -110,22 +110,6 @@ public interface ObservableDoubleArray extends ObservableArray<ObservableDoubleA
     void setAll(double... elements);
 
     /**
-     * Replaces this observable array content with a copy of portion of a given array. Capacity is increased if
-     * necessary to match the new size of the data.
-     *
-     * @param src
-     *         source array to copy.
-     * @param srcIndex
-     *         starting position in source observable array
-     * @param length
-     *         length of a portion to copy
-     *
-     * @throws NullPointerException
-     *         if {@code src} is null
-     */
-    void setAll(double[] src, int srcIndex, int length);
-
-    /**
      * Replaces this observable array content with a copy of given observable array. Capacity is increased if necessary
      * to match the new size of the data.
      *
@@ -136,6 +120,22 @@ public interface ObservableDoubleArray extends ObservableArray<ObservableDoubleA
      *         if {@code src} is null
      */
     void setAll(ObservableDoubleArray src);
+
+    /**
+     * Replaces this observable array content with a copy of portion of a given array. Capacity is increased if
+     * necessary to match the new size of the data.
+     *
+     * @param src
+     *         source array to copy.
+     * @param srcIndex
+     *         starting position in source array
+     * @param length
+     *         length of a portion to copy
+     *
+     * @throws NullPointerException
+     *         if {@code src} is null
+     */
+    void setAll(double[] src, int srcIndex, int length);
 
     /**
      * Replaces this observable array content with a portion of a given observable array. Capacity is increased if
@@ -177,7 +177,7 @@ public interface ObservableDoubleArray extends ObservableArray<ObservableDoubleA
      * @param src
      *         source observable array to copy
      * @param srcIndex
-     *         starting position in source array
+     *         starting position in source observable array
      * @param length
      *         length of portion to copy
      */
