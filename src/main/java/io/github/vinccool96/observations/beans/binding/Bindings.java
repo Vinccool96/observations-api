@@ -18,7 +18,7 @@ import java.util.concurrent.Callable;
 /**
  * Bindings is a helper class with a lot of utility functions to create simple bindings.
  * <p>
- * Usually there are two possibilities to define the same operation: the Fluent API and the the factory methods in this
+ * Usually there are two possibilities to define the same operation: the Fluent API and the factory methods in this
  * class. This allows a developer to define complex expression in a way that is most easy to understand. For instance
  * the expression {@code result = a*b + c*d} can be defined using only the Fluent API:
  * <p>
@@ -26,7 +26,7 @@ import java.util.concurrent.Callable;
  * <p>
  * Or using only factory methods in Bindings:
  * <p>
- * {@code NumberBinding result = add (multiply(a, b), multiply(c,d));}
+ * {@code NumberBinding result = add(multiply(a, b), multiply(c,d));}
  * <p>
  * Or mixing both possibilities:
  * <p>
@@ -34,11 +34,11 @@ import java.util.concurrent.Callable;
  * <p>
  * The main difference between using the Fluent API and using the factory methods in this class is that the Fluent API
  * requires that at least one of the operands is an Expression (see {@link io.github.vinccool96.observations.beans.binding}).
- * (Every Expression contains a static method that generates an Expression from an {@link ObservableValue}.)
+ * (Every Expression contains a static method that generates an Expression from an {@link ObservableValue}).
  * <p>
  * Also if you watched closely, you might have noticed that the return type of the Fluent API is different in the
  * examples above. In a lot of cases the Fluent API allows to be more specific about the returned type (see {@link
- * NumberExpression} for more details about implicit casting.
+ * NumberExpression} for more details about implicit casting).
  *
  * @see Binding
  * @see NumberBinding
@@ -4828,16 +4828,12 @@ public final class Bindings {
 
     /**
      * Returns a {@link StringExpression} that wraps a {@link ObservableValue}. If the {@code ObservableValue} is
-     * already a {@code StringExpression}, it will be returned. Otherwise a new {@link StringBinding} is created that
+     * already a {@code StringExpression}, it will be returned. Otherwise, a new {@link StringBinding} is created that
      * holds the value of the {@code ObservableValue} converted to a {@code String}.
      *
-     * @param observableValue
-     *         The source {@code ObservableValue}
-     *
+     * @param observableValue The source {@code ObservableValue}
      * @return A {@code StringExpression} that wraps the {@code ObservableValue} if necessary
-     *
-     * @throws NullPointerException
-     *         if {@code observableValue} is {@code null}
+     * @throws NullPointerException if {@code observableValue} is {@code null}
      */
     public static StringExpression convert(ObservableValue<?> observableValue) {
         return StringFormatter.convert(observableValue);
@@ -6179,7 +6175,7 @@ public final class Bindings {
 
     /**
      * Creates a new {@link ObjectBinding} that contains the element of an {@link ObservableList} at the specified
-     * position. The {@code ObjectBinding} will contain {@code null}, if the {@code index} is outside of the {@code
+     * position. The {@code ObjectBinding} will contain {@code null}, if the {@code index} is outside the {@code
      * ObservableList}.
      *
      * @param op
@@ -6200,7 +6196,7 @@ public final class Bindings {
 
     /**
      * Creates a new {@link ObjectBinding} that contains the element of an {@link ObservableList} at the specified
-     * position. The {@code ObjectBinding} will contain {@code null}, if the {@code index} is outside of the {@code
+     * position. The {@code ObjectBinding} will contain {@code null}, if the {@code index} is outside the {@code
      * ObservableList}.
      *
      * @param op
@@ -6311,7 +6307,7 @@ public final class Bindings {
 
     /**
      * Creates a new {@link BooleanBinding} that contains the element of an {@link ObservableList} at the specified
-     * position. The {@code BooleanBinding} will hold {@code false}, if the {@code index} is outside of the {@code
+     * position. The {@code BooleanBinding} will hold {@code false}, if the {@code index} is outside the {@code
      * ObservableList}.
      *
      * @param op
@@ -6330,7 +6326,7 @@ public final class Bindings {
 
     /**
      * Creates a new {@link BooleanBinding} that contains the element of an {@link ObservableList} at the specified
-     * position. The {@code BooleanBinding} will hold {@code false}, if the {@code index} is outside of the {@code
+     * position. The {@code BooleanBinding} will hold {@code false}, if the {@code index} is outside the {@code
      * ObservableList}.
      *
      * @param op
@@ -6445,7 +6441,7 @@ public final class Bindings {
 
     /**
      * Creates a new {@link DoubleBinding} that contains the element of an {@link ObservableList} at the specified
-     * position. The {@code DoubleBinding} will hold {@code 0.0}, if the {@code index} is outside of the {@code
+     * position. The {@code DoubleBinding} will hold {@code 0.0}, if the {@code index} is outside the {@code
      * ObservableList}.
      *
      * @param op
@@ -6465,7 +6461,7 @@ public final class Bindings {
 
     /**
      * Creates a new {@link DoubleBinding} that contains the element of an {@link ObservableList} at the specified
-     * position. The {@code DoubleBinding} will hold {@code 0.0}, if the {@code index} is outside of the {@code
+     * position. The {@code DoubleBinding} will hold {@code 0.0}, if the {@code index} is outside the {@code
      * ObservableList}.
      *
      * @param op
@@ -6581,7 +6577,7 @@ public final class Bindings {
 
     /**
      * Creates a new {@link FloatBinding} that contains the element of an {@link ObservableList} at the specified
-     * position. The {@code FloatBinding} will hold {@code 0.0f}, if the {@code index} is outside of the {@code
+     * position. The {@code FloatBinding} will hold {@code 0.0f}, if the {@code index} is outside the {@code
      * ObservableList}.
      *
      * @param op
@@ -6601,7 +6597,7 @@ public final class Bindings {
 
     /**
      * Creates a new {@link FloatBinding} that contains the element of an {@link ObservableList} at the specified
-     * position. The {@code FloatBinding} will hold {@code 0.0f}, if the {@code index} is outside of the {@code
+     * position. The {@code FloatBinding} will hold {@code 0.0f}, if the {@code index} is outside the {@code
      * ObservableList}.
      *
      * @param op
@@ -6717,7 +6713,7 @@ public final class Bindings {
 
     /**
      * Creates a new {@link IntegerBinding} that contains the element of an {@link ObservableList} at the specified
-     * position. The {@code IntegerBinding} will hold {@code 0}, if the {@code index} is outside of the {@code
+     * position. The {@code IntegerBinding} will hold {@code 0}, if the {@code index} is outside the {@code
      * ObservableList}.
      *
      * @param op
@@ -6737,7 +6733,7 @@ public final class Bindings {
 
     /**
      * Creates a new {@link IntegerBinding} that contains the element of an {@link ObservableList} at the specified
-     * position. The {@code IntegerBinding} will hold {@code 0}, if the {@code index} is outside of the {@code
+     * position. The {@code IntegerBinding} will hold {@code 0}, if the {@code index} is outside the {@code
      * ObservableList}.
      *
      * @param op
@@ -6853,7 +6849,7 @@ public final class Bindings {
 
     /**
      * Creates a new {@link LongBinding} that contains the element of an {@link ObservableList} at the specified
-     * position. The {@code LongBinding} will hold {@code 0L}, if the {@code index} is outside of the {@code
+     * position. The {@code LongBinding} will hold {@code 0L}, if the {@code index} is outside the {@code
      * ObservableList}.
      *
      * @param op
@@ -6873,7 +6869,7 @@ public final class Bindings {
 
     /**
      * Creates a new {@link LongBinding} that contains the element of an {@link ObservableList} at the specified
-     * position. The {@code LongBinding} will hold {@code 0L}, if the {@code index} is outside of the {@code
+     * position. The {@code LongBinding} will hold {@code 0L}, if the {@code index} is outside the {@code
      * ObservableList}.
      *
      * @param op
@@ -6983,7 +6979,7 @@ public final class Bindings {
 
     /**
      * Creates a new {@link StringBinding} that contains the element of an {@link ObservableList} at the specified
-     * position. The {@code StringBinding} will hold {@code ""}, if the {@code index} is outside of the {@code
+     * position. The {@code StringBinding} will hold {@code ""}, if the {@code index} is outside the {@code
      * ObservableList}.
      *
      * @param op
@@ -7002,7 +6998,7 @@ public final class Bindings {
 
     /**
      * Creates a new {@link StringBinding} that contains the element of an {@link ObservableList} at the specified
-     * position. The {@code StringBinding} will hold {@code ""}, if the {@code index} is outside of the {@code
+     * position. The {@code StringBinding} will hold {@code ""}, if the {@code index} is outside the {@code
      * ObservableList}.
      *
      * @param op
@@ -7274,12 +7270,13 @@ public final class Bindings {
             public ObservableList<?> getDependencies() {
                 return ObservableCollections.singletonObservableList(op);
             }
+
         };
     }
 
     /**
      * Creates a new {@link FloatBinding} that contains the element of an {@link ObservableArray} at the specified
-     * position. The {@code FloatBinding} will hold {@code 0.0f}, if the {@code index} is outside of the {@code
+     * position. The {@code FloatBinding} will hold {@code 0.0f}, if the {@code index} is outside the {@code
      * ObservableArray}.
      *
      * @param op
@@ -7298,7 +7295,7 @@ public final class Bindings {
 
     /**
      * Creates a new {@link FloatBinding} that contains the element of an {@link ObservableArray} at the specified
-     * position. The {@code FloatBinding} will hold {@code 0.0f}, if the {@code index} is outside of the {@code
+     * position. The {@code FloatBinding} will hold {@code 0.0f}, if the {@code index} is outside the {@code
      * ObservableArray}.
      *
      * @param op
@@ -7342,6 +7339,7 @@ public final class Bindings {
             public ObservableList<?> getDependencies() {
                 return new ImmutableObservableList<>(op, index);
             }
+
         };
     }
 
@@ -7396,12 +7394,13 @@ public final class Bindings {
             public ObservableList<?> getDependencies() {
                 return ObservableCollections.singletonObservableList(op);
             }
+
         };
     }
 
     /**
      * Creates a new {@link IntegerBinding} that contains the element of an {@link ObservableArray} at the specified
-     * position. The {@code IntegerBinding} will hold {@code 0}, if the {@code index} is outside of the {@code
+     * position. The {@code IntegerBinding} will hold {@code 0}, if the {@code index} is outside the {@code
      * ObservableArray}.
      *
      * @param op
@@ -7420,7 +7419,7 @@ public final class Bindings {
 
     /**
      * Creates a new {@link IntegerBinding} that contains the element of an {@link ObservableArray} at the specified
-     * position. The {@code IntegerBinding} will hold {@code 0}, if the {@code index} is outside of the {@code
+     * position. The {@code IntegerBinding} will hold {@code 0}, if the {@code index} is outside the {@code
      * ObservableArray}.
      *
      * @param op
@@ -7464,6 +7463,7 @@ public final class Bindings {
             public ObservableList<?> getDependencies() {
                 return new ImmutableObservableList<>(op, index);
             }
+
         };
     }
 

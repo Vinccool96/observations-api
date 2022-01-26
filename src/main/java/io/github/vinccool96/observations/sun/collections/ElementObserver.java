@@ -7,7 +7,8 @@ import io.github.vinccool96.observations.util.Callback;
 
 import java.util.IdentityHashMap;
 
-@SuppressWarnings({"FieldMayBeFinal", "FieldCanBeLocal", "unused"}) final class ElementObserver<E> {
+@SuppressWarnings({"FieldMayBeFinal", "FieldCanBeLocal", "unused"})
+final class ElementObserver<E> {
 
     private static class ElementsMapElement {
 

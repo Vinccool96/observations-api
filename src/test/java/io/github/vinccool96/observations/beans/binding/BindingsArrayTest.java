@@ -16,9 +16,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- *
- */
+@SuppressWarnings("ConstantConditions")
 public class BindingsArrayTest {
 
     private static final double EPSILON_DOUBLE = 1e-12;
@@ -51,9 +49,9 @@ public class BindingsArrayTest {
 
     @Before
     public void setUp() {
-        property = new SimpleListProperty<Object>();
-        list1 = ObservableCollections.<Object>observableArrayList(data1, data2);
-        list2 = ObservableCollections.<Object>observableArrayList();
+        property = new SimpleListProperty<>();
+        list1 = ObservableCollections.observableArrayList(data1, data2);
+        list2 = ObservableCollections.observableArrayList();
         index = new SimpleIntegerProperty();
     }
 
@@ -265,7 +263,7 @@ public class BindingsArrayTest {
         final boolean defaultData = false;
         final boolean localData1 = false;
         final boolean localData2 = true;
-        final ListProperty<Boolean> localProperty = new SimpleListProperty<Boolean>();
+        final ListProperty<Boolean> localProperty = new SimpleListProperty<>();
         final ObservableList<Boolean> localList1 = ObservableCollections.observableArrayList(localData1, localData2);
         final ObservableList<Boolean> localList2 = ObservableCollections.observableArrayList();
 
@@ -325,7 +323,7 @@ public class BindingsArrayTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testBooleanValueAt_Constant_NegativeIndex() {
-        final ListProperty<Boolean> localProperty = new SimpleListProperty<Boolean>();
+        final ListProperty<Boolean> localProperty = new SimpleListProperty<>();
         Bindings.booleanValueAt(localProperty, -1);
     }
 
@@ -334,7 +332,7 @@ public class BindingsArrayTest {
         final boolean defaultData = false;
         final boolean localData1 = false;
         final boolean localData2 = true;
-        final ListProperty<Boolean> localProperty = new SimpleListProperty<Boolean>();
+        final ListProperty<Boolean> localProperty = new SimpleListProperty<>();
         final ObservableList<Boolean> localList1 = ObservableCollections.observableArrayList(localData1, localData2);
         final ObservableList<Boolean> localList2 = ObservableCollections.observableArrayList();
 
@@ -417,7 +415,7 @@ public class BindingsArrayTest {
 
     @Test(expected = NullPointerException.class)
     public void testBooleanValueAt_Variable_NullIndex() {
-        final ListProperty<Boolean> localProperty = new SimpleListProperty<Boolean>();
+        final ListProperty<Boolean> localProperty = new SimpleListProperty<>();
         Bindings.booleanValueAt(localProperty, null);
     }
 
@@ -426,7 +424,7 @@ public class BindingsArrayTest {
         final double defaultData = 0.0;
         final double localData1 = Math.PI;
         final double localData2 = -Math.E;
-        final ListProperty<Double> localProperty = new SimpleListProperty<Double>();
+        final ListProperty<Double> localProperty = new SimpleListProperty<>();
         final ObservableList<Double> localList1 = ObservableCollections.observableArrayList(localData1, localData2);
         final ObservableList<Double> localList2 = ObservableCollections.observableArrayList();
 
@@ -486,7 +484,7 @@ public class BindingsArrayTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testDoubleValueAt_Constant_NegativeIndex() {
-        final ListProperty<Double> localProperty = new SimpleListProperty<Double>();
+        final ListProperty<Double> localProperty = new SimpleListProperty<>();
         Bindings.doubleValueAt(localProperty, -1);
     }
 
@@ -495,7 +493,7 @@ public class BindingsArrayTest {
         final double defaultData = 0.0;
         final double localData1 = -Math.PI;
         final double localData2 = Math.E;
-        final ListProperty<Double> localProperty = new SimpleListProperty<Double>();
+        final ListProperty<Double> localProperty = new SimpleListProperty<>();
         final ObservableList<Double> localList1 = ObservableCollections.observableArrayList(localData1, localData2);
         final ObservableList<Double> localList2 = ObservableCollections.observableArrayList();
 
@@ -578,7 +576,7 @@ public class BindingsArrayTest {
 
     @Test(expected = NullPointerException.class)
     public void testDoubleValueAt_Variable_NullIndex() {
-        final ListProperty<Double> localProperty = new SimpleListProperty<Double>();
+        final ListProperty<Double> localProperty = new SimpleListProperty<>();
         Bindings.doubleValueAt(localProperty, null);
     }
 
@@ -587,7 +585,7 @@ public class BindingsArrayTest {
         final float defaultData = 0.0f;
         final float localData1 = (float) Math.PI;
         final float localData2 = (float) -Math.E;
-        final ListProperty<Float> localProperty = new SimpleListProperty<Float>();
+        final ListProperty<Float> localProperty = new SimpleListProperty<>();
         final ObservableList<Float> localList1 = ObservableCollections.observableArrayList(localData1, localData2);
         final ObservableList<Float> localList2 = ObservableCollections.observableArrayList();
 
@@ -647,7 +645,7 @@ public class BindingsArrayTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testFloatValueAt_Constant_NegativeIndex() {
-        final ListProperty<Float> localProperty = new SimpleListProperty<Float>();
+        final ListProperty<Float> localProperty = new SimpleListProperty<>();
         Bindings.floatValueAt(localProperty, -1);
     }
 
@@ -656,7 +654,7 @@ public class BindingsArrayTest {
         final float defaultData = 0.0f;
         final float localData1 = (float) -Math.PI;
         final float localData2 = (float) Math.E;
-        final ListProperty<Float> localProperty = new SimpleListProperty<Float>();
+        final ListProperty<Float> localProperty = new SimpleListProperty<>();
         final ObservableList<Float> localList1 = ObservableCollections.observableArrayList(localData1, localData2);
         final ObservableList<Float> localList2 = ObservableCollections.observableArrayList();
 
@@ -739,7 +737,7 @@ public class BindingsArrayTest {
 
     @Test(expected = NullPointerException.class)
     public void testFloatValueAt_Variable_NullIndex() {
-        final ListProperty<Float> localProperty = new SimpleListProperty<Float>();
+        final ListProperty<Float> localProperty = new SimpleListProperty<>();
         Bindings.floatValueAt(localProperty, null);
     }
 
@@ -748,7 +746,7 @@ public class BindingsArrayTest {
         final int defaultData = 0;
         final int localData1 = 42;
         final int localData2 = -7;
-        final ListProperty<Integer> localProperty = new SimpleListProperty<Integer>();
+        final ListProperty<Integer> localProperty = new SimpleListProperty<>();
         final ObservableList<Integer> localList1 = ObservableCollections.observableArrayList(localData1, localData2);
         final ObservableList<Integer> localList2 = ObservableCollections.observableArrayList();
 
@@ -808,7 +806,7 @@ public class BindingsArrayTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testIntegerValueAt_Constant_NegativeIndex() {
-        final ListProperty<Integer> localProperty = new SimpleListProperty<Integer>();
+        final ListProperty<Integer> localProperty = new SimpleListProperty<>();
         Bindings.integerValueAt(localProperty, -1);
     }
 
@@ -817,7 +815,7 @@ public class BindingsArrayTest {
         final int defaultData = 0;
         final int localData1 = 42;
         final int localData2 = -7;
-        final ListProperty<Integer> localProperty = new SimpleListProperty<Integer>();
+        final ListProperty<Integer> localProperty = new SimpleListProperty<>();
         final ObservableList<Integer> localList1 = ObservableCollections.observableArrayList(localData1, localData2);
         final ObservableList<Integer> localList2 = ObservableCollections.observableArrayList();
 
@@ -900,7 +898,7 @@ public class BindingsArrayTest {
 
     @Test(expected = NullPointerException.class)
     public void testIntegerValueAt_Variable_NullIndex() {
-        final ListProperty<Integer> localProperty = new SimpleListProperty<Integer>();
+        final ListProperty<Integer> localProperty = new SimpleListProperty<>();
         Bindings.integerValueAt(localProperty, null);
     }
 
@@ -909,7 +907,7 @@ public class BindingsArrayTest {
         final long defaultData = 0L;
         final long localData1 = 1234567890987654321L;
         final long localData2 = -987654321987654321L;
-        final ListProperty<Long> localProperty = new SimpleListProperty<Long>();
+        final ListProperty<Long> localProperty = new SimpleListProperty<>();
         final ObservableList<Long> localList1 = ObservableCollections.observableArrayList(localData1, localData2);
         final ObservableList<Long> localList2 = ObservableCollections.observableArrayList();
 
@@ -969,7 +967,7 @@ public class BindingsArrayTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testLongValueAt_Constant_NegativeIndex() {
-        final ListProperty<Long> localProperty = new SimpleListProperty<Long>();
+        final ListProperty<Long> localProperty = new SimpleListProperty<>();
         Bindings.longValueAt(localProperty, -1);
     }
 
@@ -978,7 +976,7 @@ public class BindingsArrayTest {
         final long defaultData = 0;
         final long localData1 = 98765432123456789L;
         final long localData2 = -1234567890123456789L;
-        final ListProperty<Long> localProperty = new SimpleListProperty<Long>();
+        final ListProperty<Long> localProperty = new SimpleListProperty<>();
         final ObservableList<Long> localList1 = ObservableCollections.observableArrayList(localData1, localData2);
         final ObservableList<Long> localList2 = ObservableCollections.observableArrayList();
 
@@ -1061,7 +1059,7 @@ public class BindingsArrayTest {
 
     @Test(expected = NullPointerException.class)
     public void testLongValueAt_Variable_NullIndex() {
-        final ListProperty<Long> localProperty = new SimpleListProperty<Long>();
+        final ListProperty<Long> localProperty = new SimpleListProperty<>();
         Bindings.longValueAt(localProperty, null);
     }
 
@@ -1070,7 +1068,7 @@ public class BindingsArrayTest {
         final String defaultData = null;
         final String localData1 = "Hello World";
         final String localData2 = "Goodbye World";
-        final ListProperty<String> localProperty = new SimpleListProperty<String>();
+        final ListProperty<String> localProperty = new SimpleListProperty<>();
         final ObservableList<String> localList1 = ObservableCollections.observableArrayList(localData1, localData2);
         final ObservableList<String> localList2 = ObservableCollections.observableArrayList();
 
@@ -1130,7 +1128,7 @@ public class BindingsArrayTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testStringValueAt_Constant_NegativeIndex() {
-        final ListProperty<String> localProperty = new SimpleListProperty<String>();
+        final ListProperty<String> localProperty = new SimpleListProperty<>();
         Bindings.stringValueAt(localProperty, -1);
     }
 
@@ -1139,7 +1137,7 @@ public class BindingsArrayTest {
         final String defaultData = null;
         final String localData1 = "Goodbye";
         final String localData2 = "Hello";
-        final ListProperty<String> localProperty = new SimpleListProperty<String>();
+        final ListProperty<String> localProperty = new SimpleListProperty<>();
         final ObservableList<String> localList1 = ObservableCollections.observableArrayList(localData1, localData2);
         final ObservableList<String> localList2 = ObservableCollections.observableArrayList();
 
@@ -1211,7 +1209,7 @@ public class BindingsArrayTest {
 
     @Test(expected = NullPointerException.class)
     public void testStringValueAt_Variable_NullIndex() {
-        final ListProperty<String> localProperty = new SimpleListProperty<String>();
+        final ListProperty<String> localProperty = new SimpleListProperty<>();
         Bindings.stringValueAt(localProperty, null);
     }
 
